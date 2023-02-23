@@ -50,7 +50,7 @@
         <minio.version>8.4.5</minio.version>
         <okhttp3.version>4.10.0</okhttp3.version>
         <redission.version>3.18.0</redission.version>
-
+        <flowable.version>6.8.0</flowable.version>
     </properties>
 
     <modules>
@@ -58,6 +58,7 @@
         <module>jjche-boot-common</module>
         <module>jjche-boot-starters</module>
         <module>jjche-boot-eladmin</module>
+        <module>jjche-boot-modules</module>
     </modules>
 
     <dependencyManagement>
@@ -219,6 +220,23 @@
                 <artifactId>jjche-boot-xxl-job-starter</artifactId>
                 <version>2.0.8-SNAPSHOT</version>
             </dependency>
+            <!-- 工作流相关 -->
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-flowable-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-spring-boot-starter-process</artifactId>
+                <version>${flowable.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-spring-boot-starter-actuator</artifactId>
+                <version>${flowable.version}</version>
+            </dependency>
+            <!-- 工作流相关结束 -->
             <dependency>
                 <groupId>com.alicp.jetcache</groupId>
                 <artifactId>jetcache-starter-redisson</artifactId>

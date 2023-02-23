@@ -32,6 +32,7 @@
         <module>jjche-boot-cat-starter</module>
         <module>jjche-boot-minio-starter</module>
         <module>jjche-boot-sentinel-dashboard-starter</module>
+        <module>jjche-boot-flowable-starter</module>
     </modules>
 
 </project>
