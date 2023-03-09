@@ -13,7 +13,7 @@
         mode="vertical"
       >
         <sidebar-item
-          v-for="route in permission_routers"
+          v-for="route in sidebarRouters"
           :key="route.path"
           :item="route"
           :base-path="route.path"
@@ -32,7 +32,7 @@ import variables from '@/assets/styles/variables.scss'
 export default {
   components: { SidebarItem, Logo },
   computed: {
-    ...mapGetters(['permission_routers', 'sidebar']),
+    ...mapGetters(['sidebarRouters', 'sidebar']),
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
