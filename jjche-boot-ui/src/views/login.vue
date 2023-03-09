@@ -100,7 +100,7 @@ import '../components/icon/vabIcon'
 import { getCodeImg } from '@/api/login'
 import { encrypt } from '@/utils/rsaEncrypt'
 import Cookies from 'js-cookie'
-
+import qs from 'qs'
 const defaultSettings = require('../settings.js')
 import { MessageBox } from 'element-ui'
 import store from '@/store'
@@ -144,8 +144,17 @@ export default {
   },
   watch: {
     $route: {
-      handler(route) {
-        this.redirect = (route.query && route.query.redirect) || '/'
+      handler: function(route) {
+        const data = route.query
+        if (data && data.redirect) {
+          this.redirect = data.redirect
+          delete data.redirect
+          if (JSON.stringify(data) !== '{}') {
+            this.redirect = this.redirect + '&' + qs.stringify(data, { indices: false })
+          }
+        } else {
+          this.redirect = '/'
+        }
       },
       immediate: true
     }
