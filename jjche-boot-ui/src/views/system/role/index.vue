@@ -381,8 +381,9 @@ export default {
       this.$refs.menu.setCheckedKeys([])
     },
     // 新增前初始化部门信息
-    [Crud.HOOK.beforeToAdd]() {
+    [Crud.HOOK.beforeToAdd](crud, form) {
       this.deptDatas = []
+      form.menus = null
     },
     // 编辑前初始化自定义数据权限的部门信息
     [Crud.HOOK.beforeToEdit](crud, form) {
