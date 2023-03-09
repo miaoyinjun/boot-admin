@@ -1,4 +1,4 @@
-import JSEncrypt from 'jsencrypt/bin/jsencrypt'
+import JSEncrypt from 'jsencrypt/bin/jsencrypt.min'
 
 // 密钥对生成 http://web.chacuo.net/netrsakeypair
 // 为对一次打包docker镜像，各环境运行同一包，不使用各环境独立的publicKey，与后端保持一致
