@@ -38,6 +38,18 @@ service.interceptors.response.use(
     return responseData
   },
   error => {
+    // 兼容blob下载出错json提示
+    if (error.response.data instanceof Blob && error.response.data.type.toLowerCase().indexOf('json') !== -1) {
+      const reader = new FileReader()
+      reader.readAsText(error.response.data, 'utf-8')
+      reader.onload = function(e) {
+        const errorMsg = JSON.parse(reader.result).message
+        Notification.error({
+          title: errorMsg,
+          duration: 5000
+        })
+      }
+    } else {
     let code = 0
     try {
       code = error.response.status
@@ -86,6 +98,7 @@ service.interceptors.response.use(
         title: '接口请求失败',
         duration: 5000
       })
+    }
     }
     return Promise.reject(error)
   }
