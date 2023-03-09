@@ -266,4 +266,7 @@ export default {
 .crud-opts .crud-opts-right {
   margin-left: auto;
 }
+.crud-opts .crud-opts-right span {
+  float: left;
+}
 </style>
