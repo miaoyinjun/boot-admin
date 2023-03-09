@@ -48,7 +48,7 @@
               </div>
               <div class="content">
                 <el-progress
-                  type="circle"
+                  type="dashboard"
                   :percentage="parseFloat(data.cpu.used)"
                 />
               </div>
@@ -74,7 +74,7 @@
               </div>
               <div class="content">
                 <el-progress
-                  type="circle"
+                  type="dashboard"
                   :percentage="parseFloat(data.memory.usageRate)"
                 />
               </div>
@@ -100,7 +100,7 @@
               </div>
               <div class="content">
                 <el-progress
-                  type="circle"
+                  type="dashboard"
                   :percentage="parseFloat(data.swap.usageRate)"
                 />
               </div>
@@ -128,7 +128,7 @@
                 </div>
                 <div class="content">
                   <el-progress
-                    type="circle"
+                    type="dashboard"
                     :percentage="parseFloat(data.disk.usageRate)"
                   />
                 </div>
@@ -299,7 +299,7 @@ export default {
         }
         this.cpuInfo.xAxis.data.push(data.time)
         this.memoryInfo.xAxis.data.push(data.time)
-        this.cpuInfo.series[0].data.push(parseFloat(data.memory.used))
+        this.cpuInfo.series[0].data.push(parseFloat(data.cpu.used))
         this.memoryInfo.series[0].data.push(parseFloat(data.memory.usageRate))
       })
     }
@@ -328,14 +328,20 @@ export default {
   padding-bottom: 20px;
   margin-right: 5%;
 }
-.title,
+.title {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  color: #999;
+  margin-bottom: 16px;
+}
 .footer {
   text-align: center;
   font-size: 15px;
   font-weight: 500;
   color: #999;
-  height: 25px;
-  line-height: 25px;
+  margin-top: -5px;
+  margin-bottom: 10px;
 }
 .content {
   text-align: center;
