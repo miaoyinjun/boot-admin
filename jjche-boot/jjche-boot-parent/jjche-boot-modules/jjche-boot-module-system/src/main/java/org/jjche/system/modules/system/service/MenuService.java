@@ -451,10 +451,13 @@ public class MenuService extends MyServiceImpl<MenuMapper, MenuDO> {
                         menuVo.setHidden(menuDTO.getHidden());
                         // 如果不是外链
                         if (!menuDTO.getIFrame()) {
+                            String component = menuDTO.getComponent();
                             if (menuDTO.getPid() == null) {
-                                menuVo.setComponent(StrUtil.isEmpty(menuDTO.getComponent()) ? "Layout" : menuDTO.getComponent());
-                            } else if (!StrUtil.isEmpty(menuDTO.getComponent())) {
-                                menuVo.setComponent(menuDTO.getComponent());
+                                menuVo.setComponent(StrUtil.isEmpty(component) ? "Layout" : component);
+                            }else if(menuDTO.getType() == 0){
+                                menuVo.setComponent(StrUtil.isEmpty(component)?"ParentView":component);
+                            } else if (!StrUtil.isEmpty(component)) {
+                                menuVo.setComponent(component);
                             }
                         }
                         menuVo.setMeta(new MenuMetaVO(menuDTO.getTitle(), menuDTO.getIcon(), !menuDTO.getCache()));
