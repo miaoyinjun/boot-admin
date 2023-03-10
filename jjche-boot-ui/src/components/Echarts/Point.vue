@@ -1,5 +1,5 @@
 <template>
-  <div :class="className" :style="{ height: height, width: width }" />
+  <div :class="className" :style="{height:height,width:width}" />
 </template>
 
 <script>
@@ -76,75 +76,63 @@ export default {
                 }
               }
             },
-            data: [
-              {
-                name: '节点1',
-                x: 100,
-                y: 300
-              },
-              {
-                name: '节点2',
-                x: 1000,
-                y: 300
-              },
-              {
-                name: '节点3',
-                x: 550,
-                y: 100
-              },
-              {
-                name: '节点4',
-                x: 550,
-                y: 500
-              }
-            ],
+            data: [{
+              name: '节点1',
+              x: 100,
+              y: 300
+            }, {
+              name: '节点2',
+              x: 1000,
+              y: 300
+            }, {
+              name: '节点3',
+              x: 550,
+              y: 100
+            }, {
+              name: '节点4',
+              x: 550,
+              y: 500
+            }],
             // links: [],
-            links: [
-              {
-                source: 0,
-                target: 1,
-                symbolSize: [5, 20],
-                label: {
-                  normal: {
-                    show: true
-                  }
-                },
-                lineStyle: {
-                  normal: {
-                    width: 5,
-                    curveness: 0.2
-                  }
+            links: [{
+              source: 0,
+              target: 1,
+              symbolSize: [5, 20],
+              label: {
+                normal: {
+                  show: true
                 }
               },
-              {
-                source: '节点2',
-                target: '节点1',
-                label: {
-                  normal: {
-                    show: true
-                  }
-                },
-                lineStyle: {
-                  normal: { curveness: 0.2 }
+              lineStyle: {
+                normal: {
+                  width: 5,
+                  curveness: 0.2
                 }
-              },
-              {
-                source: '节点1',
-                target: '节点3'
-              },
-              {
-                source: '节点2',
-                target: '节点3'
-              },
-              {
-                source: '节点2',
-                target: '节点4'
-              },
-              {
-                source: '节点1',
-                target: '节点4'
               }
-            ],
+            }, {
+              source: '节点2',
+              target: '节点1',
+              label: {
+                normal: {
+                  show: true
+                }
+              },
+              lineStyle: {
+                normal: { curveness: 0.2 }
+              }
+            }, {
+              source: '节点1',
+              target: '节点3'
+            }, {
+              source: '节点2',
+              target: '节点3'
+            }, {
+              source: '节点2',
+              target: '节点4'
+            }, {
+              source: '节点1',
+              target: '节点4'
+            }],
             lineStyle: {
               normal: {
                 opacity: 0.9,
