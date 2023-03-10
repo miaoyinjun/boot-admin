@@ -42,6 +42,15 @@
             <el-radio-button label="2">按钮</el-radio-button>
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="上级类目" prop="pid">
+          <treeselect
+            v-model="form.pid"
+            :options="menus"
+            :load-options="loadMenus"
+            style="width: 450px"
+            placeholder="选择上级类目"
+          />
+        </el-form-item>
         <el-form-item
           v-show="form.type.toString() !== '2'"
           label="菜单图标"
@@ -178,15 +187,6 @@
             v-model="form.component"
             style="width: 178px"
             placeholder="组件路径"
-          />
-        </el-form-item>
-        <el-form-item label="上级类目" prop="pid">
-          <treeselect
-            v-model="form.pid"
-            :options="menus"
-            :load-options="loadMenus"
-            style="width: 450px"
-            placeholder="选择上级类目"
           />
         </el-form-item>
       </el-form>
@@ -415,7 +415,7 @@ export default {
     getSupDepts(id) {
       crudMenu.getMenuSuperior(id).then((res) => {
         const children = res.map(function(obj) {
-          if (!obj.leaf && !obj.children) {
+          if (!obj.leaf && (!obj.children || obj.children.length == 0)) {
             obj.children = null
           }
           return obj
@@ -429,6 +429,8 @@ export default {
           parentNode.children = res.map(function(obj) {
             if (!obj.leaf) {
               obj.children = null
+            } else {
+              delete obj.children
             }
             return obj
           })
