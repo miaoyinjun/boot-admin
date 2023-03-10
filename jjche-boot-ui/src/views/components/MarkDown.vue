@@ -42,4 +42,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-note-wrapper.shadow {
+  z-index: 5;
+}
+</style>
