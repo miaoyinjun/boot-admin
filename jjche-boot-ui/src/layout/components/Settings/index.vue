@@ -25,11 +25,6 @@
         <span>显示LOGO</span>
         <el-switch v-model="sidebarLogo" class="drawer-switch" />
       </div>
-
-      <div class="drawer-item">
-        <span>菜单UniqueOpened</span>
-        <el-switch v-model="uniqueOpened" class="drawer-switch" />
-      </div>
     </div>
   </div>
 </template>
@@ -72,17 +67,6 @@ export default {
       set(val) {
         this.$store.dispatch('settings/changeSetting', {
           key: 'sidebarLogo',
-          value: val
-        })
-      }
-    },
-    uniqueOpened: {
-      get() {
-        return this.$store.state.settings.uniqueOpened
-      },
-      set(val) {
-        this.$store.dispatch('settings/changeSetting', {
-          key: 'uniqueOpened',
           value: val
         })
       }
