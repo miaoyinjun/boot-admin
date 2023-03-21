@@ -5,6 +5,7 @@ import Cookies from 'js-cookie'
 import 'normalize.css/normalize.css'
 
 import Element from 'element-ui'
+import VForm from 'vform-builds'  //引入VForm库
 
 // 数据字典
 import dict from './components/Dict'
@@ -14,6 +15,7 @@ import permission from './components/Permission'
 import './assets/styles/element-variables.scss'
 // global css
 import './assets/styles/index.scss'
+import 'vform-builds/dist/VFormDesigner.css'  //引入VForm样式
 
 import App from './App'
 import store from './store'
@@ -27,6 +29,7 @@ Vue.use(dict)
 Vue.use(Element, {
   size: Cookies.get('size') || 'small' // set element-ui default size
 })
+Vue.use(VForm)
 
 Vue.config.productionTip = false
 

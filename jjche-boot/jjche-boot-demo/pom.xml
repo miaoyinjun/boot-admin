@@ -26,7 +26,11 @@
         <!--spring-boot-->
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-boot-system-starter</artifactId>
+            <artifactId>jjche-boot-module-system</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jjcheframework.boot</groupId>
+            <artifactId>jjche-boot-module-bpm</artifactId>
         </dependency>
         <!--spring-cloud-->
 <!--                                <dependency>-->

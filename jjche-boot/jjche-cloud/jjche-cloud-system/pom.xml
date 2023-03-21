@@ -30,7 +30,7 @@
     <dependencies>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-boot-system-starter</artifactId>
+            <artifactId>jjche-boot-module-system</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.jjcheframework.boot</groupId>

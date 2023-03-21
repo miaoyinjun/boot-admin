@@ -14,6 +14,7 @@
 
     <modules>
         <module>jjche-boot-module-bpm</module>
+        <module>jjche-boot-module-system</module>
     </modules>
 
 </project>

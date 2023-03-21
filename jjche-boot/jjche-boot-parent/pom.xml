@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jjcheframework.boot</groupId>
@@ -166,7 +167,12 @@
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
-                <artifactId>jjche-boot-system-starter</artifactId>
+                <artifactId>jjche-boot-module-system</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-module-bpm</artifactId>
                 <version>2.0.8-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -454,7 +460,7 @@
             <dependency>
                 <groupId>com.github.oshi</groupId>
                 <artifactId>oshi-core</artifactId>
-                <version>5.3.6</version>
+                <version>6.4.0</version>
             </dependency>
             <!--邮件依赖-->
             <dependency>
@@ -908,7 +914,9 @@
                                         <LANG>C.UTF-8</LANG>
                                         <LC_ALL>C.UTF-8</LC_ALL>
                                         <TZ>Asia/Shanghai</TZ>
-                                        <JAVA_OPTS>-Djava.security.egd=file:/dev/./urandom -Duser.timezone=${TZ} -Dfile.encoding=UTF-8</JAVA_OPTS>
+                                        <JAVA_OPTS>-Djava.security.egd=file:/dev/./urandom -Duser.timezone=${TZ}
+                                            -Dfile.encoding=UTF-8
+                                        </JAVA_OPTS>
                                     </env>
                                     <runCmds>
                                         <run>apk add ttf-freefont</run>

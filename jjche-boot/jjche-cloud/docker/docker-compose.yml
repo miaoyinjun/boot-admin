@@ -103,7 +103,7 @@ services:
     ports:
       - ${JJCHE_SERVER_MINIO_PORT_OUT}:${JJCHE_SERVER_MINIO_PORT}
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
       interval: 30s
       timeout: 20s
       retries: 3

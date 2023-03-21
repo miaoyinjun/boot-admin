@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 390.21">
     <defs>
         <style>.cls-1{fill:#fff}.cls-2{fill:url(#未命名的渐变_7)}</style>
-        <linearGradient id="未命名的渐变_7" x1="816.73" y1="195.1" x2="1492.16" y2="195.1" gradientUnits="userSpaceOnUse">
+        <linearGradient id="未命名的渐变_7" x1="816.73" y1="195.1" x2="1492.16" y2="195.1"
+                        gradientUnits="userSpaceOnUse">
             <stop offset="0" stop-color="#4190ff"/>
             <stop offset="1" stop-color="#1be1f6"/>
         </linearGradient>

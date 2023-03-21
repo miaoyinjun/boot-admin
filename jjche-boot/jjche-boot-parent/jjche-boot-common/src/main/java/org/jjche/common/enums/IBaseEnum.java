@@ -21,6 +21,7 @@ public interface IBaseEnum extends Serializable {
      * @return /
      */
     String getDesc();
+
     /**
      * <p>
      * 值

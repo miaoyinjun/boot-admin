@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public final class ClassUtil extends cn.hutool.core.util.ClassUtil {
     private static final Set<Class<?>> PRIMITIVE_ARRAY_SET = new HashSet<>();
     private static final Set<Class<?>> PRIMITIVE_WRAPPER_ARRAY_SET = new HashSet<>();
+    private final static String OBJECT_STR = "java.lang.object";
 
     static {
         // PRIMITIVE_ARRAY_SET
@@ -99,9 +100,6 @@ public final class ClassUtil extends cn.hutool.core.util.ClassUtil {
     public static boolean isDoubleArray(Class<?> clazz) {
         return double[].class.isAssignableFrom(clazz);
     }
-
-
-    private final static String OBJECT_STR = "java.lang.object";
 
     /**
      * <p>

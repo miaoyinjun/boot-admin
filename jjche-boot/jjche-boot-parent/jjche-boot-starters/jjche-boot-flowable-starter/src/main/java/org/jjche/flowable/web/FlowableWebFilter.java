@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 /**
  * flowable Web 过滤器，将 userId 设置到 {@link org.flowable.common.engine.impl.identity.Authentication} 中
  *
@@ -21,7 +22,12 @@ public class FlowableWebFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
             // 设置工作流的用户
-            Long userId = SecurityUtil.getUserId();
+            Long userId = null;
+            try {
+                userId = SecurityUtil.getUserId();
+            } catch (Exception e) {
+
+            }
             if (userId != null) {
                 FlowableUtils.setAuthenticatedUserId(userId);
             }

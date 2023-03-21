@@ -19,6 +19,12 @@ public class DeptSmallDto implements Serializable {
     private String name;
 
     /**
+     * 负责人的用户编号
+     */
+    private Long leaderUserId;
+
+    private Long pid;
+    /**
      * <p>Constructor for DeptSmallDto.</p>
      */
     public DeptSmallDto() {

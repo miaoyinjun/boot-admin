@@ -1,4 +1,3 @@
-
 package org.jjche.common.enums;
 
 /**

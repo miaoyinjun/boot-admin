@@ -50,7 +50,6 @@ public enum FileType implements IBaseEnum {
      * </p>
      *
      * @param code 标识
-     *
      * @return 枚举
      */
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)

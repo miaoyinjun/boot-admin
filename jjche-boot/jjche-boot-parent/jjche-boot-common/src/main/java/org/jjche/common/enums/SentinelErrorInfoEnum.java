@@ -4,7 +4,7 @@ import org.jjche.common.wrapper.constant.HttpStatusConstant;
 
 /**
  * <p>
- *  Sentinel异常枚举
+ * Sentinel异常枚举
  * </p>
  *
  * @author miaoyj
@@ -54,22 +54,6 @@ public enum SentinelErrorInfoEnum {
     Integer code;
 
 
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
     /**
      * 构造器
      *
@@ -99,5 +83,21 @@ public enum SentinelErrorInfoEnum {
             }
         }
         return null;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
     }
 }

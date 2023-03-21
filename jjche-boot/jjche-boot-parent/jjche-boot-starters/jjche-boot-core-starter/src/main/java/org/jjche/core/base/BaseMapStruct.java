@@ -1,5 +1,7 @@
 package org.jjche.core.base;
 
+import org.jjche.common.param.MyPage;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -53,5 +55,6 @@ public interface BaseMapStruct<E, D, V> extends BaseVoMapStruct<E, V>{
      * @return DOList
      */
     List<E> toDO(Collection<D> dtoList);
+
 
 }
