@@ -1,9 +1,12 @@
 package org.jjche.system.modules.bpm.dal.dataobject.definition;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.jjche.common.enums.CommonStatusEnum;
 import org.jjche.common.serializer.type.JsonLongSetTypeHandler;
 import org.jjche.mybatis.base.entity.BaseEntity;
 
@@ -20,12 +23,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BpmUserGroupDO extends BaseEntity {
-
-    /**
-     * 编号，自增
-     */
-    @TableId
-    private Long id;
     /**
      * 组名
      */
@@ -39,7 +36,7 @@ public class BpmUserGroupDO extends BaseEntity {
      *
      * 枚举 {@link CommonStatusEnum}
      */
-    private Integer status;
+    private CommonStatusEnum status;
     /**
      * 成员用户编号数组
      */

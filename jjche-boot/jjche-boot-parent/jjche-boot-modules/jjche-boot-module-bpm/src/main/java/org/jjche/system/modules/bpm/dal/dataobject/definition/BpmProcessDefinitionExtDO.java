@@ -1,12 +1,14 @@
 package org.jjche.system.modules.bpm.dal.dataobject.definition;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
-import lombok.*;
-import org.jjche.system.modules.bpm.enums.definition.BpmModelFormTypeEnum;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.jjche.mybatis.base.entity.BaseEntity;
+import org.jjche.system.modules.bpm.enums.definition.BpmModelFormTypeEnum;
 
 import java.util.List;
 
@@ -22,12 +24,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BpmProcessDefinitionExtDO extends BaseEntity {
-
-    /**
-     * 编号
-     */
-    @TableId
-    private Long id;
     /**
      * 流程定义的编号
      *

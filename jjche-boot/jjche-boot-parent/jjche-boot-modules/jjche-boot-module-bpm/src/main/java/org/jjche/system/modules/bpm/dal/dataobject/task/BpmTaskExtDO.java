@@ -23,12 +23,6 @@ import java.time.LocalDateTime;
 public class BpmTaskExtDO extends BaseEntity {
 
     /**
-     * 编号，自增
-     */
-    @TableId
-    private Long id;
-
-    /**
      * 任务的审批人
      *
      * 冗余 Task 的 assignee 属性

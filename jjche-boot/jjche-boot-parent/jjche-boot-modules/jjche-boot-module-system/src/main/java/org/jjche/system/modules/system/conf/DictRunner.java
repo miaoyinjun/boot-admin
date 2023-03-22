@@ -66,8 +66,8 @@ public class DictRunner implements ApplicationRunner {
                                         ReflectionUtils.makeAccessible(descField);
                                         Object desc = ReflectionUtils.getField(descField, item);
                                         DictDetailDTO dictDO = new DictDetailDTO();
-                                        dictDO.setLabel(String.valueOf(value));
-                                        dictDO.setValue(String.valueOf(desc));
+                                        dictDO.setLabel(String.valueOf(desc));
+                                        dictDO.setValue(String.valueOf(value));
                                         return dictDO;
                                     } else {
                                         return null;

@@ -38,7 +38,7 @@ spring:
       remove-abandoned: false
 
 mybatis-plus:
-  typeEnumsPackage: org.jjche.*.modules.*.api.enums;
+  typeEnumsPackage: org.jjche.*.modules.*.api.enums;org.jjche.common.enums;
   typeAliasesPackage: org.jjche.*.modules.*.domain;org.jjche.*.modules.*.api.vo;
   global-config:
     banner: false

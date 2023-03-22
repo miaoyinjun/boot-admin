@@ -2,6 +2,7 @@ package org.jjche.system.modules.bpm.service.definition;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
@@ -13,7 +14,6 @@ import org.flowable.common.engine.api.FlowableException;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.jjche.common.dto.DeptSmallDto;
 import org.jjche.common.dto.UserVO;
-import org.jjche.common.enums.CommonStatusEnum;
 import org.jjche.common.exception.BusinessException;
 import org.jjche.common.service.IDeptService;
 import org.jjche.common.service.IUserService;
@@ -324,7 +324,7 @@ public class BpmTaskAssignRuleServiceImpl extends MyServiceImpl<BpmTaskAssignRul
         Map<Long, UserVO> finalUserMap = userMap;
         assigneeUserIds.removeIf(id -> {
             UserVO user = finalUserMap.get(id);
-            return user == null || !CommonStatusEnum.ENABLE.getCode().equals(user.getEnabled());
+            return user == null || BooleanUtil.isFalse(user.getEnabled());
         });
     }
 

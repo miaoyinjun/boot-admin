@@ -69,5 +69,12 @@ export function updateEmail(form) {
   })
 }
 
-export default { add, edit, del }
+export function listSimpleUsers() {
+  return request({
+    url: 'sys/users/sample',
+    method: 'get'
+  })
+}
+
+export default { add, edit, del, listSimpleUsers }
 

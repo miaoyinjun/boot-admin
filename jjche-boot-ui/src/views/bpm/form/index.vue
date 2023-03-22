@@ -29,7 +29,6 @@
         @selection-change="crud.selectionChangeHandler"
       >
         <el-table-column type="selection" width="55" />
-        <el-table-column prop="id" label="编号" />
         <el-table-column prop="name" label="表单名" />
         <el-table-column prop="remark" label="备注" />
         <el-table-column prop="gmtCreate" label="创建时间" />
@@ -81,7 +80,6 @@ export default {
     udOperation
   },
   mixins: [presenter(), header(), form({}), crud()],
-  dicts: ['course_status'],
   cruds() {
     return CRUD({
       title: '表单',

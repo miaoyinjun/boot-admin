@@ -2,6 +2,7 @@ package org.jjche.system.modules.bpm.rest.admin.definition.vo.group;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.jjche.common.enums.CommonStatusEnum;
 
 import javax.validation.constraints.NotNull;
 import java.util.Set;
@@ -27,6 +28,6 @@ public class BpmUserGroupBaseVO {
 
     @ApiModelProperty(value = "状态", required = true, example = "1")
     @NotNull(message = "状态不能为空")
-    private Integer status;
+    private CommonStatusEnum status;
 
 }

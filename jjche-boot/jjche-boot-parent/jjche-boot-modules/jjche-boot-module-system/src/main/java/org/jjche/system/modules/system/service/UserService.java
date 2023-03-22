@@ -123,6 +123,12 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> implements IU
         return myPage;
     }
 
+    public List<UserSampleVO> querySample(){
+        UserQueryCriteriaDTO criteria = new UserQueryCriteriaDTO();
+        List<UserDO> list = this.queryAll(criteria);
+        return userMapStruct.toSampleVO(list);
+    }
+
     /**
      * 查询全部不分页
      *

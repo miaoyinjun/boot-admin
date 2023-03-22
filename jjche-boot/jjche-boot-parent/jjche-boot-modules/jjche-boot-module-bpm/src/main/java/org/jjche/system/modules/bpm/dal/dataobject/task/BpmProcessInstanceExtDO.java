@@ -27,11 +27,6 @@ import java.util.Map;
 public class BpmProcessInstanceExtDO extends BaseEntity {
 
     /**
-     * 编号，自增
-     */
-    @TableId
-    private Long id;
-    /**
      * 发起流程的用户编号
      *
      * 冗余 HistoricProcessInstance 的 startUserId 属性

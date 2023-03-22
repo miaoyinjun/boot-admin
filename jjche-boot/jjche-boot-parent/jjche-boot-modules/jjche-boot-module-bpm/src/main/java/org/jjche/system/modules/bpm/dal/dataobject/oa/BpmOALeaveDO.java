@@ -22,12 +22,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BpmOALeaveDO extends BaseEntity {
-
-    /**
-     * 请假表单主键
-     */
-    @TableId
-    private Long id;
     /**
      * 申请人的用户编号
      *

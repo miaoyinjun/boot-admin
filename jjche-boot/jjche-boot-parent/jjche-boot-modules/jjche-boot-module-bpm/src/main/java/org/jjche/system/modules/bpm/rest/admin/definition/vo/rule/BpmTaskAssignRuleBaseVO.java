@@ -1,6 +1,6 @@
 package org.jjche.system.modules.bpm.rest.admin.definition.vo.rule;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

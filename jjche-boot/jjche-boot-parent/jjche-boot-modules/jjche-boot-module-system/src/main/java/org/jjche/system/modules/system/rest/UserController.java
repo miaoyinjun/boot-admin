@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.annotation.PermissionData;
 import org.jjche.common.dto.RoleSmallDto;
+import org.jjche.common.dto.UserSampleVO;
 import org.jjche.common.dto.UserVO;
 import org.jjche.common.enums.CodeEnum;
 import org.jjche.common.enums.LogCategoryType;
@@ -41,6 +42,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -91,6 +93,12 @@ public class UserController extends BaseController {
     @PermissionData(deptIdInFieldName = DataScope.F_SQL_SCOPE_NAME)
     public R<MyPage<UserVO>> query(UserQueryCriteriaDTO criteria, PageParam pageable) {
         return R.ok(userService.queryAll(criteria, pageable));
+    }
+
+    @ApiOperation("查询用户")
+    @GetMapping("sample")
+    public R<List<UserSampleVO>> querySample() {
+        return R.ok(userService.querySample());
     }
 
     /**

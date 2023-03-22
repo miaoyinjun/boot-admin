@@ -33,12 +33,6 @@ public class BpmTaskAssignRuleDO extends BaseEntity {
     public static final String PROCESS_DEFINITION_ID_NULL = "";
 
     /**
-     * 编号
-     */
-    @TableId
-    private Long id;
-
-    /**
      * 流程模型编号
      *
      * 关联 Model 的 id 属性

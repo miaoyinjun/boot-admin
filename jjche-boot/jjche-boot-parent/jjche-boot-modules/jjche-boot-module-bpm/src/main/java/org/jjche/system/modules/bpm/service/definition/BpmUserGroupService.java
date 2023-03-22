@@ -1,22 +1,31 @@
 package org.jjche.system.modules.bpm.service.definition;
 
-import org.jjche.system.modules.bpm.rest.admin.definition.vo.group.BpmUserGroupCreateReqVO;
-import org.jjche.system.modules.bpm.rest.admin.definition.vo.group.BpmUserGroupPageReqVO;
-import org.jjche.system.modules.bpm.rest.admin.definition.vo.group.BpmUserGroupUpdateReqVO;
-import org.jjche.system.modules.bpm.dal.dataobject.definition.BpmUserGroupDO;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import lombok.RequiredArgsConstructor;
 import org.jjche.common.param.MyPage;
+import org.jjche.common.param.PageParam;
+import org.jjche.mybatis.base.service.MyServiceImpl;
+import org.jjche.mybatis.param.SortEnum;
+import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.system.modules.bpm.convert.definition.BpmUserGroupConvert;
+import org.jjche.system.modules.bpm.dal.dataobject.definition.BpmUserGroupDO;
+import org.jjche.system.modules.bpm.mapper.BpmUserGroupMapper;
+import org.jjche.system.modules.bpm.rest.admin.definition.vo.group.BpmUserGroupCreateReqVO;
+import org.jjche.system.modules.bpm.rest.admin.definition.vo.group.BpmUserGroupQueryDTO;
+import org.jjche.system.modules.bpm.rest.admin.definition.vo.group.BpmUserGroupUpdateReqVO;
+import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
- * 用户组 Service 接口
+ * 用户组 Service 实现类
  *
  * @author 芋道源码
  */
-public interface BpmUserGroupService {
+@Service
+@RequiredArgsConstructor
+public class BpmUserGroupService extends MyServiceImpl<BpmUserGroupMapper, BpmUserGroupDO> {
 
     /**
      * 创建用户组
@@ -24,21 +33,31 @@ public interface BpmUserGroupService {
      * @param createReqVO 创建信息
      * @return 编号
      */
-    Long createUserGroup(@Valid BpmUserGroupCreateReqVO createReqVO);
+    public void createUserGroup(BpmUserGroupCreateReqVO createReqVO) {
+        // 插入
+        BpmUserGroupDO userGroup = BpmUserGroupConvert.INSTANCE.convert(createReqVO);
+        this.save(userGroup);
+    }
 
     /**
      * 更新用户组
      *
      * @param updateReqVO 更新信息
      */
-    void updateUserGroup(@Valid BpmUserGroupUpdateReqVO updateReqVO);
+    public void updateUserGroup(BpmUserGroupUpdateReqVO updateReqVO) {
+        // 更新
+        BpmUserGroupDO updateObj = BpmUserGroupConvert.INSTANCE.convert(updateReqVO);
+        this.updateById(updateObj);
+    }
 
     /**
      * 删除用户组
      *
-     * @param id 编号
+     * @param ids 编号
      */
-    void deleteUserGroup(Long id);
+    public void deleteUserGroup(List<Long> ids) {
+        this.removeByIds(ids);
+    }
 
     /**
      * 获得用户组
@@ -46,7 +65,9 @@ public interface BpmUserGroupService {
      * @param id 编号
      * @return 用户组
      */
-    BpmUserGroupDO getUserGroup(Long id);
+    public BpmUserGroupDO getUserGroup(Long id) {
+        return this.getById(id);
+    }
 
     /**
      * 获得用户组列表
@@ -54,7 +75,10 @@ public interface BpmUserGroupService {
      * @param ids 编号
      * @return 用户组列表
      */
-    List<BpmUserGroupDO> getUserGroupList(Collection<Long> ids);
+    public List<BpmUserGroupDO> getUserGroupList(Collection<Long> ids) {
+        return this.listByIds(ids);
+    }
+
 
     /**
      * 获得指定状态的用户组列表
@@ -62,7 +86,9 @@ public interface BpmUserGroupService {
      * @param status 状态
      * @return 用户组列表
      */
-    List<BpmUserGroupDO> getUserGroupListByStatus(Integer status);
+    public List<BpmUserGroupDO> getUserGroupListByStatus(Boolean status) {
+        return this.baseMapper.selectListByStatus(status);
+    }
 
     /**
      * 获得用户组分页
@@ -70,15 +96,8 @@ public interface BpmUserGroupService {
      * @param pageReqVO 分页查询
      * @return 用户组分页
      */
-    MyPage<BpmUserGroupDO> getUserGroupPage(BpmUserGroupPageReqVO pageReqVO);
-
-    /**
-     * 校验用户组们是否有效。如下情况，视为无效：
-     * 1. 用户组编号不存在
-     * 2. 用户组被禁用
-     *
-     * @param ids 用户组编号数组
-     */
-    void validUserGroups(Set<Long> ids);
-
+    public MyPage<BpmUserGroupDO> getUserGroupPage(PageParam page, BpmUserGroupQueryDTO pageReqVO) {
+        LambdaQueryWrapper queryWrapper = MybatisUtil.assemblyLambdaQueryWrapper(pageReqVO, SortEnum.ID_DESC);
+        return this.page(page, queryWrapper);
+    }
 }

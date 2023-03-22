@@ -1,52 +1,37 @@
 import request from '@/utils/request'
 
 // 创建用户组
-export function createUserGroup(data) {
+export function add(data) {
   return request({
-    url: '/bpm/user-group/create',
+    url: '/sys/bpm/user-group',
     method: 'post',
     data: data
   })
 }
 
 // 更新用户组
-export function updateUserGroup(data) {
+export function edit(data) {
   return request({
-    url: '/bpm/user-group/update',
+    url: '/sys/bpm/user-group',
     method: 'put',
     data: data
   })
 }
 
 // 删除用户组
-export function deleteUserGroup(id) {
+export function del(ids) {
   return request({
-    url: '/bpm/user-group/delete?id=' + id,
-    method: 'delete'
+    url: '/sys/bpm/user-group',
+    method: 'delete',
+    data: ids
   })
 }
 
 // 获得用户组
-export function getUserGroup(id) {
+export function get(id) {
   return request({
-    url: '/bpm/user-group/get?id=' + id,
+    url: '/sys/bpm/user-group/' + id,
     method: 'get'
   })
 }
-
-// 获得用户组分页
-export function getUserGroupPage(query) {
-  return request({
-    url: '/bpm/user-group/page',
-    method: 'get',
-    params: query
-  })
-}
-
-// 获取用户组精简信息列表
-export function listSimpleUserGroups() {
-  return request({
-    url: '/bpm/user-group/list-all-simple',
-    method: 'get'
-  })
-}
+export default { add, edit, del, get }
