@@ -73,29 +73,29 @@ export const constantRouterMap = [
       path: 'manager/form/edit',
       component: (resolve) => require(['@/views/bpm/form/formEditor'], resolve),
       name: '流程表单-编辑',
-      meta: {title: '流程表单-编辑', activeMenu: '/bpm/manager/form'}
+      meta: { title: '流程表单-编辑', activeMenu: '/bpm/manager/form' }
     },
-    //   {
-    //   path: 'manager/definition',
-    //   component: (resolve) => require(['@/views/bpm/definition/index'], resolve),
-    //   name: '流程定义',
-    //   meta: {title: '流程定义', activeMenu: '/bpm/manager/model'}
-    // }, {
-    //   path: 'manager/model/design',
-    //   component: (resolve) => require(['@/views/bpm/model/modelEditor'], resolve),
-    //   name: '设计流程',
-    //   meta: {title: '设计流程', activeMenu: '/bpm/manager/model'}
-    // }, {
-    //   path: 'process-instance/create',
-    //   component: (resolve) => require(['@/views/bpm/processInstance/create'], resolve),
-    //   name: '发起流程',
-    //   meta: {title: '发起流程', activeMenu: '/bpm/task/my'}
-    // }, {
-    //   path: 'process-instance/detail',
-    //   component: (resolve) => require(['@/views/bpm/processInstance/detail'], resolve),
-    //   name: '流程详情',
-    //   meta: {title: '流程详情', activeMenu: '/bpm/task/my'}
-    // }
+      {
+        path: 'manager/definition',
+        component: (resolve) => require(['@/views/bpm/definition/index'], resolve),
+        name: '流程定义',
+        meta: { title: '流程定义', activeMenu: '/bpm/manager/model' }
+      }, {
+        path: 'manager/model/design',
+        component: (resolve) => require(['@/views/bpm/model/modelEditor'], resolve),
+        name: '设计流程',
+        meta: { title: '设计流程', activeMenu: '/bpm/manager/model' }
+      }, {
+        path: 'process-instance/create',
+        component: (resolve) => require(['@/views/bpm/processInstance/create'], resolve),
+        name: '发起流程',
+        meta: { title: '发起流程', activeMenu: '/bpm/task/my' }
+      }, {
+        path: 'process-instance/detail',
+        component: (resolve) => require(['@/views/bpm/processInstance/detail'], resolve),
+        name: '流程详情',
+        meta: { title: '流程详情', activeMenu: '/bpm/task/my' }
+      }
     ]
   }
 ]

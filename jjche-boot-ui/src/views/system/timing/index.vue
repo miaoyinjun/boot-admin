@@ -151,7 +151,7 @@
         width="90px"
         label="状态"
       >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag :type="scope.row.isPause ? 'warning' : 'success'">{{
             scope.row.isPause ? '已暂停' : '运行中'
           }}</el-tag>
@@ -169,7 +169,7 @@
         width="136px"
         label="创建日期"
       >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.gmtCreate) }}</span>
         </template>
       </el-table-column>
@@ -180,7 +180,7 @@
         align="center"
         fixed="right"
       >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button
             v-permission="['admin', 'timing:edit']"
             size="mini"

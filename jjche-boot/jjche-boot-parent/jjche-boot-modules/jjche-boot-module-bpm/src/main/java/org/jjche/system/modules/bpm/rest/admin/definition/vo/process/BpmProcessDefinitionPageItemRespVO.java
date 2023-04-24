@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @ApiModel(value = "管理后台 - 流程定义的分页的每一项 Response VO")
 @Data
@@ -18,6 +18,6 @@ public class BpmProcessDefinitionPageItemRespVO extends BpmProcessDefinitionResp
     private String formName;
 
     @ApiModelProperty(value = "部署时间", required = true)
-    private LocalDateTime deploymentTime;
+    private Timestamp deploymentTime;
 
 }

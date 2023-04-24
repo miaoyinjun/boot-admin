@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @ApiModel(value = "管理后台 - 流程任务的 Running 进行中的分页项 Response VO")
 @Data
@@ -17,10 +17,10 @@ public class BpmTaskTodoPageItemRespVO {
     private String name;
 
     @ApiModelProperty(value = "接收时间", required = true)
-    private LocalDateTime claimTime;
+    private Timestamp claimTime;
 
     @ApiModelProperty(value = "创建时间", required = true)
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
     @ApiModelProperty(value = "激活状态-参见 SuspensionState 枚举", required = true, example = "1")
     private Integer suspensionState;

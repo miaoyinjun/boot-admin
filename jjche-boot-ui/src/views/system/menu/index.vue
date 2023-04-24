@@ -222,12 +222,12 @@
         prop="title"
       />
       <el-table-column prop="icon" label="图标" align="center" width="60px">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <svg-icon :icon-class="scope.row.icon ? scope.row.icon : ''" />
         </template>
       </el-table-column>
       <el-table-column prop="menuSort" align="center" label="排序">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           {{ scope.row.menuSort }}
         </template>
       </el-table-column>
@@ -242,25 +242,25 @@
         label="组件路径"
       />
       <el-table-column prop="iframe" label="外链" width="75px">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span v-if="scope.row.iframe">是</span>
           <span v-else>否</span>
         </template>
       </el-table-column>
       <el-table-column prop="cache" label="缓存" width="75px">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span v-if="scope.row.cache">是</span>
           <span v-else>否</span>
         </template>
       </el-table-column>
       <el-table-column prop="hidden" label="可见" width="75px">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span v-if="scope.row.hidden">否</span>
           <span v-else>是</span>
         </template>
       </el-table-column>
       <el-table-column prop="gmtCreate" label="创建日期" width="135px">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.gmtCreate) }}</span>
         </template>
       </el-table-column>
@@ -271,7 +271,7 @@
         align="center"
         fixed="right"
       >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <div style="display: inline-block">
             <udOperation
               :data="scope.row"

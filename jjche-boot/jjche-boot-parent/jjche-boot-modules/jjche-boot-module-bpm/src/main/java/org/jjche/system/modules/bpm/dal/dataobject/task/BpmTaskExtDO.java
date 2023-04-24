@@ -1,14 +1,13 @@
 package org.jjche.system.modules.bpm.dal.dataobject.task;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.jjche.system.modules.bpm.enums.task.BpmProcessInstanceResultEnum;
 import org.jjche.mybatis.base.entity.BaseEntity;
+import org.jjche.system.modules.bpm.enums.task.BpmProcessInstanceResultEnum;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 /**
  * Bpm 流程任务的拓展表
@@ -61,7 +60,7 @@ public class BpmTaskExtDO extends BaseEntity {
      *
      * 冗余 HistoricTaskInstance 的 endTime  属性
      */
-    private LocalDateTime endTime;
+    private Timestamp endTime;
 
     /**
      * 流程实例的编号

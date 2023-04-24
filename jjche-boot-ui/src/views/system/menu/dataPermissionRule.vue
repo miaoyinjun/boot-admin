@@ -94,13 +94,13 @@
         <el-table-column prop="name" label="名称" show-overflow-tooltip />
         <el-table-column prop="column" label="字段" />
         <el-table-column prop="condition" label="条件">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             {{ dict.label.dataPermissionRule_condition[scope.row.condition] }}
           </template>
         </el-table-column>
         <el-table-column prop="value" label="值" />
         <el-table-column prop="isActivated" label="状态">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-tag v-if="scope.row.isActivated" type="success">启用</el-tag>
             <el-tag v-else type="danger">禁用</el-tag>
           </template>
@@ -112,7 +112,7 @@
           align="center"
           fixed="right"
         >
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <udOperation :data="scope.row" :permission="permission" />
           </template>
         </el-table-column>

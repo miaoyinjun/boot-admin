@@ -1,17 +1,16 @@
 package org.jjche.system.modules.bpm.dal.dataobject.task;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.jjche.mybatis.base.entity.BaseEntity;
 import org.jjche.system.modules.bpm.enums.task.BpmProcessInstanceResultEnum;
 import org.jjche.system.modules.bpm.enums.task.BpmProcessInstanceStatusEnum;
-import org.jjche.mybatis.base.entity.BaseEntity;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.Map;
 
 /**
@@ -74,7 +73,7 @@ public class BpmProcessInstanceExtDO extends BaseEntity {
      *
      * 冗余 HistoricProcessInstance 的 endTime 属性
      */
-    private LocalDateTime endTime;
+    private Timestamp endTime;
 
     /**
      * 提交的表单值

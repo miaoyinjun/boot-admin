@@ -450,6 +450,12 @@ VALUES (6, 'dataPermissionRule_condition', '数据规则-条件', 'System', 'Sys
         '2021-12-27 16:23:30');
 INSERT INTO `sys_dict`
 VALUES (7, 'course_status', '课程状态', 'System', 'System', '2021-09-13 13:15:30', '2021-09-13 13:15:30');
+
+INSERT INTO `sys_dict`
+VALUES (8, 'bpm_model_category', '流程分类', 'System', 'System', SYSDATE(), SYSDATE());
+
+INSERT INTO `sys_dict`
+VALUES (9, 'bpm_model_form_type', '流程的表单类型', 'System', 'System', SYSDATE(), SYSDATE());
 COMMIT;
 
 -- ----------------------------
@@ -524,6 +530,15 @@ INSERT INTO `sys_dict_detail`
 VALUES (23, 7, '视频', '104', 3, 'System', 'System', '2022-08-16 10:48:07', '2022-08-16 10:48:07');
 INSERT INTO `sys_dict_detail`
 VALUES (24, 7, '外链', '105', 4, 'System', 'System', '2022-08-16 10:48:07', '2022-08-16 10:48:07');
+INSERT INTO `sys_dict_detail`
+VALUES (25, 8, '默认', '1', 1, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (26, 8, 'OA', '2', 2, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (27, 9, '流程表单', '1', 1, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (28, 9, '业务表单', '2', 2, 'System', 'System', SYSDATE(), SYSDATE());
+
 COMMIT;
 
 -- ----------------------------

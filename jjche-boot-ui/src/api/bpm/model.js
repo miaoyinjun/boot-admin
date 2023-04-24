@@ -1,23 +1,15 @@
 import request from '@/utils/request'
 
-export function getModelPage(query) {
+export function get(id) {
   return request({
-    url: '/bpm/model/page',
-    method: 'get',
-    params: query
-  })
-}
-
-export function getModel(id) {
-  return request({
-    url: '/bpm/model/get?id=' + id,
+    url: '/sys/bpm/model/' + id,
     method: 'get'
   })
 }
 
-export function updateModel(data) {
+export function edit(data) {
   return request({
-    url: '/bpm/model/update',
+    url: '/sys/bpm/model',
     method: 'PUT',
     data: data
   })
@@ -26,7 +18,7 @@ export function updateModel(data) {
 // 任务状态修改
 export function updateModelState(id, state) {
   return request({
-    url: '/bpm/model/update-state',
+    url: '/sys/bpm/model/update-state',
     method: 'put',
     data: {
       id,
@@ -35,24 +27,27 @@ export function updateModelState(id, state) {
   })
 }
 
-export function createModel(data) {
+export function add(data) {
   return request({
-    url: '/bpm/model/create',
+    url: '/sys/bpm/model',
     method: 'POST',
     data: data
   })
 }
 
-export function deleteModel(id) {
+export function del(ids) {
   return request({
-    url: '/bpm/model/delete?id=' + id,
-    method: 'DELETE'
+    url: '/sys/bpm/model',
+    method: 'DELETE',
+    data: ids
   })
 }
 
 export function deployModel(id) {
   return request({
-    url: '/bpm/model/deploy?id=' + id,
+    url: '/sys/bpm/model/deploy?id=' + id,
     method: 'POST'
   })
 }
+
+export default { add, edit, del, get }

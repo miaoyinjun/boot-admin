@@ -134,7 +134,7 @@
                   label="操作系统"
                 />
                 <el-table-column prop="time" label="请求耗时" align="center">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <el-tag
                       v-if="scope.row.time <= 300"
                     >{{ scope.row.time }}ms</el-tag>
@@ -161,7 +161,7 @@
                       />
                     </div>
                   </template>
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.gmtCreate }}</span>
                   </template>
                 </el-table-column>

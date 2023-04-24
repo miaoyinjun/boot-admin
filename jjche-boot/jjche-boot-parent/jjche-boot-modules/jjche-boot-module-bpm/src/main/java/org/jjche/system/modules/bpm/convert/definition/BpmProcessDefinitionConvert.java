@@ -1,14 +1,13 @@
 package org.jjche.system.modules.bpm.convert.definition;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.LocalDateTimeUtil;
 import org.flowable.common.engine.impl.db.SuspensionState;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.ProcessDefinition;
-import org.jjche.system.modules.bpm.rest.admin.definition.vo.process.BpmProcessDefinitionPageItemRespVO;
-import org.jjche.system.modules.bpm.rest.admin.definition.vo.process.BpmProcessDefinitionRespVO;
 import org.jjche.system.modules.bpm.dal.dataobject.definition.BpmFormDO;
 import org.jjche.system.modules.bpm.dal.dataobject.definition.BpmProcessDefinitionExtDO;
+import org.jjche.system.modules.bpm.rest.admin.definition.vo.process.BpmProcessDefinitionPageItemRespVO;
+import org.jjche.system.modules.bpm.rest.admin.definition.vo.process.BpmProcessDefinitionRespVO;
 import org.jjche.system.modules.bpm.service.definition.dto.BpmProcessDefinitionCreateReqDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,6 +15,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -72,7 +72,7 @@ public interface BpmProcessDefinitionConvert {
         BpmProcessDefinitionPageItemRespVO respVO = convert(bean);
         respVO.setSuspensionState(bean.isSuspended() ? SuspensionState.SUSPENDED.getStateCode() : SuspensionState.ACTIVE.getStateCode());
         if (deployment != null) {
-            respVO.setDeploymentTime(LocalDateTimeUtil.of(deployment.getDeploymentTime()));
+            respVO.setDeploymentTime(new Timestamp(deployment.getDeploymentTime().getTime()));
         }
         if (form != null) {
             respVO.setFormName(form.getName());

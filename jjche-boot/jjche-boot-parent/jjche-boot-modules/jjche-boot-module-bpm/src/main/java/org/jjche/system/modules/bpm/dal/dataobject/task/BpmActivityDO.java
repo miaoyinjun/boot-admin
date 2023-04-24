@@ -1,13 +1,10 @@
 package org.jjche.system.modules.bpm.dal.dataobject.task;
 
-import cn.hutool.core.date.DatePattern;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 /**
  * 任务流程关联表
  *
@@ -77,18 +74,16 @@ public class BpmActivityDO {
     /**
      * 任务开始时间
      */
-    @DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-    private LocalDateTime startTime;
+    private Timestamp startTime;
 
     /**
      * 任务结束时间
      */
-    @DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-    private LocalDateTime endTime;
+    private Timestamp endTime;
 
     private Integer transactionOrder;
 
-    private LocalDateTime duration;
+    private Timestamp duration;
 
     /**
      * 删除结果

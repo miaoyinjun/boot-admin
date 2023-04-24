@@ -50,7 +50,7 @@
               <el-table-column prop="columnName" label="字段名称" />
               <el-table-column prop="columnType" label="字段类型" />
               <el-table-column prop="remark" label="最大长度">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-input
                     v-model="data[scope.$index].maxLength"
                     size="mini"
@@ -59,7 +59,7 @@
                 </template>
               </el-table-column>
               <el-table-column prop="remark" label="字段描述">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-input
                     v-model="data[scope.$index].remark"
                     size="mini"
@@ -68,22 +68,22 @@
                 </template>
               </el-table-column>
               <el-table-column align="center" label="必填" width="70px">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-checkbox v-model="data[scope.$index].notNull" />
                 </template>
               </el-table-column>
               <el-table-column align="center" label="列表" width="70px">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-checkbox v-model="data[scope.$index].listShow" />
                 </template>
               </el-table-column>
               <el-table-column align="center" label="表单" width="70px">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-checkbox v-model="data[scope.$index].formShow" />
                 </template>
               </el-table-column>
               <el-table-column label="表单类型">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-select
                     v-model="data[scope.$index].formType"
                     filterable
@@ -101,7 +101,7 @@
                 </template>
               </el-table-column>
               <el-table-column label="查询方式">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-select
                     v-model="data[scope.$index].queryType"
                     filterable
@@ -119,7 +119,7 @@
                 </template>
               </el-table-column>
               <el-table-column label="关联字典">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-select
                     v-model="data[scope.$index].dictName"
                     filterable

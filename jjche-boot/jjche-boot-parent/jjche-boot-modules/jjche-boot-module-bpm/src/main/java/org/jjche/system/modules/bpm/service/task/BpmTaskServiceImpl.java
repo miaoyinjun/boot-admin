@@ -35,7 +35,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -80,7 +80,7 @@ public class BpmTaskServiceImpl implements BpmTaskService {
             taskQuery.taskCreatedBefore(DateUtil.date(pageVO.getCreateTime()[1]));
         }
         // 执行查询
-        List<Task> tasks = taskQuery.listPage((int) pageVO.getPageIndex(), (int) pageVO.getPageSize());
+        List<Task> tasks = taskQuery.listPage((int) pageVO.getPageIndex() - 1, (int) pageVO.getPageSize());
         if (CollUtil.isEmpty(tasks)) {
             MyPage myPage = new MyPage();
             myPage.setTotal(taskQuery.count());
@@ -120,7 +120,7 @@ public class BpmTaskServiceImpl implements BpmTaskService {
             taskQuery.taskCreatedBefore(DateUtil.date(pageVO.getEndCreateTime()));
         }
         // 执行查询
-        List<HistoricTaskInstance> tasks = taskQuery.listPage((int) pageVO.getPageIndex(), (int) pageVO.getPageSize());
+        List<HistoricTaskInstance> tasks = taskQuery.listPage((int) pageVO.getPageIndex() - 1, (int) pageVO.getPageSize());
         if (CollUtil.isEmpty(tasks)) {
             MyPage myPage = new MyPage();
             myPage.setTotal(taskQuery.count());
@@ -237,7 +237,7 @@ public class BpmTaskServiceImpl implements BpmTaskService {
 
         bpmTaskExt.setTaskId(task.getId());
         bpmTaskExt.setResult(BpmProcessInstanceResultEnum.REJECT.getResult());
-        bpmTaskExt.setEndTime(LocalDateTime.now());
+        bpmTaskExt.setEndTime(new Timestamp(DateUtil.date().getTime()));
         bpmTaskExt.setReason(reqVO.getReason());
         taskExtMapper.updateByTaskId(bpmTaskExt);
     }
@@ -284,7 +284,7 @@ public class BpmTaskServiceImpl implements BpmTaskService {
         BpmTaskExtDO taskExtDO = BpmTaskConvert.INSTANCE.convert2TaskExt(task);
         taskExtDO.setResult(BpmProcessInstanceResultEnum.APPROVE.getResult());
         // 不设置也问题不大，因为 Complete 一般是审核通过，已经设置
-        taskExtDO.setEndTime(LocalDateTime.now());
+        taskExtDO.setEndTime(new Timestamp(DateUtil.date().getTime()));
         taskExtMapper.updateByTaskId(taskExtDO);
     }
 
@@ -317,7 +317,7 @@ public class BpmTaskServiceImpl implements BpmTaskService {
                 BpmTaskExtDO bpmTaskExtDO = new BpmTaskExtDO();
                 bpmTaskExtDO.setId(taskExt.getId());
                 bpmTaskExtDO.setResult(BpmProcessInstanceResultEnum.CANCEL.getResult());
-                bpmTaskExtDO.setEndTime(LocalDateTime.now());
+                bpmTaskExtDO.setEndTime(new Timestamp(DateUtil.date().getTime()));
                 bpmTaskExtDO.setReason(BpmProcessInstanceDeleteReasonEnum.translateReason(task.getDeleteReason()));
                 taskExtMapper.updateById(bpmTaskExtDO);
             }

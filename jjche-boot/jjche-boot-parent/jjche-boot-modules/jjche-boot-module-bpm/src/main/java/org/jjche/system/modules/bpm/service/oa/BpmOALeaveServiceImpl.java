@@ -44,7 +44,7 @@ public class BpmOALeaveServiceImpl implements BpmOALeaveService {
     @Transactional(rollbackFor = Exception.class)
     public Long createLeave(Long userId, BpmOALeaveCreateReqVO createReqVO) {
         // 插入 OA 请假单
-        long day = LocalDateTimeUtil.between(createReqVO.getStartTime(), createReqVO.getEndTime()).toDays();
+        long day = LocalDateTimeUtil.between(createReqVO.getStartTime().toLocalDateTime(), createReqVO.getEndTime().toLocalDateTime()).toDays();
         BpmOALeaveDO leave = BpmOALeaveConvert.INSTANCE.convert(createReqVO);
         leave.setUserId(userId);
         leave.setDay(day);

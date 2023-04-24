@@ -82,7 +82,7 @@
         label="cron表达式"
       />
       <el-table-column prop="gmtCreate" label="异常详情" width="110px">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button
             v-show="scope.row.exceptionDetail"
             size="mini"
@@ -104,7 +104,7 @@
         width="80px"
         label="状态"
       >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag :type="scope.row.isSuccess ? 'success' : 'danger'">{{
             scope.row.isSuccess ? '成功' : '失败'
           }}</el-tag>
@@ -115,7 +115,7 @@
         prop="gmtCreate"
         label="创建日期"
       >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.gmtCreate) }}</span>
         </template>
       </el-table-column>

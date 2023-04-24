@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 
 @ApiModel(value = "管理后台 - 用户组 Response VO")
@@ -19,6 +19,6 @@ public class BpmUserGroupRespVO extends BpmUserGroupBaseVO {
     private Long id;
 
     @ApiModelProperty(value = "创建时间", required = true)
-    private LocalDateTime createTime;
+    private Timestamp gmtCreate;
 
 }

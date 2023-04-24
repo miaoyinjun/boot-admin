@@ -29,7 +29,7 @@
         />
         <el-table-column prop="name" label="名称" />
         <el-table-column prop="name" label="可见">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-switch
               v-model="scope.row.isAccessible"
               active-color="#13ce66"
@@ -38,7 +38,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="name" label="可编辑">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-switch
               v-model="scope.row.isEditable"
               active-color="#13ce66"

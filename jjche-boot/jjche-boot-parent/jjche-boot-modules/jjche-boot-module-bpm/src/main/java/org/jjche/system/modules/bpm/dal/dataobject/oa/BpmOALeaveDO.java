@@ -1,12 +1,15 @@
 package org.jjche.system.modules.bpm.dal.dataobject.oa;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.jjche.mybatis.base.entity.BaseEntity;
+import org.jjche.system.modules.bpm.enums.task.BpmProcessInstanceResultEnum;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 /**
  * OA 请假申请 DO
@@ -40,11 +43,11 @@ public class BpmOALeaveDO extends BaseEntity {
     /**
      * 开始时间
      */
-    private LocalDateTime startTime;
+    private Timestamp startTime;
     /**
      * 结束时间
      */
-    private LocalDateTime endTime;
+    private Timestamp endTime;
     /**
      * 请假天数
      */

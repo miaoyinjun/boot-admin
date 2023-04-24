@@ -1,9 +1,8 @@
 package org.jjche.system.modules.bpm.convert.definition;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONConfig;
 import cn.hutool.json.JSONUtil;
 import org.flowable.common.engine.impl.db.SuspensionState;
 import org.flowable.engine.repository.Deployment;
@@ -17,6 +16,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -48,7 +48,7 @@ public interface BpmModelConvert {
     default BpmModelPageItemRespVO convert(Model model, BpmFormDO form, Deployment deployment, ProcessDefinition processDefinition) {
         BpmModelPageItemRespVO modelRespVO = new BpmModelPageItemRespVO();
         modelRespVO.setId(model.getId());
-        modelRespVO.setCreateTime(DateUtil.toLocalDateTime(model.getCreateTime()));
+        modelRespVO.setCreateTime(new Timestamp(model.getCreateTime().getTime()));
         // 通用 copy
         copyTo(model, modelRespVO);
         // Form
@@ -61,7 +61,7 @@ public interface BpmModelConvert {
         if (modelRespVO.getProcessDefinition() != null) {
             modelRespVO.getProcessDefinition().setSuspensionState(processDefinition.isSuspended() ?
                     SuspensionState.SUSPENDED.getStateCode() : SuspensionState.ACTIVE.getStateCode());
-            modelRespVO.getProcessDefinition().setDeploymentTime(LocalDateTimeUtil.of(deployment.getDeploymentTime()));
+            modelRespVO.getProcessDefinition().setDeploymentTime(new Timestamp(deployment.getDeploymentTime().getTime()));
         }
         return modelRespVO;
     }
@@ -69,7 +69,7 @@ public interface BpmModelConvert {
     default BpmModelRespVO convert(Model model) {
         BpmModelRespVO modelRespVO = new BpmModelRespVO();
         modelRespVO.setId(model.getId());
-        modelRespVO.setCreateTime(LocalDateTimeUtil.of(model.getCreateTime()));
+        modelRespVO.setCreateTime(new Timestamp(model.getCreateTime().getTime()));
         // 通用 copy
         copyTo(model, modelRespVO);
         return modelRespVO;
@@ -139,6 +139,8 @@ public interface BpmModelConvert {
             metaInfo.setFormCustomCreatePath(formCustomCreatePath);
             metaInfo.setFormCustomViewPath(formCustomViewPath);
         }
-        return JSONUtil.toJsonStr(metaInfo);
+        JSONConfig jsonConfig = JSONConfig.create();
+        jsonConfig.setIgnoreNullValue(false);
+        return JSONUtil.toJsonStr(metaInfo, jsonConfig);
     }
 }

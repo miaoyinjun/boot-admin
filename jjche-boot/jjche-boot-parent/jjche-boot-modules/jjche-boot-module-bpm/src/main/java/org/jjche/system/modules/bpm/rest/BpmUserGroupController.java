@@ -2,10 +2,12 @@ package org.jjche.system.modules.bpm.rest;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.annotation.controller.SysRestController;
+import org.jjche.core.base.BaseController;
 import org.jjche.system.modules.bpm.convert.definition.BpmUserGroupConvert;
 import org.jjche.system.modules.bpm.dal.dataobject.definition.BpmUserGroupDO;
 import org.jjche.system.modules.bpm.rest.admin.definition.vo.group.BpmUserGroupCreateReqVO;
@@ -14,7 +16,6 @@ import org.jjche.system.modules.bpm.rest.admin.definition.vo.group.BpmUserGroupR
 import org.jjche.system.modules.bpm.rest.admin.definition.vo.group.BpmUserGroupUpdateReqVO;
 import org.jjche.system.modules.bpm.service.definition.BpmUserGroupService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -24,11 +25,10 @@ import java.util.List;
 @Tag(name = "管理后台 - 用户组")
 @SysRestController
 @RequestMapping("/bpm/user-group")
-@Validated
-public class BpmUserGroupController {
+@RequiredArgsConstructor
+public class BpmUserGroupController extends BaseController {
 
-    @Resource
-    private BpmUserGroupService userGroupService;
+    private final BpmUserGroupService userGroupService;
 
     @PostMapping
     @ApiOperation(value = "创建用户组")

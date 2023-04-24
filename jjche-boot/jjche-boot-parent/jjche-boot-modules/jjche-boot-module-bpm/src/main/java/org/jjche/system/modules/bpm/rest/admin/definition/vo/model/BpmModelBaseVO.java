@@ -2,6 +2,8 @@ package org.jjche.system.modules.bpm.rest.admin.definition.vo.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.jjche.common.annotation.Dict;
+import org.jjche.common.annotation.JacksonAllowNull;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -25,11 +27,15 @@ public class BpmModelBaseVO {
 
     @ApiModelProperty(value = "流程分类-参见 bpm_model_category 数据字典", example = "1")
     @NotEmpty(message = "流程分类不能为空")
+    @Dict("bpm_model_category")
     private String category;
 
     @ApiModelProperty(value = "表单类型-参见 bpm_model_form_type 数据字典", example = "1")
+    @JacksonAllowNull
+    @Dict("bpm_model_form_type")
     private Integer formType;
     @ApiModelProperty(value = "表单编号-在表单类型为 {@link BpmModelFormTypeEnum#CUSTOM} 时，必须非空", example = "1024")
+    @JacksonAllowNull
     private Long formId;
     @ApiModelProperty(value = "自定义表单的提交路径，使用 Vue 的路由地址-在表单类型为 {@link BpmModelFormTypeEnum#CUSTOM} 时，必须非空",
             example = "/bpm/oa/leave/create")

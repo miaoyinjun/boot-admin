@@ -144,7 +144,7 @@
               prop="gmtCreate"
               label="创建日期"
             >
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <span>{{ parseTime(scope.row.gmtCreate) }}</span>
               </template>
             </el-table-column>
@@ -155,7 +155,7 @@
               align="center"
               fixed="right"
             >
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <div style="display: inline-block">
                   <udOperation
                     v-if="scope.row.level >= level"

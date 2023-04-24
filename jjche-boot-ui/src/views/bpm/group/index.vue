@@ -84,7 +84,7 @@
         <el-table-column prop="name" label="组名"/>
         <el-table-column prop="description" label="描述"/>
         <el-table-column prop="status" label="状态">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-tag v-if="scope.row.status == 0">开启</el-tag>
             <el-tag v-else type="info">关闭</el-tag>
           </template>
@@ -96,7 +96,7 @@
           width="300px"
           align="center"
         >
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <div style="display: inline-block">
               <udOperation :data="scope.row" :permission="permission"/>
             </div>
@@ -142,7 +142,11 @@ export default {
       title: '用户分组',
       url: 'sys/bpm/user-group',
       idField: 'id',
-      crudMethod: { ...crudBpmUserGroup }
+      crudMethod: { ...crudBpmUserGroup },
+      optShow: {
+        add: true,
+        del: true
+      }
     })
   },
   data() {

@@ -38,7 +38,7 @@
           width="300px"
           align="center"
         >
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-button
               v-permission="['student:list']"
               size="mini"
@@ -57,8 +57,8 @@
       <pagination />
     </div>
     <el-dialog title="表单详情" :visible.sync="formVisible" width="50%">
-      <v-form-render :form-json="formJson" :form-data="formData" :option-data="optionData" ref="vFormRef">
-      </v-form-render>
+      <formRender :form-json="formJson" :form-data="formData" :option-data="optionData">
+      </formRender>
     </el-dialog>
   </div>
 </template>
@@ -70,14 +70,16 @@ import rrOperation from '@crud/RR.operation'
 import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
 import pagination from '@crud/Pagination'
+import formRender from '@/components/FormRender'
 
 export default {
-  name: 'Student',
+  name: 'Form',
   components: {
     pagination,
     crudOperation,
     rrOperation,
-    udOperation
+    udOperation,
+    formRender
   },
   mixins: [presenter(), header(), form({}), crud()],
   cruds() {
@@ -123,9 +125,12 @@ export default {
         }
       })
     },
-    handlePreView(data) {
-      this.formVisible = true
-      this.formJson = JSON.parse(data.content)
+    handlePreView(row) {
+      crudBpmForm.get(row.id).then(data => {
+        // 设置值
+        this.formVisible = true
+        this.formJson = JSON.parse(data.content)
+      })
     }
   }
 }

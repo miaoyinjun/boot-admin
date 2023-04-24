@@ -2,22 +2,23 @@ package org.jjche.system.modules.bpm.rest;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.annotation.controller.SysRestController;
-import org.jjche.system.modules.bpm.rest.admin.definition.dto.form.BpmFormDTO;
-import org.jjche.system.modules.bpm.rest.admin.definition.dto.form.BpmFormQueryCriteriaDTO;
+import org.jjche.core.base.BaseController;
 import org.jjche.system.modules.bpm.convert.definition.BpmFormConvert;
 import org.jjche.system.modules.bpm.dal.dataobject.definition.BpmFormDO;
+import org.jjche.system.modules.bpm.rest.admin.definition.dto.form.BpmFormDTO;
+import org.jjche.system.modules.bpm.rest.admin.definition.dto.form.BpmFormQueryCriteriaDTO;
+import org.jjche.system.modules.bpm.rest.admin.definition.vo.form.BpmFormDetailRespVO;
 import org.jjche.system.modules.bpm.rest.admin.definition.vo.form.BpmFormRespVO;
 import org.jjche.system.modules.bpm.rest.admin.definition.vo.form.BpmFormSimpleRespVO;
 import org.jjche.system.modules.bpm.service.definition.BpmFormService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -25,11 +26,10 @@ import java.util.List;
 @Tag(name = "管理后台 - 动态表单")
 @SysRestController
 @RequestMapping("/bpm/form")
-@Validated
-public class BpmFormController {
+@RequiredArgsConstructor
+public class BpmFormController extends BaseController {
 
-    @Resource
-    private BpmFormService formService;
+    private final BpmFormService formService;
 
     @PostMapping
     @ApiOperation(value = "创建动态表单")
@@ -58,9 +58,9 @@ public class BpmFormController {
     @GetMapping("{id}")
     @ApiOperation(value = "获得动态表单")
     @PreAuthorize("@el.check('bpm:form:query')")
-    public R<BpmFormRespVO> getForm(@PathVariable("id") Long id) {
+    public R<BpmFormDetailRespVO> getForm(@PathVariable("id") Long id) {
         BpmFormDO form = formService.getForm(id);
-        return R.ok(BpmFormConvert.INSTANCE.convert(form));
+        return R.ok(BpmFormConvert.INSTANCE.convert2(form));
     }
 
     @GetMapping("/list-all-simple")

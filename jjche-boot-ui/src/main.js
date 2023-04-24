@@ -9,12 +9,14 @@ import VForm from 'vform-builds'  //引入VForm库
 
 // 数据字典
 import dict from './components/Dict'
+import plugins from './plugins' // plugins
 
 // 权限指令
 import permission from './components/Permission'
 import './assets/styles/element-variables.scss'
 // global css
 import './assets/styles/index.scss'
+import '@/assets/styles/ruoyi.scss' // ruoyi css
 import 'vform-builds/dist/VFormDesigner.css'  //引入VForm样式
 
 import App from './App'
@@ -30,6 +32,11 @@ Vue.use(Element, {
   size: Cookies.get('size') || 'small' // set element-ui default size
 })
 Vue.use(VForm)
+// bpmnProcessDesigner 需要引入
+import MyPD from '@/components/bpmnProcessDesigner/package/index.js'
+Vue.use(MyPD)
+Vue.use(plugins)
+import "@/components/bpmnProcessDesigner/package/theme/index.scss";
 
 Vue.config.productionTip = false
 

@@ -93,7 +93,7 @@
         <el-table-column prop="phone" label="电话" width="100px" />
         <el-table-column prop="email" label="邮箱" width="100px" />
         <el-table-column prop="enabled" label="状态">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-tag v-if="scope.row.enabled">激活</el-tag>
             <el-tag v-else type="danger">禁用</el-tag>
           </template>
@@ -141,7 +141,7 @@
         <el-table-column prop="phone" label="电话" width="100px" />
         <el-table-column prop="email" label="邮箱" width="100px" />
         <el-table-column prop="enabled" label="状态">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-tag v-if="scope.row.enabled">激活</el-tag>
             <el-tag v-else type="danger">禁用</el-tag>
           </template>
@@ -152,7 +152,7 @@
           align="center"
           fixed="right"
         >
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-popover
               v-model="pop"
               v-permission="['roles:edit']"

@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @ApiModel(value = "管理后台 - 流程任务的 Done 已完成的分页项 Response VO")
 @Data
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class BpmTaskDonePageItemRespVO extends BpmTaskTodoPageItemRespVO {
 
     @ApiModelProperty(value = "结束时间", required = true)
-    private LocalDateTime endTime;
+    private Timestamp endTime;
     @ApiModelProperty(value = "持续时间", required = true, example = "1000")
     private Long durationInMillis;
 

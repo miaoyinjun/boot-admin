@@ -35,4 +35,14 @@ export function get(id) {
   })
 }
 
-export default { add, edit, del, get }
+export function getForm(id) {
+  return get(id)
+}
+
+export function listFormAllSimple() {
+  return request({
+    url: '/sys/bpm/form/list-all-simple',
+    method: 'get'
+  })
+}
+export default { add, edit, del, get, listFormAllSimple, getForm }

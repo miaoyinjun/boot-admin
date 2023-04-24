@@ -4,13 +4,13 @@ import cn.hutool.core.util.ArrayUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.ibatis.annotations.Mapper;
-import org.jjche.system.modules.bpm.rest.admin.oa.vo.BpmOALeavePageReqVO;
-import org.jjche.system.modules.bpm.dal.dataobject.oa.BpmOALeaveDO;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.util.StrUtil;
 import org.jjche.mybatis.base.MyBaseMapper;
+import org.jjche.system.modules.bpm.dal.dataobject.oa.BpmOALeaveDO;
+import org.jjche.system.modules.bpm.rest.admin.oa.vo.BpmOALeavePageReqVO;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 /**
  * 请假申请 Mapper
@@ -25,7 +25,7 @@ public interface BpmOALeaveMapper extends MyBaseMapper<BpmOALeaveDO> {
         Integer result = reqVO.getResult();
         Integer type = reqVO.getType();
         String reason = reqVO.getReason();
-        LocalDateTime[] createTime = reqVO.getCreateTime();
+        Timestamp[] createTime = reqVO.getCreateTime();
 
         LambdaQueryWrapper<BpmOALeaveDO> wrapper = Wrappers.lambdaQuery();
         if (userId != null) {

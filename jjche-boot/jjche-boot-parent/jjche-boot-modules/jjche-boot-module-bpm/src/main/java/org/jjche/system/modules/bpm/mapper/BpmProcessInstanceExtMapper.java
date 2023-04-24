@@ -4,13 +4,13 @@ import cn.hutool.core.util.ArrayUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.ibatis.annotations.Mapper;
-import org.jjche.system.modules.bpm.rest.admin.task.vo.instance.BpmProcessInstanceMyPageReqVO;
-import org.jjche.system.modules.bpm.dal.dataobject.task.BpmProcessInstanceExtDO;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.util.StrUtil;
 import org.jjche.mybatis.base.MyBaseMapper;
+import org.jjche.system.modules.bpm.dal.dataobject.task.BpmProcessInstanceExtDO;
+import org.jjche.system.modules.bpm.rest.admin.task.vo.instance.BpmProcessInstanceMyPageReqVO;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Mapper
 public interface BpmProcessInstanceExtMapper extends MyBaseMapper<BpmProcessInstanceExtDO> {
@@ -21,7 +21,7 @@ public interface BpmProcessInstanceExtMapper extends MyBaseMapper<BpmProcessInst
         String category = reqVO.getCategory();
         Integer status = reqVO.getStatus();
         Integer result = reqVO.getResult();
-        LocalDateTime[] createTime = reqVO.getCreateTime();
+        Timestamp[] createTime = reqVO.getCreateTime();
 
         LambdaQueryWrapper<BpmProcessInstanceExtDO> wrapper = Wrappers.lambdaQuery();
         if (userId != null) {
