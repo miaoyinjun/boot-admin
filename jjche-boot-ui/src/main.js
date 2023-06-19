@@ -32,11 +32,16 @@ Vue.use(Element, {
   size: Cookies.get('size') || 'small' // set element-ui default size
 })
 Vue.use(VForm)
-// bpmnProcessDesigner 需要引入
-import MyPD from '@/components/bpmnProcessDesigner/package/index.js'
-Vue.use(MyPD)
 Vue.use(plugins)
+
+// bpmnProcessDesigner 需要引入
+import MyPD from "@/components/bpmnProcessDesigner/package/index.js";
+Vue.use(MyPD);
 import "@/components/bpmnProcessDesigner/package/theme/index.scss";
+import "bpmn-js/dist/assets/diagram-js.css";
+import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
+import "bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
+import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
 
 Vue.config.productionTip = false
 
