@@ -11,6 +11,7 @@ import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.util.MybatisUtil;
 import org.jjche.system.modules.system.api.dto.JobDTO;
 import org.jjche.system.modules.system.api.dto.JobQueryCriteriaDTO;
+import org.jjche.system.modules.system.api.vo.JobSimpleVO;
 import org.jjche.system.modules.system.domain.JobDO;
 import org.jjche.system.modules.system.mapper.JobMapper;
 import org.jjche.system.modules.system.mapstruct.JobMapStruct;
@@ -166,5 +167,16 @@ public class JobService extends MyServiceImpl<JobMapper, JobDO> {
      */
     public void verification(Set<Long> ids) {
         Assert.isFalse(userService.countByJobs(ids) > 0, "所选的岗位中存在用户关联，请解除关联再试！");
+    }
+
+    /**
+     * <p>
+     * 获取精简
+     * </p>
+     *
+     * @return /
+     */
+    public List<JobSimpleVO> listSimple() {
+        return this.jobMapstruct.toSimpleVO(this.list());
     }
 }

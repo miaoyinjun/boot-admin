@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { getToken } from '@/utils/auth'
+import { getBaseHeader } from '@/utils/request'
 
 export function upload(api, file) {
   var data = new FormData()
   data.append('file', file)
   const config = {
-    headers: { 'Authorization': getToken() }
+    headers: getBaseHeader()
   }
   return axios.post(api, data, config)
 }

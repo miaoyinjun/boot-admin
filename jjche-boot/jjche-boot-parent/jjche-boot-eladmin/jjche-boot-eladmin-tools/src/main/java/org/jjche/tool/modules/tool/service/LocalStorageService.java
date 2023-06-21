@@ -1,6 +1,7 @@
 package org.jjche.tool.modules.tool.service;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
@@ -93,11 +94,12 @@ public class LocalStorageService extends MyServiceImpl<LocalStorageMapper, Local
      * 上传
      *
      * @param name           文件名称
+     * @param saveDB          是否保存到数据库中
      * @param multipartFiles an array of {@link org.springframework.web.multipart.MultipartFile} objects.
      * @return a {@link LocalStorageDO} object.
      */
     @Transactional(rollbackFor = Exception.class)
-    public List<LocalStorageBaseVO> create(String name, MultipartFile[] multipartFiles) {
+    public List<LocalStorageBaseVO> create(String name, Boolean saveDB, MultipartFile[] multipartFiles) {
         List<LocalStorageDO> list = new ArrayList<>(multipartFiles.length);
         for (MultipartFile multipartFile : multipartFiles) {
             FileUtil.checkSize(properties.getMaxSize(), multipartFile.getSize());
@@ -121,7 +123,9 @@ public class LocalStorageService extends MyServiceImpl<LocalStorageMapper, Local
                 throw e;
             }
         }
-        this.saveBatch(list);
+        if(BooleanUtil.isTrue(saveDB)){
+            this.saveBatch(list);
+        }
         return this.listBaseByList(list);
     }
 

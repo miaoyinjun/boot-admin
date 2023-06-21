@@ -2,6 +2,7 @@ package org.jjche.system.modules.system.rest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
@@ -13,6 +14,7 @@ import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
 import org.jjche.system.modules.system.api.dto.JobDTO;
 import org.jjche.system.modules.system.api.dto.JobQueryCriteriaDTO;
+import org.jjche.system.modules.system.api.vo.JobSimpleVO;
 import org.jjche.system.modules.system.domain.JobDO;
 import org.jjche.system.modules.system.service.JobService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -119,5 +122,11 @@ public class JobController extends BaseController {
         jobService.verification(ids);
         jobService.delete(ids);
         return R.ok();
+    }
+
+    @GetMapping("/list-all-simple")
+    @Operation(summary = "获取岗位精简信息列表", description = "只包含被开启的岗位，主要用于前端的下拉选项")
+    public R<List<JobSimpleVO>> getSimplePostList() {
+        return R.ok(this.jobService.listSimple());
     }
 }

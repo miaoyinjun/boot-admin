@@ -27,4 +27,13 @@ public interface IDeptService {
      * @return /
      */
     DeptSmallDto getSmallById(Long id);
+
+    /**
+     * <p>
+     * 获取所有精简部门
+     * </p>
+     *
+    * @return /
+     */
+    List<DeptSmallDto> listSmall();
 }

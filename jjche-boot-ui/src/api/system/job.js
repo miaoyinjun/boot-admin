@@ -37,4 +37,12 @@ export function edit(data) {
   })
 }
 
-export default { add, edit, del }
+// 获取岗位精简信息列表
+export function listSimplePosts() {
+  return request({
+    url: 'sys/job/list-all-simple',
+    method: 'get'
+  })
+}
+
+export default { add, edit, del, listSimplePosts }

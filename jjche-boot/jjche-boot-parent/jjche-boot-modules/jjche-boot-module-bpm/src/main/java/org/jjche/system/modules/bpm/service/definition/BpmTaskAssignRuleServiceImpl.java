@@ -3,6 +3,7 @@ package org.jjche.system.modules.bpm.service.definition;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.BooleanUtil;
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
@@ -199,7 +200,8 @@ public class BpmTaskAssignRuleServiceImpl extends MyServiceImpl<BpmTaskAssignRul
         });
     }
 
-    private void validTaskAssignRuleOptions(Integer type, Set<Long> options) {
+    private void validTaskAssignRuleOptions(String typeStr, Set<Long> options) {
+        Integer type = NumberUtil.parseInt(typeStr);
         if (Objects.equals(type, BpmTaskAssignRuleTypeEnum.ROLE.getType())) {
 //            roleApi.validRoleList(options);
         } else if (Arrays.asList(BpmTaskAssignRuleTypeEnum.DEPT_MEMBER.getType(), BpmTaskAssignRuleTypeEnum.DEPT_LEADER.getType()).contains(type)) {

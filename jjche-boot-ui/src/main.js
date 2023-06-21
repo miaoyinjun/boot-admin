@@ -1,6 +1,7 @@
 import Vue from 'vue'
 
 import Cookies from 'js-cookie'
+import { parseTime, resetForm, handleTree, addBeginAndEndTime, divide} from "@/utils/ruoyi";
 
 import 'normalize.css/normalize.css'
 
@@ -25,6 +26,12 @@ import router from './router/routers'
 
 import './assets/icons' // icon
 import './router/index' // permission control
+
+// 全局方法挂载
+Vue.prototype.parseTime = parseTime
+Vue.prototype.resetForm = resetForm
+Vue.prototype.handleTree = handleTree
+Vue.prototype.divide = divide
 
 Vue.use(permission)
 Vue.use(dict)

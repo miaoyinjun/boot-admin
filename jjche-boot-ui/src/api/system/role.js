@@ -53,4 +53,14 @@ export function editMenu(data) {
     data
   })
 }
-export default { add, edit, del, get, editMenu, getLevel }
+
+// 查询角色（精简)列表
+export function listSimpleRoles() {
+  return request({
+    url: 'sys/roles/list-all-simple',
+    method: 'get'
+  })
+}
+
+
+export default { add, edit, del, get, editMenu, getLevel, listSimpleRoles }

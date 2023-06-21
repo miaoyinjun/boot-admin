@@ -418,4 +418,9 @@ public class DeptService extends MyServiceImpl<DeptMapper, DeptDO> implements ID
     public DeptSmallDto getSmallById(Long id) {
         return deptMapstruct.toSmallVO(this.getById(id));
     }
+
+    @Override
+    public List<DeptSmallDto> listSmall() {
+        return deptMapstruct.toSmallVO(this.list());
+    }
 }

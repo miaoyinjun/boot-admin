@@ -1,6 +1,7 @@
 package org.jjche.system.modules.system.mapstruct;
 
 import org.jjche.system.modules.system.api.dto.JobDTO;
+import org.jjche.system.modules.system.api.vo.JobSimpleVO;
 import org.jjche.system.modules.system.domain.JobDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -20,4 +21,5 @@ public interface JobMapStruct {
     List<JobDTO> toVO(Collection<JobDO> dooList);
     JobDTO toVO(JobDO doo);
     JobDO toDO(JobDTO dto);
+    List<JobSimpleVO> toSimpleVO(Collection<JobDO> dooList);
 }

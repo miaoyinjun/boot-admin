@@ -34,4 +34,14 @@ export function get(id) {
     method: 'get'
   })
 }
-export default { add, edit, del, get }
+
+
+// 获取用户组精简信息列表
+export function listSimpleUserGroups() {
+  return request({
+    url: '/sys/bpm/user-group/list-all-simple',
+    method: 'get'
+  })
+}
+
+export default { add, edit, del, get, listSimpleUserGroups }

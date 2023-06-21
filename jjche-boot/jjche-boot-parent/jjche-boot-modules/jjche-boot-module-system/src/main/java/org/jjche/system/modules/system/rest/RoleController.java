@@ -4,6 +4,7 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.Dict;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.annotation.PermissionData;
 import org.jjche.common.dto.RoleSmallDto;
@@ -247,5 +248,11 @@ public class RoleController extends BaseController {
     public R addUsers(@Valid @RequestBody List<UserRoleDTO> list) {
         userRoleService.addUsers(list);
         return R.ok();
+    }
+
+    @GetMapping("/list-all-simple")
+    @Operation(summary = "获取角色精简信息列表", description = "只包含被开启的角色，主要用于前端的下拉选项")
+    public R<List<RoleSmallDto>> getSimpleRoleList() {
+        return R.ok(roleService.getSimpleRoleList());
     }
 }

@@ -456,6 +456,13 @@ VALUES (8, 'bpm_model_category', '流程分类', 'System', 'System', SYSDATE(), 
 
 INSERT INTO `sys_dict`
 VALUES (9, 'bpm_model_form_type', '流程的表单类型', 'System', 'System', SYSDATE(), SYSDATE());
+
+INSERT INTO `sys_dict`
+VALUES (10, 'bpm_task_assign_rule_type', '任务分配规则的类型', 'System', 'System', SYSDATE(), SYSDATE());
+
+INSERT INTO `sys_dict`
+VALUES (11, 'bpm_task_assign_script', '任务分配自定义脚本', 'System', 'System', SYSDATE(), SYSDATE());
+
 COMMIT;
 
 -- ----------------------------
@@ -539,6 +546,26 @@ VALUES (27, 9, '流程表单', '1', 1, 'System', 'System', SYSDATE(), SYSDATE())
 INSERT INTO `sys_dict_detail`
 VALUES (28, 9, '业务表单', '2', 2, 'System', 'System', SYSDATE(), SYSDATE());
 
+INSERT INTO `sys_dict_detail`
+VALUES (29, 10, '角色', '10', 10, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (30, 10, '部门的成员', '20', 20, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (31, 10, '部门的负责人', '21', 21, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (32, 10, '用户', '30', 30, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (33, 10, '用户组', '40', 40, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (34, 10, '自定义脚本', '50', 50, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (35, 10, '岗位', '22', 22, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (36, 11, '流程发起人', '10', 10, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (37, 11, '流程发起人的一级领导', '20', 20, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (38, 11, '流程发起人的二级领导', '21', 21, 'System', 'System', SYSDATE(), SYSDATE());
 COMMIT;
 
 -- ----------------------------

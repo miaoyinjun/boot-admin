@@ -22,11 +22,15 @@ public class DeptSmallDto implements Serializable {
      * 负责人的用户编号
      */
     private Long leaderUserId;
-
+    private Long parentId;
     private Long pid;
     /**
      * <p>Constructor for DeptSmallDto.</p>
      */
     public DeptSmallDto() {
+    }
+
+    public Long getParentId() {
+        return pid;
     }
 }

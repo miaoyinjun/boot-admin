@@ -405,4 +405,14 @@ public class RoleService extends MyServiceImpl<RoleMapper, RoleDO> {
         return Collections.min(roleDtos.stream().map(RoleDTO::getLevel).collect(Collectors.toList()));
     }
 
+    /**
+     * <p>
+     * 获取角色精简信息列表
+     * </p>
+     *
+    * @return /
+     */
+    public List<RoleSmallDto> getSimpleRoleList(){
+        return roleSmallMapper.toVO(this.list());
+    }
 }

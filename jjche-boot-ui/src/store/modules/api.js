@@ -4,6 +4,8 @@ const baseApiUrl = Settings.apiPrefix
 const baseSbaUrl = Settings.sbaPrefix
 const api = {
   state: {
+    // 根路径
+    baseApiUrl: baseApiUrl,
     // 部署包上传
     deployUploadApi: baseApiUrl + '/sys/deploy/upload',
     // SQL脚本上传

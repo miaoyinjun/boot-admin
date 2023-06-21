@@ -103,4 +103,11 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+export function getBaseHeader() {
+  return {
+    'Authorization': getToken()
+  }
+}
+
 export default service

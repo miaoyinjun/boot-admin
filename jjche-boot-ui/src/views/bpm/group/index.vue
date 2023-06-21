@@ -85,7 +85,7 @@
         <el-table-column prop="description" label="描述"/>
         <el-table-column prop="status" label="状态">
           <template v-slot="scope">
-            <el-tag v-if="scope.row.status == 0">开启</el-tag>
+            <el-tag v-if="scope.row.status == 1">开启</el-tag>
             <el-tag v-else type="info">关闭</el-tag>
           </template>
         </el-table-column>
@@ -124,7 +124,7 @@ const defaultForm = {
   name: null,
   description: null,
   memberUserIds: [],
-  status: '0'
+  status: '1'
 }
 export default {
   name: 'BpmUserGroup',

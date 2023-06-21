@@ -4,8 +4,10 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.annotation.PermissionData;
+import org.jjche.common.dto.DeptSmallDto;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
 import org.jjche.common.param.MyPage;
@@ -71,6 +73,12 @@ public class DeptController extends BaseController {
         myPage.setRecords(deptDtos);
         myPage.setTotal(deptDtos.size());
         return R.ok(myPage);
+    }
+
+    @GetMapping("/list-all-simple")
+    @Operation(summary = "获取部门精简信息列表", description = "只包含被开启的部门，主要用于前端的下拉选项")
+    public R<List<DeptSmallDto>> getSimpleDeptList() {
+        return R.ok(deptService.listSmall());
     }
 
     /**

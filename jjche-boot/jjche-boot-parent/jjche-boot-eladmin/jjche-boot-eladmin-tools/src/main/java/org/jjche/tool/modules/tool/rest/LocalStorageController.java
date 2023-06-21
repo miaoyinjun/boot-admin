@@ -82,8 +82,10 @@ public class LocalStorageController extends BaseController {
     @ApiOperation("上传文件")
     @PostMapping
     @PreAuthorize("@el.check('storage:add')")
-    public R<List<LocalStorageBaseVO>> create(@RequestParam String name, @RequestPart("file") MultipartFile[] file) {
-        return R.ok(localStorageService.create(name, file));
+    public R<List<LocalStorageBaseVO>> create(@RequestParam String name,
+                                              @RequestParam(required = false, defaultValue = "true") Boolean saveDB,
+                                              @RequestPart("file") MultipartFile[] file) {
+        return R.ok(localStorageService.create(name, saveDB, file));
     }
 
     /**
@@ -106,7 +108,7 @@ public class LocalStorageController extends BaseController {
             Boolean isPic = FileType.IMAGE.equals(FileUtil.getFileType(suffix));
             Assert.isTrue(isPic, "只能上传图片");
         }
-        return R.ok(localStorageService.create(null, file));
+        return R.ok(localStorageService.create(null, Boolean.TRUE, file));
 
     }
 
