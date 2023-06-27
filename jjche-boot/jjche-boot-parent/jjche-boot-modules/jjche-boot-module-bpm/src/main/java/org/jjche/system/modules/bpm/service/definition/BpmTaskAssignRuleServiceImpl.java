@@ -181,7 +181,7 @@ public class BpmTaskAssignRuleServiceImpl extends MyServiceImpl<BpmTaskAssignRul
             rule.setGmtCreate(null);
             rule.setGmtModified(null);
         });
-        this.fastSaveBatch(newRules);
+        this.saveBatch(newRules);
     }
 
     @Override

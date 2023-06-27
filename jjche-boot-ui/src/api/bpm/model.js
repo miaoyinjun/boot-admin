@@ -18,7 +18,7 @@ export function edit(data) {
 // 任务状态修改
 export function updateModelState(id, state) {
   return request({
-    url: '/sys/bpm/model/update-state',
+    url: '/sys/bpm/model/state',
     method: 'put',
     data: {
       id,

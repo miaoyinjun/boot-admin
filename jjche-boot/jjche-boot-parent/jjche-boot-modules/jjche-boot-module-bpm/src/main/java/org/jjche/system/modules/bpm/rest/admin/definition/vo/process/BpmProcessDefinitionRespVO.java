@@ -3,6 +3,7 @@ package org.jjche.system.modules.bpm.rest.admin.definition.vo.process;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.jjche.common.annotation.Dict;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
@@ -26,6 +27,7 @@ public class BpmProcessDefinitionRespVO {
 
     @ApiModelProperty(value = "流程分类-参见 bpm_model_category 数据字典", example = "1")
     @NotEmpty(message = "流程分类不能为空")
+    @Dict("bpm_model_category")
     private String category;
 
     @ApiModelProperty(value = "表单类型-参见 bpm_model_form_type 数据字典", example = "1")

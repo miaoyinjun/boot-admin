@@ -238,7 +238,7 @@
 
     <!-- 用户导入对话框 -->
     <el-dialog title="导入流程" :visible.sync="upload.open" width="400px" append-to-body>
-      <el-upload ref="upload" :limit="1" accept=".bpmn, .xml" :headers="upload.headers" :action="upload.url"
+      <el-upload ref="upload" :limit="1" accept=".bpmn, .xml" :headers="upload.headers" :action="baseApiUrl + upload.url"
                  :disabled="upload.isUploading" :on-progress="handleFileUploadProgress" :on-success="handleFileSuccess"
                  :auto-upload="false" name="bpmnFile" :data="upload.form" drag
       >
@@ -279,7 +279,7 @@
 </template>
 
 <script>
-import crudModel, { deployModel } from '@/api/bpm/model'
+import crudModel, { deployModel, updateModelState } from '@/api/bpm/model'
 import { getForm, listFormAllSimple } from '@/api/bpm/form'
 import CRUD, { crud, form, header, presenter } from '@crud/crud'
 import rrOperation from '@crud/RR.operation'
@@ -377,7 +377,7 @@ export default {
         // 设置上传的请求头部
         headers: getBaseHeader(),
         // 上传的地址
-        url: this.$store.state + '//',
+        url: "/sys/bpm/model/import",
         // 表单
         form: {},
         // 校验规则
@@ -442,6 +442,30 @@ export default {
         this.showBpmnOpen = true
       })
     },
+    /** 跳转流程定义的列表 */
+    handleDefinitionList(row) {
+      this.$router.push({
+        path:"/bpm/manager/definition",
+        query:{
+          key: row.key
+        }
+      });
+    },
+    /** 更新状态操作 */
+    handleChangeState(row) {
+      const id = row.id;
+      let state = row.processDefinition.suspensionState;
+      let statusState = state === 1 ? '激活' : '挂起';
+      this.$modal.confirm('是否确认' + statusState + '流程名字为"' + row.name + '"的数据项?').then(function() {
+        return updateModelState(id, state);
+      }).then(() => {
+        this.crud.refresh()
+        this.$modal.msgSuccess(statusState + "成功");
+      }).catch(() => {
+        // 取消后，进行恢复按钮
+        row.processDefinition.suspensionState = (state === 1 ? 2 : 1);
+      });
+    },
     /** 处理任务分配规则列表的按钮操作 */
     handleAssignRule(row) {
       this.$refs['taskAssignRuleDialog'].initModel(row.id)
@@ -474,15 +498,11 @@ export default {
     },
     // 文件上传成功处理
     handleFileSuccess(response, file, fileList) {
-      if (response.code !== 0) {
-        this.$modal.msgError(response.msg)
-        return
-      }
       // 重置表单
       this.uploadClose()
       // 提示，并刷新
       this.$modal.msgSuccess('导入流程成功！请点击【设计流程】按钮，进行编辑保存后，才可以进行【发布流程】')
-      this.getList()
+      this.crud.refresh()
     },
     uploadClose() {
       // 关闭弹窗

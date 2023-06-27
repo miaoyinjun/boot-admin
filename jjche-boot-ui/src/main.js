@@ -26,6 +26,7 @@ import router from './router/routers'
 
 import './assets/icons' // icon
 import './router/index' // permission control
+import DocAlert from '@/components/DocAlert'
 
 // 全局方法挂载
 Vue.prototype.parseTime = parseTime
@@ -51,6 +52,7 @@ import "bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
 
 Vue.config.productionTip = false
+Vue.component('DocAlert', DocAlert)
 
 new Vue({
   el: '#app',

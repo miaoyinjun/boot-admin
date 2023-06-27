@@ -105,7 +105,10 @@ public class TokenFilter extends GenericFilterBean {
             if (p.getMatchingPatterns(uri).size() > 0) {
                 isMachUrl = true;
                 isMachUrlMethod = RequestMappingRunner.MAPPING_INFO_MAP.get(p).contains(method);
-                break;
+                // fix /test/{id} /test/import 匹配问题
+                if(isMachUrlMethod){
+                    break;
+                }
             }
         }
         if (BooleanUtil.isFalse(isMachUrl)) {

@@ -163,7 +163,7 @@ export default {
 .process-panel__container {
   position: absolute;
   right: 0;
-  top: 55px;
+  top: 140px;
   height: calc(100vh - 84px);
 }
 
