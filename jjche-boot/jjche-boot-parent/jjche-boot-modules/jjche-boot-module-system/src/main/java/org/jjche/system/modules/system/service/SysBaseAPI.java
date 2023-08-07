@@ -21,7 +21,6 @@ import org.jjche.common.util.RsaUtils;
 import org.jjche.common.util.StrUtil;
 import org.jjche.common.vo.DataPermissionFieldResultVO;
 import org.jjche.common.vo.SecurityAppKeyBasicVO;
-import org.jjche.core.util.SecurityUtil;
 import org.jjche.log.modules.logging.domain.LogDO;
 import org.jjche.log.modules.logging.mapstruct.LogRecordMapStruct;
 import org.jjche.log.modules.logging.service.LogService;
@@ -199,7 +198,8 @@ public class SysBaseAPI implements ISysBaseAPI {
 
     @Override
     public void logoutOnlineUser(String token) {
-        String username = SecurityUtil.getUsernameOrDefaultUsername();
+        JwtUserDto jwtUserDto = getUserDetails(token);
+        String username = jwtUserDto.getUsername();
         SecurityJwtProperties securityJwtProperties = properties.getJwt();
         String key = securityJwtProperties.getOnlineKey() + token;
         redisService.delete(key);
@@ -208,8 +208,13 @@ public class SysBaseAPI implements ISysBaseAPI {
 
     @Override
     public JwtUserDto getUserDetails() {
-        UserDetails userDetails = null;
         String token = tokenProvider.resolveToken();
+       return getUserDetails(token);
+    }
+
+    @Override
+    public JwtUserDto getUserDetails(String token) {
+        UserDetails userDetails = null;
         // 对于 Token 为空的不需要去查 Redis
         if (StrUtil.isNotBlank(token)) {
             OnlineUserDTO onlineUserDto = null;
@@ -229,11 +234,6 @@ public class SysBaseAPI implements ISysBaseAPI {
             }
         }
         return (JwtUserDto) userDetails;
-    }
-
-    @Override
-    public JwtUserDto getUserDetails(String token) {
-        return null;
     }
 
     @Override
