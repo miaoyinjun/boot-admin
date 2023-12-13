@@ -463,6 +463,11 @@ VALUES (10, 'bpm_task_assign_rule_type', '任务分配规则的类型', 'System'
 INSERT INTO `sys_dict`
 VALUES (11, 'bpm_task_assign_script', '任务分配自定义脚本', 'System', 'System', SYSDATE(), SYSDATE());
 
+INSERT INTO `sys_dict`
+VALUES (12, 'bpm_process_instance_status', '流程实例的状态', 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict`
+VALUES (13, 'bpm_process_instance_result', '流程实例的结果', 'System', 'System', SYSDATE(), SYSDATE());
+
 COMMIT;
 
 -- ----------------------------
@@ -566,6 +571,20 @@ INSERT INTO `sys_dict_detail`
 VALUES (37, 11, '流程发起人的一级领导', '20', 20, 'System', 'System', SYSDATE(), SYSDATE());
 INSERT INTO `sys_dict_detail`
 VALUES (38, 11, '流程发起人的二级领导', '21', 21, 'System', 'System', SYSDATE(), SYSDATE());
+
+INSERT INTO `sys_dict_detail`
+VALUES (39, 12, '进行中', '1', 1, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (40, 12, '已完成', '2', 2, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (41, 13, '处理中', '1', 1, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (42, 13, '通过', '2', 2, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (43, 13, '不通过', '3', 3, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (44, 13, '已取消', '4', 5, 'System', 'System', SYSDATE(), SYSDATE());
+
 COMMIT;
 
 -- ----------------------------

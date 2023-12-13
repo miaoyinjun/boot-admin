@@ -56,7 +56,7 @@ public class BpmProcessInstanceRespVO {
         @ApiModelProperty(value = "用户编号", required = true, example = "1")
         private Long id;
         @ApiModelProperty(value = "用户昵称", required = true, example = "芋艿")
-        private String nickname;
+        private String nickName;
 
         @ApiModelProperty(value = "部门编号", required = true, example = "1")
         private Long deptId;

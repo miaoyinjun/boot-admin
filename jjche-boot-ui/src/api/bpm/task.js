@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getTodoTaskPage(query) {
   return request({
-    url: '/bpm/task/todo-page',
+    url: '/sys/bpm/task/todo-page',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function getTodoTaskPage(query) {
 
 export function getDoneTaskPage(query) {
   return request({
-    url: '/bpm/task/done-page',
+    url: '/sys/bpm/task/done-page',
     method: 'get',
     params: query
   })
@@ -18,7 +18,7 @@ export function getDoneTaskPage(query) {
 
 export function completeTask(data) {
   return request({
-    url: '/bpm/task/complete',
+    url: '/sys/bpm/task/complete',
     method: 'PUT',
     data: data
   })
@@ -26,7 +26,7 @@ export function completeTask(data) {
 
 export function approveTask(data) {
   return request({
-    url: '/bpm/task/approve',
+    url: '/sys/bpm/task/approve',
     method: 'PUT',
     data: data
   })
@@ -34,14 +34,14 @@ export function approveTask(data) {
 
 export function rejectTask(data) {
   return request({
-    url: '/bpm/task/reject',
+    url: '/sys/bpm/task/reject',
     method: 'PUT',
     data: data
   })
 }
 export function backTask(data) {
   return request({
-    url: '/bpm/task/back',
+    url: '/sys/bpm/task/back',
     method: 'PUT',
     data: data
   })
@@ -49,7 +49,7 @@ export function backTask(data) {
 
 export function updateTaskAssignee(data) {
   return request({
-    url: '/bpm/task/update-assignee',
+    url: '/sys/bpm/task/update-assignee',
     method: 'PUT',
     data: data
   })
@@ -57,7 +57,7 @@ export function updateTaskAssignee(data) {
 
 export function getTaskListByProcessInstanceId(processInstanceId) {
   return request({
-    url: '/bpm/task/list-by-process-instance-id?processInstanceId=' + processInstanceId,
+    url: '/sys/bpm/task/list-by-process-instance-id?processInstanceId=' + processInstanceId,
     method: 'get',
   })
 }

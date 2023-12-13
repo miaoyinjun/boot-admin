@@ -30,7 +30,7 @@ public class BpmProcessInstancePageItemRespVO {
     private Integer result;
 
     @ApiModelProperty(value = "提交时间", required = true)
-    private Timestamp createTime;
+    private Timestamp gmtCreate;
 
     @ApiModelProperty(value = "结束时间", required = true)
     private Timestamp endTime;
