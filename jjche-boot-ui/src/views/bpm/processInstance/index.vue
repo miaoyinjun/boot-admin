@@ -71,7 +71,7 @@
         </el-select>
         <rrOperation :crud="crud"/>
       </div>
-      <crudOperation >
+      <crudOperation  >
         <template slot="right">
           <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
                      v-permission="['bpm:process-instance:query']"
@@ -81,7 +81,15 @@
       </crudOperation>
 
       <!-- 列表 -->
-      <el-table v-loading="loading" :data="list">
+      <el-table
+        ref="table"
+        v-loading="crud.loading"
+        highlight-current-row
+        stripe
+        :data="crud.data"
+        size="small"
+        style="width: 100%"
+      >
         <el-table-column label="编号" align="center" prop="id" width="320"/>
         <el-table-column label="流程名" align="center" prop="name"/>
         <el-table-column label="流程分类" align="center" prop="category">
@@ -98,12 +106,12 @@
         </el-table-column>
         <el-table-column label="状态" align="center" prop="status">
           <template v-slot="scope">
-            <el-tag v-if="scope.row.category">{{ scope.row.statusLabel }}</el-tag>
+            <el-tag v-if="scope.row.status">{{ scope.row.statusLabel }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="结果" align="center" prop="result">
           <template v-slot="scope">
-            <el-tag v-if="scope.row.category">{{ scope.row.resultLabel }}</el-tag>
+            <el-tag v-if="scope.row.result">{{ scope.row.resultLabel }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="提交时间" align="center" prop="gmtCreate" width="180"/>
@@ -111,11 +119,11 @@
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template v-slot="scope">
             <el-button type="text" size="small" icon="el-icon-delete" v-if="scope.row.result === 1"
-                       v-hasPermi="['bpm:process-instance:cancel']" @click="handleCancel(scope.row)"
+                       v-permission="['bpm:process-instance:cancel']" @click="handleCancel(scope.row)"
             >取消
             </el-button>
             <el-button size="mini" type="text" icon="el-icon-edit" @click="handleDetail(scope.row)"
-                       v-hasPermi="['bpm:process-instance:query']"
+                       v-permission="['bpm:process-instance:query']"
             >详情
             </el-button>
           </template>
@@ -129,7 +137,7 @@
 </template>
 
 <script>
-import { cancelProcessInstance, getMyProcessInstancePage } from '@/api/bpm/processInstance'
+import { cancelProcessInstance} from '@/api/bpm/processInstance'
 import pagination from '@crud/Pagination'
 import CRUD, { crud, header, presenter } from '@crud/crud'
 import rrOperation from '@crud/RR.operation'
@@ -154,58 +162,25 @@ export default {
       title: '我的流程',
       url: 'sys/bpm/process-instance/my-page',
       idField: 'id',
-      crudMethod: { ...crudModel }
+      crudMethod: { ...crudModel },
+      optShow: {
+        add: false,
+        edit: false,
+        del: false,
+        download: false,
+        reset: true
+      },
     })
   },
-  data() {
-    return {
-      // 遮罩层
-      loading: true,
-      // 显示搜索条件
-      showSearch: true,
-      // 总条数
-      total: 0,
-      // 工作流的流程实例的拓展列表
-      list: [],
-      // 查询参数
-      queryParams: {
-        pageNo: 1,
-        pageSize: 10,
-        name: null,
-        processDefinitionId: null,
-        category: null,
-        status: null,
-        result: null,
-        gmtCreate: []
-      },
-      permission: {
-
-      }
+  created() {
+    this.crud.optShow = {
+      add: false,
+      edit: false,
+      del: false,
+      download: false
     }
   },
-  created() {
-    this.getList()
-  },
   methods: {
-    /** 查询列表 */
-    getList() {
-      this.loading = true
-      // 执行查询
-      getMyProcessInstancePage(this.queryParams).then(data => {
-        this.list = data.list
-        this.loading = false
-      })
-    },
-    /** 搜索按钮操作 */
-    handleQuery() {
-      this.queryParams.pageNo = 1
-      this.getList()
-    },
-    /** 重置按钮操作 */
-    resetQuery() {
-      this.resetForm('queryForm')
-      this.handleQuery()
-    },
     /** 新增按钮操作 **/
     handleAdd() {
       this.$router.push({ path: '/bpm/process-instance/create' })
@@ -222,7 +197,7 @@ export default {
       }).then(({ value }) => {
         return cancelProcessInstance(id, value)
       }).then(() => {
-        this.getList()
+        this.crud.toQuery()
         this.$modal.msgSuccess('取消成功')
       })
     },

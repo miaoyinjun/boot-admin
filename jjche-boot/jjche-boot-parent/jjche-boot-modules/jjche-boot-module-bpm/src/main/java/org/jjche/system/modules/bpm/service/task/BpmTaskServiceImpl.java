@@ -3,7 +3,6 @@ package org.jjche.system.modules.bpm.service.task;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -73,11 +72,11 @@ public class BpmTaskServiceImpl implements BpmTaskService {
         if (StrUtil.isNotBlank(pageVO.getName())) {
             taskQuery.taskNameLike("%" + pageVO.getName() + "%");
         }
-        if (ArrayUtil.get(pageVO.getCreateTime(), 0) != null) {
-            taskQuery.taskCreatedAfter(DateUtil.date(pageVO.getCreateTime()[0]));
-        }
-        if (ArrayUtil.get(pageVO.getCreateTime(), 1) != null) {
-            taskQuery.taskCreatedBefore(DateUtil.date(pageVO.getCreateTime()[1]));
+
+        List<Timestamp> createTime = pageVO.getCreateTime();
+        if (CollUtil.isNotEmpty(createTime)) {
+            taskQuery.taskCreatedAfter(CollUtil.getFirst(createTime));
+            taskQuery.taskCreatedBefore(CollUtil.getLast(createTime));
         }
         // 执行查询
         List<Task> tasks = taskQuery.listPage((int) pageVO.getPageIndex() - 1, (int) pageVO.getPageSize());
@@ -113,11 +112,10 @@ public class BpmTaskServiceImpl implements BpmTaskService {
         if (StrUtil.isNotBlank(pageVO.getName())) {
             taskQuery.taskNameLike("%" + pageVO.getName() + "%");
         }
-        if (pageVO.getBeginCreateTime() != null) {
-            taskQuery.taskCreatedAfter(DateUtil.date(pageVO.getBeginCreateTime()));
-        }
-        if (pageVO.getEndCreateTime() != null) {
-            taskQuery.taskCreatedBefore(DateUtil.date(pageVO.getEndCreateTime()));
+        List<Timestamp> createTime = pageVO.getCreateTime();
+        if (CollUtil.isNotEmpty(createTime)) {
+            taskQuery.taskCreatedAfter(CollUtil.getFirst(createTime));
+            taskQuery.taskCreatedBefore(CollUtil.getLast(createTime));
         }
         // 执行查询
         List<HistoricTaskInstance> tasks = taskQuery.listPage((int) pageVO.getPageIndex() - 1, (int) pageVO.getPageSize());
@@ -145,7 +143,7 @@ public class BpmTaskServiceImpl implements BpmTaskService {
 
         List<UserVO> users = userService.listByIds(startUserIds);
 
-        Map<Long, UserVO> userMap = MapUtil.empty();
+        Map<Long, UserVO> userMap = MapUtil.newHashMap();
         userMap = CollUtil.toMap(users, userMap, UserVO::getId);
         // 拼接结果
         MyPage myPage = new MyPage();
@@ -174,7 +172,7 @@ public class BpmTaskServiceImpl implements BpmTaskService {
         // 获得 TaskExtDO Maps
         Set<String> taskIds = tasks.stream().map(HistoricTaskInstance::getId).collect(Collectors.toSet());
         List<BpmTaskExtDO> bpmTaskExtDOs = taskExtMapper.selectListByTaskIds(taskIds);
-        Map<String, BpmTaskExtDO> bpmTaskExtDOMap = MapUtil.empty();
+        Map<String, BpmTaskExtDO> bpmTaskExtDOMap = MapUtil.newHashMap();
         bpmTaskExtDOMap = CollUtil.toMap(bpmTaskExtDOs, bpmTaskExtDOMap, BpmTaskExtDO::getTaskId);
 
         // 获得 ProcessInstance Map
@@ -185,16 +183,14 @@ public class BpmTaskServiceImpl implements BpmTaskService {
 
         List<UserVO> users = userService.listByIds(userIds);
 
-        Map<Long, UserVO> userMap = MapUtil.empty();
+        Map<Long, UserVO> userMap = MapUtil.newHashMap();
         userMap = CollUtil.toMap(users, userMap, UserVO::getId);
 
         // 获得 Dept Map
         Set<Long> deptIds = userMap.values().stream().map(UserVO::getDeptId).collect(Collectors.toSet());
         List<DeptSmallDto> deptSmalls = deptService.listByIds(deptIds);
-        Map<Long, DeptSmallDto> deptMap = MapUtil.empty();
-        deptMap = CollUtil.toMap(deptSmalls, deptMap, DeptSmallDto::getId);
         // 拼接数据
-        return BpmTaskConvert.INSTANCE.convertList3(tasks, bpmTaskExtDOMap, processInstance, userMap, deptMap);
+        return BpmTaskConvert.INSTANCE.convertList3(tasks, bpmTaskExtDOMap, processInstance, userMap);
     }
 
     @Override

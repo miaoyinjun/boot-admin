@@ -1,6 +1,6 @@
 package org.jjche.system.modules.bpm.mapper;
 
-import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.ibatis.annotations.Mapper;
@@ -11,6 +11,7 @@ import org.jjche.system.modules.bpm.dal.dataobject.oa.BpmOALeaveDO;
 import org.jjche.system.modules.bpm.rest.admin.oa.vo.BpmOALeavePageReqVO;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * 请假申请 Mapper
@@ -25,7 +26,7 @@ public interface BpmOALeaveMapper extends MyBaseMapper<BpmOALeaveDO> {
         Integer result = reqVO.getResult();
         Integer type = reqVO.getType();
         String reason = reqVO.getReason();
-        Timestamp[] createTime = reqVO.getCreateTime();
+        List<Timestamp> gmtCreate = reqVO.getGmtCreate();
 
         LambdaQueryWrapper<BpmOALeaveDO> wrapper = Wrappers.lambdaQuery();
         if (userId != null) {
@@ -40,10 +41,8 @@ public interface BpmOALeaveMapper extends MyBaseMapper<BpmOALeaveDO> {
         if (StrUtil.isNotBlank(reason)) {
             wrapper.like(BpmOALeaveDO::getReason, reason);
         }
-        if (createTime != null && createTime.length == 2) {
-            Object val1 = ArrayUtil.get(createTime, 0);
-            Object val2 = ArrayUtil.get(createTime, 1);
-            wrapper.between(BpmOALeaveDO::getGmtCreate, val1, val2);
+        if (CollUtil.isNotEmpty(gmtCreate)) {
+            wrapper.between(BpmOALeaveDO::getGmtCreate, CollUtil.getFirst(gmtCreate), CollUtil.getLast(gmtCreate));
         }
         return selectPage(reqVO, wrapper);
     }

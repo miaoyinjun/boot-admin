@@ -467,6 +467,8 @@ INSERT INTO `sys_dict`
 VALUES (12, 'bpm_process_instance_status', '流程实例的状态', 'System', 'System', SYSDATE(), SYSDATE());
 INSERT INTO `sys_dict`
 VALUES (13, 'bpm_process_instance_result', '流程实例的结果', 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict`
+VALUES (14, 'bpm_oa_leave_type', 'OA 请假类型', 'System', 'System', SYSDATE(), SYSDATE());
 
 COMMIT;
 
@@ -547,9 +549,9 @@ VALUES (25, 8, '默认', '1', 1, 'System', 'System', SYSDATE(), SYSDATE());
 INSERT INTO `sys_dict_detail`
 VALUES (26, 8, 'OA', '2', 2, 'System', 'System', SYSDATE(), SYSDATE());
 INSERT INTO `sys_dict_detail`
-VALUES (27, 9, '流程表单', '1', 1, 'System', 'System', SYSDATE(), SYSDATE());
+VALUES (27, 9, '流程表单', '10', 1, 'System', 'System', SYSDATE(), SYSDATE());
 INSERT INTO `sys_dict_detail`
-VALUES (28, 9, '业务表单', '2', 2, 'System', 'System', SYSDATE(), SYSDATE());
+VALUES (28, 9, '业务表单', '20', 2, 'System', 'System', SYSDATE(), SYSDATE());
 
 INSERT INTO `sys_dict_detail`
 VALUES (29, 10, '角色', '10', 10, 'System', 'System', SYSDATE(), SYSDATE());
@@ -584,6 +586,12 @@ INSERT INTO `sys_dict_detail`
 VALUES (43, 13, '不通过', '3', 3, 'System', 'System', SYSDATE(), SYSDATE());
 INSERT INTO `sys_dict_detail`
 VALUES (44, 13, '已取消', '4', 5, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (45, 14, '病假', '1', 1, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (46, 14, '事假', '2', 2, 'System', 'System', SYSDATE(), SYSDATE());
+INSERT INTO `sys_dict_detail`
+VALUES (47, 14, '婚假', '3', 3, 'System', 'System', SYSDATE(), SYSDATE());
 
 COMMIT;
 

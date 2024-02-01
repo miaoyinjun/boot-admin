@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.jjche.common.annotation.Dict;
 
 import java.sql.Timestamp;
 
@@ -20,6 +21,7 @@ public class BpmTaskDonePageItemRespVO extends BpmTaskTodoPageItemRespVO {
     private Long durationInMillis;
 
     @ApiModelProperty(value = "任务结果-参见 bpm_process_instance_result", required = true, example = "2")
+    @Dict("bpm_process_instance_result")
     private Integer result;
     @ApiModelProperty(value = "审批建议", required = true, example = "不请假了！")
     private String reason;

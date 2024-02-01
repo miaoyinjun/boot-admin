@@ -3,6 +3,7 @@ package org.jjche.system.modules.bpm.rest.admin.task.vo.instance;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.jjche.common.annotation.Dict;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -25,10 +26,11 @@ public class BpmProcessInstanceRespVO {
     private Integer status;
 
     @ApiModelProperty(value = "流程实例的结果-参见 bpm_process_instance_result", required = true, example = "2")
+    @Dict("bpm_process_instance_result")
     private Integer result;
 
     @ApiModelProperty(value = "提交时间", required = true)
-    private Timestamp createTime;
+    private Timestamp gmtCreate;
 
     @ApiModelProperty(value = "结束时间", required = true)
     private Timestamp endTime;

@@ -8,6 +8,7 @@ import lombok.ToString;
 import org.jjche.common.param.PageParam;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @ApiModel(value = "管理后台 - 请假申请分页 Request VO")
 @Data
@@ -25,6 +26,6 @@ public class BpmOALeavePageReqVO extends PageParam {
     private String reason;
 
     @ApiModelProperty(value = "申请时间")
-    private Timestamp[] createTime;
+    private List<Timestamp> gmtCreate;
 
 }

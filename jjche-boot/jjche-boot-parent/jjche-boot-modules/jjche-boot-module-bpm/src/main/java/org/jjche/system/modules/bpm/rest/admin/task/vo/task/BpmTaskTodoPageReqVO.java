@@ -9,6 +9,7 @@ import lombok.ToString;
 import org.jjche.common.param.PageParam;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @ApiModel(value = "管理后台 - 流程任务的 TODO 待办的分页 Request VO")
 @Data
@@ -20,6 +21,5 @@ public class BpmTaskTodoPageReqVO extends PageParam {
     private String name;
 
     @ApiModelProperty(value = "创建时间")
-    private Timestamp[] createTime;
-
+    private List<Timestamp> createTime;
 }

@@ -33,14 +33,14 @@
         <el-table-column prop="remark" label="备注" />
         <el-table-column prop="gmtCreate" label="创建时间" />
         <el-table-column
-          v-permission="['admin', 'student:edit', 'student:del']"
+          v-permission="['admin', 'bpm:form:update', 'bpm:form:delete']"
           label="操作"
           width="300px"
           align="center"
         >
           <template v-slot="scope">
             <el-button
-              v-permission="['student:list']"
+              v-permission="['bpm:form:query']"
               size="mini"
               type="success"
               icon="el-icon-view"
@@ -98,9 +98,9 @@ export default {
     return {
       formVisible: false,
       permission: {
-        add: ['admin', 'student:add'],
-        edit: ['admin', 'student:edit'],
-        del: ['admin', 'student:del']
+        add: ['admin', 'bpm:form:create'],
+        edit: ['admin', 'bpm:form:update'],
+        del: ['admin', 'bpm:form:delete']
       },
       formJson: {"widgetList":[],"formConfig":{"labelWidth":80,"labelPosition":"left","size":"","labelAlign":"label-left-align","cssCode":"","customClass":"","functions":"","layoutType":"PC","onFormCreated":"","onFormMounted":"","onFormDataChange":""}},
       formData: {},

@@ -2,6 +2,7 @@ package org.jjche.system.modules.bpm.rest.admin.oa.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.jjche.common.annotation.Dict;
 
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
@@ -21,7 +22,8 @@ public class BpmOALeaveBaseVO {
     private Timestamp endTime;
 
     @ApiModelProperty(value = "请假类型-参见 bpm_oa_type 枚举", required = true, example = "1")
-    private Integer type;
+    @Dict("bpm_oa_leave_type")
+    private String type;
 
     @ApiModelProperty(value = "原因", required = true, example = "阅读芋道源码")
     private String reason;

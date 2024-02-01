@@ -117,7 +117,7 @@ public interface BpmTaskConvert {
 
     default List<BpmTaskRespVO> convertList3(List<HistoricTaskInstance> tasks,
                                              Map<String, BpmTaskExtDO> bpmTaskExtDOMap, HistoricProcessInstance processInstance,
-                                             Map<Long, UserVO> userMap, Map<Long, DeptSmallDto> deptMap) {
+                                             Map<Long, UserVO> userMap) {
         List<BpmTaskRespVO> result = CollUtil.newArrayList();
         for (HistoricTaskInstance task : tasks) {
             BpmTaskRespVO respVO = convert3(task);
@@ -129,11 +129,15 @@ public interface BpmTaskConvert {
             }
             UserVO assignUser = userMap.get(NumberUtil.parseLong(task.getAssignee()));
             if (assignUser != null) {
-                respVO.setAssigneeUser(convert3(assignUser));
-                DeptSmallDto dept = deptMap.get(assignUser.getDeptId());
+                BpmTaskRespVO.User assigneeUser = new BpmTaskRespVO.User();
+                assigneeUser.setId(assignUser.getId());
+                assigneeUser.setNickName(assignUser.getNickName());
+                DeptSmallDto dept = assignUser.getDept();
                 if (dept != null) {
-                    respVO.getAssigneeUser().setDeptName(dept.getName());
+                    assigneeUser.setDeptId(dept.getId());
+                    assigneeUser.setDeptName(dept.getName());
                 }
+                respVO.setAssigneeUser(assigneeUser);
             }
             result.add(respVO);
         }
@@ -142,8 +146,6 @@ public interface BpmTaskConvert {
 
     @Mapping(source = "taskDefinitionKey", target = "definitionKey")
     BpmTaskRespVO convert3(HistoricTaskInstance bean);
-
-    BpmTaskRespVO.User convert3(UserVO bean);
 
     @Mapping(target = "id", ignore = true)
     void copyTo(BpmTaskExtDO from, @MappingTarget BpmTaskDonePageItemRespVO to);

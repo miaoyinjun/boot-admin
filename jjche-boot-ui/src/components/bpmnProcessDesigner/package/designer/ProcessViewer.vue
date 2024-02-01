@@ -283,18 +283,18 @@ export default {
             <p>Elemet type: ${element.type}</p>
           </div>`; // 默认值
         if (element.type === 'bpmn:StartEvent' && this.processInstance) {
-          html = `<p>发起人：${this.processInstance.startUser.nickname}</p>
+          html = `<p>发起人：${this.processInstance.startUser.nickName}</p>
                   <p>部门：${this.processInstance.startUser.deptName}</p>
-                  <p>创建时间：${this.parseTime(this.processInstance.createTime)}`;
+                  <p>创建时间：${this.parseTime(this.processInstance.gmtCreate)}`;
         } else if (element.type === 'bpmn:UserTask') {
           // debugger
           let task = this.taskList.find(m => m.id === activity.taskId); // 找到活动对应的 taskId
           if (!task) {
             return;
           }
-          html = `<p>审批人：${task.assigneeUser.nickname}</p>
+          html = `<p>审批人：${task.assigneeUser.nickName}</p>
                   <p>部门：${task.assigneeUser.deptName}</p>
-                  <p>结果：${this.getDictDataLabel(this.DICT_TYPE.BPM_PROCESS_INSTANCE_RESULT, task.result)}</p>
+                  <p>结果：${task.resultLabel}</p>
                   <p>创建时间：${this.parseTime(task.createTime)}</p>`;
           if (task.endTime) {
             html += `<p>结束时间：${this.parseTime(task.endTime)}</p>`
@@ -309,9 +309,8 @@ export default {
           if(activity.endTime>0){
             html += `<p>结束时间：${this.parseTime(activity.endTime)}</p>`
           }
-          console.log(html)
         } else if (element.type === 'bpmn:EndEvent' && this.processInstance) {
-          html = `<p>结果：${this.getDictDataLabel(this.DICT_TYPE.BPM_PROCESS_INSTANCE_RESULT, this.processInstance.result)}</p>`;
+          html = `<p>结果：${this.processInstance.resultLabel}</p>`;
           if (this.processInstance.endTime) {
             html += `<p>结束时间：${this.parseTime(this.processInstance.endTime)}</p>`
           }

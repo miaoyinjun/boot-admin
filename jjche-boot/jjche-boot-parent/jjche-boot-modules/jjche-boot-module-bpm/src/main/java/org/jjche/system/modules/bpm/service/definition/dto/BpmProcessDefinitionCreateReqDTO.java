@@ -1,6 +1,5 @@
 package org.jjche.system.modules.bpm.service.definition.dto;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 import org.jjche.system.modules.bpm.enums.definition.BpmModelFormTypeEnum;
@@ -89,7 +88,9 @@ public class BpmProcessDefinitionCreateReqDTO {
         if (!Objects.equals(formType, BpmModelFormTypeEnum.NORMAL.getType())) {
             return true;
         }
-        return formId != null && StrUtil.isNotEmpty(formConf) && CollUtil.isNotEmpty(formFields);
+        return formId != null && StrUtil.isNotEmpty(formConf)
+//                && CollUtil.isNotEmpty(formFields)
+                ;
     }
 
     @AssertTrue(message = "业务表单信息不全")

@@ -95,12 +95,12 @@
                 </el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="form.formType === 1" label="流程表单" prop="formId">
+            <el-form-item v-if="form.formType === 10" label="流程表单" prop="formId">
               <el-select v-model="form.formId" clearable style="width: 100%">
                 <el-option v-for="f in forms" :key="f.id" :label="f.name" :value="f.id"/>
               </el-select>
             </el-form-item>
-            <el-form-item v-if="form.formType === 2" label="表单提交路由" prop="formCustomCreatePath">
+            <el-form-item v-if="form.formType === 20" label="表单提交路由" prop="formCustomCreatePath">
               <el-input v-model="form.formCustomCreatePath" placeholder="请输入表单提交路由" style="width: 330px;"/>
               <el-tooltip class="item" effect="light"
                           content="自定义表单的提交路径，使用 Vue 的路由地址，例如说：bpm/oa/leave/create" placement="top"
@@ -108,7 +108,7 @@
                 <i style="padding-left: 5px;" class="el-icon-question"/>
               </el-tooltip>
             </el-form-item>
-            <el-form-item v-if="form.formType === 2" label="表单查看路由" prop="formCustomViewPath">
+            <el-form-item v-if="form.formType === 20" label="表单查看路由" prop="formCustomViewPath">
               <el-input v-model="form.formCustomViewPath" placeholder="请输入表单查看路由" style="width: 330px;"/>
               <el-tooltip class="item" effect="light"
                           content="自定义表单的查看路径，使用 Vue 的路由地址，例如说：bpm/oa/leave/view" placement="top"

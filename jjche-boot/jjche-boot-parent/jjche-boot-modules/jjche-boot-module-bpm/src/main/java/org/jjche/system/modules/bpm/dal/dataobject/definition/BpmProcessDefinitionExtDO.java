@@ -1,16 +1,12 @@
 package org.jjche.system.modules.bpm.dal.dataobject.definition;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.jjche.mybatis.base.entity.BaseEntity;
 import org.jjche.system.modules.bpm.enums.definition.BpmModelFormTypeEnum;
-
-import java.util.List;
 
 /**
  * Bpm 流程定义的拓展表
@@ -61,14 +57,6 @@ public class BpmProcessDefinitionExtDO extends BaseEntity {
      * 冗余 {@link BpmFormDO#getConf()}
      */
     private String formConf;
-    /**
-     * 表单项的数组
-     * 在表单类型为 {@link BpmModelFormTypeEnum#NORMAL} 时
-     *
-     * 冗余 {@link BpmFormDO#getFields()} ()}
-     */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> formFields;
     /**
      * 自定义表单的提交路径，使用 Vue 的路由地址
      * 在表单类型为 {@link BpmModelFormTypeEnum#CUSTOM} 时

@@ -1,6 +1,6 @@
 package org.jjche.system.modules.bpm.mapper;
 
-import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.ibatis.annotations.Mapper;
@@ -11,6 +11,7 @@ import org.jjche.system.modules.bpm.dal.dataobject.task.BpmProcessInstanceExtDO;
 import org.jjche.system.modules.bpm.rest.admin.task.vo.instance.BpmProcessInstanceMyPageReqVO;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Mapper
 public interface BpmProcessInstanceExtMapper extends MyBaseMapper<BpmProcessInstanceExtDO> {
@@ -21,7 +22,8 @@ public interface BpmProcessInstanceExtMapper extends MyBaseMapper<BpmProcessInst
         String category = reqVO.getCategory();
         Integer status = reqVO.getStatus();
         Integer result = reqVO.getResult();
-        Timestamp[] createTime = reqVO.getCreateTime();
+
+        List<Timestamp> gmtCreate = reqVO.getGmtCreate();
 
         LambdaQueryWrapper<BpmProcessInstanceExtDO> wrapper = Wrappers.lambdaQuery();
         if (userId != null) {
@@ -43,10 +45,8 @@ public interface BpmProcessInstanceExtMapper extends MyBaseMapper<BpmProcessInst
             wrapper.eq(BpmProcessInstanceExtDO::getResult, result);
         }
 
-        if (createTime != null && createTime.length == 2) {
-            Object val1 = ArrayUtil.get(createTime, 0);
-            Object val2 = ArrayUtil.get(createTime, 1);
-            wrapper.between(BpmProcessInstanceExtDO::getGmtCreate, val1, val2);
+        if (CollUtil.isNotEmpty(gmtCreate)) {
+            wrapper.between(BpmProcessInstanceExtDO::getGmtCreate, CollUtil.getFirst(gmtCreate), CollUtil.getLast(gmtCreate));
         }
         return selectPage(reqVO, wrapper);
     }

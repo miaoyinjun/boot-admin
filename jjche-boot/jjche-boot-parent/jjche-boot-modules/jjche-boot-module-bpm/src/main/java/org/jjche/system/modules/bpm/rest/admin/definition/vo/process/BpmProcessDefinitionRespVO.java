@@ -6,7 +6,6 @@ import lombok.Data;
 import org.jjche.common.annotation.Dict;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
 
 @ApiModel(value = "管理后台 - 流程定义 Response VO")
 @Data
@@ -36,8 +35,6 @@ public class BpmProcessDefinitionRespVO {
     private Long formId;
     @ApiModelProperty(value = "表单的配置-JSON 字符串。在表单类型为 {@link BpmModelFormTypeEnum#CUSTOM} 时，必须非空", required = true)
     private String formConf;
-    @ApiModelProperty(value = "表单项的数组-JSON 字符串的数组。在表单类型为 {@link BpmModelFormTypeEnum#CUSTOM} 时，必须非空", required = true)
-    private List<String> formFields;
     @ApiModelProperty(value = "自定义表单的提交路径，使用 Vue 的路由地址-在表单类型为 {@link BpmModelFormTypeEnum#CUSTOM} 时，必须非空",
             example = "/bpm/oa/leave/create")
     private String formCustomCreatePath;

@@ -8,6 +8,8 @@ import lombok.ToString;
 import org.jjche.common.param.PageParam;
 
 import java.sql.Timestamp;
+import java.util.List;
+
 @ApiModel(value = "管理后台 - 流程实例的分页 Item Response VO")
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -30,6 +32,5 @@ public class BpmProcessInstanceMyPageReqVO extends PageParam {
     private String category;
 
     @ApiModelProperty(value = "创建时间")
-    private Timestamp[] createTime;
-
+    private List<Timestamp> gmtCreate;
 }
