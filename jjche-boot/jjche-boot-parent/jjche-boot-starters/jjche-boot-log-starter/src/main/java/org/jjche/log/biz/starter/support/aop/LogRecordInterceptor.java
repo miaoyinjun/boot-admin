@@ -172,7 +172,7 @@ public class LogRecordInterceptor extends LogRecordValueParser
         for (LogRecordDTO logRecord : operations) {
             try {
                 //满足条件才记录
-                if (exitsCondition(methodExecuteResult, functionNameAndReturnMap, logRecord)) continue;
+                if (exitsCondition(methodExecuteResult, functionNameAndReturnMap, logRecord)) {continue;}
                 String errorMsg = methodExecuteResult.getErrorMsg();
                 boolean success = methodExecuteResult.isSuccess();
 
@@ -223,7 +223,7 @@ public class LogRecordInterceptor extends LogRecordValueParser
                 commonAPI.recordLog(newLogRecord);
             } catch (Exception t) {
                 StaticLog.error("log record execute exception:{}", ThrowableUtil.getStackTrace(t));
-                if (joinTransaction) throw t;
+                if (joinTransaction) {throw t;}
             } finally {
             }
         }
@@ -233,7 +233,7 @@ public class LogRecordInterceptor extends LogRecordValueParser
     private boolean exitsCondition(MethodExecuteResult methodExecuteResult, Map<String, String> functionNameAndReturnMap, LogRecordDTO operation) {
         if (!StrUtil.isEmpty(operation.getCondition())) {
             String condition = singleProcessTemplate(methodExecuteResult, operation.getCondition(), functionNameAndReturnMap);
-            if (StringUtils.endsWithIgnoreCase(condition, "false")) return true;
+            if (StringUtils.endsWithIgnoreCase(condition, "false")) {return true;}
         }
         return false;
     }

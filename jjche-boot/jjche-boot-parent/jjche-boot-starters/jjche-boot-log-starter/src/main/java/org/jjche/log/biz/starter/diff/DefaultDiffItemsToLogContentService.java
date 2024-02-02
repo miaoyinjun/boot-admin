@@ -79,7 +79,7 @@ public class DefaultDiffItemsToLogContentService implements IDiffItemsToLogConte
             ReflectionUtils.makeAccessible(childrenField);
             Map<ElementSelector, DiffNode> children = (Map<ElementSelector, DiffNode>) ReflectionUtils.getField(childrenField, node);
             assert children != null;
-            for (DiffNode value : children.values()) memorandum(value, set);
+            for (DiffNode value : children.values()) {memorandum(value, set);}
         }
     }
 

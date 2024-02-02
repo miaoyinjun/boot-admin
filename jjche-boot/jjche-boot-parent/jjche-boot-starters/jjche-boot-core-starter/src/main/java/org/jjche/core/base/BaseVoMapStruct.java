@@ -1,5 +1,8 @@
 package org.jjche.core.base;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.jjche.common.param.MyPage;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -32,4 +35,14 @@ public interface BaseVoMapStruct<E, V> {
      * @return VOList
      */
     List<V> toVO(Collection<E> dooList);
+
+    /**
+     * <p>
+     * DO分页转VO分页
+     * </p>
+     *
+     * @param pageDo 分页DO
+     * @return VO分页
+     */
+    MyPage<V> toVO(Page<E> pageDo);
 }
