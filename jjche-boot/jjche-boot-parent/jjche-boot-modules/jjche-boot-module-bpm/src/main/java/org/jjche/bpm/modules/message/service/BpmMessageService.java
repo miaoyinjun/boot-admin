@@ -1,4 +1,6 @@
 package org.jjche.bpm.modules.message.service;
+
+import lombok.RequiredArgsConstructor;
 import org.jjche.bpm.modules.message.api.dto.BpmMessageSendWhenProcessInstanceApproveReqDTO;
 import org.jjche.bpm.modules.message.api.dto.BpmMessageSendWhenProcessInstanceRejectReqDTO;
 import org.jjche.bpm.modules.message.api.dto.BpmMessageSendWhenTaskCreatedReqDTO;
@@ -6,7 +8,6 @@ import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,13 +18,13 @@ import java.util.Map;
  */
 @Service
 @Validated
+@RequiredArgsConstructor
 public class BpmMessageService {
 //
 //    @Resource
 //    private SmsSendApi smsSendApi;
 
-    @Resource
-    private WebProperties webProperties;
+    private final WebProperties webProperties;
 
     /**
      * 发送流程实例被通过的消息

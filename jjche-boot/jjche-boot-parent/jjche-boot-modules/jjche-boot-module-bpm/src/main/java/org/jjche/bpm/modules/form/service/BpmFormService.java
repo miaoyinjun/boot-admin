@@ -3,23 +3,23 @@ package org.jjche.bpm.modules.form.service;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import org.jjche.bpm.modules.form.domain.BpmFormDO;
+import lombok.RequiredArgsConstructor;
 import org.jjche.bpm.modules.form.api.dto.BpmFormDTO;
 import org.jjche.bpm.modules.form.api.dto.BpmFormQueryCriteriaDTO;
 import org.jjche.bpm.modules.form.api.vo.BpmFormDetailRespVO;
 import org.jjche.bpm.modules.form.api.vo.BpmFormRespVO;
 import org.jjche.bpm.modules.form.api.vo.BpmFormSimpleRespVO;
+import org.jjche.bpm.modules.form.domain.BpmFormDO;
+import org.jjche.bpm.modules.form.mapper.BpmFormMapper;
+import org.jjche.bpm.modules.form.mapstruct.BpmFormConvert;
 import org.jjche.common.exception.BusinessException;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
-import org.jjche.bpm.modules.form.mapstruct.BpmFormConvert;
-import org.jjche.bpm.modules.form.mapper.BpmFormMapper;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -30,10 +30,10 @@ import java.util.Map;
  * @author 风里雾里
  */
 @Service
+@RequiredArgsConstructor
 public class BpmFormService extends MyServiceImpl<BpmFormMapper, BpmFormDO>{
 
-    @Resource
-    private BpmFormConvert bpmFormConvert;
+    private final BpmFormConvert bpmFormConvert;
 
     /**
      * 创建动态表单

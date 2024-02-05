@@ -55,12 +55,9 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
     @Resource
     @Lazy // 解决循环依赖
     private BpmProcessDefinitionService processDefinitionService;
-    @Resource
-    private BpmUserGroupService userGroupService;
-    @Resource
-    private IDeptService deptService;
-    @Resource
-    private IUserService userService;
+    private final BpmUserGroupService userGroupService;
+    private final IDeptService deptService;
+    private final IUserService userService;
     private final BpmTaskAssignRuleConvert bpmTaskAssignRuleConvert;
     /**
      * 任务分配脚本

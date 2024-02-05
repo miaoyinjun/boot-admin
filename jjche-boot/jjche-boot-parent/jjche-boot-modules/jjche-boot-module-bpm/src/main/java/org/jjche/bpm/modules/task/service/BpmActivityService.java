@@ -8,7 +8,6 @@ import org.jjche.bpm.modules.task.mapstruct.BpmActivityConvert;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 
@@ -22,8 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BpmActivityService {
 
-    @Resource
-    private HistoryService historyService;
+    private final HistoryService historyService;
     private final BpmActivityConvert bpmActivityConvert;
 
     /**

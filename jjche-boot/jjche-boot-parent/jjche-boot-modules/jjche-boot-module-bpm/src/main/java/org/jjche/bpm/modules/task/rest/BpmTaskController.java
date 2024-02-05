@@ -3,17 +3,17 @@ package org.jjche.bpm.modules.task.rest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.jjche.bpm.modules.task.api.vo.task.*;
+import org.jjche.bpm.modules.task.service.BpmTaskService;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.annotation.controller.SysRestController;
 import org.jjche.core.util.SecurityUtil;
-import org.jjche.bpm.modules.task.service.BpmTaskService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -21,10 +21,10 @@ import java.util.List;
 @SysRestController
 @RequestMapping("/bpm/task")
 @Validated
+@RequiredArgsConstructor
 public class BpmTaskController {
 
-    @Resource
-    private BpmTaskService taskService;
+    private final BpmTaskService taskService;
 
     @GetMapping("todo-page")
     @Operation(summary = "获取 Todo 待办任务分页")

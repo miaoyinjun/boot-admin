@@ -19,9 +19,9 @@ import org.flowable.engine.repository.ProcessDefinition;
 import org.jjche.bpm.modules.definition.api.dto.BpmModelMetaInfoRespDTO;
 import org.jjche.bpm.modules.definition.api.dto.BpmProcessDefinitionCreateReqDTO;
 import org.jjche.bpm.modules.definition.api.vo.model.*;
+import org.jjche.bpm.modules.definition.enums.BpmModelFormTypeEnum;
 import org.jjche.bpm.modules.definition.mapstruct.BpmModelConvert;
 import org.jjche.bpm.modules.form.domain.BpmFormDO;
-import org.jjche.bpm.modules.definition.enums.BpmModelFormTypeEnum;
 import org.jjche.bpm.modules.form.service.BpmFormService;
 import org.jjche.common.exception.BusinessException;
 import org.jjche.common.param.MyPage;
@@ -32,7 +32,6 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -51,14 +50,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BpmModelService {
     private final BpmModelConvert bpmModelConvert;
-    @Resource
-    private RepositoryService repositoryService;
-    @Resource
-    private BpmProcessDefinitionService processDefinitionService;
-    @Resource
-    private BpmFormService bpmFormService;
-    @Resource
-    private BpmTaskAssignRuleService taskAssignRuleService;
+    private final RepositoryService repositoryService;
+    private final BpmProcessDefinitionService processDefinitionService;
+    private final BpmFormService bpmFormService;
+    private final BpmTaskAssignRuleService taskAssignRuleService;
 
     private static final Pattern PATTERN_XML_NCNAME = Pattern.compile("[a-zA-Z_][\\-_.0-9_a-zA-Z$]*");
 

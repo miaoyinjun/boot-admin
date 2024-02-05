@@ -34,7 +34,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.*;
@@ -50,20 +49,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BpmTaskService extends MyServiceImpl<BpmTaskExtMapper, BpmTaskExtDO> {
 
-    @Resource
-    private TaskService taskService;
-    @Resource
-    private HistoryService historyService;
-
-    @Resource
-    private BpmProcessInstanceService processInstanceService;
-    @Resource
-    private IUserService userService;
-    @Resource
-    private IDeptService deptService;
-    @Resource
-    private BpmMessageService messageService;
-
+    private final TaskService taskService;
+    private final HistoryService historyService;
+    private final BpmProcessInstanceService processInstanceService;
+    private final IUserService userService;
+    private final IDeptService deptService;
+    private final BpmMessageService messageService;
     private final BpmTaskConvert bpmTaskConvert;
     /**
      * 获得待办的流程任务分页

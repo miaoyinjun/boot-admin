@@ -1,11 +1,11 @@
 package org.jjche.bpm.modules.definition.api;
 
+import lombok.RequiredArgsConstructor;
 import org.jjche.bpm.modules.definition.api.dto.BpmProcessInstanceCreateReqDTO;
 import org.jjche.bpm.modules.task.service.BpmProcessInstanceService;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 
 /**
@@ -16,10 +16,10 @@ import javax.validation.Valid;
  */
 @Service
 @Validated
+@RequiredArgsConstructor
 public class BpmProcessInstanceApiImpl implements BpmProcessInstanceApi {
 
-    @Resource
-    private BpmProcessInstanceService processInstanceService;
+    private final BpmProcessInstanceService processInstanceService;
 
     @Override
     public String createProcessInstance(Long userId, @Valid BpmProcessInstanceCreateReqDTO reqDTO) {

@@ -15,22 +15,21 @@ import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.repository.ProcessDefinitionQuery;
 import org.jjche.bpm.modules.definition.api.dto.BpmProcessDefinitionCreateReqDTO;
-import org.jjche.bpm.modules.definition.mapstruct.BpmProcessDefinitionConvert;
-import org.jjche.bpm.modules.form.domain.BpmFormDO;
-import org.jjche.bpm.modules.definition.mapper.BpmProcessDefinitionExtMapper;
 import org.jjche.bpm.modules.definition.api.vo.process.BpmProcessDefinitionListReqVO;
 import org.jjche.bpm.modules.definition.api.vo.process.BpmProcessDefinitionPageItemRespVO;
 import org.jjche.bpm.modules.definition.api.vo.process.BpmProcessDefinitionPageReqVO;
+import org.jjche.bpm.modules.definition.api.vo.process.BpmProcessDefinitionRespVO;
+import org.jjche.bpm.modules.definition.domain.BpmProcessDefinitionExtDO;
+import org.jjche.bpm.modules.definition.mapper.BpmProcessDefinitionExtMapper;
+import org.jjche.bpm.modules.definition.mapstruct.BpmProcessDefinitionConvert;
+import org.jjche.bpm.modules.form.domain.BpmFormDO;
 import org.jjche.bpm.modules.form.service.BpmFormService;
 import org.jjche.common.exception.BusinessException;
 import org.jjche.common.param.MyPage;
 import org.jjche.flowable.util.FlowableUtils;
-import org.jjche.bpm.modules.definition.domain.BpmProcessDefinitionExtDO;
-import org.jjche.bpm.modules.definition.api.vo.process.BpmProcessDefinitionRespVO;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -49,17 +48,10 @@ import static java.util.Collections.emptyList;
 @Validated
 @RequiredArgsConstructor
 public class BpmProcessDefinitionService {
-
     private static final String BPMN_FILE_SUFFIX = ".bpmn";
-
-    @Resource
-    private RepositoryService repositoryService;
-
-    @Resource
-    private BpmProcessDefinitionExtMapper processDefinitionMapper;
-
-    @Resource
-    private BpmFormService formService;
+    private final RepositoryService repositoryService;
+    private final BpmProcessDefinitionExtMapper processDefinitionMapper;
+    private final BpmFormService formService;
     private final BpmProcessDefinitionConvert bpmProcessDefinitionConvert;
 
     /**

@@ -7,18 +7,17 @@ import lombok.RequiredArgsConstructor;
 import org.jjche.bpm.modules.oa.api.vo.BpmOALeaveCreateReqDTO;
 import org.jjche.bpm.modules.oa.api.vo.BpmOALeavePageReqVO;
 import org.jjche.bpm.modules.oa.api.vo.BpmOALeaveRespVO;
+import org.jjche.bpm.modules.oa.domain.BpmOALeaveDO;
+import org.jjche.bpm.modules.oa.mapstruct.BpmOALeaveConvert;
+import org.jjche.bpm.modules.oa.service.BpmOALeaveService;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.annotation.controller.SysRestController;
 import org.jjche.core.util.SecurityUtil;
-import org.jjche.bpm.modules.oa.mapstruct.BpmOALeaveConvert;
-import org.jjche.bpm.modules.oa.domain.BpmOALeaveDO;
-import org.jjche.bpm.modules.oa.service.BpmOALeaveService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 
 /**
@@ -34,8 +33,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class BpmOALeaveController {
 
-    @Resource
-    private BpmOALeaveService leaveService;
+    private final BpmOALeaveService leaveService;
     private final BpmOALeaveConvert leaveConvert;
 
     @PostMapping("/create")

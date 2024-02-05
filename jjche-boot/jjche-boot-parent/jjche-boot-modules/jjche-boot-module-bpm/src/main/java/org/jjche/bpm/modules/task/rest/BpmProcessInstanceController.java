@@ -3,26 +3,26 @@ package org.jjche.bpm.modules.task.rest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.jjche.bpm.modules.task.api.vo.instance.*;
+import org.jjche.bpm.modules.task.service.BpmProcessInstanceService;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.annotation.controller.SysRestController;
 import org.jjche.core.util.SecurityUtil;
-import org.jjche.bpm.modules.task.service.BpmProcessInstanceService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 @Tag(name = "管理后台 - 流程实例") // 流程实例，通过流程定义创建的一次“申请”
 @SysRestController
 @RequestMapping("/bpm/process-instance")
 @Validated
+@RequiredArgsConstructor
 public class BpmProcessInstanceController {
 
-    @Resource
-    private BpmProcessInstanceService processInstanceService;
+    private final BpmProcessInstanceService processInstanceService;
 
     @GetMapping("/my-page")
     @Operation(summary = "获得我的实例分页列表", description = "在【我的流程】菜单中，进行调用")

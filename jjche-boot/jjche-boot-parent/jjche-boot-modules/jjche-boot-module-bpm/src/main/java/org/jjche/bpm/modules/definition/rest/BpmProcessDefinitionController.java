@@ -3,31 +3,31 @@ package org.jjche.bpm.modules.definition.rest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.jjche.bpm.modules.definition.api.vo.process.BpmProcessDefinitionListReqVO;
 import org.jjche.bpm.modules.definition.api.vo.process.BpmProcessDefinitionPageItemRespVO;
 import org.jjche.bpm.modules.definition.api.vo.process.BpmProcessDefinitionPageReqVO;
+import org.jjche.bpm.modules.definition.api.vo.process.BpmProcessDefinitionRespVO;
+import org.jjche.bpm.modules.definition.service.BpmProcessDefinitionService;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.annotation.controller.SysRestController;
-import org.jjche.bpm.modules.definition.api.vo.process.BpmProcessDefinitionRespVO;
-import org.jjche.bpm.modules.definition.service.BpmProcessDefinitionService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @Tag(name = "管理后台 - 流程定义")
 @SysRestController
 @RequestMapping("/bpm/process-definition")
 @Validated
+@RequiredArgsConstructor
 public class BpmProcessDefinitionController {
 
-    @Resource
-    private BpmProcessDefinitionService bpmDefinitionService;
+    private final BpmProcessDefinitionService bpmDefinitionService;
 
     @GetMapping("/page")
     @Operation(summary = "获得流程定义分页")
