@@ -7,6 +7,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.AsyncListenableTaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+/**
+ * <p>
+ * 入口
+ * </p>
+ *
+ * @author miaoyj
+ * @since 2024-02-18
+ */
 @Configuration
 public class JjcheFlowableConfiguration {
 

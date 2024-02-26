@@ -1,7 +1,6 @@
 package org.jjche.system.modules.quartz.config;
 
 import lombok.RequiredArgsConstructor;
-import org.jjche.system.modules.quartz.domain.QuartzJobDO;
 import org.jjche.system.modules.quartz.service.QuartzJobService;
 import org.jjche.system.modules.quartz.utils.QuartzManage;
 import org.slf4j.Logger;
@@ -9,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * <p>JobRunner class.</p>
@@ -34,8 +31,8 @@ public class JobRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments applicationArguments) {
         log.info("--------------------注入定时任务---------------------");
-        List<QuartzJobDO> quartzJobs = quartzJobService.listIsPauseIsFalse();
-        quartzJobs.forEach(quartzManage::addJob);
+//        List<QuartzJobDO> quartzJobs = quartzJobService.listIsPauseIsFalse();
+//        quartzJobs.forEach(quartzManage::addJob);
         log.info("--------------------定时任务注入完成---------------------");
     }
 }

@@ -3,10 +3,6 @@ spring:
     redis:
       repositories:
         enabled: false
-
-jjche:
-  liquibase:
-    change-log: classpath:liquibase/changelog/master.xml
   user:
     account:
       expired-days: 90

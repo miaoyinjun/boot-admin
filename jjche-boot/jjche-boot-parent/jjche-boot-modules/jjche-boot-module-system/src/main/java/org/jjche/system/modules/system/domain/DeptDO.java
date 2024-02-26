@@ -1,6 +1,5 @@
 package org.jjche.system.modules.system.domain;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -42,8 +41,7 @@ public class DeptDO extends BaseEntity {
     private Integer subCount = 0;
 
     /**
-     * 负责人的用户编号
+     * 负责人的用户id
      */
-    @TableField(exist = false)
     private Long leaderUserId;
 }

@@ -1,1 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.jjche.flowable.JjcheFlowableConfiguration
+org.springframework.boot.env.EnvironmentPostProcessor=org.jjche.flowable.env.BpmEnvironmentPostProcessor

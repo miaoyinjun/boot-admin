@@ -1,1 +1,0 @@
-ALTER TABLE `student` ADD `creator_user_id` BIGINT UNSIGNED COMMENT '所属用户id';

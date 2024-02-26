@@ -1,0 +1,18 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="20200702_003_add_col_student" author="miaoyj">
+        <sql>
+            ALTER TABLE `student` ADD `creator_user_id` BIGINT UNSIGNED COMMENT '所属用户id';
+        </sql>
+        <rollback>
+            <sql>
+                ALTER TABLE `student` DROP COLUMN `creator_user_id`;
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

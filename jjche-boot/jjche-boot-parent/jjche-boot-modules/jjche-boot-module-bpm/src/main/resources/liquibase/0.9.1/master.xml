@@ -1,0 +1,519 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="20240218_001_add_bpm" author="miaoyj">
+        <sql>
+            -- ----------------------------
+-- Table structure for bpm_form
+-- ----------------------------
+            CREATE TABLE `bpm_form`
+            (
+                `id`           bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                `name`         varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '表单名',
+                `content`      text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '表单的配置',
+                `remark`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+                `created_by`   varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '创建者',
+                `updated_by`   varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '修改者',
+                `gmt_create`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `gmt_modified` datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                PRIMARY KEY (`id`) USING BTREE
+            ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流的表单定义' ROW_FORMAT = COMPACT;
+
+            -- ----------------------------
+-- Records of bpm_form
+-- ----------------------------
+            INSERT INTO `bpm_form`
+            VALUES (1, 'test',
+                    '{\"widgetList\":[{\"type\":\"static-text\",\"icon\":\"static-text\",\"formItemFlag\":false,\"options\":{\"name\":\"statictext111193\",\"columnWidth\":\"200px\",\"hidden\":false,\"textContent\":\"单列表单\",\"customClass\":[],\"onCreated\":\"\",\"onMounted\":\"\",\"label\":\"static-text\"},\"id\":\"statictext111193\"},{\"type\":\"divider\",\"icon\":\"divider\",\"formItemFlag\":false,\"options\":{\"name\":\"divider102346\",\"label\":\"\",\"columnWidth\":\"200px\",\"direction\":\"horizontal\",\"contentPosition\":\"center\",\"hidden\":false,\"customClass\":[],\"onCreated\":\"\",\"onMounted\":\"\"},\"id\":\"divider102346\"},{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input12931\",\"label\":\"发件人姓名\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"input12931\"},{\"type\":\"switch\",\"icon\":\"switch-field\",\"formItemFlag\":true,\"options\":{\"name\":\"switch96070\",\"label\":\"是否保密\",\"labelAlign\":\"\",\"defaultValue\":true,\"columnWidth\":\"200px\",\"labelWidth\":null,\"labelHidden\":false,\"disabled\":false,\"hidden\":false,\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"switchWidth\":40,\"activeText\":\"\",\"inactiveText\":\"\",\"activeColor\":null,\"inactiveColor\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onValidate\":\"\"},\"id\":\"switch96070\"},{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input23031\",\"label\":\"发件人号码\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"input23031\"},{\"type\":\"textarea\",\"icon\":\"textarea-field\",\"formItemFlag\":true,\"options\":{\"name\":\"textarea21654\",\"label\":\"发件人地址\",\"labelAlign\":\"\",\"rows\":3,\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"textarea21654\"},{\"type\":\"divider\",\"icon\":\"divider\",\"formItemFlag\":false,\"options\":{\"name\":\"divider69240\",\"label\":\"\",\"columnWidth\":\"200px\",\"direction\":\"horizontal\",\"contentPosition\":\"center\",\"hidden\":false,\"customClass\":\"\",\"onCreated\":\"\",\"onMounted\":\"\"},\"id\":\"divider69240\"},{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input113152\",\"label\":\"收件人姓名\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"input113152\"},{\"type\":\"checkbox\",\"icon\":\"checkbox-field\",\"formItemFlag\":true,\"options\":{\"name\":\"checkbox63174\",\"label\":\"接收时间段\",\"labelAlign\":\"\",\"defaultValue\":[],\"columnWidth\":\"200px\",\"size\":\"\",\"displayStyle\":\"inline\",\"buttonStyle\":false,\"border\":false,\"labelWidth\":null,\"labelHidden\":false,\"disabled\":false,\"hidden\":false,\"optionItems\":[{\"label\":\"上午9:00 - 11:30\",\"value\":1},{\"label\":\"下午12:30 - 18:00\",\"value\":2},{\"label\":\"晚上18:00 - 21:00\",\"value\":3}],\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onValidate\":\"\"},\"id\":\"checkbox63174\"},{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input40240\",\"label\":\"收件人号码\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"input40240\"},{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input78584\",\"label\":\"收件人地址\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"input78584\"},{\"type\":\"divider\",\"icon\":\"divider\",\"formItemFlag\":false,\"options\":{\"name\":\"divider75887\",\"label\":\"\",\"columnWidth\":\"200px\",\"direction\":\"horizontal\",\"contentPosition\":\"center\",\"hidden\":false,\"customClass\":[],\"onCreated\":\"\",\"onMounted\":\"\"},\"id\":\"divider75887\"},{\"type\":\"time-range\",\"icon\":\"time-range-field\",\"formItemFlag\":true,\"options\":{\"name\":\"timerange47503\",\"label\":\"送货时间\",\"labelAlign\":\"\",\"defaultValue\":null,\"startPlaceholder\":\"\",\"endPlaceholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"editable\":false,\"format\":\"HH:mm:ss\",\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"timerange47503\"},{\"type\":\"slider\",\"icon\":\"slider-field\",\"formItemFlag\":true,\"options\":{\"name\":\"slider54714\",\"label\":\"价格保护\",\"labelAlign\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"disabled\":false,\"hidden\":false,\"required\":false,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"min\":0,\"max\":100,\"step\":10,\"range\":false,\"height\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onValidate\":\"\",\"showStops\":true},\"id\":\"slider54714\"},{\"type\":\"textarea\",\"icon\":\"textarea-field\",\"formItemFlag\":true,\"options\":{\"name\":\"textarea64794\",\"label\":\"其他信息\",\"labelAlign\":\"\",\"rows\":3,\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"required\":false,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"textarea64794\"}],\"formConfig\":{\"modelName\":\"formData\",\"refName\":\"vForm\",\"rulesName\":\"rules\",\"labelWidth\":150,\"labelPosition\":\"left\",\"size\":\"\",\"labelAlign\":\"label-right-align\",\"cssCode\":\"\",\"customClass\":[],\"functions\":\"\",\"layoutType\":\"PC\",\"onFormCreated\":\"\",\"onFormMounted\":\"\",\"onFormDataChange\":\"\",\"onFormValidate\":\"\"}}',
+                    NULL, 'admin', 'admin', '2023-03-31 13:13:51', '2023-03-31 13:13:51');
+            INSERT INTO `bpm_form`
+            VALUES (2, 'aa',
+                    '{\"widgetList\":[{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input37714\",\"label\":\"input\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"requiredHint\":\"\",\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\",\"onAppendButtonClick\":\"\"},\"id\":\"input37714\"},{\"type\":\"radio\",\"icon\":\"radio-field\",\"formItemFlag\":true,\"options\":{\"name\":\"radio32270\",\"label\":\"radio\",\"labelAlign\":\"\",\"defaultValue\":1,\"columnWidth\":\"200px\",\"size\":\"\",\"displayStyle\":\"inline\",\"buttonStyle\":false,\"border\":false,\"labelWidth\":null,\"labelHidden\":false,\"disabled\":false,\"hidden\":false,\"optionItems\":[{\"label\":\"radio 1\",\"value\":1},{\"label\":\"radio 2\",\"value\":2},{\"label\":\"radio 3\",\"value\":3}],\"required\":false,\"requiredHint\":\"\",\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onValidate\":\"\"},\"id\":\"radio32270\"}],\"formConfig\":{\"modelName\":\"formData\",\"refName\":\"vForm\",\"rulesName\":\"rules\",\"labelWidth\":80,\"labelPosition\":\"left\",\"size\":\"\",\"labelAlign\":\"label-left-align\",\"cssCode\":\"\",\"customClass\":\"\",\"functions\":\"\",\"layoutType\":\"PC\",\"onFormCreated\":\"\",\"onFormMounted\":\"\",\"onFormDataChange\":\"\",\"onFormValidate\":\"\"}}',
+                    'ss', 'admin', 'admin', '2023-07-17 10:49:32', '2024-01-31 13:36:05');
+
+            -- ----------------------------
+-- Table structure for bpm_oa_leave
+-- ----------------------------
+            CREATE TABLE `bpm_oa_leave`
+            (
+                `id`                  bigint(20) NOT NULL AUTO_INCREMENT COMMENT '请假表单主键',
+                `user_id`             bigint(20) NOT NULL COMMENT '申请人的用户编号',
+                `type`                tinyint(4) NOT NULL COMMENT '请假类型',
+                `reason`              varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请假原因',
+                `start_time`          datetime                                                      NOT NULL COMMENT '开始时间',
+                `end_time`            datetime                                                      NOT NULL COMMENT '结束时间',
+                `day`                 tinyint(4) NOT NULL COMMENT '请假天数',
+                `result`              tinyint(4) NOT NULL COMMENT '请假结果',
+                `process_instance_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '流程实例的编号',
+                `created_by`          varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT 'System' COMMENT '创建者',
+                `updated_by`          varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT 'System' COMMENT '修改者',
+                `gmt_create`          datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `gmt_modified`        datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                PRIMARY KEY (`id`) USING BTREE
+            ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'OA 请假申请表' ROW_FORMAT = COMPACT;
+
+            -- ----------------------------
+-- Records of bpm_oa_leave
+-- ----------------------------
+            INSERT INTO `bpm_oa_leave`
+            VALUES (4, 1, 2, '66', '2024-02-01 00:00:00', '2024-02-02 00:00:00', 1, 1,
+                    'ec052909-c0c7-11ee-99e7-e4a8dfc0db26', 'admin', 'admin', '2024-02-01 14:05:38',
+                    '2024-02-01 14:05:38');
+            INSERT INTO `bpm_oa_leave`
+            VALUES (5, 1, 2, '444', '2024-02-01 00:00:00', '2024-02-02 00:00:00', 1, 4,
+                    '1182a237-c0c8-11ee-99e7-e4a8dfc0db26', 'admin', 'admin', '2024-02-01 14:06:41',
+                    '2024-02-01 14:17:46');
+            INSERT INTO `bpm_oa_leave`
+            VALUES (6, 1, 2, '555', '2024-02-01 00:00:00', '2024-02-02 00:00:00', 1, 1,
+                    '1b4d851b-c0db-11ee-8f3b-e4a8dfc0db26', 'admin', 'admin', '2024-02-01 16:22:58',
+                    '2024-02-01 16:22:58');
+
+            -- ----------------------------
+-- Table structure for bpm_process_definition_ext
+-- ----------------------------
+            CREATE TABLE `bpm_process_definition_ext`
+            (
+                `id`                      bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                `process_definition_id`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '流程定义的编号',
+                `model_id`                varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '流程模型的编号',
+                `description`             varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                `form_type`               tinyint(4) NOT NULL COMMENT '表单类型',
+                `form_id`                 bigint(20) NULL DEFAULT NULL COMMENT '表单编号',
+                `form_conf`               text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '表单的配置',
+                `form_custom_create_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '自定义表单的提交路径',
+                `form_custom_view_path`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '自定义表单的查看路径',
+                `created_by`              varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '创建者',
+                `updated_by`              varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '修改者',
+                `gmt_create`              datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `gmt_modified`            datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                PRIMARY KEY (`id`) USING BTREE
+            ) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Bpm 流程定义的拓展表' ROW_FORMAT = COMPACT;
+
+            -- ----------------------------
+-- Records of bpm_process_definition_ext
+-- ----------------------------
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (1, 'ss:1:4cfbbee6-0f49-11ee-8b74-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 1, 1,
+                    NULL, '', '', 'admin', 'admin', '2023-06-20 17:03:19', '2023-06-20 17:03:19');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (2, 'ss:2:edd0a7aa-13ef-11ee-b0f6-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 1, 1,
+                    NULL, '', '', 'admin', 'admin', '2023-06-26 15:06:10', '2023-06-26 15:06:10');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (3, 'ss:3:238df61d-1496-11ee-82b5-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 1, 1,
+                    NULL, '', '', 'admin', 'admin', '2023-06-27 10:55:57', '2023-06-27 10:55:57');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (4, 'ss:4:b07f8121-1496-11ee-82b5-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 1, 1,
+                    NULL, '', '', 'admin', 'admin', '2023-06-27 10:59:53', '2023-06-27 10:59:53');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (5, 'ss:5:d5d63865-1496-11ee-82b5-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 1, 1,
+                    NULL, '', '', 'admin', 'admin', '2023-06-27 11:00:56', '2023-06-27 11:00:56');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (6, 'ss:6:e3c59d5f-1497-11ee-a6c1-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 1, 1,
+                    NULL, '', '', 'admin', 'admin', '2023-06-27 11:08:28', '2023-06-27 11:08:28');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (7, 'ss:7:b315aa7a-1498-11ee-8d37-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 1, 1,
+                    NULL, '', '', 'admin', 'admin', '2023-06-27 11:14:16', '2023-06-27 11:14:16');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (8, 'ss:8:5220f9f1-221e-11ee-a86d-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 1, 1,
+                    NULL, '', '', 'admin', 'admin', '2023-07-14 16:13:31', '2023-07-14 16:13:31');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (9, 'ss:9:dca19a15-2220-11ee-a86d-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 1, 1,
+                    NULL, '', '', 'admin', 'admin', '2023-07-14 16:31:43', '2023-07-14 16:31:43');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (10, 'ss:10:8107850d-2222-11ee-a86d-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 10,
+                    1,
+                    '{\"widgetList\":[{\"type\":\"static-text\",\"icon\":\"static-text\",\"formItemFlag\":false,\"options\":{\"name\":\"statictext111193\",\"columnWidth\":\"200px\",\"hidden\":false,\"textContent\":\"单列表单\",\"customClass\":[],\"onCreated\":\"\",\"onMounted\":\"\",\"label\":\"static-text\"},\"id\":\"statictext111193\"},{\"type\":\"divider\",\"icon\":\"divider\",\"formItemFlag\":false,\"options\":{\"name\":\"divider102346\",\"label\":\"\",\"columnWidth\":\"200px\",\"direction\":\"horizontal\",\"contentPosition\":\"center\",\"hidden\":false,\"customClass\":[],\"onCreated\":\"\",\"onMounted\":\"\"},\"id\":\"divider102346\"},{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input12931\",\"label\":\"发件人姓名\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"input12931\"},{\"type\":\"switch\",\"icon\":\"switch-field\",\"formItemFlag\":true,\"options\":{\"name\":\"switch96070\",\"label\":\"是否保密\",\"labelAlign\":\"\",\"defaultValue\":true,\"columnWidth\":\"200px\",\"labelWidth\":null,\"labelHidden\":false,\"disabled\":false,\"hidden\":false,\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"switchWidth\":40,\"activeText\":\"\",\"inactiveText\":\"\",\"activeColor\":null,\"inactiveColor\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onValidate\":\"\"},\"id\":\"switch96070\"},{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input23031\",\"label\":\"发件人号码\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"input23031\"},{\"type\":\"textarea\",\"icon\":\"textarea-field\",\"formItemFlag\":true,\"options\":{\"name\":\"textarea21654\",\"label\":\"发件人地址\",\"labelAlign\":\"\",\"rows\":3,\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"textarea21654\"},{\"type\":\"divider\",\"icon\":\"divider\",\"formItemFlag\":false,\"options\":{\"name\":\"divider69240\",\"label\":\"\",\"columnWidth\":\"200px\",\"direction\":\"horizontal\",\"contentPosition\":\"center\",\"hidden\":false,\"customClass\":\"\",\"onCreated\":\"\",\"onMounted\":\"\"},\"id\":\"divider69240\"},{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input113152\",\"label\":\"收件人姓名\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"input113152\"},{\"type\":\"checkbox\",\"icon\":\"checkbox-field\",\"formItemFlag\":true,\"options\":{\"name\":\"checkbox63174\",\"label\":\"接收时间段\",\"labelAlign\":\"\",\"defaultValue\":[],\"columnWidth\":\"200px\",\"size\":\"\",\"displayStyle\":\"inline\",\"buttonStyle\":false,\"border\":false,\"labelWidth\":null,\"labelHidden\":false,\"disabled\":false,\"hidden\":false,\"optionItems\":[{\"label\":\"上午9:00 - 11:30\",\"value\":1},{\"label\":\"下午12:30 - 18:00\",\"value\":2},{\"label\":\"晚上18:00 - 21:00\",\"value\":3}],\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onValidate\":\"\"},\"id\":\"checkbox63174\"},{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input40240\",\"label\":\"收件人号码\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"input40240\"},{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input78584\",\"label\":\"收件人地址\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"input78584\"},{\"type\":\"divider\",\"icon\":\"divider\",\"formItemFlag\":false,\"options\":{\"name\":\"divider75887\",\"label\":\"\",\"columnWidth\":\"200px\",\"direction\":\"horizontal\",\"contentPosition\":\"center\",\"hidden\":false,\"customClass\":[],\"onCreated\":\"\",\"onMounted\":\"\"},\"id\":\"divider75887\"},{\"type\":\"time-range\",\"icon\":\"time-range-field\",\"formItemFlag\":true,\"options\":{\"name\":\"timerange47503\",\"label\":\"送货时间\",\"labelAlign\":\"\",\"defaultValue\":null,\"startPlaceholder\":\"\",\"endPlaceholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"editable\":false,\"format\":\"HH:mm:ss\",\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"timerange47503\"},{\"type\":\"slider\",\"icon\":\"slider-field\",\"formItemFlag\":true,\"options\":{\"name\":\"slider54714\",\"label\":\"价格保护\",\"labelAlign\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"disabled\":false,\"hidden\":false,\"required\":false,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"min\":0,\"max\":100,\"step\":10,\"range\":false,\"height\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onValidate\":\"\",\"showStops\":true},\"id\":\"slider54714\"},{\"type\":\"textarea\",\"icon\":\"textarea-field\",\"formItemFlag\":true,\"options\":{\"name\":\"textarea64794\",\"label\":\"其他信息\",\"labelAlign\":\"\",\"rows\":3,\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"required\":false,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"textarea64794\"}],\"formConfig\":{\"modelName\":\"formData\",\"refName\":\"vForm\",\"rulesName\":\"rules\",\"labelWidth\":150,\"labelPosition\":\"left\",\"size\":\"\",\"labelAlign\":\"label-right-align\",\"cssCode\":\"\",\"customClass\":[],\"functions\":\"\",\"layoutType\":\"PC\",\"onFormCreated\":\"\",\"onFormMounted\":\"\",\"onFormDataChange\":\"\",\"onFormValidate\":\"\"}}',
+                    '', '', 'admin', 'admin', '2023-07-14 16:43:28', '2023-07-14 16:43:28');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (11, 'ss:11:95712ac1-244c-11ee-a86d-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 10,
+                    2,
+                    '{\"widgetList\":[{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input37714\",\"label\":\"input\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"requiredHint\":\"\",\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\",\"onAppendButtonClick\":\"\"},\"id\":\"input37714\"}],\"formConfig\":{\"modelName\":\"formData\",\"refName\":\"vForm\",\"rulesName\":\"rules\",\"labelWidth\":80,\"labelPosition\":\"left\",\"size\":\"\",\"labelAlign\":\"label-left-align\",\"cssCode\":\"\",\"customClass\":\"\",\"functions\":\"\",\"layoutType\":\"PC\",\"onFormCreated\":\"\",\"onFormMounted\":\"\",\"onFormDataChange\":\"\",\"onFormValidate\":\"\"}}',
+                    '', '', 'admin', 'admin', '2023-07-17 10:49:43', '2023-07-17 10:49:43');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (12, 'ss:12:0c6fcdd4-31d6-11ee-989c-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 10,
+                    2,
+                    '{\"widgetList\":[{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input37714\",\"label\":\"input\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"requiredHint\":\"\",\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\",\"onAppendButtonClick\":\"\"},\"id\":\"input37714\"}],\"formConfig\":{\"modelName\":\"formData\",\"refName\":\"vForm\",\"rulesName\":\"rules\",\"labelWidth\":80,\"labelPosition\":\"left\",\"size\":\"\",\"labelAlign\":\"label-left-align\",\"cssCode\":\"\",\"customClass\":\"\",\"functions\":\"\",\"layoutType\":\"PC\",\"onFormCreated\":\"\",\"onFormMounted\":\"\",\"onFormDataChange\":\"\",\"onFormValidate\":\"\"}}',
+                    '', '', 'admin', 'admin', '2023-08-03 16:16:29', '2023-08-03 16:16:29');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (13, 'ss:13:ed0034f5-be57-11ee-a054-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 1,
+                    2, NULL, '', '', 'admin', 'admin', '2024-01-29 11:38:54', '2024-01-29 11:38:54');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (14, 'ss:14:23f41514-be6f-11ee-93f2-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 10,
+                    2,
+                    '{\"widgetList\":[{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input37714\",\"label\":\"input\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"requiredHint\":\"\",\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\",\"onAppendButtonClick\":\"\"},\"id\":\"input37714\"}],\"formConfig\":{\"modelName\":\"formData\",\"refName\":\"vForm\",\"rulesName\":\"rules\",\"labelWidth\":80,\"labelPosition\":\"left\",\"size\":\"\",\"labelAlign\":\"label-left-align\",\"cssCode\":\"\",\"customClass\":\"\",\"functions\":\"\",\"layoutType\":\"PC\",\"onFormCreated\":\"\",\"onFormMounted\":\"\",\"onFormDataChange\":\"\",\"onFormValidate\":\"\"}}',
+                    '', '', 'admin', 'admin', '2024-01-29 14:25:04', '2024-01-29 14:25:04');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (15, 'ss:15:c75a569d-bfeb-11ee-910d-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 10,
+                    2,
+                    '{\"widgetList\":[{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input37714\",\"label\":\"input\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"requiredHint\":\"\",\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\",\"onAppendButtonClick\":\"\"},\"id\":\"input37714\"},{\"type\":\"radio\",\"icon\":\"radio-field\",\"formItemFlag\":true,\"options\":{\"name\":\"radio32270\",\"label\":\"radio\",\"labelAlign\":\"\",\"defaultValue\":null,\"columnWidth\":\"200px\",\"size\":\"\",\"displayStyle\":\"inline\",\"buttonStyle\":false,\"border\":false,\"labelWidth\":null,\"labelHidden\":false,\"disabled\":false,\"hidden\":false,\"optionItems\":[{\"label\":\"radio 1\",\"value\":1},{\"label\":\"radio 2\",\"value\":2},{\"label\":\"radio 3\",\"value\":3}],\"required\":false,\"requiredHint\":\"\",\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onValidate\":\"\"},\"id\":\"radio32270\"}],\"formConfig\":{\"modelName\":\"formData\",\"refName\":\"vForm\",\"rulesName\":\"rules\",\"labelWidth\":80,\"labelPosition\":\"left\",\"size\":\"\",\"labelAlign\":\"label-left-align\",\"cssCode\":\"\",\"customClass\":\"\",\"functions\":\"\",\"layoutType\":\"PC\",\"onFormCreated\":\"\",\"onFormMounted\":\"\",\"onFormDataChange\":\"\",\"onFormValidate\":\"\"}}',
+                    '', '', 'admin', 'admin', '2024-01-31 11:49:47', '2024-01-31 11:49:47');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (16, 'ss:16:a69b040c-bffa-11ee-910d-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 10,
+                    2,
+                    '{\"widgetList\":[{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input37714\",\"label\":\"input\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"requiredHint\":\"\",\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\",\"onAppendButtonClick\":\"\"},\"id\":\"input37714\"},{\"type\":\"radio\",\"icon\":\"radio-field\",\"formItemFlag\":true,\"options\":{\"name\":\"radio32270\",\"label\":\"radio\",\"labelAlign\":\"\",\"defaultValue\":1,\"columnWidth\":\"200px\",\"size\":\"\",\"displayStyle\":\"inline\",\"buttonStyle\":false,\"border\":false,\"labelWidth\":null,\"labelHidden\":false,\"disabled\":false,\"hidden\":false,\"optionItems\":[{\"label\":\"radio 1\",\"value\":1},{\"label\":\"radio 2\",\"value\":2},{\"label\":\"radio 3\",\"value\":3}],\"required\":false,\"requiredHint\":\"\",\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onValidate\":\"\"},\"id\":\"radio32270\"}],\"formConfig\":{\"modelName\":\"formData\",\"refName\":\"vForm\",\"rulesName\":\"rules\",\"labelWidth\":80,\"labelPosition\":\"left\",\"size\":\"\",\"labelAlign\":\"label-left-align\",\"cssCode\":\"\",\"customClass\":\"\",\"functions\":\"\",\"layoutType\":\"PC\",\"onFormCreated\":\"\",\"onFormMounted\":\"\",\"onFormDataChange\":\"\",\"onFormValidate\":\"\"}}',
+                    '', '', 'admin', 'admin', '2024-01-31 13:36:15', '2024-01-31 13:36:15');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (17, 'ss:17:54e14849-bfff-11ee-910d-e4a8dfc0db26', 'bee92da0-cf96-11ed-b355-da808313c797', NULL, 10,
+                    2,
+                    '{\"widgetList\":[{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input37714\",\"label\":\"input\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"requiredHint\":\"\",\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\",\"onAppendButtonClick\":\"\"},\"id\":\"input37714\"},{\"type\":\"radio\",\"icon\":\"radio-field\",\"formItemFlag\":true,\"options\":{\"name\":\"radio32270\",\"label\":\"radio\",\"labelAlign\":\"\",\"defaultValue\":1,\"columnWidth\":\"200px\",\"size\":\"\",\"displayStyle\":\"inline\",\"buttonStyle\":false,\"border\":false,\"labelWidth\":null,\"labelHidden\":false,\"disabled\":false,\"hidden\":false,\"optionItems\":[{\"label\":\"radio 1\",\"value\":1},{\"label\":\"radio 2\",\"value\":2},{\"label\":\"radio 3\",\"value\":3}],\"required\":false,\"requiredHint\":\"\",\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onValidate\":\"\"},\"id\":\"radio32270\"}],\"formConfig\":{\"modelName\":\"formData\",\"refName\":\"vForm\",\"rulesName\":\"rules\",\"labelWidth\":80,\"labelPosition\":\"left\",\"size\":\"\",\"labelAlign\":\"label-left-align\",\"cssCode\":\"\",\"customClass\":\"\",\"functions\":\"\",\"layoutType\":\"PC\",\"onFormCreated\":\"\",\"onFormMounted\":\"\",\"onFormDataChange\":\"\",\"onFormValidate\":\"\"}}',
+                    '', '', 'admin', 'admin', '2024-01-31 14:09:45', '2024-01-31 14:09:45');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (18, 'oa_leave:1:bd56a118-c0c7-11ee-99e7-e4a8dfc0db26', '677527d3-c0c7-11ee-99e7-e4a8dfc0db26', '笔',
+                    20, NULL, NULL, 'oa/leave/create', 'oa/leave/detail', 'admin', 'admin', '2024-02-01 14:04:20',
+                    '2024-02-01 14:04:20');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (19, 'oa_leave:2:0954ab86-c0c8-11ee-99e7-e4a8dfc0db26', '677527d3-c0c7-11ee-99e7-e4a8dfc0db26', '笔',
+                    20, NULL, NULL, 'oa/leave/create', 'oa/leave/detail', 'admin', 'admin', '2024-02-01 14:06:27',
+                    '2024-02-01 14:06:27');
+            INSERT INTO `bpm_process_definition_ext`
+            VALUES (20, 'oa_leave:3:485cfe04-c0c8-11ee-99e7-e4a8dfc0db26', '677527d3-c0c7-11ee-99e7-e4a8dfc0db26', '笔',
+                    20, NULL, NULL, '/bpm/oa/leave/create', '/bpm/oa/leave/detail', 'admin', 'admin',
+                    '2024-02-01 14:08:13', '2024-02-01 14:08:13');
+
+            -- ----------------------------
+-- Table structure for bpm_process_instance_ext
+-- ----------------------------
+            CREATE TABLE `bpm_process_instance_ext`
+            (
+                `id`                    bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                `start_user_id`         bigint(20) NOT NULL COMMENT '发起流程的用户编号',
+                `name`                  varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '流程实例的名字',
+                `process_instance_id`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '流程实例的编号',
+                `process_definition_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '流程定义的编号',
+                `category`              varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '流程分类',
+                `status`                tinyint(4) NOT NULL COMMENT '流程实例的状态',
+                `result`                tinyint(4) NOT NULL COMMENT '流程实例的结果',
+                `end_time`              datetime NULL DEFAULT NULL COMMENT '结束时间',
+                `form_variables`        varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '表单值',
+                `created_by`            varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '创建者',
+                `updated_by`            varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '修改者',
+                `gmt_create`            datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `gmt_modified`          datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                PRIMARY KEY (`id`) USING BTREE
+            ) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流的流程实例的拓展' ROW_FORMAT = COMPACT;
+
+            -- ----------------------------
+-- Records of bpm_process_instance_ext
+-- ----------------------------
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (1, 1, 's', '2a6b7462-2451-11ee-a86d-e4a8dfc0db26', 'ss:11:95712ac1-244c-11ee-a86d-e4a8dfc0db26',
+                    '1', 2, 4, '2023-08-03 10:51:04', '{\"input37714\":\"777\"}', 'admin', 'admin',
+                    '2023-07-17 11:22:31', '2023-08-03 10:51:04');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (2, 1, 's', '811b6b41-2452-11ee-82ae-e4a8dfc0db26', 'ss:11:95712ac1-244c-11ee-a86d-e4a8dfc0db26',
+                    '1', 2, 4, '2023-08-03 10:49:25', '{\"input37714\":\"tt\"}', 'admin', 'admin',
+                    '2023-07-17 11:32:06', '2023-08-03 10:49:24');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (3, 1, 's', 'a3555841-31a8-11ee-beaf-e4a8dfc0db26', 'ss:11:95712ac1-244c-11ee-a86d-e4a8dfc0db26',
+                    '1', 2, 4, '2023-08-03 10:52:30', '{\"input37714\":\"rrr\"}', 'admin', 'admin',
+                    '2023-08-03 10:51:25', '2023-08-03 10:52:30');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (4, 1, 's', '157b73dd-31ce-11ee-989c-e4a8dfc0db26', 'ss:11:95712ac1-244c-11ee-a86d-e4a8dfc0db26',
+                    '1', 1, 1, NULL, '{\"input37714\":\"56456\"}', 'admin', 'admin', '2023-08-03 15:19:28',
+                    '2023-08-03 15:19:29');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (5, 1, 's', '7b55eb47-31d4-11ee-989c-e4a8dfc0db26', 'ss:11:95712ac1-244c-11ee-a86d-e4a8dfc0db26',
+                    '1', 1, 1, NULL, '{\"input37714\":\"5676\"}', 'admin', 'admin', '2023-08-03 16:05:16',
+                    '2023-08-03 16:05:16');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (6, 1, 's', '1b1f43b5-31d6-11ee-989c-e4a8dfc0db26', 'ss:12:0c6fcdd4-31d6-11ee-989c-e4a8dfc0db26',
+                    '1', 2, 3, NULL, '{\"input37714\":\"444\"}', 'admin', 'demo', '2023-08-03 16:16:54',
+                    '2023-08-07 10:17:42');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (7, 1, 's', '9568c1e0-bce4-11ee-ae71-e4a8dfc0db26', 'ss:12:0c6fcdd4-31d6-11ee-989c-e4a8dfc0db26',
+                    '1', 1, 1, NULL, '{\"input37714\":\"666\"}', 'admin', 'admin', '2024-01-27 15:20:44',
+                    '2024-01-27 15:20:44');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (8, 1, 's', '401ab99a-bce5-11ee-ae71-e4a8dfc0db26', 'ss:12:0c6fcdd4-31d6-11ee-989c-e4a8dfc0db26',
+                    '1', 2, 4, '2024-01-29 10:19:33', '{\"input37714\":\"777\"}', 'admin', 'admin',
+                    '2024-01-27 15:25:30', '2024-01-29 10:19:32');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (9, 1, 's', '4060d8a5-be6f-11ee-93f2-e4a8dfc0db26', 'ss:14:23f41514-be6f-11ee-93f2-e4a8dfc0db26',
+                    '1', 1, 1, NULL, '{\"input37714\":\"444\"}', 'admin', 'admin', '2024-01-29 14:25:52',
+                    '2024-01-29 14:25:52');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (10, 1, 's', 'a4944e90-bfe6-11ee-910d-e4a8dfc0db26', 'ss:14:23f41514-be6f-11ee-93f2-e4a8dfc0db26',
+                    '1', 1, 1, NULL, '{\"input37714\":\"55555\"}', 'admin', 'admin', '2024-01-31 11:13:02',
+                    '2024-01-31 11:13:02');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (11, 1, 's', '78c0281e-bfec-11ee-910d-e4a8dfc0db26', 'ss:15:c75a569d-bfeb-11ee-910d-e4a8dfc0db26',
+                    '1', 1, 1, NULL, '{\"input37714\":\"5555\",\"radio32270\":2}', 'admin', 'admin',
+                    '2024-01-31 11:54:45', '2024-01-31 11:54:45');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (12, 1, 's', '769b9eea-bfff-11ee-910d-e4a8dfc0db26', 'ss:17:54e14849-bfff-11ee-910d-e4a8dfc0db26',
+                    '1', 2, 3, NULL, '{\"input37714\":\"666\",\"radio32270\":1}', 'admin', 'demo',
+                    '2024-01-31 14:10:42', '2024-01-31 17:54:12');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (13, 1, 's', '0fb64dab-c001-11ee-910d-e4a8dfc0db26', 'ss:17:54e14849-bfff-11ee-910d-e4a8dfc0db26',
+                    '1', 2, 3, NULL, '{\"input37714\":\"5555\",\"radio32270\":1}', 'admin', 'demo',
+                    '2024-01-31 14:22:08', '2024-01-31 14:51:59');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (14, 1, 's', '9f3c6cb0-c009-11ee-910d-e4a8dfc0db26', 'ss:17:54e14849-bfff-11ee-910d-e4a8dfc0db26',
+                    '1', 2, 2, '2024-01-31 17:53:33', '{\"input37714\":\"555\",\"radio32270\":1}', 'admin', 'demo',
+                    '2024-01-31 15:23:25', '2024-01-31 17:53:33');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (15, 1, '请假流程', 'ec052909-c0c7-11ee-99e7-e4a8dfc0db26',
+                    'oa_leave:1:bd56a118-c0c7-11ee-99e7-e4a8dfc0db26', '2', 1, 1, NULL, '{\"day\":1}', 'admin', 'admin',
+                    '2024-02-01 14:05:38', '2024-02-01 14:05:38');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (16, 1, '请假流程', '1182a237-c0c8-11ee-99e7-e4a8dfc0db26',
+                    'oa_leave:2:0954ab86-c0c8-11ee-99e7-e4a8dfc0db26', '2', 2, 4, '2024-02-01 14:17:47', '{\"day\":1}',
+                    'admin', 'admin', '2024-02-01 14:06:41', '2024-02-01 14:17:46');
+            INSERT INTO `bpm_process_instance_ext`
+            VALUES (17, 1, '请假流程', '1b4d851b-c0db-11ee-8f3b-e4a8dfc0db26',
+                    'oa_leave:3:485cfe04-c0c8-11ee-99e7-e4a8dfc0db26', '2', 1, 1, NULL, '{\"day\":1}', 'admin', 'admin',
+                    '2024-02-01 16:22:58', '2024-02-01 16:22:58');
+
+            -- ----------------------------
+-- Table structure for bpm_task_assign_rule
+-- ----------------------------
+            CREATE TABLE `bpm_task_assign_rule`
+            (
+                `id`                    bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                `model_id`              varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL COMMENT '流程模型的编号',
+                `process_definition_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL COMMENT '流程定义的编号',
+                `task_definition_key`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL COMMENT '流程任务定义的 key',
+                `type`                  tinyint(4) NOT NULL COMMENT '规则类型',
+                `options`               varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则值，JSON 数组',
+                `created_by`            varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL DEFAULT 'System' COMMENT '创建者',
+                `updated_by`            varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL DEFAULT 'System' COMMENT '修改者',
+                `gmt_create`            datetime                                                       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `gmt_modified`          datetime                                                       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                PRIMARY KEY (`id`) USING BTREE
+            ) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Bpm 任务规则表' ROW_FORMAT = COMPACT;
+
+            -- ----------------------------
+-- Records of bpm_task_assign_rule
+-- ----------------------------
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (1, 'bee92da0-cf96-11ed-b355-da808313c797', '', 'Activity_09w7fao', 30, '[1]', 'admin', 'admin',
+                    '2023-06-20 16:22:36', '2023-08-03 16:14:55');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (2, 'bee92da0-cf96-11ed-b355-da808313c797', '', 'Activity_15lqz3i', 20, '[15]', 'admin', 'admin',
+                    '2023-06-20 17:03:15', '2023-06-20 17:03:15');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (3, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:7:b315aa7a-1498-11ee-8d37-e4a8dfc0db26',
+                    'Activity_09w7fao', 50, '[20,10]', 'admin', 'admin', '2023-06-27 11:14:16', '2023-06-27 11:14:16');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (4, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:7:b315aa7a-1498-11ee-8d37-e4a8dfc0db26',
+                    'Activity_15lqz3i', 20, '[15]', 'admin', 'admin', '2023-06-27 11:14:16', '2023-06-27 11:14:16');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (5, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:8:5220f9f1-221e-11ee-a86d-e4a8dfc0db26',
+                    'Activity_09w7fao', 50, '[20,10]', 'admin', 'admin', '2023-07-14 16:13:31', '2023-07-14 16:13:31');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (6, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:9:dca19a15-2220-11ee-a86d-e4a8dfc0db26',
+                    'Activity_09w7fao', 50, '[20,10]', 'admin', 'admin', '2023-07-14 16:31:43', '2023-07-14 16:31:43');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (7, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:10:8107850d-2222-11ee-a86d-e4a8dfc0db26',
+                    'Activity_09w7fao', 50, '[20,10]', 'admin', 'admin', '2023-07-14 16:43:28', '2023-07-14 16:43:28');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (8, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:11:95712ac1-244c-11ee-a86d-e4a8dfc0db26',
+                    'Activity_09w7fao', 50, '[20,10]', 'admin', 'admin', '2023-07-17 10:49:43', '2023-07-17 10:49:43');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (9, 'bee92da0-cf96-11ed-b355-da808313c797', '', 'Activity_0d7vdc9', 30, '[2]', 'admin', 'admin',
+                    '2023-08-03 16:16:22', '2023-08-03 16:16:22');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (10, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:12:0c6fcdd4-31d6-11ee-989c-e4a8dfc0db26',
+                    'Activity_09w7fao', 30, '[1]', 'admin', 'admin', '2023-08-03 16:16:29', '2023-08-03 16:16:29');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (11, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:12:0c6fcdd4-31d6-11ee-989c-e4a8dfc0db26',
+                    'Activity_0d7vdc9', 30, '[2]', 'admin', 'admin', '2023-08-03 16:16:29', '2023-08-03 16:16:29');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (12, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:13:ed0034f5-be57-11ee-a054-e4a8dfc0db26',
+                    'Activity_09w7fao', 30, '[1]', 'admin', 'admin', '2024-01-29 11:38:54', '2024-01-29 11:38:54');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (13, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:13:ed0034f5-be57-11ee-a054-e4a8dfc0db26',
+                    'Activity_0d7vdc9', 30, '[2]', 'admin', 'admin', '2024-01-29 11:38:54', '2024-01-29 11:38:54');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (14, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:14:23f41514-be6f-11ee-93f2-e4a8dfc0db26',
+                    'Activity_09w7fao', 30, '[1]', 'admin', 'admin', '2024-01-29 14:25:05', '2024-01-29 14:25:05');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (15, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:14:23f41514-be6f-11ee-93f2-e4a8dfc0db26',
+                    'Activity_0d7vdc9', 30, '[2]', 'admin', 'admin', '2024-01-29 14:25:05', '2024-01-29 14:25:05');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (16, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:15:c75a569d-bfeb-11ee-910d-e4a8dfc0db26',
+                    'Activity_09w7fao', 30, '[1]', 'admin', 'admin', '2024-01-31 11:49:47', '2024-01-31 11:49:47');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (17, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:15:c75a569d-bfeb-11ee-910d-e4a8dfc0db26',
+                    'Activity_0d7vdc9', 30, '[2]', 'admin', 'admin', '2024-01-31 11:49:47', '2024-01-31 11:49:47');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (18, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:16:a69b040c-bffa-11ee-910d-e4a8dfc0db26',
+                    'Activity_09w7fao', 30, '[1]', 'admin', 'admin', '2024-01-31 13:36:15', '2024-01-31 13:36:15');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (19, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:16:a69b040c-bffa-11ee-910d-e4a8dfc0db26',
+                    'Activity_0d7vdc9', 30, '[2]', 'admin', 'admin', '2024-01-31 13:36:15', '2024-01-31 13:36:15');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (20, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:17:54e14849-bfff-11ee-910d-e4a8dfc0db26',
+                    'Activity_09w7fao', 30, '[1]', 'admin', 'admin', '2024-01-31 14:09:45', '2024-01-31 14:09:45');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (21, 'bee92da0-cf96-11ed-b355-da808313c797', 'ss:17:54e14849-bfff-11ee-910d-e4a8dfc0db26',
+                    'Activity_0d7vdc9', 30, '[2]', 'admin', 'admin', '2024-01-31 14:09:45', '2024-01-31 14:09:45');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (22, '677527d3-c0c7-11ee-99e7-e4a8dfc0db26', '', 'Activity_0m9hzi9', 30, '[1]', 'admin', 'admin',
+                    '2024-02-01 14:04:05', '2024-02-01 14:04:05');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (23, '677527d3-c0c7-11ee-99e7-e4a8dfc0db26', 'oa_leave:1:bd56a118-c0c7-11ee-99e7-e4a8dfc0db26',
+                    'Activity_0m9hzi9', 30, '[1]', 'admin', 'admin', '2024-02-01 14:04:20', '2024-02-01 14:04:20');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (24, '677527d3-c0c7-11ee-99e7-e4a8dfc0db26', 'oa_leave:2:0954ab86-c0c8-11ee-99e7-e4a8dfc0db26',
+                    'Activity_0m9hzi9', 30, '[1]', 'admin', 'admin', '2024-02-01 14:06:27', '2024-02-01 14:06:27');
+            INSERT INTO `bpm_task_assign_rule`
+            VALUES (25, '677527d3-c0c7-11ee-99e7-e4a8dfc0db26', 'oa_leave:3:485cfe04-c0c8-11ee-99e7-e4a8dfc0db26',
+                    'Activity_0m9hzi9', 30, '[1]', 'admin', 'admin', '2024-02-01 14:08:13', '2024-02-01 14:08:13');
+
+            -- ----------------------------
+-- Table structure for bpm_task_ext
+-- ----------------------------
+            CREATE TABLE `bpm_task_ext`
+            (
+                `id`                    bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                `assignee_user_id`      bigint(20) NULL DEFAULT NULL COMMENT '任务的审批人',
+                `name`                  varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '任务的名字',
+                `task_id`               varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务的编号',
+                `result`                tinyint(4) NOT NULL COMMENT '任务的结果',
+                `reason`                varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '审批建议',
+                `end_time`              datetime NULL DEFAULT NULL COMMENT '任务的结束时间',
+                `process_instance_id`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '流程实例的编号',
+                `process_definition_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '流程定义的编号',
+                `created_by`            varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '创建者',
+                `updated_by`            varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '修改者',
+                `gmt_create`            datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `gmt_modified`          datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                PRIMARY KEY (`id`) USING BTREE
+            ) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流的流程任务的拓展表' ROW_FORMAT = COMPACT;
+
+            -- ----------------------------
+-- Records of bpm_task_ext
+-- ----------------------------
+            INSERT INTO `bpm_task_ext`
+            VALUES (1, 1, '任务1', '2aa1c6a9-2451-11ee-a86d-e4a8dfc0db26', 4, '主动取消任务，原因：7777',
+                    '2023-08-03 10:51:04', '2a6b7462-2451-11ee-a86d-e4a8dfc0db26',
+                    'ss:11:95712ac1-244c-11ee-a86d-e4a8dfc0db26', 'admin', 'admin', '2023-07-17 11:22:32',
+                    '2023-08-03 10:51:04');
+            INSERT INTO `bpm_task_ext`
+            VALUES (2, 1, '任务1', '81313d38-2452-11ee-82ae-e4a8dfc0db26', 4, '主动取消任务，原因：666',
+                    '2023-08-03 10:49:25', '811b6b41-2452-11ee-82ae-e4a8dfc0db26',
+                    'ss:11:95712ac1-244c-11ee-a86d-e4a8dfc0db26', 'admin', 'admin', '2023-07-17 11:32:07',
+                    '2023-08-03 10:49:25');
+            INSERT INTO `bpm_task_ext`
+            VALUES (3, 1, '任务1', 'a37674d8-31a8-11ee-beaf-e4a8dfc0db26', 4, '主动取消任务，原因：9999',
+                    '2023-08-03 10:52:30', 'a3555841-31a8-11ee-beaf-e4a8dfc0db26',
+                    'ss:11:95712ac1-244c-11ee-a86d-e4a8dfc0db26', 'admin', 'admin', '2023-08-03 10:51:26',
+                    '2023-08-03 10:52:30');
+            INSERT INTO `bpm_task_ext`
+            VALUES (4, 1, '任务1', '15a717c4-31ce-11ee-989c-e4a8dfc0db26', 1, NULL, NULL,
+                    '157b73dd-31ce-11ee-989c-e4a8dfc0db26', 'ss:11:95712ac1-244c-11ee-a86d-e4a8dfc0db26', 'admin',
+                    'admin', '2023-08-03 15:19:29', '2023-08-03 15:19:29');
+            INSERT INTO `bpm_task_ext`
+            VALUES (5, 1, '任务1', '7b5a7f2e-31d4-11ee-989c-e4a8dfc0db26', 1, NULL, NULL,
+                    '7b55eb47-31d4-11ee-989c-e4a8dfc0db26', 'ss:11:95712ac1-244c-11ee-a86d-e4a8dfc0db26', 'admin',
+                    'admin', '2023-08-03 16:05:17', '2023-08-03 16:05:16');
+            INSERT INTO `bpm_task_ext`
+            VALUES (6, 2, 'HR', '1b21dbcc-31d6-11ee-989c-e4a8dfc0db26', 3, '7777', '2023-08-07 10:17:43',
+                    '1b1f43b5-31d6-11ee-989c-e4a8dfc0db26', 'ss:12:0c6fcdd4-31d6-11ee-989c-e4a8dfc0db26', 'admin',
+                    'demo', '2023-08-03 16:16:54', '2023-08-07 10:17:42');
+            INSERT INTO `bpm_task_ext`
+            VALUES (7, 1, 'HR', '9591a6a7-bce4-11ee-ae71-e4a8dfc0db26', 1, NULL, NULL,
+                    '9568c1e0-bce4-11ee-ae71-e4a8dfc0db26', 'ss:12:0c6fcdd4-31d6-11ee-989c-e4a8dfc0db26', 'admin',
+                    'admin', '2024-01-27 15:20:44', '2024-01-27 15:20:44');
+            INSERT INTO `bpm_task_ext`
+            VALUES (8, 1, 'HR', '401bf221-bce5-11ee-ae71-e4a8dfc0db26', 4, '主动取消任务，原因：666',
+                    '2024-01-29 10:19:33', '401ab99a-bce5-11ee-ae71-e4a8dfc0db26',
+                    'ss:12:0c6fcdd4-31d6-11ee-989c-e4a8dfc0db26', 'admin', 'admin', '2024-01-27 15:25:30',
+                    '2024-01-29 10:19:32');
+            INSERT INTO `bpm_task_ext`
+            VALUES (9, 1, 'HR', '4078cd7c-be6f-11ee-93f2-e4a8dfc0db26', 1, NULL, NULL,
+                    '4060d8a5-be6f-11ee-93f2-e4a8dfc0db26', 'ss:14:23f41514-be6f-11ee-93f2-e4a8dfc0db26', 'admin',
+                    'admin', '2024-01-29 14:25:53', '2024-01-29 14:25:52');
+            INSERT INTO `bpm_task_ext`
+            VALUES (10, 1, 'HR', 'a4ba2617-bfe6-11ee-910d-e4a8dfc0db26', 1, NULL, NULL,
+                    'a4944e90-bfe6-11ee-910d-e4a8dfc0db26', 'ss:14:23f41514-be6f-11ee-93f2-e4a8dfc0db26', 'admin',
+                    'admin', '2024-01-31 11:13:02', '2024-01-31 11:13:02');
+            INSERT INTO `bpm_task_ext`
+            VALUES (11, 1, 'HR', '78c6dee6-bfec-11ee-910d-e4a8dfc0db26', 2, '4444', '2024-01-31 14:01:47',
+                    '78c0281e-bfec-11ee-910d-e4a8dfc0db26', 'ss:15:c75a569d-bfeb-11ee-910d-e4a8dfc0db26', 'admin',
+                    'admin', '2024-01-31 11:54:45', '2024-01-31 14:01:47');
+            INSERT INTO `bpm_task_ext`
+            VALUES (12, 2, '总经理', '37c74a33-bffe-11ee-910d-e4a8dfc0db26', 1, NULL, NULL,
+                    '78c0281e-bfec-11ee-910d-e4a8dfc0db26', 'ss:15:c75a569d-bfeb-11ee-910d-e4a8dfc0db26', 'admin',
+                    'admin', '2024-01-31 14:01:47', '2024-01-31 14:01:47');
+            INSERT INTO `bpm_task_ext`
+            VALUES (13, 1, 'HR', '769d4ca2-bfff-11ee-910d-e4a8dfc0db26', 2, '666', '2024-01-31 14:10:58',
+                    '769b9eea-bfff-11ee-910d-e4a8dfc0db26', 'ss:17:54e14849-bfff-11ee-910d-e4a8dfc0db26', 'admin',
+                    'admin', '2024-01-31 14:10:42', '2024-01-31 14:10:58');
+            INSERT INTO `bpm_task_ext`
+            VALUES (14, 2, '总经理', '80342228-bfff-11ee-910d-e4a8dfc0db26', 3, '77', '2024-01-31 17:54:12',
+                    '769b9eea-bfff-11ee-910d-e4a8dfc0db26', 'ss:17:54e14849-bfff-11ee-910d-e4a8dfc0db26', 'admin',
+                    'demo', '2024-01-31 14:10:58', '2024-01-31 17:54:12');
+            INSERT INTO `bpm_task_ext`
+            VALUES (15, 1, 'HR', '0fc6c873-c001-11ee-910d-e4a8dfc0db26', 2, '555', '2024-01-31 14:47:31',
+                    '0fb64dab-c001-11ee-910d-e4a8dfc0db26', 'ss:17:54e14849-bfff-11ee-910d-e4a8dfc0db26', 'admin',
+                    'admin', '2024-01-31 14:22:09', '2024-01-31 14:47:31');
+            INSERT INTO `bpm_task_ext`
+            VALUES (16, 2, '总经理', '9b6df1c9-c004-11ee-910d-e4a8dfc0db26', 3, '555ttt', '2024-01-31 14:52:00',
+                    '0fb64dab-c001-11ee-910d-e4a8dfc0db26', 'ss:17:54e14849-bfff-11ee-910d-e4a8dfc0db26', 'admin',
+                    'demo', '2024-01-31 14:47:32', '2024-01-31 14:51:59');
+            INSERT INTO `bpm_task_ext`
+            VALUES (17, 1, 'HR', '9f3fa108-c009-11ee-910d-e4a8dfc0db26', 2, '77', '2024-01-31 15:27:09',
+                    '9f3c6cb0-c009-11ee-910d-e4a8dfc0db26', 'ss:17:54e14849-bfff-11ee-910d-e4a8dfc0db26', 'admin',
+                    'admin', '2024-01-31 15:23:25', '2024-01-31 15:27:08');
+            INSERT INTO `bpm_task_ext`
+            VALUES (18, 2, '总经理', '246615de-c00a-11ee-910d-e4a8dfc0db26', 2, '77', '2024-01-31 17:53:33',
+                    '9f3c6cb0-c009-11ee-910d-e4a8dfc0db26', 'ss:17:54e14849-bfff-11ee-910d-e4a8dfc0db26', 'admin',
+                    'demo', '2024-01-31 15:27:09', '2024-01-31 17:53:33');
+            INSERT INTO `bpm_task_ext`
+            VALUES (19, 1, NULL, 'ec11d340-c0c7-11ee-99e7-e4a8dfc0db26', 1, NULL, NULL,
+                    'ec052909-c0c7-11ee-99e7-e4a8dfc0db26', 'oa_leave:1:bd56a118-c0c7-11ee-99e7-e4a8dfc0db26', 'admin',
+                    'admin', '2024-02-01 14:05:39', '2024-02-01 14:05:38');
+            INSERT INTO `bpm_task_ext`
+            VALUES (20, 1, 'HR', '1196514e-c0c8-11ee-99e7-e4a8dfc0db26', 4, '主动取消任务，原因：666',
+                    '2024-02-01 14:17:47', '1182a237-c0c8-11ee-99e7-e4a8dfc0db26',
+                    'oa_leave:2:0954ab86-c0c8-11ee-99e7-e4a8dfc0db26', 'admin', 'admin', '2024-02-01 14:06:41',
+                    '2024-02-01 14:17:47');
+            INSERT INTO `bpm_task_ext`
+            VALUES (21, 1, 'HR', '1b5b8ee2-c0db-11ee-8f3b-e4a8dfc0db26', 1, NULL, NULL,
+                    '1b4d851b-c0db-11ee-8f3b-e4a8dfc0db26', 'oa_leave:3:485cfe04-c0c8-11ee-99e7-e4a8dfc0db26', 'admin',
+                    'admin', '2024-02-01 16:22:58', '2024-02-01 16:22:58');
+
+            -- ----------------------------
+-- Table structure for bpm_user_group
+-- ----------------------------
+            CREATE TABLE `bpm_user_group`
+            (
+                `id`              bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                `name`            varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL DEFAULT '' COMMENT '组名',
+                `description`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT '' COMMENT '描述',
+                `member_user_ids` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '成员编号数组',
+                `status`          tinyint(4) NOT NULL COMMENT '状态（0正常 1停用）',
+                `created_by`      varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL DEFAULT 'System' COMMENT '创建者',
+                `updated_by`      varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL DEFAULT 'System' COMMENT '修改者',
+                `gmt_create`      datetime                                                       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `gmt_modified`    datetime                                                       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                PRIMARY KEY (`id`) USING BTREE
+            ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户组' ROW_FORMAT = COMPACT;
+
+            -- ----------------------------
+-- Records of bpm_user_group
+-- ----------------------------
+            INSERT INTO `bpm_user_group`
+            VALUES (1, '分组1', '11', '[1]', 1, 'admin', 'admin', '2023-06-20 10:18:16', '2023-06-20 10:36:48');
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE IF EXISTS `bpm_form`;
+                DROP TABLE IF EXISTS `bpm_oa_leave`;
+                DROP TABLE IF EXISTS `bpm_process_definition_ext`;
+                DROP TABLE IF EXISTS `bpm_process_instance_ext`;
+                DROP TABLE IF EXISTS `bpm_task_assign_rule`;
+                DROP TABLE IF EXISTS `bpm_task_ext`;
+                DROP TABLE IF EXISTS `bpm_user_group`;
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
+

@@ -33,7 +33,7 @@
 
         <hutool.version>5.8.3</hutool.version>
         <mybatis.plus.version>3.5.1</mybatis.plus.version>
-        <liquibase.version>4.4.3</liquibase.version>
+        <liquibase.version>4.9.1</liquibase.version>
         <jjwt.version>0.11.1</jjwt.version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
         <poi.version>4.1.2</poi.version>
