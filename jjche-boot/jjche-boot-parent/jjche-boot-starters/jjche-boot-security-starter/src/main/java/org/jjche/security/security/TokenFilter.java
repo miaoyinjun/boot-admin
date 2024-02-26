@@ -1,5 +1,6 @@
 package org.jjche.security.security;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.BooleanUtil;
 import org.jjche.common.api.CommonAPI;
 import org.jjche.common.constant.SecurityConstant;
@@ -104,9 +105,15 @@ public class TokenFilter extends GenericFilterBean {
         for (PatternsRequestCondition p : RequestMappingRunner.MAPPING_INFO_MAP.keySet()) {
             if (p.getMatchingPatterns(uri).size() > 0) {
                 isMachUrl = true;
-                isMachUrlMethod = RequestMappingRunner.MAPPING_INFO_MAP.get(p).contains(method);
-                // fix /test/{id} /test/import 匹配问题
-                if(isMachUrlMethod){
+                Set<String> methods = RequestMappingRunner.MAPPING_INFO_MAP.get(p);
+                if (CollUtil.isNotEmpty(methods)) {
+                    isMachUrlMethod = methods.contains(method);
+                    // fix /test/{id} /test/import 匹配问题
+                } else {
+                    //fix @RequestMapping("/bpm/**")没有methods问题
+                    isMachUrlMethod = true;
+                }
+                if (isMachUrlMethod) {
                     break;
                 }
             }

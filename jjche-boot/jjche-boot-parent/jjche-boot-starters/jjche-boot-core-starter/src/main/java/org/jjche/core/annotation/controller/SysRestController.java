@@ -11,7 +11,7 @@ import java.lang.annotation.*;
  * admin/controller层统一使用该注解
  * </p>
  * <p>
- * 默认增加前缀/api/admin/
+ * 默认增加前缀/admin/admin/
  * </p>
  *
  * @author miaoyj

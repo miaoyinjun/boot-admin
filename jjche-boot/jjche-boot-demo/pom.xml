@@ -28,10 +28,10 @@
             <groupId>org.jjcheframework.boot</groupId>
             <artifactId>jjche-boot-module-system</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-boot-module-bpm</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.jjcheframework.boot</groupId>-->
+<!--            <artifactId>jjche-boot-module-bpm</artifactId>-->
+<!--        </dependency>-->
         <!--spring-cloud-->
 <!--                                <dependency>-->
 <!--                                    <groupId>org.jjcheframework.boot</groupId>-->
