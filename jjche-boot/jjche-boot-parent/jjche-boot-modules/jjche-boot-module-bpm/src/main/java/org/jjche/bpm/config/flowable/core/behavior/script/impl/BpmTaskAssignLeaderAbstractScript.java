@@ -5,11 +5,11 @@ import cn.hutool.core.util.NumberUtil;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.jjche.bpm.config.flowable.core.behavior.script.BpmTaskAssignScript;
+import org.jjche.bpm.modules.task.service.BpmProcessInstanceService;
 import org.jjche.common.dto.DeptSmallDto;
 import org.jjche.common.dto.UserVO;
-import org.jjche.common.service.IDeptService;
-import org.jjche.common.service.IUserService;
-import org.jjche.bpm.modules.task.service.BpmProcessInstanceService;
+import org.jjche.system.modules.dept.api.DeptApi;
+import org.jjche.system.modules.user.api.UserApi;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.util.Assert;
 
@@ -27,9 +27,9 @@ import static java.util.Collections.emptySet;
 public abstract class BpmTaskAssignLeaderAbstractScript implements BpmTaskAssignScript {
 
     @Resource
-    private IUserService userService;
+    private UserApi userApi;
     @Resource
-    private IDeptService deptService;
+    private DeptApi deptApi;
     @Resource
     @Lazy // 解决循环依赖
     private BpmProcessInstanceService bpmProcessInstanceService;
@@ -49,7 +49,7 @@ public abstract class BpmTaskAssignLeaderAbstractScript implements BpmTaskAssign
                     return emptySet();
                 }
             } else {
-                DeptSmallDto parentDept = deptService.getSmallById(dept.getPid());
+                DeptSmallDto parentDept = deptApi.getSmallById(dept.getPid());
                 if (parentDept == null) { // 找不到父级部门，所以只好结束寻找。原因是：例如说，级别比较高的人，所在部门层级比较少
                     break;
                 }
@@ -60,11 +60,11 @@ public abstract class BpmTaskAssignLeaderAbstractScript implements BpmTaskAssign
     }
 
     private DeptSmallDto getStartUserDept(Long startUserId) {
-        UserVO startUser = userService.findById(startUserId);
+        UserVO startUser = userApi.findById(startUserId);
         if (startUser.getDeptId() == null) { // 找不到部门，所以无法使用该规则
             return null;
         }
-        return deptService.getSmallById(startUser.getDeptId());
+        return deptApi.getSmallById(startUser.getDeptId());
     }
 
 }

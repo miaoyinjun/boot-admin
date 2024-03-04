@@ -115,7 +115,7 @@
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-system-cloud-api</artifactId>
+            <artifactId>jjche-boot-module-system-cloud-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>

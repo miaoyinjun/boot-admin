@@ -2,7 +2,7 @@ package org.jjche.cloud;
 
 import org.jjche.cloud.gray.config.VersionServiceInstanceListSupplierConfiguration;
 import org.jjche.cloud.loader.DynamicRouteLoader;
-import org.jjche.common.system.api.ISysBaseAPI;
+import org.jjche.system.modules.ISysBaseAPI;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

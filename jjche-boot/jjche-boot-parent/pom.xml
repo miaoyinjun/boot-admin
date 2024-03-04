@@ -55,7 +55,6 @@
     </properties>
 
     <modules>
-        <module>jjche-boot-base-api</module>
         <module>jjche-boot-common</module>
         <module>jjche-boot-starters</module>
         <module>jjche-boot-eladmin</module>
@@ -101,12 +100,17 @@
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
-                <artifactId>jjche-system-local-api</artifactId>
+                <artifactId>jjche-boot-module-system-base</artifactId>
                 <version>2.0.8-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
-                <artifactId>jjche-system-cloud-api</artifactId>
+                <artifactId>jjche-boot-module-system-local-api</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-module-system-cloud-api</artifactId>
                 <version>2.0.8-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -167,7 +171,7 @@
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
-                <artifactId>jjche-boot-module-system</artifactId>
+                <artifactId>jjche-boot-module-system-biz</artifactId>
                 <version>2.0.8-SNAPSHOT</version>
             </dependency>
             <dependency>

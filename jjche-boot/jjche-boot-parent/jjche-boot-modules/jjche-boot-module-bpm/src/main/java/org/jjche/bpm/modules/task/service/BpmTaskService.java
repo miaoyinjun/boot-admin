@@ -26,9 +26,9 @@ import org.jjche.common.dto.DeptSmallDto;
 import org.jjche.common.dto.UserVO;
 import org.jjche.common.exception.BusinessException;
 import org.jjche.common.param.MyPage;
-import org.jjche.common.service.IDeptService;
-import org.jjche.common.service.IUserService;
 import org.jjche.mybatis.base.service.MyServiceImpl;
+import org.jjche.system.modules.dept.api.DeptApi;
+import org.jjche.system.modules.user.api.UserApi;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
@@ -52,8 +52,8 @@ public class BpmTaskService extends MyServiceImpl<BpmTaskExtMapper, BpmTaskExtDO
     private final TaskService taskService;
     private final HistoryService historyService;
     private final BpmProcessInstanceService processInstanceService;
-    private final IUserService userService;
-    private final IDeptService deptService;
+    private final UserApi userApi;
+    private final DeptApi deptApi;
     private final BpmMessageService messageService;
     private final BpmTaskConvert bpmTaskConvert;
     /**
@@ -91,7 +91,7 @@ public class BpmTaskService extends MyServiceImpl<BpmTaskExtMapper, BpmTaskExtDO
         Map<String, ProcessInstance> processInstanceMap = processInstanceService.getProcessInstanceMap(instanceIds);
         // 获得 User Map
         Set<Long> startUserIds = processInstanceMap.values().stream().map(o -> Long.valueOf(o.getStartUserId())).collect(Collectors.toSet());
-        List<UserVO> users = userService.listByIds(startUserIds);
+        List<UserVO> users = userApi.listByIds(startUserIds);
 
         Map<Long, UserVO> userMap = MapUtil.newHashMap();
         userMap = CollUtil.toMap(users, userMap, UserVO::getId);
@@ -146,8 +146,7 @@ public class BpmTaskService extends MyServiceImpl<BpmTaskExtMapper, BpmTaskExtDO
         // 获得 User Map
         Set<Long> startUserIds = historicProcessInstanceMap.values().stream().map(instance -> Long.valueOf(instance.getStartUserId())).collect(Collectors.toSet());
 
-
-        List<UserVO> users = userService.listByIds(startUserIds);
+        List<UserVO> users = userApi.listByIds(startUserIds);
 
         Map<Long, UserVO> userMap = MapUtil.newHashMap();
         userMap = CollUtil.toMap(users, userMap, UserVO::getId);
@@ -210,14 +209,14 @@ public class BpmTaskService extends MyServiceImpl<BpmTaskExtMapper, BpmTaskExtDO
         Set<Long> userIds = tasks.stream().map(task -> NumberUtil.parseLong(task.getAssignee())).collect(Collectors.toSet());
         userIds.add(NumberUtil.parseLong(processInstance.getStartUserId()));
 
-        List<UserVO> users = userService.listByIds(userIds);
+        List<UserVO> users = userApi.listByIds(userIds);
 
         Map<Long, UserVO> userMap = MapUtil.newHashMap();
         userMap = CollUtil.toMap(users, userMap, UserVO::getId);
 
         // 获得 Dept Map
         Set<Long> deptIds = userMap.values().stream().map(UserVO::getDeptId).collect(Collectors.toSet());
-        List<DeptSmallDto> deptSmalls = deptService.listByIds(deptIds);
+        List<DeptSmallDto> deptSmalls = deptApi.listByIds(deptIds);
         // 拼接数据
         return bpmTaskConvert.convertList3(tasks, bpmTaskExtDOMap, processInstance, userMap);
     }
@@ -397,7 +396,7 @@ public class BpmTaskService extends MyServiceImpl<BpmTaskExtMapper, BpmTaskExtDO
             @Override
             public void afterCommit() {
                 ProcessInstance processInstance = processInstanceService.getProcessInstance(task.getProcessInstanceId());
-                UserVO startUser = userService.findById(Long.valueOf(processInstance.getStartUserId()));
+                UserVO startUser = userApi.findById(Long.valueOf(processInstance.getStartUserId()));
                 messageService.sendMessageWhenTaskAssigned(bpmTaskConvert.convert(processInstance, startUser, task));
             }
         });

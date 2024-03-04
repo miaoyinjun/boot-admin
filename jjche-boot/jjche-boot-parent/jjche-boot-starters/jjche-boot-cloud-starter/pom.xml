@@ -35,7 +35,7 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.jjcheframework.boot</groupId>
-                    <artifactId>jjche-system-local-api</artifactId>
+                    <artifactId>jjche-boot-module-system-local-api</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>org.jjcheframework.boot</groupId>
@@ -45,11 +45,11 @@
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-system-cloud-api</artifactId>
+            <artifactId>jjche-boot-module-system-cloud-api</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.jjcheframework.boot</groupId>
-                    <artifactId>jjche-system-local-api</artifactId>
+                    <artifactId>jjche-boot-module-system-local-api</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

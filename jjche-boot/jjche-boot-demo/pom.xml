@@ -27,7 +27,7 @@
         <!--spring-boot-->
         <!--        <dependency>-->
         <!--            <groupId>org.jjcheframework.boot</groupId>-->
-        <!--            <artifactId>jjche-boot-module-system</artifactId>-->
+        <!--            <artifactId>jjche-boot-module-system-biz</artifactId>-->
         <!--        </dependency>-->
         <!--        <dependency>-->
         <!--            <groupId>org.jjcheframework.boot</groupId>-->

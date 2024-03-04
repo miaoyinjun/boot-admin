@@ -29,13 +29,11 @@ import org.jjche.bpm.onstants.DictTypeConstants;
 import org.jjche.common.dto.DeptSmallDto;
 import org.jjche.common.dto.UserVO;
 import org.jjche.common.exception.BusinessException;
-import org.jjche.common.service.IDeptService;
-import org.jjche.common.service.IUserService;
-import org.jjche.common.system.api.dept.DeptApi;
-import org.jjche.common.system.api.dept.JobApi;
-import org.jjche.common.system.api.dict.DictApi;
-import org.jjche.common.system.api.permission.RoleApi;
-import org.jjche.common.system.api.user.UserApi;
+import org.jjche.system.modules.dept.api.DeptApi;
+import org.jjche.system.modules.dept.api.JobApi;
+import org.jjche.system.modules.dict.api.DictApi;
+import org.jjche.system.modules.permission.api.RoleApi;
+import org.jjche.system.modules.user.api.UserApi;
 import org.jjche.flowable.util.FlowableUtils;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.springframework.context.annotation.Lazy;
@@ -63,11 +61,9 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
     @Lazy // 解决循环依赖
     private BpmProcessDefinitionService processDefinitionService;
     private final BpmUserGroupService userGroupService;
-    private final IDeptService deptService;
-    private final IUserService userService;
+    private final DeptApi deptApi;
     private final BpmTaskAssignRuleConvert bpmTaskAssignRuleConvert;
     private final RoleApi roleApi;
-    private final DeptApi deptApi;
     private final JobApi jobApi;
     private final UserApi userApi;
     private final DictApi dictApi;
@@ -329,12 +325,12 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
     }
 
     private Set<Long> calculateTaskCandidateUsersByDeptMember(BpmTaskAssignRuleDO rule) {
-        List<UserVO> users = userService.listByDeptIds(rule.getOptions());
+        List<UserVO> users = userApi.listByDeptIds(rule.getOptions());
         return users.stream().map(UserVO::getId).collect(Collectors.toSet());
     }
 
     private Set<Long> calculateTaskCandidateUsersByDeptLeader(BpmTaskAssignRuleDO rule) {
-        List<DeptSmallDto> depts = deptService.listByIds(rule.getOptions());
+        List<DeptSmallDto> depts = deptApi.listByIds(rule.getOptions());
         return depts.stream().map(DeptSmallDto::getLeaderUserId).collect(Collectors.toSet());
     }
 
@@ -375,7 +371,7 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
         if (CollUtil.isEmpty(assigneeUserIds)) {
             return;
         }
-        List<UserVO> users = userService.listByIds(assigneeUserIds);
+        List<UserVO> users = userApi.listByIds(assigneeUserIds);
         Map<Long, UserVO> userMap = MapUtil.newHashMap();
         userMap = CollUtil.toMap(users, userMap, UserVO::getId);
 

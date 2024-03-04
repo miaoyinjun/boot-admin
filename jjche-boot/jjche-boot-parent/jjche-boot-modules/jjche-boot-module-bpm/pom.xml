@@ -21,7 +21,7 @@
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-system-local-api</artifactId>
+            <artifactId>jjche-boot-module-system-local-api</artifactId>
         </dependency>
     </dependencies>
 </project>

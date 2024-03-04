@@ -30,7 +30,7 @@
     <dependencies>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-boot-module-system</artifactId>
+            <artifactId>jjche-boot-module-system-biz</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.jjcheframework.boot</groupId>
@@ -44,7 +44,7 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.jjcheframework.boot</groupId>
-                    <artifactId>jjche-system-cloud-api</artifactId>
+                    <artifactId>jjche-boot-module-system-cloud-api</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>org.jjcheframework.boot</groupId>
