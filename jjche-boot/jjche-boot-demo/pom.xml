@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <name>jjche-boot-demo</name>
@@ -14,7 +15,7 @@
         <groupId>org.jjcheframework.boot</groupId>
         <artifactId>jjche-boot-parent</artifactId>
         <version>2.0.8-SNAPSHOT</version>
-        <relativePath />
+        <relativePath/>
     </parent>
 
     <properties>
@@ -24,19 +25,19 @@
 
     <dependencies>
         <!--spring-boot-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.jjcheframework.boot</groupId>-->
+        <!--            <artifactId>jjche-boot-module-system</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.jjcheframework.boot</groupId>-->
+        <!--            <artifactId>jjche-boot-module-bpm</artifactId>-->
+        <!--        </dependency>-->
+        <!--spring-cloud-->
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-boot-module-system</artifactId>
+            <artifactId>jjche-boot-cloud-starter</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.jjcheframework.boot</groupId>-->
-<!--            <artifactId>jjche-boot-module-bpm</artifactId>-->
-<!--        </dependency>-->
-        <!--spring-cloud-->
-<!--                                <dependency>-->
-<!--                                    <groupId>org.jjcheframework.boot</groupId>-->
-<!--                                    <artifactId>jjche-boot-cloud-starter</artifactId>-->
-<!--                                </dependency>-->
 
         <!--                <dependency>-->
         <!--                    <groupId>org.jjche.demo</groupId>-->

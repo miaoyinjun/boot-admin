@@ -1,10 +1,13 @@
 package org.jjche.system.modules.system.service;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
+import org.jjche.common.system.api.dept.JobApi;
 import org.jjche.common.util.ValidationUtil;
 import org.jjche.core.util.FileUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
@@ -31,7 +34,7 @@ import java.util.*;
  */
 @Service
 @RequiredArgsConstructor
-public class JobService extends MyServiceImpl<JobMapper, JobDO> {
+public class JobService extends MyServiceImpl<JobMapper, JobDO> implements JobApi {
 
     private final JobMapStruct jobMapstruct;
     private final UserService userService;
@@ -178,5 +181,23 @@ public class JobService extends MyServiceImpl<JobMapper, JobDO> {
      */
     public List<JobSimpleVO> listSimple() {
         return this.jobMapstruct.toSimpleVO(this.list());
+    }
+
+    @Override
+    public void validPostList(Collection<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return;
+        }
+        // 获得岗位信息
+        List<JobDO> posts = this.listByIds(ids);
+        Map<Long, JobDO> postMap = MapUtil.newHashMap();;
+        postMap = CollUtil.toMap(posts, postMap, JobDO::getId);
+
+        // 校验
+        Map<Long, JobDO> finalPostMap = postMap;
+        ids.forEach(id -> {
+            JobDO post = finalPostMap.get(id);
+            Assert.notNull(post, "当前岗位不存在");
+        });
     }
 }

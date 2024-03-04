@@ -3,6 +3,7 @@ package org.jjche.system.modules.system.service;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alicp.jetcache.anno.Cached;
@@ -17,6 +18,7 @@ import org.jjche.common.enums.DataScopeEnum;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.pojo.DataScope;
 import org.jjche.common.service.IDeptService;
+import org.jjche.common.system.api.dept.DeptApi;
 import org.jjche.common.util.StrUtil;
 import org.jjche.common.util.ValidationUtil;
 import org.jjche.core.util.FileUtil;
@@ -48,7 +50,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-public class DeptService extends MyServiceImpl<DeptMapper, DeptDO> implements IDeptService {
+public class DeptService extends MyServiceImpl<DeptMapper, DeptDO> implements IDeptService, DeptApi {
 
     private final DeptMapStruct deptMapstruct;
     private final UserMapper userRepository;
@@ -422,5 +424,22 @@ public class DeptService extends MyServiceImpl<DeptMapper, DeptDO> implements ID
     @Override
     public List<DeptSmallDto> listSmall() {
         return deptMapstruct.toSmallVO(this.list());
+    }
+
+    @Override
+    public void validateDeptList(Collection<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return;
+        }
+        // 获得科室信息
+        List<DeptDO> departs = this.listByIds(ids);
+        Map<Long, DeptDO> deptMap = MapUtil.newHashMap();
+        deptMap = CollUtil.toMap(departs, deptMap, DeptDO::getId);
+        // 校验
+        Map<Long, DeptDO> finalDeptMap = deptMap;
+        ids.forEach(id -> {
+            DeptDO dept = finalDeptMap.get(id);
+            Assert.notNull(dept, "当前部门不存在");
+        });
     }
 }

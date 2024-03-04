@@ -1,6 +1,7 @@
 package org.jjche.bpm.modules.definition.service;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.NumberUtil;
@@ -14,23 +15,29 @@ import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.UserTask;
 import org.flowable.common.engine.api.FlowableException;
 import org.flowable.engine.delegate.DelegateExecution;
-import org.jjche.bpm.modules.definition.domain.BpmTaskAssignRuleDO;
-import org.jjche.bpm.modules.group.domain.BpmUserGroupDO;
 import org.jjche.bpm.config.flowable.core.behavior.script.BpmTaskAssignScript;
 import org.jjche.bpm.modules.definition.api.vo.rule.BpmTaskAssignRuleCreateReqVO;
 import org.jjche.bpm.modules.definition.api.vo.rule.BpmTaskAssignRuleRespVO;
 import org.jjche.bpm.modules.definition.api.vo.rule.BpmTaskAssignRuleUpdateReqVO;
+import org.jjche.bpm.modules.definition.domain.BpmTaskAssignRuleDO;
+import org.jjche.bpm.modules.definition.enums.BpmTaskAssignRuleTypeEnum;
+import org.jjche.bpm.modules.definition.mapper.BpmTaskAssignRuleMapper;
+import org.jjche.bpm.modules.definition.mapstruct.BpmTaskAssignRuleConvert;
+import org.jjche.bpm.modules.group.domain.BpmUserGroupDO;
 import org.jjche.bpm.modules.group.service.BpmUserGroupService;
+import org.jjche.bpm.onstants.DictTypeConstants;
 import org.jjche.common.dto.DeptSmallDto;
 import org.jjche.common.dto.UserVO;
 import org.jjche.common.exception.BusinessException;
 import org.jjche.common.service.IDeptService;
 import org.jjche.common.service.IUserService;
+import org.jjche.common.system.api.dept.DeptApi;
+import org.jjche.common.system.api.dept.JobApi;
+import org.jjche.common.system.api.dict.DictApi;
+import org.jjche.common.system.api.permission.RoleApi;
+import org.jjche.common.system.api.user.UserApi;
 import org.jjche.flowable.util.FlowableUtils;
 import org.jjche.mybatis.base.service.MyServiceImpl;
-import org.jjche.bpm.modules.definition.mapstruct.BpmTaskAssignRuleConvert;
-import org.jjche.bpm.modules.definition.enums.BpmTaskAssignRuleTypeEnum;
-import org.jjche.bpm.modules.definition.mapper.BpmTaskAssignRuleMapper;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -59,6 +66,11 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
     private final IDeptService deptService;
     private final IUserService userService;
     private final BpmTaskAssignRuleConvert bpmTaskAssignRuleConvert;
+    private final RoleApi roleApi;
+    private final DeptApi deptApi;
+    private final JobApi jobApi;
+    private final UserApi userApi;
+    private final DictApi dictApi;
     /**
      * 任务分配脚本
      */
@@ -243,17 +255,17 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
     private void validTaskAssignRuleOptions(String typeStr, Set<Long> options) {
         Integer type = NumberUtil.parseInt(typeStr);
         if (Objects.equals(type, BpmTaskAssignRuleTypeEnum.ROLE.getType())) {
-//            roleApi.validRoleList(options);
+            roleApi.validRoleList(options);
         } else if (Arrays.asList(BpmTaskAssignRuleTypeEnum.DEPT_MEMBER.getType(), BpmTaskAssignRuleTypeEnum.DEPT_LEADER.getType()).contains(type)) {
-//            deptApi.validateDeptList(options);
+            deptApi.validateDeptList(options);
         } else if (Objects.equals(type, BpmTaskAssignRuleTypeEnum.POST.getType())) {
-//            postApi.validPostList(options);
+            jobApi.validPostList(options);
         } else if (Objects.equals(type, BpmTaskAssignRuleTypeEnum.USER.getType())) {
-//            adminUserApi.validateUserList(options);
+            userApi.validateUserList(options);
         } else if (Objects.equals(type, BpmTaskAssignRuleTypeEnum.USER_GROUP.getType())) {
-//            userGroupService.validUserGroups(options);
+            userGroupService.validUserGroups(options);
         } else if (Objects.equals(type, BpmTaskAssignRuleTypeEnum.SCRIPT.getType())) {
-//            dictDataApi.validateDictDataList(DictTypeConstants.TASK_ASSIGN_SCRIPT, CollectionUtils.convertSet(options, String::valueOf));
+            dictApi.validateDictDataList(DictTypeConstants.TASK_ASSIGN_SCRIPT, Convert.toList(String.class, options));
         } else {
             throw new IllegalArgumentException(format("未知的规则类型({})", type));
         }
@@ -287,13 +299,13 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
     Set<Long> calculateTaskCandidateUsers(DelegateExecution execution, BpmTaskAssignRuleDO rule) {
         Set<Long> assigneeUserIds = null;
         if (Objects.equals(BpmTaskAssignRuleTypeEnum.ROLE.getType(), rule.getType())) {
-//            assigneeUserIds = calculateTaskCandidateUsersByRole(rule);
+            assigneeUserIds = calculateTaskCandidateUsersByRole(rule);
         } else if (Objects.equals(BpmTaskAssignRuleTypeEnum.DEPT_MEMBER.getType(), rule.getType())) {
             assigneeUserIds = calculateTaskCandidateUsersByDeptMember(rule);
         } else if (Objects.equals(BpmTaskAssignRuleTypeEnum.DEPT_LEADER.getType(), rule.getType())) {
             assigneeUserIds = calculateTaskCandidateUsersByDeptLeader(rule);
         } else if (Objects.equals(BpmTaskAssignRuleTypeEnum.POST.getType(), rule.getType())) {
-//            assigneeUserIds = calculateTaskCandidateUsersByPost(rule);
+            assigneeUserIds = calculateTaskCandidateUsersByPost(rule);
         } else if (Objects.equals(BpmTaskAssignRuleTypeEnum.USER.getType(), rule.getType())) {
             assigneeUserIds = calculateTaskCandidateUsersByUser(rule);
         } else if (Objects.equals(BpmTaskAssignRuleTypeEnum.USER_GROUP.getType(), rule.getType())) {
@@ -312,9 +324,9 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
         return assigneeUserIds;
     }
 
-//    private Set<Long> calculateTaskCandidateUsersByRole(BpmTaskAssignRuleDO rule) {
-//        return permissionApi.getUserRoleIdListByRoleIds(rule.getOptions());
-//    }
+    private Set<Long> calculateTaskCandidateUsersByRole(BpmTaskAssignRuleDO rule) {
+        return roleApi.getUserRoleIdListByRoleIds(rule.getOptions());
+    }
 
     private Set<Long> calculateTaskCandidateUsersByDeptMember(BpmTaskAssignRuleDO rule) {
         List<UserVO> users = userService.listByDeptIds(rule.getOptions());
@@ -326,10 +338,9 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
         return depts.stream().map(DeptSmallDto::getLeaderUserId).collect(Collectors.toSet());
     }
 
-//    private Set<Long> calculateTaskCandidateUsersByPost(BpmTaskAssignRuleDO rule) {
-//        List<AdminUserRespDTO> users = adminUserApi.getUsersByPostIds(rule.getOptions());
-//        return users.stream().map(AdminUserRespDTO::getId).collect(Collectors.toSet());
-//    }
+    private Set<Long> calculateTaskCandidateUsersByPost(BpmTaskAssignRuleDO rule) {
+        return userApi.listUserIdsByJobIds(rule.getOptions());
+    }
 
     private Set<Long> calculateTaskCandidateUsersByUser(BpmTaskAssignRuleDO rule) {
         return rule.getOptions();

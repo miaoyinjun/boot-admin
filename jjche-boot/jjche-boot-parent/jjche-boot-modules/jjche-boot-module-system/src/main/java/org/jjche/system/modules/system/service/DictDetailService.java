@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.jjche.common.constant.CacheKey;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
+import org.jjche.common.system.api.dict.DictApi;
 import org.jjche.common.util.StrUtil;
 import org.jjche.common.util.ValidationUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
@@ -26,7 +27,9 @@ import org.jjche.system.modules.system.mapstruct.DictDetailMapStruct;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>DictDetailService class.</p>
@@ -37,7 +40,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-public class DictDetailService extends MyServiceImpl<DictDetailMapper, DictDetailDO> {
+public class DictDetailService extends MyServiceImpl<DictDetailMapper, DictDetailDO> implements DictApi {
 
     private final DictService dictService;
     private final DictDetailMapStruct dictDetailMapper;
@@ -147,5 +150,36 @@ public class DictDetailService extends MyServiceImpl<DictDetailMapper, DictDetai
     public void delCaches(DictDetailDO dictDetail) {
         DictDO dict = dictService.getById(dictDetail.getDictId());
         dicDetailCache.remove(dict.getName());
+    }
+
+    /**
+     * <p>
+     * 查询字典项
+     * </p>
+     *
+     * @param dictId 字典类型
+     * @param values 字典项
+     * @return /
+     */
+    private List<DictDetailDO> listByDictIdAndValues(Long dictId, Collection<String> values) {
+        return this.list(new LambdaQueryWrapper<DictDetailDO>().eq(DictDetailDO::getDictId, dictId)
+                .in(DictDetailDO::getValue, values));
+    }
+
+    @Override
+    public void validateDictDataList(String dictType, Collection<String> values) {
+        if (CollUtil.isEmpty(values)) {
+            return;
+        }
+        DictDO dictDO = this.dictService.getByName(dictType);
+        Map<String, DictDetailDO> dictDataMap = MapUtil.newHashMap();
+        List<DictDetailDO> dictDetails = this.listByDictIdAndValues(dictDO.getId(), values);
+        dictDataMap = CollUtil.toMap(dictDetails, dictDataMap, DictDetailDO::getValue);
+        // 校验
+        Map<String, DictDetailDO> finalDictDataMap = dictDataMap;
+        values.forEach(value -> {
+            DictDetailDO dictData = finalDictDataMap.get(value);
+            Assert.notNull(dictData, "当前字典数据不存在");
+        });
     }
 }

@@ -14,6 +14,7 @@ import org.jjche.common.enums.LogType;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.pojo.DataScope;
+import org.jjche.common.system.api.user.UserApi;
 import org.jjche.common.util.RsaUtils;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.annotation.controller.SysRestController;
@@ -41,6 +42,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -56,7 +58,7 @@ import java.util.stream.Collectors;
 @Api(tags = "系统：用户管理")
 @SysRestController("users")
 @RequiredArgsConstructor
-public class UserController extends BaseController {
+public class UserController extends BaseController implements UserApi {
 
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
@@ -268,5 +270,17 @@ public class UserController extends BaseController {
         verificationCodeService.validated(CodeEnum.EMAIL_RESET_EMAIL_CODE.getKey() + user.getEmail(), code);
         userService.updateEmail(userDto.getUsername(), user.getEmail());
         return R.ok();
+    }
+
+    @Override
+    @GetMapping("valid")
+    public void validateUserList(@RequestParam Collection<Long> ids) {
+        this.userService.validateUserList(ids);
+    }
+
+    @Override
+    @GetMapping("list-user-ids")
+    public Set<Long> listUserIdsByJobIds(@RequestParam Set<Long> jobIds) {
+        return this.userService.listUserIdsByJobIds(jobIds);
     }
 }

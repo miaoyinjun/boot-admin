@@ -14,6 +14,7 @@ import org.jjche.common.enums.LogType;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.pojo.DataScope;
+import org.jjche.common.system.api.permission.RoleApi;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.annotation.controller.SysRestController;
 import org.jjche.core.base.BaseController;
@@ -32,22 +33,24 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * <p>RoleController class.</p>
+ * <p>
+ * 角色-控制器
+ * </p>
  *
- * @author Zheng Jie
- * @version 1.0.8-SNAPSHOT
- * @since 2018-12-03
+ * @author miaoyj
+ * @since 2024-02-28
  */
 @RequiredArgsConstructor
 @Api(tags = "系统：角色管理")
 @SysRestController("roles")
-public class RoleController extends BaseController {
+public class RoleController extends BaseController implements RoleApi {
 
     private static final String ENTITY_NAME = "role";
     private final RoleService roleService;
@@ -254,5 +257,18 @@ public class RoleController extends BaseController {
     @Operation(summary = "获取角色精简信息列表", description = "只包含被开启的角色，主要用于前端的下拉选项")
     public R<List<RoleSmallDto>> getSimpleRoleList() {
         return R.ok(roleService.getSimpleRoleList());
+    }
+
+    @Override
+    @ApiOperation("校验角色们是否有效")
+    @GetMapping("/valid")
+    public void validRoleList(@RequestParam Collection<Long> ids) {
+        roleService.validRoleList(ids);
+    }
+
+    @Override
+    @GetMapping("user-role-ids")
+    public Set<Long> getUserRoleIdListByRoleIds(@RequestParam Collection<Long> roleIds) {
+        return roleService.getUserRoleIdListByRoleIds(roleIds);
     }
 }

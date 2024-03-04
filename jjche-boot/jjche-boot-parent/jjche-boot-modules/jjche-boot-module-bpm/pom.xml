@@ -19,5 +19,9 @@
             <groupId>org.jjcheframework.boot</groupId>
             <artifactId>jjche-boot-mybatis-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.jjcheframework.boot</groupId>
+            <artifactId>jjche-system-local-api</artifactId>
+        </dependency>
     </dependencies>
 </project>

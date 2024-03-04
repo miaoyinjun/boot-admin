@@ -3,6 +3,7 @@ package org.jjche.system.modules.system.service;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
@@ -18,6 +19,7 @@ import org.jjche.common.enums.UserTypeEnum;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.service.IUserService;
+import org.jjche.common.system.api.user.UserApi;
 import org.jjche.common.util.PwdCheckUtil;
 import org.jjche.common.util.ValidationUtil;
 import org.jjche.core.util.FileUtil;
@@ -68,7 +70,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-public class UserService extends MyServiceImpl<UserMapper, UserDO> implements IUserService {
+public class UserService extends MyServiceImpl<UserMapper, UserDO> implements IUserService, UserApi {
 
     private final UserJobMapper userJobMapper;
     private final UserRoleMapper userRoleMapper;
@@ -784,5 +786,27 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> implements IU
         } else {
             return CollUtil.newArrayList();
         }
+    }
+
+    @Override
+    public void validateUserList(Collection<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return;
+        }
+        // 获得岗位信息
+        List<UserDO> users = this.listByIds(ids);
+        Map<Long, UserDO> userMap = MapUtil.newHashMap();;
+        userMap = CollUtil.toMap(users, userMap, UserDO::getId);
+        // 校验
+        Map<Long, UserDO> finalUserMap = userMap;
+        ids.forEach(id -> {
+            UserDO user = finalUserMap.get(id);
+            Assert.notNull(user, "用户不存在");
+        });
+    }
+
+    @Override
+    public Set<Long> listUserIdsByJobIds(Set<Long> jobIds) {
+        return this.userJobMapper.selectUserIdByJobIds(jobIds);
     }
 }

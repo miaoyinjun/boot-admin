@@ -3,6 +3,7 @@ package org.jjche.system.modules.system.service;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.alicp.jetcache.anno.Cached;
@@ -17,6 +18,7 @@ import org.jjche.common.dto.UserVO;
 import org.jjche.common.enums.DataScopeEnum;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
+import org.jjche.common.system.api.permission.RoleApi;
 import org.jjche.common.util.ValidationUtil;
 import org.jjche.core.util.FileUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
@@ -49,7 +51,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-public class RoleService extends MyServiceImpl<RoleMapper, RoleDO> {
+public class RoleService extends MyServiceImpl<RoleMapper, RoleDO> implements RoleApi {
 
     private final RoleMenuMapper roleMenuMapper;
     private final RoleDeptMapper roleDeptMapper;
@@ -414,5 +416,28 @@ public class RoleService extends MyServiceImpl<RoleMapper, RoleDO> {
      */
     public List<RoleSmallDto> getSimpleRoleList(){
         return roleSmallMapper.toVO(this.list());
+    }
+
+    @Override
+    public void validRoleList(Collection<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return;
+        }
+        // 获得角色信息
+        List<RoleDO> roles = this.listByIds(ids);
+        Map<Long, RoleDO> roleMap = MapUtil.newHashMap();
+        roleMap = CollUtil.toMap(roles, roleMap, RoleDO::getId);
+        // 校验
+        Map<Long, RoleDO> finalRoleMap = roleMap;
+        ids.forEach(id -> {
+            RoleDO role = finalRoleMap.get(id);
+            Assert.notNull(role, "角色不存在");
+        });
+    }
+
+    @Override
+    public Set<Long> getUserRoleIdListByRoleIds(Collection<Long> roleIds) {
+        UserRoleService userRoleService = SpringUtil.getBean(UserRoleService.class);
+        return userRoleService.getUserRoleIdListByRoleIds(roleIds);
     }
 }

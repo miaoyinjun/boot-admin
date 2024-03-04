@@ -1,6 +1,5 @@
 package org.jjche.demo.modules.student.rest;
 
-import cn.hutool.log.StaticLog;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
@@ -87,19 +86,18 @@ public class StudentController extends BaseController {
         return R.ok(this.studentService.getVoById(id));
     }
 
+    @GetMapping
+    @ApiOperation(value = "学生-列表", tags = ApiVersion.VERSION_1_0_0)
+    @PreAuthorize("@el.check('student:list')")
+    public R<MyPage<StudentVO>> page(PageParam page, @ApiParam(value = "课程") @RequestParam(required = false) CourseEnum course, @Validated StudentQueryCriteriaDTO query) {
+        return R.ok(studentService.page(page, course, query));
+    }
+
     @GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @ApiOperation(value = "学生-导出", tags = ApiVersion.VERSION_1_0_0)
     @PreAuthorize("@el.check('student:list')")
     public void download(StudentQueryCriteriaDTO criteria) {
         studentService.download(criteria);
-    }
-
-    @GetMapping
-    @ApiOperation(value = "学生-列表", tags = ApiVersion.VERSION_1_0_0)
-    @PreAuthorize("@el.check('student:list')")
-    public R<MyPage<StudentVO>> page(PageParam page, @ApiParam(value = "课程") @RequestParam(required = false) CourseEnum course, @Validated StudentQueryCriteriaDTO query) {
-        StaticLog.warn("name:{}", query.getName());
-        return R.ok(studentService.page(page, course, query));
     }
 
     @ApiOperation(value = "学生-导入")

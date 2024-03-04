@@ -8,6 +8,7 @@ import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
+import org.jjche.common.system.api.dict.DictApi;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.annotation.controller.SysRestController;
 import org.jjche.core.base.BaseController;
@@ -20,6 +21,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +36,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Api(tags = "系统：字典详情管理")
 @SysRestController("dictDetail")
-public class DictDetailController extends BaseController {
+public class DictDetailController extends BaseController implements DictApi {
 
     private static final String ENTITY_NAME = "dictDetail";
     private final DictDetailService dictDetailService;
@@ -122,5 +124,12 @@ public class DictDetailController extends BaseController {
     public R delete(@PathVariable Long id) {
         dictDetailService.delete(id);
         return R.ok();
+    }
+
+    @Override
+    @ApiOperation("校验字典数据们是否有效")
+    @GetMapping("/valid")
+    public void validateDictDataList(@RequestParam  String dictType, @RequestParam Collection<String> values) {
+        dictDetailService.validateDictDataList(dictType, values);
     }
 }

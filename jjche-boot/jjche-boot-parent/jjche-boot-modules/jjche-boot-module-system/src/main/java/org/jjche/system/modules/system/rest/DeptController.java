@@ -11,6 +11,7 @@ import org.jjche.common.dto.DeptSmallDto;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
 import org.jjche.common.param.MyPage;
+import org.jjche.common.system.api.dept.DeptApi;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.annotation.controller.SysRestController;
 import org.jjche.core.base.BaseController;
@@ -36,7 +37,7 @@ import java.util.*;
 @RequiredArgsConstructor
 @Api(tags = "系统：部门管理")
 @SysRestController("dept")
-public class DeptController extends BaseController {
+public class DeptController extends BaseController implements DeptApi {
 
     private static final String ENTITY_NAME = "dept";
     private final DeptService deptService;
@@ -164,5 +165,12 @@ public class DeptController extends BaseController {
         deptService.verification(deptDtos);
         deptService.delete(deptDtos);
         return R.ok();
+    }
+
+    @Override
+    @ApiOperation("校验部门们是否有效")
+    @GetMapping("/valid")
+    public void validateDeptList(@RequestParam Collection<Long> ids) {
+        deptService.validateDeptList(ids);
     }
 }

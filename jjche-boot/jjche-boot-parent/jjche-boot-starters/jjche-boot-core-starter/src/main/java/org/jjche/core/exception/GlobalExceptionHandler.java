@@ -106,6 +106,14 @@ public class GlobalExceptionHandler {
         return R.notFound();
     }
 
+    /**
+     * <p>
+     * 接收FeignErrorDecoderR的异常，使用fallbackFactory时不会进来
+     * </p>
+     *
+     * @param e
+    * @return /
+     */
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public R methodNotAllowedException(Exception e) {

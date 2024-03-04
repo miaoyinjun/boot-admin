@@ -1,5 +1,6 @@
 package org.jjche.system.modules.system.service;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,9 @@ import org.jjche.system.modules.system.mapper.UserRoleMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -94,5 +97,14 @@ public class UserRoleService extends MyServiceImpl<UserRoleMapper, UserRoleDO> {
             this.save(userRoleDO);
             roleService.delCaches(roleId);
         }
+    }
+
+    public Set<Long> getUserRoleIdListByRoleIds(Collection<Long> roleIds) {
+        LambdaQueryWrapper<UserRoleDO> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.select(UserRoleDO::getUserId);
+        queryWrapper.in(UserRoleDO::getRoleId, roleIds);
+        return CollUtil.newHashSet(this.listObjs(queryWrapper, a -> {
+            return Long.valueOf(a.toString());
+        }));
     }
 }

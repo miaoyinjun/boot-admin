@@ -16,7 +16,7 @@ import org.jjche.core.base.BaseController;
 import org.jjche.demo.constant.ProviderApiVersion;
 import org.jjche.demo.modules.provider.api.enums.ProviderCourseEnum;
 import org.jjche.demo.modules.provider.api.vo.ProviderVO;
-import org.jjche.demo.modules.provider.feign.ProviderStudentApi;
+import org.jjche.demo.modules.provider.api.ProviderStudentApi;
 import org.jjche.demo.modules.provider.service.ProviderService;
 import org.jjche.log.biz.starter.annotation.LogRecord;
 import org.springframework.security.access.prepost.PreAuthorize;

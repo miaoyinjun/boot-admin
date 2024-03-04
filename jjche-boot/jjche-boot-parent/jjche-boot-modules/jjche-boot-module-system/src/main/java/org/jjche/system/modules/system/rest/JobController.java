@@ -8,6 +8,7 @@ import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
+import org.jjche.common.system.api.dept.JobApi;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.annotation.controller.SysRestController;
 import org.jjche.core.base.BaseController;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -36,7 +38,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Api(tags = "系统：岗位管理")
 @SysRestController("job")
-public class JobController extends BaseController {
+public class JobController extends BaseController implements JobApi {
 
     private static final String ENTITY_NAME = "job";
     private final JobService jobService;
@@ -128,5 +130,11 @@ public class JobController extends BaseController {
     @Operation(summary = "获取岗位精简信息列表", description = "只包含被开启的岗位，主要用于前端的下拉选项")
     public R<List<JobSimpleVO>> getSimplePostList() {
         return R.ok(this.jobService.listSimple());
+    }
+    @Override
+    @ApiOperation("校验岗位们是否有效")
+    @GetMapping("valid")
+    public void validPostList(@RequestParam Collection<Long> ids) {
+        this.jobService.validPostList(ids);
     }
 }

@@ -46,6 +46,12 @@
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
             <artifactId>jjche-system-cloud-api</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jjcheframework.boot</groupId>
+                    <artifactId>jjche-system-local-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>

@@ -2,9 +2,8 @@ package org.jjche.common.system.api;
 
 import org.jjche.common.api.CommonAPI;
 import org.jjche.common.constant.SecurityConstant;
-import org.jjche.common.constant.ServiceNameConstant;
 import org.jjche.common.dto.*;
-import org.jjche.common.system.api.factory.SysBaseAPIFallbackFactory;
+import org.jjche.common.system.api.constant.ApiConstants;
 import org.jjche.common.vo.DataPermissionFieldResultVO;
 import org.jjche.common.vo.SecurityAppKeyBasicVO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -22,10 +21,9 @@ import java.util.List;
  * @since 2022-01-25
  */
 @Component
-@FeignClient(contextId = "sysBaseRemoteApi",
-        path = "/sys/base/",
-        value = ServiceNameConstant.SYSTEM_SERVICE,
-        fallbackFactory = SysBaseAPIFallbackFactory.class)
+@FeignClient(contextId = ApiConstants.NAME + "-base-api",
+        name = ApiConstants.NAME,
+        path = "/sys/base/")
 public interface ISysBaseAPI extends CommonAPI {
 
     @Override
