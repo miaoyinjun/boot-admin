@@ -12,20 +12,20 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
-import org.jjche.common.constant.CacheKey;
-import org.jjche.common.dto.DeptSmallDto;
-import org.jjche.common.enums.DataScopeEnum;
+import org.jjche.common.dto.DeptSmallDTO;
 import org.jjche.common.param.MyPage;
-import org.jjche.common.pojo.DataScope;
-import org.jjche.system.modules.dept.api.DeptApi;
+import org.jjche.common.vo.DataScopeVO;
 import org.jjche.common.util.StrUtil;
 import org.jjche.common.util.ValidationUtil;
 import org.jjche.core.util.FileUtil;
 import org.jjche.core.util.SecurityUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.system.modules.dept.api.DeptApi;
 import org.jjche.system.modules.system.api.dto.DeptDTO;
 import org.jjche.system.modules.system.api.dto.DeptQueryCriteriaDTO;
+import org.jjche.system.modules.system.api.enums.DataScopeEnum;
+import org.jjche.system.modules.system.constant.DeptCacheKey;
 import org.jjche.system.modules.system.domain.DeptDO;
 import org.jjche.system.modules.system.mapper.DeptMapper;
 import org.jjche.system.modules.system.mapper.RoleMapper;
@@ -62,8 +62,8 @@ public class DeptService extends MyServiceImpl<DeptMapper, DeptDO> implements De
      * @return 级别
      */
     public static String getDataScopeType() {
-        DataScope dataScope = SecurityUtil.getUserDataScope();
-        Set<Long> dataScopes = dataScope.getDeptIds();
+        DataScopeVO dataScopeVO = SecurityUtil.getUserDataScope();
+        Set<Long> dataScopes = dataScopeVO.getDeptIds();
         if (dataScopes.size() != 0) {
             return "";
         }
@@ -120,7 +120,7 @@ public class DeptService extends MyServiceImpl<DeptMapper, DeptDO> implements De
      * @param id /
      * @return /
      */
-    @Cached(name = CacheKey.DEPT_ID, key = "#id")
+    @Cached(name = DeptCacheKey.DEPT_ID, key = "#id")
     public DeptDTO findById(Long id) {
         DeptDO dept = this.getById(id);
         Assert.notNull(dept, "未找到部门");
@@ -373,7 +373,7 @@ public class DeptService extends MyServiceImpl<DeptMapper, DeptDO> implements De
      */
     public void delCaches(Long id) {
         // 删除数据权限
-        redisService.delete(CacheKey.DEPT_ID + id);
+        redisService.delete(DeptCacheKey.DEPT_ID + id);
     }
 
     /**
@@ -405,7 +405,7 @@ public class DeptService extends MyServiceImpl<DeptMapper, DeptDO> implements De
     }
 
     @Override
-    public List<DeptSmallDto> listByIds(Set<Long> ids) {
+    public List<DeptSmallDTO> listByIds(Set<Long> ids) {
         if (CollUtil.isNotEmpty(ids)) {
             LambdaQueryWrapper<DeptDO> queryWrapper = Wrappers.lambdaQuery();
             queryWrapper.in(DeptDO::getId, ids);
@@ -416,12 +416,12 @@ public class DeptService extends MyServiceImpl<DeptMapper, DeptDO> implements De
     }
 
     @Override
-    public DeptSmallDto getSmallById(Long id) {
+    public DeptSmallDTO getSmallById(Long id) {
         return deptMapstruct.toSmallVO(this.getById(id));
     }
 
     @Override
-    public List<DeptSmallDto> listSmall() {
+    public List<DeptSmallDTO> listSmall() {
         return deptMapstruct.toSmallVO(this.list());
     }
 

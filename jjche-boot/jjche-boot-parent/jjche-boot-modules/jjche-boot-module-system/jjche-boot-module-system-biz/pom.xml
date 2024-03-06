@@ -19,10 +19,6 @@
         <!-- 同时需要common模块和logging模块只需要引入logging模块即可 -->
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-boot-eladmin-logging</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jjcheframework.boot</groupId>
             <artifactId>jjche-boot-module-system-local-api</artifactId>
         </dependency>
         <!-- tools 模块包含了 common 和 logging 模块 -->

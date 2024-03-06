@@ -7,20 +7,23 @@ import cn.hutool.core.util.StrUtil;
 import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.constant.CacheKey;
+import org.jjche.common.constant.PermissionDataCacheKey;
 import org.jjche.common.dto.PermissionDataResourceDTO;
+import org.jjche.common.dto.PermissionDataRuleDTO;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.vo.DataPermissionFieldResultVO;
 import org.jjche.core.util.SecurityUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.system.modules.permission.api.DataPermissionFieldApi;
 import org.jjche.system.modules.system.api.dto.DataPermissionFieldDTO;
 import org.jjche.system.modules.system.api.dto.DataPermissionFieldQueryCriteriaDTO;
 import org.jjche.system.modules.system.api.vo.DataPermissionFieldVO;
 import org.jjche.system.modules.system.domain.DataPermissionFieldDO;
 import org.jjche.system.modules.system.mapper.DataPermissionFieldMapper;
 import org.jjche.system.modules.system.mapstruct.DataPermissionFieldMapStruct;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,10 +45,12 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-public class DataPermissionFieldService extends MyServiceImpl<DataPermissionFieldMapper, DataPermissionFieldDO> {
+@Primary
+public class DataPermissionFieldService extends MyServiceImpl<DataPermissionFieldMapper, DataPermissionFieldDO> implements DataPermissionFieldApi {
 
     private final DataPermissionFieldMapStruct dataPermissionFieldMapper;
     private final DataPermissionFieldRoleService dataPermissionFieldRoleService;
+    private final DataPermissionRuleService dataPermissionRuleService;
 
     /**
      * <p>
@@ -144,7 +149,7 @@ public class DataPermissionFieldService extends MyServiceImpl<DataPermissionFiel
      * @param userId 用户id
      * @return /
      */
-    @Cached(name = CacheKey.PERMISSION_DATA_FIELD_USER_ID, key = "#userId")
+    @Cached(name = PermissionDataCacheKey.PERMISSION_DATA_FIELD_USER_ID, key = "#userId")
     public List<DataPermissionFieldVO> listByUserId(Long userId) {
         return this.getBaseMapper().queryByUserId(userId);
     }
@@ -199,5 +204,15 @@ public class DataPermissionFieldService extends MyServiceImpl<DataPermissionFiel
             }
         }
         return resources;
+    }
+
+    @Override
+    public List<DataPermissionFieldResultVO> listPermissionDataResource(PermissionDataResourceDTO dto) {
+        return this.getDataResource(dto);
+    }
+
+    @Override
+    public List<PermissionDataRuleDTO> listPermissionDataRuleByUserId(Long userId) {
+        return dataPermissionRuleService.listByUserId(userId);
     }
 }

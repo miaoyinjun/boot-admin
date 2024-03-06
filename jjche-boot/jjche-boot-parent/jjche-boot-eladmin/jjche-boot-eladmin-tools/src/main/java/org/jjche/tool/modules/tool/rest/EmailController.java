@@ -11,7 +11,7 @@ import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
 import org.jjche.tool.modules.tool.domain.EmailConfigDO;
 import org.jjche.tool.modules.tool.service.EmailService;
-import org.jjche.tool.modules.tool.vo.EmailVO;
+import org.jjche.tool.modules.tool.api.vo.EmailVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

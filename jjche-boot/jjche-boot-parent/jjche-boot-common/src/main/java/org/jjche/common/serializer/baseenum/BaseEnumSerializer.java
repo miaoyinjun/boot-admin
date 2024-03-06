@@ -3,7 +3,7 @@ package org.jjche.common.serializer.baseenum;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import org.jjche.common.enums.IBaseEnum;
+import org.jjche.common.base.IBaseEnum;
 
 import java.io.IOException;
 

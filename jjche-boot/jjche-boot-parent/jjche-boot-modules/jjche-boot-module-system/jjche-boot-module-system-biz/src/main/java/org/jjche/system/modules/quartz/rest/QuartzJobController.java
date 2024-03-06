@@ -14,7 +14,7 @@ import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
 import org.jjche.system.modules.quartz.domain.QuartzJobDO;
 import org.jjche.system.modules.quartz.domain.QuartzLogDO;
-import org.jjche.system.modules.quartz.dto.JobQueryCriteriaDTO;
+import org.jjche.system.modules.quartz.api.dto.JobQueryCriteriaDTO;
 import org.jjche.system.modules.quartz.service.QuartzJobService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;

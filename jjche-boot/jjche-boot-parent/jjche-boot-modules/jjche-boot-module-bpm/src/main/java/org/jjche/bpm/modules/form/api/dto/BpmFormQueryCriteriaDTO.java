@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.jjche.common.annotation.QueryCriteria;
-import org.jjche.common.dto.BaseQueryCriteriaDTO;
+import org.jjche.common.base.BaseQueryCriteriaDTO;
 
 @ApiModel(value = "管理后台 - 动态表单分页 Request VO")
 @Data

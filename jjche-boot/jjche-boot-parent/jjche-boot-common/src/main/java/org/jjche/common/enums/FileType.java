@@ -3,6 +3,7 @@ package org.jjche.common.enums;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.jjche.common.base.IBaseEnum;
 
 import java.util.stream.Stream;
 

@@ -4,8 +4,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Length;
-import org.jjche.common.dto.BaseDTO;
-import org.jjche.common.dto.BaseQueryCriteriaDTO;
+import org.jjche.common.base.BaseDTO;
+import org.jjche.common.base.BaseQueryCriteriaDTO;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

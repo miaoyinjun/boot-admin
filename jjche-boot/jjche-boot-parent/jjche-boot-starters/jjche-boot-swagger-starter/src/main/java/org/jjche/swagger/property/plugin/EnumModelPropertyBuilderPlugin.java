@@ -3,7 +3,7 @@ package org.jjche.swagger.property.plugin;
 import cn.hutool.core.util.ObjectUtil;
 import com.fasterxml.jackson.databind.introspect.BeanPropertyDefinition;
 import org.jjche.common.constant.EnumConstant;
-import org.jjche.common.enums.IBaseEnum;
+import org.jjche.common.base.IBaseEnum;
 import org.springframework.util.ReflectionUtils;
 import springfox.documentation.builders.ModelPropertyBuilder;
 import springfox.documentation.spi.DocumentationType;

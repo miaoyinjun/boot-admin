@@ -1,7 +1,7 @@
 package org.jjche.security.config;
 
 import cn.hutool.core.collection.CollUtil;
-import org.jjche.common.context.ElPermissionContext;
+import org.jjche.security.context.ElPermissionContext;
 import org.jjche.core.util.SecurityUtil;
 import org.springframework.stereotype.Service;
 

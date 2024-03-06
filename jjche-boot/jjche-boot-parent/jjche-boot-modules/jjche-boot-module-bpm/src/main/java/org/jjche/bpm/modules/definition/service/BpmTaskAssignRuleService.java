@@ -26,7 +26,7 @@ import org.jjche.bpm.modules.definition.mapstruct.BpmTaskAssignRuleConvert;
 import org.jjche.bpm.modules.group.domain.BpmUserGroupDO;
 import org.jjche.bpm.modules.group.service.BpmUserGroupService;
 import org.jjche.bpm.onstants.DictTypeConstants;
-import org.jjche.common.dto.DeptSmallDto;
+import org.jjche.common.dto.DeptSmallDTO;
 import org.jjche.common.dto.UserVO;
 import org.jjche.common.exception.BusinessException;
 import org.jjche.system.modules.dept.api.DeptApi;
@@ -330,8 +330,8 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
     }
 
     private Set<Long> calculateTaskCandidateUsersByDeptLeader(BpmTaskAssignRuleDO rule) {
-        List<DeptSmallDto> depts = deptApi.listByIds(rule.getOptions());
-        return depts.stream().map(DeptSmallDto::getLeaderUserId).collect(Collectors.toSet());
+        List<DeptSmallDTO> depts = deptApi.listByIds(rule.getOptions());
+        return depts.stream().map(DeptSmallDTO::getLeaderUserId).collect(Collectors.toSet());
     }
 
     private Set<Long> calculateTaskCandidateUsersByPost(BpmTaskAssignRuleDO rule) {

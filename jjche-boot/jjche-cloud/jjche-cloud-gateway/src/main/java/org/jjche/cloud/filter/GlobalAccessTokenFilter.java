@@ -4,9 +4,9 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.log.StaticLog;
-import org.jjche.common.api.CommonAPI;
+import org.jjche.common.api.CommonAuthApi;
 import org.jjche.common.constant.SecurityConstant;
-import org.jjche.common.dto.JwtUserDto;
+import org.jjche.common.dto.JwtUserDTO;
 import org.jjche.common.util.HttpUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -33,20 +33,20 @@ import java.util.function.Consumer;
  */
 @Component
 public class GlobalAccessTokenFilter implements GlobalFilter, Ordered {
-    private static CommonAPI commonAPI;
+    private static CommonAuthApi commonAuthApi;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         HttpHeaders headers = exchange.getRequest().getHeaders();
         String token = headers.getFirst(SecurityConstant.HEADER_AUTH);
         if (StrUtil.isNotBlank(token)) {
-            if (ObjectUtil.isNull(commonAPI)) {
-                commonAPI = SpringUtil.getBean(CommonAPI.class);
+            if (ObjectUtil.isNull(commonAuthApi)) {
+                commonAuthApi = SpringUtil.getBean(CommonAuthApi.class);
             }
-            CompletableFuture<JwtUserDto> completableFuture = CompletableFuture.supplyAsync(() -> {
-                return commonAPI.getUserDetails(token);
+            CompletableFuture<JwtUserDTO> completableFuture = CompletableFuture.supplyAsync(() -> {
+                return commonAuthApi.getUserDetails(token);
             });
-            JwtUserDto userDetails = null;
+            JwtUserDTO userDetails = null;
             try {
                 userDetails = completableFuture.get();
                 // 设置用户信息到请求
@@ -79,7 +79,7 @@ public class GlobalAccessTokenFilter implements GlobalFilter, Ordered {
      * @param userDetails 用户信息
      * @return /
      */
-    private Consumer<HttpHeaders> getUserHeadersConsumer(JwtUserDto userDetails) {
+    private Consumer<HttpHeaders> getUserHeadersConsumer(JwtUserDTO userDetails) {
         return httpHeaders -> {
             Map<String, Object> userHeaders = HttpUtil.getUserHeaders(userDetails);
             for (String key : userHeaders.keySet()) {

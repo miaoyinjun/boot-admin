@@ -22,11 +22,11 @@ public class UserVO implements Serializable {
 
     private Long id;
 
-    private List<RoleSmallDto> roles;
+    private List<RoleSmallDTO> roles;
 
-    private List<JobSmallDto> jobs;
+    private List<JobSmallDTO> jobs;
 
-    private DeptSmallDto dept;
+    private DeptSmallDTO dept;
 
     private Long deptId;
 

@@ -15,7 +15,7 @@ import de.codecentric.boot.admin.server.utils.jackson.AdminServerModule;
 import de.codecentric.boot.admin.server.utils.jackson.InstanceIdMixin;
 import de.codecentric.boot.admin.server.utils.jackson.RegistrationDeserializer;
 import org.jjche.common.annotation.JacksonAllowNull;
-import org.jjche.common.enums.IBaseEnum;
+import org.jjche.common.base.IBaseEnum;
 import org.jjche.common.serializer.baseenum.BaseEnumSerializer;
 import org.jjche.common.util.StrUtil;
 import org.springframework.http.MediaType;

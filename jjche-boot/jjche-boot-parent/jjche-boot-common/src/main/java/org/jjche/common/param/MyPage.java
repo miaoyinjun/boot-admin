@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.EqualsAndHashCode;
-import org.jjche.common.annotation.IgnoreSwaggerParameter;
+import org.jjche.common.annotation.IgnoreField;
 import org.jjche.common.permission.DataPermissionFieldFilterable;
 import org.jjche.common.permission.DataPermissionFieldMetaSetter;
 import org.jjche.common.vo.DataPermissionFieldResultVO;
@@ -45,7 +45,7 @@ public class MyPage<T> extends Page<T> implements DataPermissionFieldFilterable<
     @JsonIgnore
     @ApiModelProperty(hidden = true)
     @ApiParam(hidden = true)
-    @IgnoreSwaggerParameter
+    @IgnoreField
     protected List<OrderItem> orders;
     @JsonIgnore
     @ApiModelProperty(hidden = true)
@@ -66,7 +66,7 @@ public class MyPage<T> extends Page<T> implements DataPermissionFieldFilterable<
     @ApiModelProperty("字段")
     private List<DataPermissionFieldResultVO> meta;
     @JsonIgnore
-    @IgnoreSwaggerParameter
+    @IgnoreField
     private Iterable<T> data;
 
     /**

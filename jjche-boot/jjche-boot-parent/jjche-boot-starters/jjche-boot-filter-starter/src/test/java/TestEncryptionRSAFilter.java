@@ -8,7 +8,7 @@
 //import cn.hutool.http.HttpStatus;
 //import controller.TestFilterController;
 //import org.jjche.common.constant.FilterEncConstant;
-//import org.jjche.common.enums.FilterEncEnum;
+//import org.jjche.filter.enc.api.enums.FilterEncEnum;
 //import org.jjche.filter.property.FilterEncProperties;
 //import org.jjche.filter.property.FilterEncApiProperties;
 //import org.jjche.filter.util.EncUtil;

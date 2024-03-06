@@ -6,7 +6,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
-import org.jjche.common.constant.CacheKey;
+import org.jjche.common.constant.PermissionDataCacheKey;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.mybatis.base.service.MyServiceImpl;
@@ -166,7 +166,7 @@ public class DataPermissionFieldRoleService extends MyServiceImpl<DataPermission
      * </p>
      */
     public void delUserCache() {
-        redisService.delByKeyPrefix(CacheKey.PERMISSION_DATA_FIELD_USER_ID);
+        redisService.delByKeyPrefix(PermissionDataCacheKey.PERMISSION_DATA_FIELD_USER_ID);
     }
 
 }

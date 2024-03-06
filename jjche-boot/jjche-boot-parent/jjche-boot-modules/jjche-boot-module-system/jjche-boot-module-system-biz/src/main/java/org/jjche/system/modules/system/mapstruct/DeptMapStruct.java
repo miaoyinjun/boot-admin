@@ -1,6 +1,6 @@
 package org.jjche.system.modules.system.mapstruct;
 
-import org.jjche.common.dto.DeptSmallDto;
+import org.jjche.common.dto.DeptSmallDTO;
 import org.jjche.system.modules.system.api.dto.DeptDTO;
 import org.jjche.system.modules.system.domain.DeptDO;
 import org.mapstruct.Mapper;
@@ -20,6 +20,6 @@ import java.util.List;
 public interface DeptMapStruct {
     List<DeptDTO> toVO(Collection<DeptDO> dooList);
     DeptDTO toVO(DeptDO doo);
-    List<DeptSmallDto> toSmallVO(Collection<DeptDO> dooList);
-    DeptSmallDto toSmallVO(DeptDO doo);
+    List<DeptSmallDTO> toSmallVO(Collection<DeptDO> dooList);
+    DeptSmallDTO toSmallVO(DeptDO doo);
 }

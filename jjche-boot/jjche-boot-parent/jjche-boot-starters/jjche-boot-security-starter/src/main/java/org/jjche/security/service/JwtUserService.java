@@ -1,6 +1,6 @@
 package org.jjche.security.service;
 
-import org.jjche.common.dto.JwtUserDto;
+import org.jjche.common.dto.JwtUserDTO;
 
 /**
  * <p>
@@ -12,6 +12,12 @@ import org.jjche.common.dto.JwtUserDto;
  * @since 2020-10-20
  */
 public interface JwtUserService {
+
+    /**
+     * Constant <code>JWT_USER_NAME="user:jwt:username:"</code>
+     */
+    String JWT_USER_NAME = "user:jwt:username:";
+
     /**
      * <p>
      * 根据用户名获取jwt缓存
@@ -22,7 +28,7 @@ public interface JwtUserService {
      * @author miaoyj
      * @since 2020-10-20
      */
-    JwtUserDto getByUserName(String userName);
+    JwtUserDTO getByUserName(String userName);
 
     /**
      * <p>
@@ -34,7 +40,7 @@ public interface JwtUserService {
      * @author miaoyj
      * @since 2020-10-20
      */
-    void putByUserName(String userName, JwtUserDto jwtUserDto);
+    void putByUserName(String userName, JwtUserDTO jwtUserDto);
 
     /**
      * <p>

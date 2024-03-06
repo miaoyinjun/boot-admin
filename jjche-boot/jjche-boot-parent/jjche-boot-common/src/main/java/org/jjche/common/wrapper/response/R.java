@@ -2,7 +2,7 @@ package org.jjche.common.wrapper.response;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.jjche.common.pojo.AbstractR;
+import org.jjche.common.abs.AbstractR;
 import org.jjche.common.wrapper.constant.HttpStatusConstant;
 import org.jjche.common.wrapper.enums.RCodeEnum;
 

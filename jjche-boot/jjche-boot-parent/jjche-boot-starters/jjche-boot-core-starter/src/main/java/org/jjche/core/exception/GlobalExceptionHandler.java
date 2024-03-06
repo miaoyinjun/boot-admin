@@ -3,7 +3,6 @@ package org.jjche.core.exception;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.log4j.Log4j2;
-import org.jjche.common.api.CommonAPI;
 import org.jjche.common.constant.LogConstant;
 import org.jjche.common.constant.SpringPropertyConstant;
 import org.jjche.common.context.ContextUtil;
@@ -16,7 +15,6 @@ import org.jjche.core.util.LogUtil;
 import org.jjche.core.util.SecurityUtil;
 import org.jjche.core.util.SpringContextHolder;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.*;
@@ -50,8 +48,8 @@ import java.util.Set;
 @RestControllerAdvice
 @Log4j2
 public class GlobalExceptionHandler {
-    @Autowired(required = false)
-    private CommonAPI commonAPI;
+//    @Autowired(required = false)
+//    private CommonAPI commonAPI;
 
     /**
      * <p>

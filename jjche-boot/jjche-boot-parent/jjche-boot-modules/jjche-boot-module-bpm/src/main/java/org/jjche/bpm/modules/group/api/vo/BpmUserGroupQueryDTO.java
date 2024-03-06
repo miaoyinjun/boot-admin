@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.jjche.common.annotation.QueryCriteria;
-import org.jjche.common.dto.BaseQueryCriteriaDTO;
+import org.jjche.common.base.BaseQueryCriteriaDTO;
 import org.jjche.common.enums.CommonStatusEnum;
 
 import java.util.List;

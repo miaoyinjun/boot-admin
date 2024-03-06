@@ -4,7 +4,6 @@ import cn.hutool.core.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.constant.EnvConstant;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.wrapper.response.R;
@@ -105,7 +104,7 @@ public class GeneratorController extends BaseController {
     @PostMapping(value = "/{tableName}/{type}")
     @PreAuthorize("@el.check('generator:list')")
     public R generator(@PathVariable String tableName, @PathVariable Integer type, HttpServletRequest request, HttpServletResponse response) {
-        boolean isDev = SpringContextHolder.getEnvActive().equalsIgnoreCase(EnvConstant.DEV);
+        boolean isDev = SpringContextHolder.isDev();
         Assert.isFalse(!isDev && type == 0, "此环境不允许生成代码，请选择预览或者下载查看！");
         switch (type) {
             // 生成代码

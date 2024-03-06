@@ -15,14 +15,14 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.jjche.common.annotation.PermissionData;
 import org.jjche.common.annotation.QueryCriteria;
-import org.jjche.common.api.CommonAPI;
-import org.jjche.common.context.ElPermissionContext;
-import org.jjche.common.dto.BaseQueryCriteriaDTO;
+import org.jjche.common.api.CommonDataPermissionFieldApi;
+import org.jjche.security.context.ElPermissionContext;
+import org.jjche.common.base.BaseQueryCriteriaDTO;
 import org.jjche.common.dto.PermissionDataResourceDTO;
 import org.jjche.common.dto.PermissionDataRuleDTO;
 import org.jjche.common.permission.DataPermissionFieldFilterable;
 import org.jjche.common.permission.DataPermissionFieldMetaSetter;
-import org.jjche.common.pojo.DataScope;
+import org.jjche.common.vo.DataScopeVO;
 import org.jjche.common.util.ClassUtil;
 import org.jjche.common.util.StrUtil;
 import org.jjche.common.vo.DataPermissionFieldResultVO;
@@ -57,7 +57,7 @@ import java.util.stream.Collectors;
 public class PermissionDataAspect {
 
     @Autowired
-    private CommonAPI commonAPI;
+    private CommonDataPermissionFieldApi commonDataPermissionFieldApi;
 
     /**
      * <p>permissionDataCut.</p>
@@ -82,14 +82,14 @@ public class PermissionDataAspect {
         PermissionData pd = method.getAnnotation(PermissionData.class);
 
         String permissionCode = ElPermissionContext.get();
-        DataScope dataScope = null;
+        DataScopeVO dataScopeVO = null;
         //未登录情况下
         try {
-            dataScope = SecurityUtil.getUserDataScope();
+            dataScopeVO = SecurityUtil.getUserDataScope();
         } catch (Exception e) {
         }
         BaseQueryCriteriaDTO paramQueryCriteriaDTO = null;
-        boolean isNotAdmin = dataScope != null && !dataScope.isAll() && StrUtil.isNotBlank(permissionCode);
+        boolean isNotAdmin = dataScopeVO != null && !dataScopeVO.isAll() && StrUtil.isNotBlank(permissionCode);
 
         //传输对象
         PermissionDataResourceDTO dto = new PermissionDataResourceDTO();
@@ -105,9 +105,9 @@ public class PermissionDataAspect {
             //dataScope定义
             String deptName = pd.deptIdInFieldName(),
                     creatorName = pd.userIdEQFieldName(),
-                    userName = dataScope.getUserName();
-            Set<Long> deptIds = dataScope.getDeptIds();
-            boolean isSelf = dataScope.isSelf();
+                    userName = dataScopeVO.getUserName();
+            Set<Long> deptIds = dataScopeVO.getDeptIds();
+            boolean isSelf = dataScopeVO.isSelf();
             //部门id
             if (StrUtil.isNotBlank(deptName) && CollectionUtil.isNotEmpty(deptIds)) {
                 PermissionDataRuleDTO permissionDataRuleDTO = PermissionDataRuleDTO.builder()
@@ -128,7 +128,7 @@ public class PermissionDataAspect {
 
             //获取用户数据规则配置
             List<PermissionDataRuleDTO> permissionDataRuleDTOList =
-                    commonAPI.listPermissionDataRuleByUserId(SecurityUtil.getUserId());
+                    commonDataPermissionFieldApi.listPermissionDataRuleByUserId(SecurityUtil.getUserId());
             if (CollUtil.isNotEmpty(permissionDataRuleDTOList)) {
                 String finalPermissionCode = permissionCode;
                 Predicate condition = (str) -> StrUtil.equals(String.valueOf(str), finalPermissionCode);
@@ -218,7 +218,7 @@ public class PermissionDataAspect {
     private List<DataPermissionFieldResultVO> doFilter(DataPermissionFieldFilterable<?> filterable,
                                                        PermissionDataResourceDTO dto,
                                                        boolean editable) {
-        List<DataPermissionFieldResultVO> resources = this.commonAPI.listPermissionDataResource(dto);
+        List<DataPermissionFieldResultVO> resources = this.commonDataPermissionFieldApi.listPermissionDataResource(dto);
         if (CollUtil.isEmpty(resources)) {
             return null;
         }

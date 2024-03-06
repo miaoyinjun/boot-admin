@@ -5,15 +5,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.annotation.PermissionData;
-import org.jjche.common.dto.RoleSmallDto;
+import org.jjche.common.dto.RoleSmallDTO;
 import org.jjche.common.dto.UserSampleVO;
 import org.jjche.common.dto.UserVO;
-import org.jjche.common.enums.CodeEnum;
+import org.jjche.system.modules.system.api.enums.CodeEnum;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
-import org.jjche.common.pojo.DataScope;
+import org.jjche.common.vo.DataScopeVO;
 import org.jjche.system.modules.user.api.UserApi;
 import org.jjche.common.util.RsaUtils;
 import org.jjche.common.wrapper.response.R;
@@ -77,7 +77,7 @@ public class UserController extends BaseController implements UserApi {
     @ApiOperation("导出用户数据")
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check('user:list')")
-    @PermissionData(deptIdInFieldName = DataScope.F_SQL_SCOPE_NAME)
+    @PermissionData(deptIdInFieldName = DataScopeVO.F_SQL_SCOPE_NAME)
     public void download(HttpServletResponse response, UserQueryCriteriaDTO criteria) throws IOException {
         userService.download(userService.queryAll(criteria), response);
     }
@@ -92,7 +92,7 @@ public class UserController extends BaseController implements UserApi {
     @ApiOperation("查询用户")
     @GetMapping
     @PreAuthorize("@el.check('user:list')")
-    @PermissionData(deptIdInFieldName = DataScope.F_SQL_SCOPE_NAME)
+    @PermissionData(deptIdInFieldName = DataScopeVO.F_SQL_SCOPE_NAME)
     public R<MyPage<UserVO>> query(UserQueryCriteriaDTO criteria, PageParam pageable) {
         return R.ok(userService.queryAll(criteria, pageable));
     }
@@ -173,8 +173,8 @@ public class UserController extends BaseController implements UserApi {
     @PreAuthorize("@el.check('user:del')")
     public R delete(@RequestBody Set<Long> ids) {
         for (Long id : ids) {
-            Integer currentLevel = Collections.min(roleService.findByUsersId(SecurityUtil.getUserId()).stream().map(RoleSmallDto::getLevel).collect(Collectors.toList()));
-            Integer optLevel = Collections.min(roleService.findByUsersId(id).stream().map(RoleSmallDto::getLevel).collect(Collectors.toList()));
+            Integer currentLevel = Collections.min(roleService.findByUsersId(SecurityUtil.getUserId()).stream().map(RoleSmallDTO::getLevel).collect(Collectors.toList()));
+            Integer optLevel = Collections.min(roleService.findByUsersId(id).stream().map(RoleSmallDTO::getLevel).collect(Collectors.toList()));
             Assert.isFalse(currentLevel > optLevel, "角色权限不足，不能删除：" + userService.findById(id).getUsername());
         }
         userService.delete(ids);

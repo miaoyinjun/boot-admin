@@ -11,11 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
-import org.jjche.common.api.CommonAPI;
-import org.jjche.common.dto.AuthUserDto;
-import org.jjche.common.dto.AuthUserSmsDto;
-import org.jjche.common.dto.LoginVO;
-import org.jjche.common.dto.SmsCodeDTO;
+import org.jjche.common.dto.*;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogModule;
 import org.jjche.common.enums.LogType;
@@ -30,8 +26,13 @@ import org.jjche.security.annotation.rest.IgnoreGetMapping;
 import org.jjche.security.annotation.rest.IgnorePostMapping;
 import org.jjche.security.property.*;
 import org.jjche.security.security.TokenProvider;
-import org.jjche.system.modules.security.vo.LoginCodeVO;
+import org.jjche.system.modules.security.api.dto.AuthUserDTO;
+import org.jjche.system.modules.security.api.dto.AuthUserSmsDTO;
+import org.jjche.system.modules.security.api.dto.SmsCodeDTO;
+import org.jjche.system.modules.security.api.vo.LoginCodeVO;
+import org.jjche.system.modules.system.service.AuthService;
 import org.jjche.system.modules.system.service.UserService;
+import org.jjche.system.modules.security.api.vo.LoginVO;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
@@ -54,7 +55,7 @@ import javax.validation.Valid;
 public class AuthorizationController extends BaseController {
     private final SecurityProperties properties;
     private final RedisService redisService;
-    private final CommonAPI commonAPI;
+    private final AuthService authService;
     private final UserService userService;
     private final TokenProvider tokenProvider;
     private final CaptchaService captchaService;
@@ -62,13 +63,13 @@ public class AuthorizationController extends BaseController {
     /**
      * <p>login.</p>
      *
-     * @param authUser a {@link AuthUserDto} object.
+     * @param authUser a {@link AuthUserDTO} object.
      * @return a {@link R} object.
      */
     @IgnorePostMapping(value = "/login")
     @ApiOperation("密码登录授权")
     @LogRecord(value = "密码登录", category = LogCategoryType.MANAGER, type = LogType.SELECT, module = LogModule.LOG_MODULE_LOGIN, operatorId = "{{#authUser.username}}", saveParams = false)
-    public R<LoginVO> login(@Validated @RequestBody AuthUserDto authUser) {
+    public R<LoginVO> login(@Validated @RequestBody AuthUserDTO authUser) {
         SecurityRsaProperties rsaProperties = properties.getRsa();
         // 密码解密
         String password = RsaUtils.decryptByPrivateKey(rsaProperties.getPrivateKey(), authUser.getPassword());
@@ -100,13 +101,13 @@ public class AuthorizationController extends BaseController {
     /**
      * <p>smslogin.</p>
      *
-     * @param dto a {@link AuthUserSmsDto} object.
+     * @param dto a {@link AuthUserSmsDTO} object.
      * @return a {@link R} object.
      */
     @IgnorePostMapping(value = "/sms_login")
     @ApiOperation("短信登录授权")
     @LogRecord(value = "短信登录", category = LogCategoryType.MANAGER, type = LogType.SELECT, module = LogModule.LOG_MODULE_LOGIN, operatorId = "{{#dto.phone}}", saveParams = false)
-    public R<LoginVO> smsLogin(@Validated @RequestBody AuthUserSmsDto dto) {
+    public R<LoginVO> smsLogin(@Validated @RequestBody AuthUserSmsDTO dto) {
         return R.ok(userService.smslogin(dto));
     }
 
@@ -130,7 +131,7 @@ public class AuthorizationController extends BaseController {
     @ApiOperation("获取用户信息")
     @GetMapping(value = "/info")
     public R<UserDetails> getUserInfo() {
-        return R.ok(commonAPI.getUserDetails());
+        return R.ok(authService.getUserDetails());
     }
 
     /**
@@ -165,9 +166,19 @@ public class AuthorizationController extends BaseController {
      * @return a {@link R} object.
      */
     @ApiOperation("退出登录")
-    @IgnoreDeleteMapping(value = "/logout")
+    @IgnoreDeleteMapping("/logout")
     public R logout() {
-        commonAPI.logoutOnlineUser(tokenProvider.resolveToken());
+        authService.logoutOnlineUser(tokenProvider.resolveToken());
         return R.ok();
+    }
+
+    @GetMapping("logout-token")
+    public void logoutOnlineUser(String token) {
+        this.authService.logoutOnlineUser(token);
+    }
+
+    @IgnoreGetMapping("user-details")
+    public JwtUserDTO getUserDetails() {
+        return this.authService.getUserDetails();
     }
 }

@@ -3,7 +3,7 @@ package org.jjche.system.modules.app.api.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.jjche.common.annotation.QueryCriteria;
-import org.jjche.common.dto.BaseQueryCriteriaDTO;
+import org.jjche.common.base.BaseQueryCriteriaDTO;
 
 /**
  * <p>

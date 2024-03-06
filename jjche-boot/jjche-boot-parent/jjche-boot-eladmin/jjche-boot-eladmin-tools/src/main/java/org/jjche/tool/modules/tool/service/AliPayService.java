@@ -4,11 +4,11 @@ import cn.hutool.core.lang.Assert;
 import com.alicp.jetcache.anno.CacheUpdate;
 import com.alicp.jetcache.anno.Cached;
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.constant.CacheKey;
 import org.jjche.mybatis.base.service.MyServiceImpl;
+import org.jjche.tool.modules.tool.api.vo.TradeVO;
+import org.jjche.tool.modules.tool.constant.ToolCacheKey;
 import org.jjche.tool.modules.tool.domain.AlipayConfigDO;
 import org.jjche.tool.modules.tool.mapper.AliPayMapper;
-import org.jjche.tool.modules.tool.vo.TradeVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +28,7 @@ public class AliPayService extends MyServiceImpl<AliPayMapper, AlipayConfigDO> {
      *
      * @return AlipayConfigDO
      */
-    @Cached(name = CacheKey.ALI_PAY)
+    @Cached(name = ToolCacheKey.ALI_PAY)
     public AlipayConfigDO find() {
         return this.getById(1L);
     }
@@ -39,7 +39,7 @@ public class AliPayService extends MyServiceImpl<AliPayMapper, AlipayConfigDO> {
      * @param alipayConfig 支付宝配置
      * @return AlipayConfigDO
      */
-    @CacheUpdate(name = CacheKey.ALI_PAY, value = "#result")
+    @CacheUpdate(name = ToolCacheKey.ALI_PAY, value = "#result")
     @Transactional(rollbackFor = Exception.class)
     public AlipayConfigDO config(AlipayConfigDO alipayConfig) {
         alipayConfig.setId(1L);

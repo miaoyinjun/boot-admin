@@ -1,6 +1,6 @@
 package org.jjche.system.modules.dept.api;
 
-import org.jjche.common.dto.DeptSmallDto;
+import org.jjche.common.dto.DeptSmallDTO;
 import org.jjche.system.constant.ApiConstants;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -44,7 +44,7 @@ public interface DeptApi {
      * @return /
      */
     @GetMapping("list-small-condition")
-    List<DeptSmallDto> listByIds(@RequestParam Set<Long> ids);
+    List<DeptSmallDTO> listByIds(@RequestParam Set<Long> ids);
 
     /**
      * 根据ID查询
@@ -53,7 +53,7 @@ public interface DeptApi {
      * @return /
      */
     @GetMapping("get-small")
-    DeptSmallDto getSmallById(@RequestParam Long id);
+    DeptSmallDTO getSmallById(@RequestParam Long id);
 
     /**
      * <p>
@@ -63,5 +63,5 @@ public interface DeptApi {
      * @return /
      */
     @GetMapping("list-small")
-    List<DeptSmallDto> listSmall();
+    List<DeptSmallDTO> listSmall();
 }

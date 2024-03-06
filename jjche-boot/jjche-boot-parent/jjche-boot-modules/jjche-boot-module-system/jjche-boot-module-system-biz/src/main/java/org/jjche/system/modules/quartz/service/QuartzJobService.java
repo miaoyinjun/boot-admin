@@ -7,7 +7,7 @@ import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
-import org.jjche.common.enums.RedisTopicEnum;
+import org.jjche.system.modules.quartz.api.enums.QuartzRedisTopicEnum;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.util.StrUtil;
@@ -18,9 +18,9 @@ import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
 import org.jjche.system.modules.quartz.domain.QuartzJobDO;
 import org.jjche.system.modules.quartz.domain.QuartzLogDO;
-import org.jjche.system.modules.quartz.dto.JobQueryCriteriaDTO;
-import org.jjche.system.modules.quartz.dto.QuartzRedisMessageDTO;
-import org.jjche.system.modules.quartz.enums.QuartzActionEnum;
+import org.jjche.system.modules.quartz.api.dto.JobQueryCriteriaDTO;
+import org.jjche.system.modules.quartz.api.dto.QuartzRedisMessageDTO;
+import org.jjche.system.modules.quartz.api.enums.QuartzActionEnum;
 import org.jjche.system.modules.quartz.mapper.QuartzJobMapper;
 import org.jjche.system.modules.quartz.mapper.QuartzLogMapper;
 import org.quartz.CronExpression;
@@ -130,7 +130,7 @@ public class QuartzJobService extends MyServiceImpl<QuartzJobMapper, QuartzJobDO
         QuartzRedisMessageDTO dto = new QuartzRedisMessageDTO();
         dto.setQuartzJob(resources);
         dto.setAction(QuartzActionEnum.ADD);
-        redisService.push(RedisTopicEnum.TOPIC_QUARTZ.getTopic(), dto);
+        redisService.push(QuartzRedisTopicEnum.TOPIC_QUARTZ.getTopic(), dto);
     }
 
 
@@ -151,7 +151,7 @@ public class QuartzJobService extends MyServiceImpl<QuartzJobMapper, QuartzJobDO
         QuartzRedisMessageDTO dto = new QuartzRedisMessageDTO();
         dto.setQuartzJob(resources);
         dto.setAction(QuartzActionEnum.UPDATE);
-        redisService.push(RedisTopicEnum.TOPIC_QUARTZ.getTopic(), dto);
+        redisService.push(QuartzRedisTopicEnum.TOPIC_QUARTZ.getTopic(), dto);
     }
 
     /**
@@ -169,7 +169,7 @@ public class QuartzJobService extends MyServiceImpl<QuartzJobMapper, QuartzJobDO
         QuartzRedisMessageDTO dto = new QuartzRedisMessageDTO();
         dto.setQuartzJob(quartzJob);
         dto.setAction(QuartzActionEnum.PAUSE);
-        redisService.push(RedisTopicEnum.TOPIC_QUARTZ.getTopic(), dto);
+        redisService.push(QuartzRedisTopicEnum.TOPIC_QUARTZ.getTopic(), dto);
     }
 
     /**
@@ -181,7 +181,7 @@ public class QuartzJobService extends MyServiceImpl<QuartzJobMapper, QuartzJobDO
         QuartzRedisMessageDTO dto = new QuartzRedisMessageDTO();
         dto.setQuartzJob(quartzJob);
         dto.setAction(QuartzActionEnum.EXEC);
-        redisService.push(RedisTopicEnum.TOPIC_QUARTZ.getTopic(), dto);
+        redisService.push(QuartzRedisTopicEnum.TOPIC_QUARTZ.getTopic(), dto);
     }
 
     /**
@@ -197,7 +197,7 @@ public class QuartzJobService extends MyServiceImpl<QuartzJobMapper, QuartzJobDO
             QuartzRedisMessageDTO dto = new QuartzRedisMessageDTO();
             dto.setQuartzJob(quartzJob);
             dto.setAction(QuartzActionEnum.DEL);
-            redisService.push(RedisTopicEnum.TOPIC_QUARTZ.getTopic(), dto);
+            redisService.push(QuartzRedisTopicEnum.TOPIC_QUARTZ.getTopic(), dto);
         }
     }
 

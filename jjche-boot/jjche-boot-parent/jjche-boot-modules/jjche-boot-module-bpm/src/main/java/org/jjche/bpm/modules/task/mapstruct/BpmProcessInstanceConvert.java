@@ -9,7 +9,7 @@ import org.jjche.bpm.modules.message.api.dto.BpmMessageSendWhenProcessInstanceAp
 import org.jjche.bpm.modules.message.api.dto.BpmMessageSendWhenProcessInstanceRejectReqDTO;
 import org.jjche.bpm.config.bpm.core.event.BpmProcessInstanceResultEvent;
 import org.jjche.bpm.modules.task.api.vo.instance.BpmProcessInstancePageItemRespVO;
-import org.jjche.common.dto.DeptSmallDto;
+import org.jjche.common.dto.DeptSmallDTO;
 import org.jjche.common.dto.UserVO;
 import org.jjche.common.param.MyPage;
 import org.jjche.bpm.modules.definition.domain.BpmProcessDefinitionExtDO;
@@ -49,7 +49,7 @@ public interface BpmProcessInstanceConvert {
 
     default BpmProcessInstanceRespVO convert2(HistoricProcessInstance processInstance, BpmProcessInstanceExtDO processInstanceExt,
                                               ProcessDefinition processDefinition, BpmProcessDefinitionExtDO processDefinitionExt,
-                                              String bpmnXml, UserVO startUser, DeptSmallDto dept) {
+                                              String bpmnXml, UserVO startUser, DeptSmallDTO dept) {
         BpmProcessInstanceRespVO respVO = convert2(processInstance);
         copyTo(processInstanceExt, respVO);
         // definition

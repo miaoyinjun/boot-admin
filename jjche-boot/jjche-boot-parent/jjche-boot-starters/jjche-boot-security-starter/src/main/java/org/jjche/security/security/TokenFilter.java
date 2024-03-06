@@ -2,13 +2,13 @@ package org.jjche.security.security;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.BooleanUtil;
-import org.jjche.common.api.CommonAPI;
+import org.jjche.common.api.CommonAuthApi;
 import org.jjche.common.constant.SecurityConstant;
 import org.jjche.common.context.ContextUtil;
-import org.jjche.common.dto.JwtUserDto;
+import org.jjche.common.dto.JwtUserDTO;
 import org.jjche.common.dto.UserVO;
 import org.jjche.common.enums.UserTypeEnum;
-import org.jjche.common.pojo.DataScope;
+import org.jjche.common.vo.DataScopeVO;
 import org.jjche.common.util.HttpUtil;
 import org.jjche.common.wrapper.HeaderMapRequestWrapper;
 import org.jjche.common.wrapper.response.R;
@@ -39,15 +39,15 @@ import java.util.stream.Collectors;
  * @version 1.0.8-SNAPSHOT
  */
 public class TokenFilter extends GenericFilterBean {
-    private final CommonAPI commonAPI;
+    private final CommonAuthApi commonAuthApi;
 
     /**
      * <p>Constructor for TokenFilter.</p>
      *
-     * @param commonAPI api
+     * @param commonAuthApi api
      */
-    public TokenFilter(CommonAPI commonAPI) {
-        this.commonAPI = commonAPI;
+    public TokenFilter(CommonAuthApi commonAuthApi) {
+        this.commonAuthApi = commonAuthApi;
     }
 
     /**
@@ -67,7 +67,7 @@ public class TokenFilter extends GenericFilterBean {
 
         HeaderMapRequestWrapper reqWrapper = new HeaderMapRequestWrapper((HttpServletRequest) servletRequest);
         //非cloud才会走这里
-        JwtUserDto userDetails = commonAPI.getUserDetails();
+        JwtUserDTO userDetails = commonAuthApi.getUserDetails();
         String token = reqWrapper.getHeader(SecurityConstant.HEADER_AUTH);
         if (userDetails != null) {
             Authentication authentication = null;
@@ -139,7 +139,7 @@ public class TokenFilter extends GenericFilterBean {
      * @param userDetails 用户
      * @param token       /
      */
-    private void setContextUser(JwtUserDto userDetails, String token) {
+    private void setContextUser(JwtUserDTO userDetails, String token) {
         if (userDetails != null) {
             ContextUtil.setToken(token);
             UserVO user = userDetails.getUser();
@@ -148,17 +148,17 @@ public class TokenFilter extends GenericFilterBean {
             String username = user.getUsername();
             Set<String> elPermissions = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
             //数据范围
-            DataScope dataScope = userDetails.getDataScope();
+            DataScopeVO dataScopeVO = userDetails.getDataScopeVO();
             //部门id
-            Set<Long> dataScopeDeptIds = dataScope.getDeptIds();
+            Set<Long> dataScopeDeptIds = dataScopeVO.getDeptIds();
             //全部
-            Boolean dataScopeIsAll = dataScope.isAll();
+            Boolean dataScopeIsAll = dataScopeVO.isAll();
             //本人
-            Boolean dataScopeIsSelf = dataScope.isSelf();
+            Boolean dataScopeIsSelf = dataScopeVO.isSelf();
             //用户id
-            Long dataScopeUserid = dataScope.getUserId();
+            Long dataScopeUserid = dataScopeVO.getUserId();
             //用户名
-            String dataScopeUsername = dataScope.getUserName();
+            String dataScopeUsername = dataScopeVO.getUserName();
 
             ContextUtil.setUserId(userId);
             ContextUtil.setUsername(username);

@@ -3,8 +3,8 @@ package org.jjche.demo.modules.provider.api.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.jjche.common.annotation.QueryCriteria;
-import org.jjche.common.dto.BaseDTO;
-import org.jjche.common.dto.BaseQueryCriteriaDTO;
+import org.jjche.common.base.BaseDTO;
+import org.jjche.common.base.BaseQueryCriteriaDTO;
 import org.jjche.demo.modules.provider.api.enums.ProviderCourseEnum;
 
 import javax.validation.constraints.NotBlank;

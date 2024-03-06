@@ -8,7 +8,7 @@ import com.dianping.cat.configuration.client.entity.ClientConfig;
 import com.dianping.cat.configuration.client.entity.Server;
 import net.dreamlu.mica.core.utils.StringUtil;
 import org.jjche.cat.property.JjcheCatProperties;
-import org.jjche.common.constant.CatConstant;
+import org.jjche.cat.constant.CatConstant;
 import org.jjche.common.constant.SpringPropertyConstant;
 
 /**

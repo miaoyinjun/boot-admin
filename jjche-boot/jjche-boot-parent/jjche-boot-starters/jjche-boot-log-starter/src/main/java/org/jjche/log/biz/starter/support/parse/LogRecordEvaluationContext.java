@@ -1,6 +1,6 @@
 package org.jjche.log.biz.starter.support.parse;
 
-import org.jjche.common.context.LogRecordContext;
+import org.jjche.log.context.LogRecordContext;
 import org.springframework.context.expression.MethodBasedEvaluationContext;
 import org.springframework.core.ParameterNameDiscoverer;
 

@@ -1,5 +1,7 @@
 package org.jjche.system.modules.dict.api;
 
+import org.jjche.common.api.CommonDictApi;
+
 import java.util.Collection;
 
 /**
@@ -10,7 +12,7 @@ import java.util.Collection;
  * @author miaoyj
  * @since 2024-03-01
  */
-public interface DictApi {
+public interface DictApi extends CommonDictApi {
 
     /**
      * 校验字典数据们是否有效。如下情况，视为无效：

@@ -9,7 +9,7 @@ import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.ApiModelProperty;
 import org.jjche.common.constant.EnumConstant;
 import org.jjche.common.dto.LogUpdateDetailDTO;
-import org.jjche.common.enums.IBaseEnum;
+import org.jjche.common.base.IBaseEnum;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;

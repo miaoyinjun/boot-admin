@@ -1,7 +1,7 @@
 package org.jjche.system.modules.system.api.dto;
 
 import lombok.Data;
-import org.jjche.common.enums.DataScopeEnum;
+import org.jjche.system.modules.system.api.enums.DataScopeEnum;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

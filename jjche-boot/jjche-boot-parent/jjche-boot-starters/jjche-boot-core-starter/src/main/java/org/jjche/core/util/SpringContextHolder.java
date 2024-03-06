@@ -3,7 +3,7 @@ package org.jjche.core.util;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.StaticLog;
 import org.apache.commons.lang3.ArrayUtils;
-import org.jjche.common.constant.EnvConstant;
+import org.jjche.core.constant.EnvConstant;
 import org.jjche.common.constant.SpringPropertyConstant;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;

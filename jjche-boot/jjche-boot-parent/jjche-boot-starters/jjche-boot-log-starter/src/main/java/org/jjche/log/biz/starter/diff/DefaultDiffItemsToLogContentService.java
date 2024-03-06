@@ -6,7 +6,7 @@ import de.danielbechler.diff.selector.ElementSelector;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import org.jjche.common.enums.IBaseEnum;
+import org.jjche.common.base.IBaseEnum;
 import org.jjche.common.util.StrUtil;
 import org.jjche.log.biz.service.IFunctionService;
 import org.jjche.log.biz.starter.configuration.LogRecordProperties;

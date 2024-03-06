@@ -9,17 +9,17 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.StaticLog;
 import org.jjche.cache.service.RedisService;
-import org.jjche.common.api.CommonAPI;
-import org.jjche.common.constant.CacheKey;
+import org.jjche.common.api.CommonAppKeyApi;
 import org.jjche.common.constant.FilterEncConstant;
 import org.jjche.common.context.ContextUtil;
-import org.jjche.common.enums.FilterEncEnum;
-import org.jjche.common.util.HttpUtil;
-import org.jjche.common.vo.SecurityAppKeyBasicVO;
 import org.jjche.common.exception.RequestLimitException;
 import org.jjche.common.exception.RequestTimeoutException;
 import org.jjche.common.exception.SignException;
 import org.jjche.common.exception.WhiteIpException;
+import org.jjche.common.util.HttpUtil;
+import org.jjche.common.vo.SecurityAppKeyBasicVO;
+import org.jjche.filter.constant.FilterCacheKey;
+import org.jjche.filter.enc.api.enums.FilterEncEnum;
 import org.jjche.filter.util.EncUtil;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
@@ -40,12 +40,12 @@ import java.util.List;
  * @since 2020-08-14
  */
 public class EncCheckHeaderInterceptor implements HandlerInterceptor {
-    private CommonAPI commonAPI;
+    private CommonAppKeyApi commonAppKeyApi;
     private RedisService redisService;
     private AntPathMatcher PATH_MATCHER = new AntPathMatcher();
 
-    public EncCheckHeaderInterceptor(CommonAPI commonAPI, RedisService redisService) {
-        this.commonAPI = commonAPI;
+    public EncCheckHeaderInterceptor(CommonAppKeyApi commonAppKeyApi, RedisService redisService) {
+        this.commonAppKeyApi = commonAppKeyApi;
         this.redisService = redisService;
     }
 
@@ -89,7 +89,7 @@ public class EncCheckHeaderInterceptor implements HandlerInterceptor {
         StaticLog.info("md5Filter.appId:{},timestamp:{}, nonce:{},sign:{}", appIdValue, timestampValue, nonceValue, signValue);
 
         /** 校验appId有效性 */
-        SecurityAppKeyBasicVO appSecretVO = commonAPI.getKeyByAppId(appIdValue);
+        SecurityAppKeyBasicVO appSecretVO = commonAppKeyApi.getKeyByAppId(appIdValue);
         String appSecret = null;
         if (appSecretVO != null) {
             appSecret = appSecretVO.getAppSecret();
@@ -175,9 +175,9 @@ public class EncCheckHeaderInterceptor implements HandlerInterceptor {
     private void checkRequestLimit(Integer limitCount, String uri) {
         if (limitCount != null && limitCount > 0) {
             String url = uri.replaceAll("/", "_");
-            List<Object> keys = CollUtil.toList(StrUtil.join(CacheKey.REQUEST_LIMIT, "_", url));
+            List<Object> keys = CollUtil.toList(StrUtil.join(FilterCacheKey.REQUEST_LIMIT, "_", url));
 
-            RedisScript<Long> redisScript = new DefaultRedisScript<>(CacheKey.SCRIPT_LUA_LIMIT, Long.class);
+            RedisScript<Long> redisScript = new DefaultRedisScript<>(FilterCacheKey.SCRIPT_LUA_LIMIT, Long.class);
             Number count = redisService.execute(redisScript, keys, limitCount, 1);
             Boolean isMorThan = null != count && count.intValue() <= limitCount;
             if (BooleanUtil.isFalse(isMorThan)) {

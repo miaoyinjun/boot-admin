@@ -13,7 +13,7 @@ import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
 import org.jjche.tool.modules.tool.domain.QiniuConfigDO;
 import org.jjche.tool.modules.tool.domain.QiniuContentDO;
-import org.jjche.tool.modules.tool.dto.QiniuQueryCriteriaDTO;
+import org.jjche.tool.modules.tool.api.dto.QiniuQueryCriteriaDTO;
 import org.jjche.tool.modules.tool.service.QiNiuService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

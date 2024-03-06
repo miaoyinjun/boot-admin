@@ -3,8 +3,9 @@ package org.jjche.security.service;
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.anno.CreateCache;
 import org.jjche.cache.service.RedisService;
-import org.jjche.common.constant.CacheKey;
-import org.jjche.common.dto.JwtUserDto;
+import org.jjche.common.constant.CommonMenuCacheKey;
+import org.jjche.common.constant.PermissionDataCacheKey;
+import org.jjche.common.dto.JwtUserDTO;
 import org.jjche.common.dto.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class JwtUserServiceImpl implements JwtUserService {
-    @CreateCache(name = CacheKey.JWT_USER_NAME)
-    private Cache<String, JwtUserDto> jwtUserCache;
+    @CreateCache(name = JWT_USER_NAME)
+    private Cache<String, JwtUserDTO> jwtUserCache;
     @Autowired
     private RedisService redisService;
 
@@ -29,7 +30,7 @@ public class JwtUserServiceImpl implements JwtUserService {
      * {@inheritDoc}
      */
     @Override
-    public JwtUserDto getByUserName(String userName) {
+    public JwtUserDTO getByUserName(String userName) {
         return jwtUserCache.get(userName);
     }
 
@@ -37,7 +38,7 @@ public class JwtUserServiceImpl implements JwtUserService {
      * {@inheritDoc}
      */
     @Override
-    public void putByUserName(String userName, JwtUserDto jwtUserDto) {
+    public void putByUserName(String userName, JwtUserDTO jwtUserDto) {
         jwtUserCache.put(userName, jwtUserDto);
     }
 
@@ -46,15 +47,15 @@ public class JwtUserServiceImpl implements JwtUserService {
      */
     @Override
     public void removeByUserName(String userName) {
-        JwtUserDto jwtUserDto = this.getByUserName(userName);
+        JwtUserDTO jwtUserDto = this.getByUserName(userName);
         if (jwtUserDto != null) {
             UserVO user = jwtUserDto.getUser();
             if (user != null) {
                 Long userId = user.getId();
                 jwtUserCache.remove(userName);
-                redisService.delete(CacheKey.MENU_USER_ID + userId);
-                redisService.delete(CacheKey.PERMISSION_DATA_RULE_USER_ID + userId);
-                redisService.delete(CacheKey.PERMISSION_DATA_FIELD_USER_ID + userId);
+                redisService.delete(CommonMenuCacheKey.MENU_USER_ID + userId);
+                redisService.delete(PermissionDataCacheKey.PERMISSION_DATA_RULE_USER_ID + userId);
+                redisService.delete(PermissionDataCacheKey.PERMISSION_DATA_FIELD_USER_ID + userId);
             }
         }
 

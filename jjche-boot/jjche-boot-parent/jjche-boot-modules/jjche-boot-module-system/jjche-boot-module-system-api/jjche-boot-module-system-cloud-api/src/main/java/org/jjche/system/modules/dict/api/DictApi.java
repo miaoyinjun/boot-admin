@@ -1,5 +1,7 @@
 package org.jjche.system.modules.dict.api;
 
+import org.jjche.common.api.CommonDictApi;
+import org.jjche.common.dto.DictParam;
 import org.jjche.system.constant.ApiConstants;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -22,7 +24,7 @@ import java.util.Collection;
         path = "/sys/dictDetail/",
         url = "${FEIGN_URL_SYSTEM:}"
 )
-public interface DictApi {
+public interface DictApi extends CommonDictApi {
 
     /**
      * 校验字典数据们是否有效。如下情况，视为无效：
@@ -34,4 +36,16 @@ public interface DictApi {
      */
     @GetMapping("valid")
     void validateDictDataList(@RequestParam String dictType, @RequestParam Collection<String> values);
+
+    /**
+     * <p>
+     * 获取根据字典名称和值
+     * </p>
+     *
+     * @param name  字典名称
+     * @param value 字典值
+     * @return /
+     */
+    @GetMapping("dict-by-name-value")
+    DictParam getDictByNameValue(@RequestParam("name") String name, @RequestParam("value") String value);
 }

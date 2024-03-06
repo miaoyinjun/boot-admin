@@ -9,12 +9,12 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.jjche.cache.service.RedisService;
-import org.jjche.common.annotation.Limit;
-import org.jjche.common.constant.CacheKey;
-import org.jjche.common.enums.LimitType;
+import org.jjche.common.exception.RequestLimitException;
 import org.jjche.common.util.HttpUtil;
 import org.jjche.common.util.StrUtil;
-import org.jjche.common.exception.RequestLimitException;
+import org.jjche.filter.constant.FilterCacheKey;
+import org.jjche.filter.enc.limit.annotation.Limit;
+import org.jjche.filter.enc.limit.enums.LimitType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
@@ -43,7 +43,7 @@ public class LimitAspect {
     /**
      * <p>pointcut.</p>
      */
-    @Pointcut("@annotation(org.jjche.common.annotation.Limit)")
+    @Pointcut("@annotation(org.jjche.filter.enc.limit.annotation.Limit)")
     public void pointcut() {
     }
 
@@ -73,7 +73,7 @@ public class LimitAspect {
         String url = request.getRequestURI().replaceAll("/", "_");
         List<Object> keys = CollUtil.toList(StrUtil.join(limit.prefix(), "_", key, "_", url));
 
-        RedisScript<Long> redisScript = new DefaultRedisScript<>(CacheKey.SCRIPT_LUA_LIMIT, Long.class);
+        RedisScript<Long> redisScript = new DefaultRedisScript<>(FilterCacheKey.SCRIPT_LUA_LIMIT, Long.class);
         Number count = redisService.execute(redisScript, keys, limit.count(), limit.period());
         Boolean isMorThan = null != count && count.intValue() <= limit.count();
         if (BooleanUtil.isFalse(isMorThan)) {

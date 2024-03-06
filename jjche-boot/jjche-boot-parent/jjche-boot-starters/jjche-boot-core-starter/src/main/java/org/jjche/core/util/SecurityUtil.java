@@ -3,12 +3,11 @@ package org.jjche.core.util;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.log.StaticLog;
 import org.jjche.common.constant.SecurityConstant;
-import org.jjche.common.constant.UserConstant;
 import org.jjche.common.context.ContextUtil;
-import org.jjche.common.pojo.DataScope;
+import org.jjche.common.vo.DataScopeVO;
 import org.jjche.common.util.StrUtil;
 import org.jjche.common.wrapper.enums.RCodeEnum;
-import org.jjche.common.exception.AuthenticationTokenExpiredException;
+import org.jjche.core.exception.AuthenticationTokenExpiredException;
 import org.springframework.util.StringUtils;
 
 import java.util.Set;
@@ -21,6 +20,11 @@ import java.util.Set;
  * @since 2019-01-17
  */
 public class SecurityUtil {
+    /**
+     * 默认系统用户名 {@value}
+     */
+    static String DEFAULT_SYSTEM_USER_NAME = "System";
+
     /**
      * 获取系统用户名称
      *
@@ -53,7 +57,7 @@ public class SecurityUtil {
         } catch (Exception ignored) {
         }
         // 用户定时任务，或者无Token调用的情况
-        return UserConstant.DEFAULT_SYSTEM_USER_NAME;
+        return DEFAULT_SYSTEM_USER_NAME;
     }
 
     /**
@@ -74,20 +78,20 @@ public class SecurityUtil {
      *
      * @return /
      */
-    public static DataScope getUserDataScope() {
-        DataScope dataScope = new DataScope();
+    public static DataScopeVO getUserDataScope() {
+        DataScopeVO dataScopeVO = new DataScopeVO();
         Set<Long> deptIds = ContextUtil.getDataScopeDeptIds();
         boolean isAll = ContextUtil.getDataScopeIsAll();
         boolean isSelf = ContextUtil.getDataScopeIsSelf();
         Long userid = ContextUtil.getDataScopeUserId();
         String username = ContextUtil.getDataScopeUserName();
 
-        dataScope.setDeptIds(deptIds);
-        dataScope.setAll(isAll);
-        dataScope.setAll(isSelf);
-        dataScope.setUserId(userid);
-        dataScope.setUserName(username);
-        return dataScope;
+        dataScopeVO.setDeptIds(deptIds);
+        dataScopeVO.setAll(isAll);
+        dataScopeVO.setAll(isSelf);
+        dataScopeVO.setUserId(userid);
+        dataScopeVO.setUserName(username);
+        return dataScopeVO;
     }
 
     /**

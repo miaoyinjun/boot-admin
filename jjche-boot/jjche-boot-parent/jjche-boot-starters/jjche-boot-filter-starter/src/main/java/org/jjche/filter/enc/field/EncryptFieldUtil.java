@@ -5,7 +5,7 @@ import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import cn.hutool.crypto.symmetric.SymmetricCrypto;
-import org.jjche.common.annotation.EncryptField;
+import org.jjche.filter.enc.field.enums.EncryptField;
 import org.jjche.common.constant.FilterEncConstant;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

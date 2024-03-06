@@ -2,7 +2,7 @@ package org.jjche.cloud;
 
 import org.jjche.cloud.gray.config.VersionServiceInstanceListSupplierConfiguration;
 import org.jjche.cloud.loader.DynamicRouteLoader;
-import org.jjche.system.modules.ISysBaseAPI;
+import org.jjche.system.modules.permission.api.AuthApi;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  * @author miaoyj
  * @since 2022-03-03
  */
-@EnableFeignClients(clients = ISysBaseAPI.class)
+@EnableFeignClients(clients = AuthApi.class)
 @EnableDiscoveryClient
 @LoadBalancerClients(defaultConfiguration = VersionServiceInstanceListSupplierConfiguration.class)
 @SpringBootApplication(exclude = {GatewayDiscoveryClientAutoConfiguration.class})

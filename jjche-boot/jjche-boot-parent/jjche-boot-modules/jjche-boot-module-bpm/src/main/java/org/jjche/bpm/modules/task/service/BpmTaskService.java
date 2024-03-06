@@ -22,7 +22,7 @@ import org.jjche.bpm.modules.task.enums.BpmProcessInstanceDeleteReasonEnum;
 import org.jjche.bpm.modules.task.enums.BpmProcessInstanceResultEnum;
 import org.jjche.bpm.modules.task.mapper.BpmTaskExtMapper;
 import org.jjche.bpm.modules.task.mapstruct.BpmTaskConvert;
-import org.jjche.common.dto.DeptSmallDto;
+import org.jjche.common.dto.DeptSmallDTO;
 import org.jjche.common.dto.UserVO;
 import org.jjche.common.exception.BusinessException;
 import org.jjche.common.param.MyPage;
@@ -216,7 +216,7 @@ public class BpmTaskService extends MyServiceImpl<BpmTaskExtMapper, BpmTaskExtDO
 
         // 获得 Dept Map
         Set<Long> deptIds = userMap.values().stream().map(UserVO::getDeptId).collect(Collectors.toSet());
-        List<DeptSmallDto> deptSmalls = deptApi.listByIds(deptIds);
+        List<DeptSmallDTO> deptSmalls = deptApi.listByIds(deptIds);
         // 拼接数据
         return bpmTaskConvert.convertList3(tasks, bpmTaskExtDOMap, processInstance, userMap);
     }

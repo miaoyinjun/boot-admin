@@ -1,6 +1,6 @@
 package org.jjche.core.fileconf;
 
-import org.jjche.common.constant.FileConstant;
+import org.jjche.core.constant.FileConstant;
 import org.jjche.core.property.CoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

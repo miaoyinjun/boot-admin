@@ -12,8 +12,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.jjche.common.annotation.EncryptField;
-import org.jjche.common.annotation.EncryptMethod;
+import org.jjche.filter.enc.field.enums.EncryptField;
+import org.jjche.filter.enc.field.enums.EncryptMethod;
 import org.jjche.common.util.ThrowableUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
@@ -47,7 +47,7 @@ public class EncryptFieldAop {
     /**
      * <p>annotationPointCut.</p>
      */
-    @Pointcut("@annotation(org.jjche.common.annotation.EncryptMethod)")
+    @Pointcut("@annotation(org.jjche.filter.enc.field.enums.EncryptMethod)")
     public void annotationPointCut() {
     }
 

@@ -1,6 +1,6 @@
 package org.jjche.cloud.config;
 
-import org.jjche.common.enums.IBaseEnum;
+import org.jjche.common.base.IBaseEnum;
 import org.springframework.core.convert.converter.Converter;
 
 /**

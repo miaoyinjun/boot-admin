@@ -23,7 +23,7 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.type.TypeHandlerRegistry;
-import org.jjche.common.constant.CatConstant;
+import org.jjche.cat.constant.CatConstant;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Field;

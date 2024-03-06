@@ -1,7 +1,7 @@
 package org.jjche.common.dto;
 
 import lombok.Data;
-import org.jjche.common.annotation.Mobile;
+import org.jjche.common.annotation.validate.Mobile;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Map;

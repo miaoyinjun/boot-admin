@@ -6,7 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.dto.BaseDTO;
+import org.jjche.common.base.BaseDTO;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
 import org.jjche.common.param.MyPage;

@@ -2,8 +2,8 @@ package org.jjche.tool.modules.tool.mapstruct;
 
 import org.jjche.core.base.BaseMapStruct;
 import org.jjche.tool.modules.tool.domain.LocalStorageDO;
-import org.jjche.tool.modules.tool.dto.LocalStorageDTO;
-import org.jjche.tool.modules.tool.vo.LocalStorageBaseVO;
+import org.jjche.tool.modules.tool.api.dto.LocalStorageDTO;
+import org.jjche.tool.modules.tool.api.vo.LocalStorageBaseVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

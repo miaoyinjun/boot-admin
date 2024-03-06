@@ -2,7 +2,7 @@ package org.jjche.system.modules.security.service;
 
 import cn.hutool.core.util.ObjectUtil;
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.dto.JwtUserDto;
+import org.jjche.common.dto.JwtUserDTO;
 import org.jjche.common.dto.UserVO;
 import org.jjche.security.service.JwtUserService;
 import org.jjche.system.modules.system.service.*;
@@ -38,12 +38,12 @@ public abstract class AbstractUserDetailsService implements UserDetailsService {
      * {@inheritDoc}
      */
     @Override
-    public JwtUserDto loadUserByUsername(String username) {
-        JwtUserDto jwtUserDto = jwtUserService.getByUserName(username);
+    public JwtUserDTO loadUserByUsername(String username) {
+        JwtUserDTO jwtUserDto = jwtUserService.getByUserName(username);
         if (ObjectUtil.isNull(jwtUserDto)) {
             UserVO user = this.findUserDto(username);
             if (user != null) {
-                jwtUserDto = new JwtUserDto(
+                jwtUserDto = new JwtUserDTO(
                         user,
                         dataService.getDataScope(user),
                         roleService.mapToGrantedAuthorities(user)

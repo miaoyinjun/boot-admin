@@ -8,18 +8,19 @@ import com.alicp.jetcache.anno.Cached;
 import com.alicp.jetcache.anno.CreateCache;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.constant.CacheKey;
+import org.jjche.common.dto.DictParam;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
-import org.jjche.system.modules.dict.api.DictApi;
 import org.jjche.common.util.StrUtil;
 import org.jjche.common.util.ValidationUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.system.modules.dict.api.DictApi;
 import org.jjche.system.modules.system.api.dto.DictDetailDTO;
 import org.jjche.system.modules.system.api.dto.DictDetailQueryCriteriaDTO;
 import org.jjche.system.modules.system.api.dto.DictSmallDto;
 import org.jjche.system.modules.system.conf.DictRunner;
+import org.jjche.system.modules.system.constant.DictCacheKey;
 import org.jjche.system.modules.system.domain.DictDO;
 import org.jjche.system.modules.system.domain.DictDetailDO;
 import org.jjche.system.modules.system.mapper.DictDetailMapper;
@@ -44,7 +45,7 @@ public class DictDetailService extends MyServiceImpl<DictDetailMapper, DictDetai
 
     private final DictService dictService;
     private final DictDetailMapStruct dictDetailMapper;
-    @CreateCache(name = CacheKey.DIC_NAME)
+    @CreateCache(name = DictCacheKey.DIC_NAME)
     private Cache<String, List<DictDetailDTO>> dicDetailCache;
 
     /**
@@ -119,7 +120,7 @@ public class DictDetailService extends MyServiceImpl<DictDetailMapper, DictDetai
      * @param name 字典名称
      * @return /
      */
-    @Cached(name = CacheKey.DIC_NAME, key = "#name")
+    @Cached(name = DictCacheKey.DIC_NAME, key = "#name")
     public List<DictDetailDTO> getDictByName(String name) {
         DictDO dictDO = dictService.getByName(name);
         Assert.notNull(dictDO, "未找到字典");
@@ -181,5 +182,26 @@ public class DictDetailService extends MyServiceImpl<DictDetailMapper, DictDetai
             DictDetailDO dictData = finalDictDataMap.get(value);
             Assert.notNull(dictData, "当前字典数据不存在");
         });
+    }
+
+    @Override
+    public DictParam getDictByNameValue(String name, String value) {
+        List<DictDetailDTO> list = this.getDictByName(name);
+        if (CollUtil.isNotEmpty(list)) {
+            DictDetailDTO dictDetailDTO = null;
+            for (DictDetailDTO dict : list) {
+                if (StrUtil.equals(dict.getValue(), value)) {
+                    dictDetailDTO = dict;
+                    break;
+                }
+            }
+            if (dictDetailDTO != null) {
+                DictParam dictParam = new DictParam();
+                dictParam.setValue(dictDetailDTO.getValue());
+                dictParam.setLabel(dictDetailDTO.getLabel());
+                return dictParam;
+            }
+        }
+        return null;
     }
 }

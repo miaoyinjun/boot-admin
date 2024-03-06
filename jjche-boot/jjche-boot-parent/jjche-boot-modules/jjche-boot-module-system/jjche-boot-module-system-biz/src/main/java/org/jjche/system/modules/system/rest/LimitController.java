@@ -2,7 +2,7 @@ package org.jjche.system.modules.system.rest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.jjche.common.annotation.Limit;
+import org.jjche.filter.enc.limit.annotation.Limit;
 import org.jjche.core.annotation.controller.SysRestController;
 import org.jjche.core.base.BaseController;
 import org.jjche.security.annotation.rest.IgnoreGetMapping;

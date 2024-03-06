@@ -10,14 +10,14 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.log.StaticLog;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.jjche.common.api.CommonAPI;
+import org.jjche.common.api.CommonLogApi;
 import org.jjche.common.constant.FilterEncConstant;
 import org.jjche.common.constant.LogConstant;
 import org.jjche.common.constant.SpringPropertyConstant;
 import org.jjche.common.context.ContextUtil;
-import org.jjche.common.context.LogRecordContext;
+import org.jjche.log.context.LogRecordContext;
 import org.jjche.common.dto.LogRecordDTO;
-import org.jjche.common.pojo.AbstractR;
+import org.jjche.common.abs.AbstractR;
 import org.jjche.common.util.HttpUtil;
 import org.jjche.common.util.StrUtil;
 import org.jjche.common.util.ThrowableUtil;
@@ -62,7 +62,7 @@ public class LogRecordInterceptor extends LogRecordValueParser
     private String tenantId;
     private ILogRecordService bizLogService;
     private IOperatorGetService operatorGetService;
-    private CommonAPI commonAPI;
+    private CommonLogApi commonLogApi;
     private boolean joinTransaction;
 
     /**
@@ -220,7 +220,7 @@ public class LogRecordInterceptor extends LogRecordValueParser
                 LogUtil.setLogRecordHttpRequest(logRecord);
 
                 LogRecordDTO newLogRecord = setRecord(logRecord, bizKey, expressionValues.get(bizNo), operatorId, expressionValues.get(value), expressionValues.get(detail), success, methodName, result, time);
-                commonAPI.recordLog(newLogRecord);
+                commonLogApi.recordLog(newLogRecord);
             } catch (Exception t) {
                 StaticLog.error("log record execute exception:{}", ThrowableUtil.getStackTrace(t));
                 if (joinTransaction) {throw t;}
@@ -375,8 +375,8 @@ public class LogRecordInterceptor extends LogRecordValueParser
         this.bizLogService = bizLogService;
     }
 
-    public void setCommonAPI(CommonAPI commonAPI) {
-        this.commonAPI = commonAPI;
+    public void setCommonAPI(CommonLogApi commonLogApi) {
+        this.commonLogApi = commonLogApi;
     }
 
     public void setJoinTransaction(boolean joinTransaction) {

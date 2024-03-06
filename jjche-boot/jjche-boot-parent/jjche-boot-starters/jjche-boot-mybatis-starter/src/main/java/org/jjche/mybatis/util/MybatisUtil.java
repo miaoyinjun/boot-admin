@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.jjche.common.annotation.QueryCriteria;
 import org.jjche.common.constant.EnumConstant;
-import org.jjche.common.dto.BaseQueryCriteriaDTO;
+import org.jjche.common.base.BaseQueryCriteriaDTO;
 import org.jjche.common.dto.PermissionDataRuleDTO;
 import org.jjche.mybatis.param.BetweenParam;
 

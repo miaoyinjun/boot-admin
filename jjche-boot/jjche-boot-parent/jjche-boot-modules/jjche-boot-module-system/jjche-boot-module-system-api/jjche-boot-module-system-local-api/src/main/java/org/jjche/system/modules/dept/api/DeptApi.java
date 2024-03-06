@@ -1,6 +1,6 @@
 package org.jjche.system.modules.dept.api;
 
-import org.jjche.common.dto.DeptSmallDto;
+import org.jjche.common.dto.DeptSmallDTO;
 
 import java.util.Collection;
 import java.util.List;
@@ -31,7 +31,7 @@ public interface DeptApi {
      * @param ids ID
      * @return /
      */
-    List<DeptSmallDto> listByIds(Set<Long> ids);
+    List<DeptSmallDTO> listByIds(Set<Long> ids);
 
     /**
      * 根据ID查询
@@ -39,7 +39,7 @@ public interface DeptApi {
      * @param id ID
      * @return /
      */
-    DeptSmallDto getSmallById(Long id);
+    DeptSmallDTO getSmallById(Long id);
 
     /**
      * <p>
@@ -48,5 +48,5 @@ public interface DeptApi {
      *
      * @return /
      */
-    List<DeptSmallDto> listSmall();
+    List<DeptSmallDTO> listSmall();
 }

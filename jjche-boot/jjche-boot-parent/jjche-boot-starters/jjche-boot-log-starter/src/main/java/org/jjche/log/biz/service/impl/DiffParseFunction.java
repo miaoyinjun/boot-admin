@@ -4,7 +4,7 @@ import cn.hutool.log.StaticLog;
 import de.danielbechler.diff.ObjectDifferBuilder;
 import de.danielbechler.diff.comparison.ComparisonService;
 import de.danielbechler.diff.node.DiffNode;
-import org.jjche.common.context.LogRecordContext;
+import org.jjche.log.context.LogRecordContext;
 import org.jjche.log.biz.diff.ArrayDiffer;
 import org.jjche.log.biz.starter.diff.IDiffItemsToLogContentService;
 

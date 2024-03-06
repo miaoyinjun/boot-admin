@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.dto.OnlineUserDTO;
+import org.jjche.system.modules.system.api.dto.OnlineUserDTO;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
 import org.jjche.common.param.MyPage;
@@ -15,7 +15,7 @@ import org.jjche.core.annotation.controller.SysRestController;
 import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
 import org.jjche.security.property.SecurityProperties;
-import org.jjche.system.modules.system.service.SysBaseAPI;
+import org.jjche.system.modules.system.service.AuthService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +37,7 @@ import java.util.Set;
 @SysRestController("/auth/online")
 public class OnlineController extends BaseController {
 
-    private final SysBaseAPI sysBaseAPI;
+    private final AuthService authService;
     private final SecurityProperties securityProperties;
 
     /**
@@ -51,7 +51,7 @@ public class OnlineController extends BaseController {
     @GetMapping
     @PreAuthorize("@el.check('online:list')")
     public R query(String filter, PageParam pageable) {
-        List<OnlineUserDTO> onlineUserDTOS = sysBaseAPI.getAll(filter);
+        List<OnlineUserDTO> onlineUserDTOS = authService.getAll(filter);
         List<OnlineUserDTO> list = CollUtil.page((int) pageable.getPageIndex() - 1, (int) pageable.getPageSize(), onlineUserDTOS);
         MyPage myPage = new MyPage();
         myPage.setRecords(list);
@@ -74,7 +74,7 @@ public class OnlineController extends BaseController {
     @GetMapping(value = "/download")
     @PreAuthorize("@el.check('online:list')")
     public void download(HttpServletResponse response, String filter) throws IOException {
-        sysBaseAPI.download(sysBaseAPI.getAll(filter), response);
+        authService.download(authService.getAll(filter), response);
     }
 
     /**
@@ -92,7 +92,7 @@ public class OnlineController extends BaseController {
             String privateKey = securityProperties.getRsa().getPrivateKey();
             // 解密Key
             key = RsaUtils.decryptByPrivateKey(privateKey, key);
-            sysBaseAPI.kickOut(key);
+            authService.kickOut(key);
         }
         return R.ok();
     }

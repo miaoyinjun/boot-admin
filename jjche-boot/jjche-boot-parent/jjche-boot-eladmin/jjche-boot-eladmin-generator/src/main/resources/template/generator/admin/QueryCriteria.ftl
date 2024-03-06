@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 import java.math.BigDecimal;
 import java.util.List;
 import org.jjche.common.annotation.QueryCriteria;
-import org.jjche.common.dto.BaseQueryCriteriaDTO;
+import org.jjche.common.base.BaseQueryCriteriaDTO;
 
 /**
 * <p>

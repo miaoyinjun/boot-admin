@@ -10,22 +10,22 @@ import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
-import org.jjche.common.constant.CacheKey;
 import org.jjche.common.constant.SecurityConstant;
-import org.jjche.common.dto.RoleSmallDto;
+import org.jjche.common.dto.RoleSmallDTO;
 import org.jjche.common.dto.SimpleGrantedAuthorityDTO;
 import org.jjche.common.dto.UserVO;
-import org.jjche.common.enums.DataScopeEnum;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
-import org.jjche.system.modules.permission.api.RoleApi;
 import org.jjche.common.util.ValidationUtil;
 import org.jjche.core.util.FileUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.util.MybatisUtil;
 import org.jjche.security.service.JwtUserService;
+import org.jjche.system.modules.permission.api.RoleApi;
 import org.jjche.system.modules.system.api.dto.RoleDTO;
 import org.jjche.system.modules.system.api.dto.RoleQueryCriteriaDTO;
+import org.jjche.system.modules.system.api.enums.DataScopeEnum;
+import org.jjche.system.modules.system.constant.RoleCacheKey;
 import org.jjche.system.modules.system.domain.*;
 import org.jjche.system.modules.system.mapper.RoleDeptMapper;
 import org.jjche.system.modules.system.mapper.RoleMapper;
@@ -151,7 +151,7 @@ public class RoleService extends MyServiceImpl<RoleMapper, RoleDO> implements Ro
      * @param id /
      * @return /
      */
-    @Cached(name = CacheKey.ROLE_ID, key = "#id")
+    @Cached(name = RoleCacheKey.ROLE_ID, key = "#id")
     public RoleDTO findById(long id) {
         RoleDO role = this.getById(id);
         ValidationUtil.isNull(role.getId(), "RoleDO", "id", id);
@@ -270,7 +270,7 @@ public class RoleService extends MyServiceImpl<RoleMapper, RoleDO> implements Ro
      * @param id 用户ID
      * @return /
      */
-    public List<RoleSmallDto> findByUsersId(Long id) {
+    public List<RoleSmallDTO> findByUsersId(Long id) {
         return roleSmallMapper.toVO(this.baseMapper.selectByUserId(id));
     }
 
@@ -341,7 +341,7 @@ public class RoleService extends MyServiceImpl<RoleMapper, RoleDO> implements Ro
         if (CollectionUtil.isNotEmpty(users)) {
             users.forEach(item -> jwtUserService.removeByUserName(item.getUsername()));
         }
-        redisService.delete(CacheKey.ROLE_ID + id);
+        redisService.delete(RoleCacheKey.ROLE_ID + id);
     }
 
     /**
@@ -414,7 +414,7 @@ public class RoleService extends MyServiceImpl<RoleMapper, RoleDO> implements Ro
      *
     * @return /
      */
-    public List<RoleSmallDto> getSimpleRoleList(){
+    public List<RoleSmallDTO> getSimpleRoleList(){
         return roleSmallMapper.toVO(this.list());
     }
 

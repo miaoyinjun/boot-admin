@@ -12,10 +12,9 @@ import lombok.SneakyThrows;
 import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
 import net.dreamlu.mica.ip2region.core.IpInfo;
 import org.jjche.common.constant.SecurityConstant;
-import org.jjche.common.constant.UrlConstant;
-import org.jjche.common.dto.JwtUserDto;
+import org.jjche.common.dto.JwtUserDTO;
 import org.jjche.common.dto.UserVO;
-import org.jjche.common.pojo.DataScope;
+import org.jjche.common.vo.DataScopeVO;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +50,12 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
     private static final Supplier<Stream<String>> OPERATING_SYSTEM = () -> Stream.of(
             "Android", "Linux", "Mac OS X", "Ubuntu", "Windows 10", "Windows 8", "Windows 7", "Windows XP", "Windows Vista"
     );
+
+    /**
+     * IP归属地查询
+     */
+    public static final String IP_JSON_URL = "http://whois.pconline.com.cn/ipJson.jsp?ip=%s&json=true";
+
     /**
      * 注入bean
      */
@@ -120,7 +125,7 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
      * @return a {@link java.lang.String} object.
      */
     public static String getHttpCityInfo(String ip) {
-        String api = String.format(UrlConstant.IP_JSON_URL, ip);
+        String api = String.format(IP_JSON_URL, ip);
         JSONObject object = JSONUtil.parseObj(cn.hutool.http.HttpUtil.get(api));
         return object.get("addr", String.class);
     }
@@ -263,7 +268,7 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
      * @param userDetails /
      * @return /
      */
-    public static Map<String, Object> getUserHeaders(JwtUserDto userDetails) {
+    public static Map<String, Object> getUserHeaders(JwtUserDTO userDetails) {
         Map<String, Object> httpHeaders = new HashMap<>();
         if (userDetails != null) {
             UserVO user = userDetails.getUser();
@@ -272,26 +277,26 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
             String username = user.getUsername();
             List<String> elPermissions = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
             //数据范围
-            DataScope dataScope = userDetails.getDataScope();
+            DataScopeVO dataScopeVO = userDetails.getDataScopeVO();
             //部门id
-            Set<Long> dataScopeDeptIds = dataScope.getDeptIds();
+            Set<Long> dataScopeDeptIds = dataScopeVO.getDeptIds();
             List<String> dataScopeDeptIdsList = new ArrayList<>();
             if (CollUtil.isNotEmpty(dataScopeDeptIds)) {
                 dataScopeDeptIdsList = dataScopeDeptIds.stream().map(o -> String.valueOf(o)).collect(Collectors.toList());
             }
             List<String> dataScopeFinalDeptIdsList = dataScopeDeptIdsList;
             //全部
-            String dataScopeIsAll = String.valueOf(dataScope.isAll());
+            String dataScopeIsAll = String.valueOf(dataScopeVO.isAll());
             //本人
-            String dataScopeIsSelf = String.valueOf(dataScope.isSelf());
+            String dataScopeIsSelf = String.valueOf(dataScopeVO.isSelf());
             //用户id
-            Long userIdL = dataScope.getUserId();
+            Long userIdL = dataScopeVO.getUserId();
             String dataScopeUserid = null;
             if (userIdL != null) {
                 dataScopeUserid = String.valueOf(userIdL);
             }
             //用户名
-            String dataScopeUsername = dataScope.getUserName();
+            String dataScopeUsername = dataScopeVO.getUserName();
 
             httpHeaders.put(SecurityConstant.JWT_KEY_USER_ID, userId);
             httpHeaders.put(SecurityConstant.JWT_KEY_USERNAME, username);

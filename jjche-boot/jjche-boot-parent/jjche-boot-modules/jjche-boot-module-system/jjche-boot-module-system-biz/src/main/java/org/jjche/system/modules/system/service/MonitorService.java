@@ -2,7 +2,7 @@ package org.jjche.system.modules.system.service;
 
 import cn.hutool.core.date.BetweenFormatter;
 import cn.hutool.core.date.DateUtil;
-import org.jjche.common.constant.ElAdminConstant;
+import org.jjche.core.constant.OSConstant;
 import org.jjche.common.util.HttpUtil;
 import org.jjche.core.util.FileUtil;
 import org.jjche.system.modules.system.api.vo.MonitorVO;
@@ -78,7 +78,7 @@ public class MonitorService {
         long available = 0, total = 0;
         for (OSFileStore fs : fsArray) {
             // windows 需要将所有磁盘分区累加
-            if (osName.toLowerCase().startsWith(ElAdminConstant.WIN)) {
+            if (osName.toLowerCase().startsWith(OSConstant.WIN)) {
                 available += fs.getUsableSpace();
                 total += fs.getTotalSpace();
             } else {

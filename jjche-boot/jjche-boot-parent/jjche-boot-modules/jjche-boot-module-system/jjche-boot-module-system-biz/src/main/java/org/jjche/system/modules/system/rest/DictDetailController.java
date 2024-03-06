@@ -4,6 +4,7 @@ import cn.hutool.core.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.jjche.common.dto.DictParam;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
 import org.jjche.common.param.MyPage;
@@ -131,5 +132,12 @@ public class DictDetailController extends BaseController implements DictApi {
     @GetMapping("/valid")
     public void validateDictDataList(@RequestParam  String dictType, @RequestParam Collection<String> values) {
         dictDetailService.validateDictDataList(dictType, values);
+    }
+
+    @Override
+    @ApiOperation("获取根据字典名称和值")
+    @GetMapping("dict-by-name-value")
+    public DictParam getDictByNameValue(@RequestParam("name") String name, @RequestParam("value") String value) {
+        return dictDetailService.getDictByNameValue(name, value);
     }
 }

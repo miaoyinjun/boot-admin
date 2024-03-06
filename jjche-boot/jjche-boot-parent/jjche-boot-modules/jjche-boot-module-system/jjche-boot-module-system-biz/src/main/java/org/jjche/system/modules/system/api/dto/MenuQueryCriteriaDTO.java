@@ -2,7 +2,7 @@ package org.jjche.system.modules.system.api.dto;
 
 import lombok.Data;
 import org.jjche.common.annotation.QueryCriteria;
-import org.jjche.common.dto.BaseQueryCriteriaDTO;
+import org.jjche.common.base.BaseQueryCriteriaDTO;
 
 import java.util.List;
 

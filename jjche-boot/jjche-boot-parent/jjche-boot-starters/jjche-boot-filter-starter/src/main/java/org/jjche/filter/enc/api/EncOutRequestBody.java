@@ -4,7 +4,7 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import cn.hutool.crypto.symmetric.SymmetricCrypto;
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.annotation.HttpBodyDecrypt;
+import org.jjche.filter.enc.api.enums.HttpBodyDecrypt;
 import org.jjche.common.context.ContextUtil;
 import org.jjche.common.util.StrUtil;
 import org.jjche.core.annotation.controller.OutRestController;

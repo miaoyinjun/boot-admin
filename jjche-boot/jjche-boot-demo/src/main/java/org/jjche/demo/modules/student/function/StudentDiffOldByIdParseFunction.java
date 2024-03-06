@@ -1,7 +1,7 @@
 package org.jjche.demo.modules.student.function;
 
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.context.LogRecordContext;
+import org.jjche.log.context.LogRecordContext;
 import org.jjche.demo.modules.student.domain.StudentDO;
 import org.jjche.demo.modules.student.mapstruct.StudentMapStruct;
 import org.jjche.demo.modules.student.service.StudentService;

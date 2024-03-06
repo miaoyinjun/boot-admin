@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.annotation.PermissionData;
-import org.jjche.common.dto.DeptSmallDto;
+import org.jjche.common.dto.DeptSmallDTO;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
 import org.jjche.common.param.MyPage;
@@ -78,7 +78,7 @@ public class DeptController extends BaseController implements DeptApi {
 
     @GetMapping("/list-all-simple")
     @Operation(summary = "获取部门精简信息列表", description = "只包含被开启的部门，主要用于前端的下拉选项")
-    public R<List<DeptSmallDto>> getSimpleDeptList() {
+    public R<List<DeptSmallDTO>> getSimpleDeptList() {
         return R.ok(deptService.listSmall());
     }
 
@@ -176,19 +176,19 @@ public class DeptController extends BaseController implements DeptApi {
 
     @Override
     @GetMapping("list-small-condition")
-    public List<DeptSmallDto> listByIds(@RequestParam Set<Long> ids) {
+    public List<DeptSmallDTO> listByIds(@RequestParam Set<Long> ids) {
         return this.deptService.listByIds(ids);
     }
 
     @Override
     @GetMapping("get-small")
-    public DeptSmallDto getSmallById(@RequestParam Long id) {
+    public DeptSmallDTO getSmallById(@RequestParam Long id) {
         return this.deptService.getSmallById(id);
     }
 
     @Override
     @GetMapping("list-small")
-    public List<DeptSmallDto> listSmall() {
+    public List<DeptSmallDTO> listSmall() {
         return this.deptService.listSmall();
     }
 }

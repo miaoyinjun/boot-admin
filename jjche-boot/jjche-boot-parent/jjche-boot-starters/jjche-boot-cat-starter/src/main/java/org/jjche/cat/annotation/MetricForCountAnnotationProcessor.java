@@ -3,7 +3,6 @@ package org.jjche.cat.annotation;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.log.StaticLog;
 import com.dianping.cat.Cat;
-import org.jjche.common.annotation.CatMetricForCount;
 import org.jjche.common.util.StrUtil;
 import org.springframework.aop.AfterReturningAdvice;
 import org.springframework.aop.framework.AopProxyUtils;

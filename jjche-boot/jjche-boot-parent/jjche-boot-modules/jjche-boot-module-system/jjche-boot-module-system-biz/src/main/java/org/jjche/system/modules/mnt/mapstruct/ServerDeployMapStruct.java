@@ -2,7 +2,7 @@ package org.jjche.system.modules.mnt.mapstruct;
 
 import org.jjche.core.base.BaseVoMapStruct;
 import org.jjche.system.modules.mnt.domain.ServerDeployDO;
-import org.jjche.system.modules.mnt.dto.ServerDeployDTO;
+import org.jjche.system.modules.mnt.api.dto.ServerDeployDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

@@ -15,7 +15,6 @@ import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.constant.CacheKey;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.util.ValidationUtil;
@@ -23,9 +22,10 @@ import org.jjche.core.util.FileUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.tool.modules.tool.api.dto.QiniuQueryCriteriaDTO;
+import org.jjche.tool.modules.tool.constant.ToolCacheKey;
 import org.jjche.tool.modules.tool.domain.QiniuConfigDO;
 import org.jjche.tool.modules.tool.domain.QiniuContentDO;
-import org.jjche.tool.modules.tool.dto.QiniuQueryCriteriaDTO;
 import org.jjche.tool.modules.tool.mapper.QiNiuConfigMapper;
 import org.jjche.tool.modules.tool.mapper.QiniuContentMapper;
 import org.jjche.tool.modules.tool.utils.QiNiuUtil;
@@ -62,7 +62,7 @@ public class QiNiuService extends MyServiceImpl<QiNiuConfigMapper, QiniuConfigDO
      *
      * @return QiniuConfigDO
      */
-    @Cached(name = CacheKey.QI_NIU)
+    @Cached(name = ToolCacheKey.QI_NIU)
     public QiniuConfigDO find() {
         return this.getById(1L);
     }
@@ -73,7 +73,7 @@ public class QiNiuService extends MyServiceImpl<QiNiuConfigMapper, QiniuConfigDO
      * @param qiniuConfig 配置
      * @return QiniuConfigDO
      */
-    @CacheInvalidate(name = CacheKey.QI_NIU)
+    @CacheInvalidate(name = ToolCacheKey.QI_NIU)
     @Transactional(rollbackFor = Exception.class)
     public QiniuConfigDO config(QiniuConfigDO qiniuConfig) {
         qiniuConfig.setId(1L);

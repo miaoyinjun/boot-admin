@@ -18,6 +18,8 @@ import org.jjche.common.dto.*;
 import org.jjche.common.enums.UserTypeEnum;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
+import org.jjche.system.modules.security.api.dto.AuthUserSmsDTO;
+import org.jjche.system.modules.security.api.dto.SmsCodeDTO;
 import org.jjche.system.modules.user.api.UserApi;
 import org.jjche.common.util.PwdCheckUtil;
 import org.jjche.common.util.ValidationUtil;
@@ -41,6 +43,7 @@ import org.jjche.system.modules.system.mapper.UserJobMapper;
 import org.jjche.system.modules.system.mapper.UserMapper;
 import org.jjche.system.modules.system.mapper.UserRoleMapper;
 import org.jjche.system.modules.system.mapstruct.UserMapStruct;
+import org.jjche.system.modules.security.api.vo.LoginVO;
 import org.jjche.system.property.AdminProperties;
 import org.jjche.system.property.AliYunSmsCodeProperties;
 import org.jjche.system.property.PasswordProperties;
@@ -75,7 +78,7 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> implements Us
     private final UserRoleMapper userRoleMapper;
     private final UserMapStruct userMapStruct;
     private final RedisService redisService;
-    private final SysBaseAPI sysBaseAPI;
+    private final AuthService authService;
     private final AvatarService avatarService;
     private final JwtUserService jwtUserService;
     private final AdminProperties adminConfig;
@@ -268,7 +271,7 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> implements Us
         boolean userUpdate = !StrUtil.equals(usernameOld, usernameNew)
                 || !StrUtil.equals(emailOld, emailNew) || !StrUtil.equals(phoneOld, phoneNew);
         if (!resources.getEnabled() || userUpdate) {
-            sysBaseAPI.kickOutForUsername(usernameOld);
+            authService.kickOutForUsername(usernameOld);
         }
         user.setUsername(usernameNew);
         user.setEmail(emailOld);
@@ -505,16 +508,16 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> implements Us
         SecurityContextHolder.getContext().setAuthentication(authentication);
         // 生成令牌
         String token = tokenProvider.createToken(authentication.getName(), userTypeEnum);
-        final JwtUserDto jwtUserDto = (JwtUserDto) authentication.getPrincipal();
+        final JwtUserDTO jwtUserDto = (JwtUserDTO) authentication.getPrincipal();
         // 保存在线信息
-        sysBaseAPI.save(jwtUserDto, token, request);
+        authService.save(jwtUserDto, token, request);
         // 返回 token 与 用户信息
         SecurityJwtProperties securityJwtProperties = properties.getJwt();
         LoginVO loginVO = new LoginVO(jwtUserDto, securityJwtProperties.getTokenStartWith() + token);
         SecurityLoginProperties loginProperties = properties.getLogin();
         if (loginProperties.isSingle()) {
             //踢掉之前已经登录的token
-            sysBaseAPI.checkLoginOnUser(authentication.getName(), token);
+            authService.checkLoginOnUser(authentication.getName(), token);
         }
         this.updateLastLoginTimeAndCleanPwdFailsCount(loginVO.getUser().getUser().getId());
         return loginVO;
@@ -726,7 +729,7 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> implements Us
      * @param dto 入参
      * @return /
      */
-    public LoginVO smslogin(AuthUserSmsDto dto) {
+    public LoginVO smslogin(AuthUserSmsDTO dto) {
         String phone = dto.getPhone();
         String uuid = dto.getSmsCodeUuid();
         SecurityJwtProperties securityJwtProperties = properties.getJwt();

@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.EqualsAndHashCode;
-import org.jjche.common.annotation.IgnoreSwaggerParameter;
+import org.jjche.common.annotation.IgnoreField;
 import org.jjche.common.constant.PageConstant;
+import org.jjche.common.param.MyPage;
 import org.jjche.common.vo.DataPermissionFieldResultVO;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class PageParam<T> extends MyPage<T> {
     @ApiModelProperty(hidden = true)
     protected long pages;
     @ApiModelProperty(value = "字段", hidden = true)
-    @IgnoreSwaggerParameter
+    @IgnoreField
     private List<DataPermissionFieldResultVO> meta;
 
     /**

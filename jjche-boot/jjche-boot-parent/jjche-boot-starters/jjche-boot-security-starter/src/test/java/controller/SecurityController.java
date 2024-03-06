@@ -1,7 +1,7 @@
 package controller;
 
 import dto.LoginDTO;
-import org.jjche.common.dto.JwtUserDto;
+import org.jjche.common.dto.JwtUserDTO;
 import org.jjche.common.enums.UserTypeEnum;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.security.security.TokenProvider;
@@ -54,7 +54,7 @@ public class SecurityController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         //生成token
         final String token = tokenProvider.createToken(authentication.getName(), UserTypeEnum.PWD);
-        final JwtUserDto jwtUserDto = (JwtUserDto) authentication.getPrincipal();
+        final JwtUserDTO jwtUserDto = (JwtUserDTO) authentication.getPrincipal();
         // 保存在线信息
 //        onlineUserService.save(jwtUserDto, token, request);
         return R.ok(token);

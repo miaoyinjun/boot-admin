@@ -3,6 +3,7 @@ package org.jjche.common.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.jjche.common.annotation.QueryCriteria;
+import org.jjche.common.base.BaseQueryCriteriaDTO;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;

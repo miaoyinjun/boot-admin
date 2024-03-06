@@ -5,7 +5,7 @@ import cn.hutool.core.lang.Assert;
 import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.constant.CacheKey;
+import org.jjche.common.constant.PermissionDataCacheKey;
 import org.jjche.common.dto.PermissionDataRuleDTO;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
@@ -122,7 +122,7 @@ public class DataPermissionRuleService extends MyServiceImpl<DataPermissionRuleM
      * @param userId 用户id
      * @return /
      */
-    @Cached(name = CacheKey.PERMISSION_DATA_RULE_USER_ID, key = "#userId")
+    @Cached(name = PermissionDataCacheKey.PERMISSION_DATA_RULE_USER_ID, key = "#userId")
     public List<PermissionDataRuleDTO> listByUserId(Long userId) {
         return this.getBaseMapper().selectByUserId(userId);
     }

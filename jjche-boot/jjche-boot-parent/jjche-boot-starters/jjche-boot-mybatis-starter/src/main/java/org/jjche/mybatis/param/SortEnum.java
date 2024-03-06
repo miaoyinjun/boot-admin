@@ -3,7 +3,7 @@ package org.jjche.mybatis.param;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.jjche.common.enums.IBaseEnum;
+import org.jjche.common.base.IBaseEnum;
 
 import java.util.stream.Stream;
 

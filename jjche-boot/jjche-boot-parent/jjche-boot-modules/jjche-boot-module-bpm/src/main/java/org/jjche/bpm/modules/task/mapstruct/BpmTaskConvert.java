@@ -9,7 +9,7 @@ import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.history.HistoricTaskInstance;
 import org.jjche.bpm.modules.task.api.vo.task.BpmTaskDonePageItemRespVO;
-import org.jjche.common.dto.DeptSmallDto;
+import org.jjche.common.dto.DeptSmallDTO;
 import org.jjche.common.dto.UserVO;
 import org.jjche.bpm.modules.task.domain.BpmTaskExtDO;
 import org.jjche.bpm.modules.task.api.vo.task.BpmTaskRespVO;
@@ -128,7 +128,7 @@ public interface BpmTaskConvert {
                 BpmTaskRespVO.User assigneeUser = new BpmTaskRespVO.User();
                 assigneeUser.setId(assignUser.getId());
                 assigneeUser.setNickName(assignUser.getNickName());
-                DeptSmallDto dept = assignUser.getDept();
+                DeptSmallDTO dept = assignUser.getDept();
                 if (dept != null) {
                     assigneeUser.setDeptId(dept.getId());
                     assigneeUser.setDeptName(dept.getName());

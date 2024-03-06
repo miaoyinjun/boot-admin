@@ -1,7 +1,7 @@
 package org.jjche.cat.property;
 
 import lombok.Data;
-import org.jjche.common.constant.CatConstant;
+import org.jjche.cat.constant.CatConstant;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 

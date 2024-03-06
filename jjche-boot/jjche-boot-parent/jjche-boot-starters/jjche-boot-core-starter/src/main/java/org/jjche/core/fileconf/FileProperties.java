@@ -1,7 +1,7 @@
 package org.jjche.core.fileconf;
 
 import lombok.Data;
-import org.jjche.common.constant.ElAdminConstant;
+import org.jjche.core.constant.OSConstant;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -39,9 +39,9 @@ public class FileProperties {
      */
     public ElPath getPath() {
         String os = System.getProperty("os.name");
-        if (os.toLowerCase().startsWith(ElAdminConstant.WIN)) {
+        if (os.toLowerCase().startsWith(OSConstant.WIN)) {
             return windows;
-        } else if (os.toLowerCase().startsWith(ElAdminConstant.MAC)) {
+        } else if (os.toLowerCase().startsWith(OSConstant.MAC)) {
             return mac;
         }
         return linux;

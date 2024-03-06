@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
-import org.jjche.common.constant.CacheKey;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.util.ValidationUtil;
@@ -14,6 +13,7 @@ import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
 import org.jjche.system.modules.system.api.dto.DictDTO;
 import org.jjche.system.modules.system.api.dto.DictQueryCriteriaDTO;
+import org.jjche.system.modules.system.constant.DictCacheKey;
 import org.jjche.system.modules.system.domain.DictDO;
 import org.jjche.system.modules.system.mapper.DictMapper;
 import org.jjche.system.modules.system.mapstruct.DictMapStruct;
@@ -159,6 +159,6 @@ public class DictService extends MyServiceImpl<DictMapper, DictDO> {
      * @param dict a {@link DictDO} object.
      */
     public void delCaches(DictDO dict) {
-        redisService.delete(CacheKey.DIC_NAME + dict.getName());
+        redisService.delete(DictCacheKey.DIC_NAME + dict.getName());
     }
 }

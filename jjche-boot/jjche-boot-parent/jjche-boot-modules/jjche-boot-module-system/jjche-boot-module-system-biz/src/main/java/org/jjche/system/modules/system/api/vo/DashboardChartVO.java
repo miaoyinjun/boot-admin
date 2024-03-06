@@ -3,9 +3,9 @@ package org.jjche.system.modules.system.api.vo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.jjche.log.modules.logging.vo.DashboardChartBrowserVO;
-import org.jjche.log.modules.logging.vo.DashboardChartLastTenVisitVO;
-import org.jjche.log.modules.logging.vo.DashboardChartOperatingSystemVO;
+import org.jjche.system.modules.logging.api.vo.DashboardChartBrowserVO;
+import org.jjche.system.modules.logging.api.vo.DashboardChartLastTenVisitVO;
+import org.jjche.system.modules.logging.api.vo.DashboardChartOperatingSystemVO;
 
 import java.io.Serializable;
 import java.util.List;

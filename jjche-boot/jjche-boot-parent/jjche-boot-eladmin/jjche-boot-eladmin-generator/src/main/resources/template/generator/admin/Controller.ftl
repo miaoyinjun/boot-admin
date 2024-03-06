@@ -5,7 +5,7 @@ import ${packageService}.service.${className}Service;
 import ${packageApi}.dto.${className}QueryCriteriaDTO;
 import ${packageApi}.dto.${className}DTO;
 import ${packagePath}.constant.ApiVersion;
-import org.jjche.common.dto.BaseDTO;
+import org.jjche.common.base.BaseDTO;
 import org.jjche.log.biz.starter.annotation.LogRecord;
 import org.jjche.core.annotation.controller.ApiRestController;
 import org.jjche.core.base.BaseController;

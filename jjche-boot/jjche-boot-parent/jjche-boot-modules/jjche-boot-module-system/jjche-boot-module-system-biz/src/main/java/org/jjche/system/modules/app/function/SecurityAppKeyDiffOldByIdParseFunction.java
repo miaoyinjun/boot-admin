@@ -1,11 +1,11 @@
 package org.jjche.system.modules.app.function;
 
-import org.jjche.common.context.LogRecordContext;
+import org.jjche.log.context.LogRecordContext;
 import org.jjche.log.biz.service.IParseFunction;
 import org.jjche.log.biz.service.impl.DiffParseFunction;
 import org.jjche.system.modules.app.domain.SecurityAppKeyDO;
 import org.jjche.system.modules.app.mapstruct.SecurityAppKeyMapStruct;
-import org.jjche.system.modules.app.service.SecurityAppKeyService;
+import org.jjche.system.modules.app.service.SecurityCommonAppKeyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -24,7 +24,7 @@ import java.util.List;
 public class SecurityAppKeyDiffOldByIdParseFunction implements IParseFunction {
     @Autowired
     @Lazy
-    private SecurityAppKeyService securityAppKeyService;
+    private SecurityCommonAppKeyService securityAppKeyService;
     @Autowired
     @Lazy
     private SecurityAppKeyMapStruct securityAppKeyMapStruct;

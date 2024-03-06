@@ -15,7 +15,7 @@ import org.jjche.system.modules.quartz.domain.QuartzLogDO;
 import org.jjche.system.modules.quartz.mapper.QuartzLogMapper;
 import org.jjche.system.modules.quartz.service.QuartzJobService;
 import org.jjche.tool.modules.tool.service.EmailService;
-import org.jjche.tool.modules.tool.vo.EmailVO;
+import org.jjche.tool.modules.tool.api.vo.EmailVO;
 import org.quartz.JobExecutionContext;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.quartz.QuartzJobBean;

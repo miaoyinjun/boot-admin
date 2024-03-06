@@ -7,13 +7,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.annotation.PermissionData;
-import org.jjche.common.dto.RoleSmallDto;
+import org.jjche.common.dto.RoleSmallDTO;
 import org.jjche.common.dto.UserVO;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
-import org.jjche.common.pojo.DataScope;
+import org.jjche.common.vo.DataScopeVO;
 import org.jjche.system.modules.permission.api.RoleApi;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.annotation.controller.SysRestController;
@@ -197,7 +197,7 @@ public class RoleController extends BaseController implements RoleApi {
      * @return /
      */
     private int getLevels(Integer level) {
-        List<Integer> levels = roleService.findByUsersId(SecurityUtil.getUserId()).stream().map(RoleSmallDto::getLevel).collect(Collectors.toList());
+        List<Integer> levels = roleService.findByUsersId(SecurityUtil.getUserId()).stream().map(RoleSmallDTO::getLevel).collect(Collectors.toList());
         int min = Collections.min(levels);
         if (level != null) {
             Assert.isFalse(level < min, "权限不足，你的角色级别：" + min + "，低于操作的角色级别：" + level);
@@ -215,7 +215,7 @@ public class RoleController extends BaseController implements RoleApi {
     @ApiOperation("查询下属用户")
     @GetMapping("/users")
     @PreAuthorize("@el.check('roles:edit')")
-    @PermissionData(deptIdInFieldName = DataScope.F_SQL_SCOPE_NAME)
+    @PermissionData(deptIdInFieldName = DataScopeVO.F_SQL_SCOPE_NAME)
     public R<MyPage<UserVO>> listByRole(PageParam pageable, @RequestParam Long roleId, @RequestParam(required = false) String blurry) {
         return R.ok(userRoleService.listUserById(pageable, roleId, blurry));
     }
@@ -230,7 +230,7 @@ public class RoleController extends BaseController implements RoleApi {
     @ApiOperation("查询非下属用户")
     @GetMapping("/not/users")
     @PreAuthorize("@el.check('roles:edit')")
-    @PermissionData(deptIdInFieldName = DataScope.F_SQL_SCOPE_NAME)
+    @PermissionData(deptIdInFieldName = DataScopeVO.F_SQL_SCOPE_NAME)
     public R<MyPage<UserVO>> listNotByRole(PageParam pageable, @RequestParam Long roleId, @RequestParam(required = false) String blurry) {
         return R.ok(userRoleService.listNotUserById(pageable, roleId, blurry));
     }
@@ -255,7 +255,7 @@ public class RoleController extends BaseController implements RoleApi {
 
     @GetMapping("/list-all-simple")
     @Operation(summary = "获取角色精简信息列表", description = "只包含被开启的角色，主要用于前端的下拉选项")
-    public R<List<RoleSmallDto>> getSimpleRoleList() {
+    public R<List<RoleSmallDTO>> getSimpleRoleList() {
         return R.ok(roleService.getSimpleRoleList());
     }
 

@@ -11,8 +11,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
-import org.jjche.common.constant.CacheKey;
-import org.jjche.common.dto.RoleSmallDto;
+import org.jjche.common.constant.CommonMenuCacheKey;
+import org.jjche.common.dto.RoleSmallDTO;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.util.ValidationUtil;
@@ -24,6 +24,8 @@ import org.jjche.system.modules.system.api.dto.MenuDTO;
 import org.jjche.system.modules.system.api.dto.MenuQueryCriteriaDTO;
 import org.jjche.system.modules.system.api.vo.MenuMetaVO;
 import org.jjche.system.modules.system.api.vo.MenuVO;
+import org.jjche.system.modules.system.constant.MenuCacheKey;
+import org.jjche.system.modules.system.constant.RoleCacheKey;
 import org.jjche.system.modules.system.domain.MenuDO;
 import org.jjche.system.modules.system.domain.RoleDO;
 import org.jjche.system.modules.system.domain.UserDO;
@@ -124,7 +126,7 @@ public class MenuService extends MyServiceImpl<MenuMapper, MenuDO> {
      * @param id /
      * @return /
      */
-    @Cached(name = CacheKey.MENU_ID, key = "#id")
+    @Cached(name = MenuCacheKey.MENU_ID, key = "#id")
     public MenuDTO findById(long id) {
         MenuDO menu = this.getById(id);
         return menuMapStruct.toVO(menu);
@@ -136,7 +138,7 @@ public class MenuService extends MyServiceImpl<MenuMapper, MenuDO> {
      * @param currentUserId /
      * @return /
      */
-    @Cached(name = CacheKey.MENU_USER_ID, key = "#currentUserId")
+    @Cached(name = CommonMenuCacheKey.MENU_USER_ID, key = "#currentUserId")
     public List<MenuDTO> findByUser(Long currentUserId) {
         LambdaQueryWrapper<MenuDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.ne(MenuDO::getType, 2);
@@ -146,8 +148,8 @@ public class MenuService extends MyServiceImpl<MenuMapper, MenuDO> {
         if (SecurityUtil.isAdmin()) {
             menus = this.list(queryWrapper);
         } else {
-            List<RoleSmallDto> roles = roleService.findByUsersId(currentUserId);
-            Set<Long> roleIds = roles.stream().map(RoleSmallDto::getId).collect(Collectors.toSet());
+            List<RoleSmallDTO> roles = roleService.findByUsersId(currentUserId);
+            Set<Long> roleIds = roles.stream().map(RoleSmallDTO::getId).collect(Collectors.toSet());
             if (CollUtil.isNotEmpty(roleIds)) {
                 menus = this.baseMapper.findByRoleIdsAndTypeNot(roleIds, 2);
             }
@@ -544,12 +546,12 @@ public class MenuService extends MyServiceImpl<MenuMapper, MenuDO> {
      */
     public void delCaches(Long id) {
         List<UserDO> users = userRepository.findByMenuId(id);
-        redisService.delete(CacheKey.MENU_ID + id);
-        redisService.delByKeys(CacheKey.MENU_USER_ID, users.stream().map(UserDO::getId).collect(Collectors.toSet()));
-        // 清除 RoleDO 缓存
+        redisService.delete(MenuCacheKey.MENU_ID + id);
+        redisService.delByKeys(CommonMenuCacheKey.MENU_USER_ID, users.stream().map(UserDO::getId).collect(Collectors.toSet()));
+        // 清除 RoleDO 缓存`
         List<RoleDO> roles = roleService.findInMenuId(new ArrayList<Long>() {{
             add(id);
         }});
-        redisService.delByKeys(CacheKey.ROLE_ID, roles.stream().map(RoleDO::getId).collect(Collectors.toSet()));
+        redisService.delByKeys(RoleCacheKey.ROLE_ID, roles.stream().map(RoleDO::getId).collect(Collectors.toSet()));
     }
 }

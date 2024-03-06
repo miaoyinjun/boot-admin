@@ -6,7 +6,7 @@ import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
-import org.jjche.common.constant.CacheKey;
+import org.jjche.common.constant.PermissionDataCacheKey;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.util.MybatisUtil;
 import org.jjche.system.modules.system.api.dto.DataPermissionRuleRoleDTO;
@@ -100,6 +100,6 @@ public class DataPermissionRuleRoleService extends MyServiceImpl<DataPermissionR
      * </p>
      */
     public void delUserCache() {
-        redisService.delByKeyPrefix(CacheKey.PERMISSION_DATA_RULE_USER_ID);
+        redisService.delByKeyPrefix(PermissionDataCacheKey.PERMISSION_DATA_RULE_USER_ID);
     }
 }

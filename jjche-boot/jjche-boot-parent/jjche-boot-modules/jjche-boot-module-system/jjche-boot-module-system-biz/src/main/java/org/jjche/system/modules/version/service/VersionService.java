@@ -12,11 +12,11 @@ import org.jjche.common.util.ThrowableUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.util.MybatisUtil;
 import org.jjche.system.modules.version.domain.VersionDO;
-import org.jjche.system.modules.version.dto.VersionDTO;
-import org.jjche.system.modules.version.dto.VersionQueryCriteriaDTO;
+import org.jjche.system.modules.version.api.dto.VersionDTO;
+import org.jjche.system.modules.version.api.dto.VersionQueryCriteriaDTO;
 import org.jjche.system.modules.version.mapper.VersionMapper;
 import org.jjche.system.modules.version.mapstruct.VersionMapStruct;
-import org.jjche.system.modules.version.vo.VersionVO;
+import org.jjche.system.modules.version.api.vo.VersionVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

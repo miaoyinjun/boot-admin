@@ -10,7 +10,7 @@ import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Sets;
-import org.jjche.common.annotation.IgnoreSwaggerParameter;
+import org.jjche.common.annotation.IgnoreField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -390,8 +390,8 @@ public class CustomizeModelAttributeParameterExpander extends ModelAttributePara
                 }
                 if (field != null) {
                     field.setAccessible(true);
-                    IgnoreSwaggerParameter ignoreSwaggerParameter = field.getDeclaredAnnotation(IgnoreSwaggerParameter.class);
-                    if (ignoreSwaggerParameter != null) {
+                    IgnoreField ignoreField = field.getDeclaredAnnotation(IgnoreField.class);
+                    if (ignoreField != null) {
                         continue;
                     }
                 }

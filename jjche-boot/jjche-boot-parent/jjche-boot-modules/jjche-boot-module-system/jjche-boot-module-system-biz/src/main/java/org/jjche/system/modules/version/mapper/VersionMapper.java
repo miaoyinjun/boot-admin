@@ -7,7 +7,7 @@ import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.mybatis.base.MyBaseMapper;
 import org.jjche.system.modules.version.domain.VersionDO;
-import org.jjche.system.modules.version.vo.VersionVO;
+import org.jjche.system.modules.version.api.vo.VersionVO;
 
 /**
  * <p>

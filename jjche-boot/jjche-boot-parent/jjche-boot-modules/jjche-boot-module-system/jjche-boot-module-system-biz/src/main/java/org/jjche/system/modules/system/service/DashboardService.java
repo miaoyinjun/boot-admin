@@ -4,7 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
 import org.jjche.core.util.SecurityUtil;
-import org.jjche.log.modules.logging.service.LogService;
+import org.jjche.system.modules.logging.service.LogService;
 import org.jjche.system.modules.system.api.vo.DashboardChartVO;
 import org.jjche.system.modules.system.api.vo.DashboardCountVO;
 import org.springframework.stereotype.Service;

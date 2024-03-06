@@ -1,7 +1,7 @@
 package org.jjche.system.modules.system.api.dto;
 
 import lombok.Data;
-import org.jjche.common.dto.DeptSmallDto;
+import org.jjche.common.dto.DeptSmallDTO;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,7 +22,7 @@ public class UserDTO implements Serializable {
 
     private List<Long> jobIds;
 
-    private DeptSmallDto dept;
+    private DeptSmallDTO dept;
 
     private String username;
 

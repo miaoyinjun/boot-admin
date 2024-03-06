@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import ${packageService}.domain.${className}DO;
 import ${packageService}.mapstruct.${className}MapStruct;
 import ${packageService}.service.${className}Service;
-import org.jjche.common.context.LogRecordContext;
+import org.jjche.log.context.LogRecordContext;
 import org.jjche.log.biz.service.IParseFunction;
 import org.jjche.log.biz.service.impl.DiffParseFunction;
 import org.springframework.stereotype.Component;

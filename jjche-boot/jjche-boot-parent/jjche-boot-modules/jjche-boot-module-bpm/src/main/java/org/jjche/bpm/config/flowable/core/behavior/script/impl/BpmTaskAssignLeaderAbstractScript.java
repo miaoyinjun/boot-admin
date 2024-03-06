@@ -6,7 +6,7 @@ import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.jjche.bpm.config.flowable.core.behavior.script.BpmTaskAssignScript;
 import org.jjche.bpm.modules.task.service.BpmProcessInstanceService;
-import org.jjche.common.dto.DeptSmallDto;
+import org.jjche.common.dto.DeptSmallDTO;
 import org.jjche.common.dto.UserVO;
 import org.jjche.system.modules.dept.api.DeptApi;
 import org.jjche.system.modules.user.api.UserApi;
@@ -40,7 +40,7 @@ public abstract class BpmTaskAssignLeaderAbstractScript implements BpmTaskAssign
         ProcessInstance processInstance = bpmProcessInstanceService.getProcessInstance(execution.getProcessInstanceId());
         Long startUserId = NumberUtil.parseLong(processInstance.getStartUserId());
         // 获得对应 leve 的部门
-        DeptSmallDto dept = null;
+        DeptSmallDTO dept = null;
         for (int i = 0; i < level; i++) {
             // 获得 level 对应的部门
             if (dept == null) {
@@ -49,7 +49,7 @@ public abstract class BpmTaskAssignLeaderAbstractScript implements BpmTaskAssign
                     return emptySet();
                 }
             } else {
-                DeptSmallDto parentDept = deptApi.getSmallById(dept.getPid());
+                DeptSmallDTO parentDept = deptApi.getSmallById(dept.getPid());
                 if (parentDept == null) { // 找不到父级部门，所以只好结束寻找。原因是：例如说，级别比较高的人，所在部门层级比较少
                     break;
                 }
@@ -59,7 +59,7 @@ public abstract class BpmTaskAssignLeaderAbstractScript implements BpmTaskAssign
         return dept.getLeaderUserId() != null ? CollUtil.newHashSet(dept.getLeaderUserId()) : emptySet();
     }
 
-    private DeptSmallDto getStartUserDept(Long startUserId) {
+    private DeptSmallDTO getStartUserDept(Long startUserId) {
         UserVO startUser = userApi.findById(startUserId);
         if (startUser.getDeptId() == null) { // 找不到部门，所以无法使用该规则
             return null;

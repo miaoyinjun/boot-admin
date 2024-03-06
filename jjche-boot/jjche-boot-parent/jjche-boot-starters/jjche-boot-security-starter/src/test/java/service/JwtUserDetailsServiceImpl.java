@@ -1,7 +1,7 @@
 package service;
 
-import org.jjche.common.dto.DeptSmallDto;
-import org.jjche.common.dto.JwtUserDto;
+import org.jjche.common.dto.DeptSmallDTO;
+import org.jjche.common.dto.JwtUserDTO;
 import org.jjche.common.dto.SimpleGrantedAuthorityDTO;
 import org.jjche.common.dto.UserVO;
 import org.springframework.context.annotation.Configuration;
@@ -33,10 +33,10 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
     public static String password = "admin";
 
-    static Map<String, JwtUserDto> userDtoCache = new ConcurrentHashMap<>();
+    static Map<String, JwtUserDTO> userDtoCache = new ConcurrentHashMap<>();
 
     @Override
-    public JwtUserDto loadUserByUsername(String username) {
+    public JwtUserDTO loadUserByUsername(String username) {
         List<SimpleGrantedAuthorityDTO> authorityList = new ArrayList<>();
         authorityList.add(new SimpleGrantedAuthorityDTO("ROLE_USER"));
         String password = "$2a$10$DOCWRJejaEnhW1p7Ez4wEePbhQcdJkOOnEb17VdhMr1wQtZGAk.zi";
@@ -45,7 +45,7 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
         user.setUsername(username);
         user.setPassword(password);
         user.setEnabled(true);
-        DeptSmallDto deptSmallDto = new DeptSmallDto();
+        DeptSmallDTO deptSmallDto = new DeptSmallDTO();
         deptSmallDto.setId(1L);
         deptSmallDto.setName("aaa");
         user.setDept(deptSmallDto);
@@ -53,7 +53,7 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
         user.setIsCredentialsNonExpired(true);
         user.setIsAccountNonLocked(true);
         user.setIsAccountNonExpired(true);
-        JwtUserDto jwtUserDto = new JwtUserDto(
+        JwtUserDTO jwtUserDto = new JwtUserDTO(
                 user,
                 null,
                 authorityList

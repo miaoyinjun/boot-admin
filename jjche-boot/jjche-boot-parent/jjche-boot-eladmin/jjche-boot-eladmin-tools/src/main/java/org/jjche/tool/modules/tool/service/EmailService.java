@@ -6,13 +6,13 @@ import cn.hutool.extra.mail.MailAccount;
 import com.alicp.jetcache.anno.CacheUpdate;
 import com.alicp.jetcache.anno.Cached;
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.constant.CacheKey;
 import org.jjche.common.util.RsaUtils;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.security.property.SecurityProperties;
+import org.jjche.tool.modules.tool.api.vo.EmailVO;
+import org.jjche.tool.modules.tool.constant.ToolCacheKey;
 import org.jjche.tool.modules.tool.domain.EmailConfigDO;
 import org.jjche.tool.modules.tool.mapper.EmailMapper;
-import org.jjche.tool.modules.tool.vo.EmailVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +37,7 @@ public class EmailService extends MyServiceImpl<EmailMapper, EmailConfigDO> {
      * @return /
      * @throws java.lang.Exception if any.
      */
-    @CacheUpdate(name = CacheKey.EMAIL, value = "#result")
+    @CacheUpdate(name = ToolCacheKey.EMAIL, value = "#result")
     @Transactional(rollbackFor = Exception.class)
     public EmailConfigDO config(EmailConfigDO emailConfig, EmailConfigDO old) throws Exception {
         emailConfig.setId(1L);
@@ -55,7 +55,7 @@ public class EmailService extends MyServiceImpl<EmailMapper, EmailConfigDO> {
      *
      * @return EmailConfigDO 邮件配置
      */
-    @Cached(name = CacheKey.EMAIL)
+    @Cached(name = ToolCacheKey.EMAIL)
     public EmailConfigDO find() {
         return this.getById(1L);
     }

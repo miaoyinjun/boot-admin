@@ -4,7 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.google.common.base.Joiner;
 import io.swagger.annotations.ApiParam;
 import org.jjche.common.constant.EnumConstant;
-import org.jjche.common.enums.IBaseEnum;
+import org.jjche.common.base.IBaseEnum;
 import org.springframework.util.ReflectionUtils;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.ParameterBuilderPlugin;

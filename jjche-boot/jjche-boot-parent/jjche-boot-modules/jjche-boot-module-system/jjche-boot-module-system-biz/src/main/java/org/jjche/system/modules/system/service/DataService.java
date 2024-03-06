@@ -2,10 +2,10 @@ package org.jjche.system.modules.system.service;
 
 import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.dto.RoleSmallDto;
+import org.jjche.common.dto.RoleSmallDTO;
 import org.jjche.common.dto.UserVO;
-import org.jjche.common.enums.DataScopeEnum;
-import org.jjche.common.pojo.DataScope;
+import org.jjche.system.modules.system.api.enums.DataScopeEnum;
+import org.jjche.common.vo.DataScopeVO;
 import org.jjche.system.modules.system.domain.DeptDO;
 import org.springframework.stereotype.Service;
 
@@ -35,40 +35,40 @@ public class DataService {
      * @param user 用户
      * @return /
      */
-    public DataScope getDataScope(UserVO user) {
+    public DataScopeVO getDataScope(UserVO user) {
         // 查询用户角色
-        List<RoleSmallDto> roleSet = roleService.findByUsersId(user.getId());
+        List<RoleSmallDTO> roleSet = roleService.findByUsersId(user.getId());
         // 获取对应的部门ID
-        DataScope dataScope = new DataScope();
-        for (RoleSmallDto role : roleSet) {
+        DataScopeVO dataScopeVO = new DataScopeVO();
+        for (RoleSmallDTO role : roleSet) {
 
             DataScopeEnum dataScopeEnum = DataScopeEnum.find(role.getDataScope());
             //权限：全部，跳出
             if (dataScopeEnum == DataScopeEnum.DATA_SCOPE_ALL) {
-                dataScope.setAll(true);
-                dataScope.setDeptIds(CollUtil.newHashSet());
+                dataScopeVO.setAll(true);
+                dataScopeVO.setDeptIds(CollUtil.newHashSet());
                 break;
             }
             switch (Objects.requireNonNull(dataScopeEnum)) {
                 case DATA_SCOPE_DEPT_AND_CHILD:
-                    dataScope.getDeptIds().add(user.getDept().getId());
-                    dataScope.getDeptIds().addAll(deptService.getDeptChildrenIds(user.getDept().getId()));
+                    dataScopeVO.getDeptIds().add(user.getDept().getId());
+                    dataScopeVO.getDeptIds().addAll(deptService.getDeptChildrenIds(user.getDept().getId()));
                     break;
                 case DATA_SCOPE_DEPT:
-                    dataScope.getDeptIds().addAll(CollUtil.newArrayList(user.getDept().getId()));
+                    dataScopeVO.getDeptIds().addAll(CollUtil.newArrayList(user.getDept().getId()));
                     break;
                 case DATA_SCOPE_SELF:
-                    dataScope.setSelf(true);
-                    dataScope.setUserId(user.getId());
-                    dataScope.setUserName(user.getUsername());
+                    dataScopeVO.setSelf(true);
+                    dataScopeVO.setUserId(user.getId());
+                    dataScopeVO.setUserName(user.getUsername());
                     break;
                 case DATA_SCOPE_CUSTOM:
-                    dataScope.getDeptIds().addAll(getCustomize(role));
+                    dataScopeVO.getDeptIds().addAll(getCustomize(role));
                     break;
                 default:
             }
         }
-        return dataScope;
+        return dataScopeVO;
     }
 
     /**
@@ -77,7 +77,7 @@ public class DataService {
      * @param role 角色
      * @return 数据权限ID
      */
-    public Set<Long> getCustomize(RoleSmallDto role) {
+    public Set<Long> getCustomize(RoleSmallDTO role) {
         Set<Long> deptIds = CollUtil.newHashSet();
         List<DeptDO> depts = deptService.findByRoleId(role.getId());
         for (DeptDO dept : depts) {

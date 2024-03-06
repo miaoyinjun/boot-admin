@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.jjche.common.base.IBaseEnum;
 
 import java.util.stream.Stream;
 
@@ -16,7 +17,7 @@ import java.util.stream.Stream;
  */
 @Getter
 @AllArgsConstructor
-public enum CommonStatusEnum implements IBaseEnum{
+public enum CommonStatusEnum implements IBaseEnum {
     ENABLE("1", "开启"),
     DISABLE("0", "关闭");
 

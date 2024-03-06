@@ -1,7 +1,7 @@
 package org.jjche.system.modules.quartz.task;
 
 import cn.hutool.core.util.NumberUtil;
-import org.jjche.log.modules.logging.service.LogService;
+import org.jjche.system.modules.logging.service.LogService;
 import org.jjche.system.modules.quartz.service.QuartzJobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

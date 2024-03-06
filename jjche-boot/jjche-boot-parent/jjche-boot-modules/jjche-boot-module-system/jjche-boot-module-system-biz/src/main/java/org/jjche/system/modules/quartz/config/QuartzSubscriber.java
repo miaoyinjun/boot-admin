@@ -4,10 +4,10 @@ import cn.hutool.json.JSONUtil;
 import cn.hutool.log.StaticLog;
 import lombok.AllArgsConstructor;
 import org.jjche.cache.conf.RedisSubscriber;
-import org.jjche.common.enums.RedisTopicEnum;
+import org.jjche.system.modules.quartz.api.enums.QuartzRedisTopicEnum;
 import org.jjche.system.modules.quartz.domain.QuartzJobDO;
-import org.jjche.system.modules.quartz.dto.QuartzRedisMessageDTO;
-import org.jjche.system.modules.quartz.enums.QuartzActionEnum;
+import org.jjche.system.modules.quartz.api.dto.QuartzRedisMessageDTO;
+import org.jjche.system.modules.quartz.api.enums.QuartzActionEnum;
 import org.jjche.system.modules.quartz.utils.QuartzManage;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,7 @@ public class QuartzSubscriber implements RedisSubscriber {
     private final QuartzManage quartzManage;
     @Override
     public String getTopic() {
-        return RedisTopicEnum.TOPIC_QUARTZ.getTopic();
+        return QuartzRedisTopicEnum.TOPIC_QUARTZ.getTopic();
     }
 
 

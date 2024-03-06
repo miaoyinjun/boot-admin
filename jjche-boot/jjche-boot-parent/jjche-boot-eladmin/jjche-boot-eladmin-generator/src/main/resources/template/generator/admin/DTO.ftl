@@ -8,8 +8,8 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import org.jjche.common.annotation.QueryCriteria;
-import org.jjche.common.dto.BaseDTO;
-import org.jjche.common.dto.BaseQueryCriteriaDTO;
+import org.jjche.common.base.BaseDTO;
+import org.jjche.common.base.BaseQueryCriteriaDTO;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Length;
 

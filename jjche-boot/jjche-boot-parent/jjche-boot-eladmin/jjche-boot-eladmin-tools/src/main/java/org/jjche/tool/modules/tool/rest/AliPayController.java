@@ -14,7 +14,7 @@ import org.jjche.tool.modules.tool.domain.AlipayConfigDO;
 import org.jjche.tool.modules.tool.service.AliPayService;
 import org.jjche.tool.modules.tool.utils.AliPayStatusEnum;
 import org.jjche.tool.modules.tool.utils.AlipayUtils;
-import org.jjche.tool.modules.tool.vo.TradeVO;
+import org.jjche.tool.modules.tool.api.vo.TradeVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;

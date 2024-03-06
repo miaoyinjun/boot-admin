@@ -2,8 +2,8 @@ package org.jjche.system.modules.version.mapstruct;
 
 import org.jjche.core.base.BaseVoMapStruct;
 import org.jjche.system.modules.version.domain.VersionDO;
-import org.jjche.system.modules.version.dto.VersionDTO;
-import org.jjche.system.modules.version.vo.VersionVO;
+import org.jjche.system.modules.version.api.dto.VersionDTO;
+import org.jjche.system.modules.version.api.vo.VersionVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

@@ -4,14 +4,18 @@ import cn.hutool.core.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.jjche.common.dto.PermissionDataResourceDTO;
+import org.jjche.common.dto.PermissionDataRuleDTO;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
+import org.jjche.common.vo.DataPermissionFieldResultVO;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.annotation.controller.SysRestController;
 import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
+import org.jjche.system.modules.permission.api.DataPermissionFieldApi;
 import org.jjche.system.modules.system.api.dto.DataPermissionFieldDTO;
 import org.jjche.system.modules.system.api.dto.DataPermissionFieldQueryCriteriaDTO;
 import org.jjche.system.modules.system.api.vo.DataPermissionFieldVO;
@@ -20,6 +24,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -33,7 +38,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Api(tags = "系统：数据字段管理")
 @SysRestController("data_permission_fields")
-public class DataPermissionFieldController extends BaseController {
+public class DataPermissionFieldController extends BaseController implements DataPermissionFieldApi {
 
     private final DataPermissionFieldService dataPermissionFieldService;
 
@@ -118,5 +123,17 @@ public class DataPermissionFieldController extends BaseController {
     @PreAuthorize("@el.check('menu:list')")
     public R<MyPage<DataPermissionFieldVO>> query(PageParam pageable, DataPermissionFieldQueryCriteriaDTO criteria) {
         return R.ok(dataPermissionFieldService.pageQuery(pageable, criteria));
+    }
+
+    @Override
+    @PostMapping("list-permission-data-resource")
+    public List<DataPermissionFieldResultVO> listPermissionDataResource(@RequestBody PermissionDataResourceDTO dto) {
+        return dataPermissionFieldService.listPermissionDataResource(dto);
+    }
+
+    @Override
+    @GetMapping("list-permission-data-ruleByUserId")
+    public List<PermissionDataRuleDTO> listPermissionDataRuleByUserId(@RequestParam Long userId){
+        return dataPermissionFieldService.listPermissionDataRuleByUserId(userId);
     }
 }
