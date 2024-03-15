@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import org.jjche.common.annotation.Dict;
-import org.jjche.common.api.CommonDictApi;
+import org.jjche.common.api.CommonApi;
 import org.jjche.common.dto.DictParam;
 
 import java.io.IOException;
@@ -30,7 +30,7 @@ public class DictSerializer extends StdSerializer<Object> implements ContextualS
      */
     private Dict dict;
     private String type;
-    private CommonDictApi commonDictApi;
+    private CommonApi commonApi;
 
     public DictSerializer() {
         super(Object.class);
@@ -53,7 +53,7 @@ public class DictSerializer extends StdSerializer<Object> implements ContextualS
         // 通过数据字典类型和value获取name
         if (type != null) {
             gen.writeObject(value);
-            DictParam dictParam = commonDictApi.getDictByNameValue(type, String.valueOf(value));
+            DictParam dictParam = commonApi.getDictByNameValue(type, String.valueOf(value));
             if (dictParam != null) {
                 String filedName = gen.getOutputContext().getCurrentName() + "Label";
                 gen.writeFieldName(filedName);
@@ -64,8 +64,8 @@ public class DictSerializer extends StdSerializer<Object> implements ContextualS
 
     @Override
     public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty beanProperty) throws JsonMappingException {
-        if (ObjectUtil.isNull(commonDictApi)) {
-            commonDictApi = SpringUtil.getBean(CommonDictApi.class);
+        if (ObjectUtil.isNull(commonApi)) {
+            commonApi = SpringUtil.getBean(CommonApi.class);
         }
         if (Objects.isNull(beanProperty)) {
             return prov.findValueSerializer(beanProperty.getType(), beanProperty);

@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.api.CommonAuthApi;
+import org.jjche.common.api.CommonApi;
 import org.jjche.common.constant.SecurityConstant;
 import org.jjche.core.util.SpringContextHolder;
 import org.jjche.security.annotation.IgnoreAccess;
@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationAccessDeniedHandler jwtAccessDeniedHandler;
     private final ApplicationContext applicationContext;
     private final SecurityProperties properties;
-    private final CommonAuthApi commonAuthApi;
+    private final CommonApi commonApi;
     private final UserDetailsService userDetailsService;
     private final UserDetailsService smsUserDetailsService;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -284,7 +284,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private TokenConfigurer securityConfigurerAdapter() {
-        return new TokenConfigurer(commonAuthApi);
+        return new TokenConfigurer(commonApi);
     }
 
 }

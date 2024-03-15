@@ -6,8 +6,6 @@ import org.jjche.swagger.property.SwaggerSecurityJwtProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import springfox.documentation.service.Contact;
 
-import java.util.List;
-
 /**
  * <p>
  * swagger属性加载类
@@ -25,7 +23,6 @@ public class SwaggerProperties {
      */
     SwaggerSecurityJwtProperties securityJwt;
     private String filterPath;
-    private List<String> ignoreFilterPath;
     private String basePackage = PackageConstant.CONTROLLER_PATH_STAR;
     private String title;
     private String description;

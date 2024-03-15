@@ -7,7 +7,7 @@
 
     <parent>
         <groupId>org.jjche.demo</groupId>
-        <artifactId>jjche-cloud-demo-provider-parent</artifactId>
+        <artifactId>jjche-cloud-demo-provider</artifactId>
         <version>2.0.8-SNAPSHOT</version>
     </parent>
 

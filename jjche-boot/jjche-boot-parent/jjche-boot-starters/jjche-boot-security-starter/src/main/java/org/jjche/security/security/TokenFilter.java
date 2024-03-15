@@ -2,14 +2,14 @@ package org.jjche.security.security;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.BooleanUtil;
-import org.jjche.common.api.CommonAuthApi;
+import org.jjche.common.api.CommonApi;
 import org.jjche.common.constant.SecurityConstant;
 import org.jjche.common.context.ContextUtil;
 import org.jjche.common.dto.JwtUserDTO;
 import org.jjche.common.dto.UserVO;
 import org.jjche.common.enums.UserTypeEnum;
-import org.jjche.common.vo.DataScopeVO;
 import org.jjche.common.util.HttpUtil;
+import org.jjche.common.vo.DataScopeVO;
 import org.jjche.common.wrapper.HeaderMapRequestWrapper;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.runner.RequestMappingRunner;
@@ -39,15 +39,15 @@ import java.util.stream.Collectors;
  * @version 1.0.8-SNAPSHOT
  */
 public class TokenFilter extends GenericFilterBean {
-    private final CommonAuthApi commonAuthApi;
+    private final CommonApi commonApi;
 
     /**
      * <p>Constructor for TokenFilter.</p>
      *
-     * @param commonAuthApi api
+     * @param commonApi api
      */
-    public TokenFilter(CommonAuthApi commonAuthApi) {
-        this.commonAuthApi = commonAuthApi;
+    public TokenFilter(CommonApi commonApi) {
+        this.commonApi = commonApi;
     }
 
     /**
@@ -67,7 +67,7 @@ public class TokenFilter extends GenericFilterBean {
 
         HeaderMapRequestWrapper reqWrapper = new HeaderMapRequestWrapper((HttpServletRequest) servletRequest);
         //非cloud才会走这里
-        JwtUserDTO userDetails = commonAuthApi.getUserDetails();
+        JwtUserDTO userDetails = commonApi.getUserDetails();
         String token = reqWrapper.getHeader(SecurityConstant.HEADER_AUTH);
         if (userDetails != null) {
             Authentication authentication = null;

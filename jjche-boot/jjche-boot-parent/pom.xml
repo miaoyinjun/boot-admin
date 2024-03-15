@@ -57,8 +57,7 @@
     <modules>
         <module>jjche-boot-common</module>
         <module>jjche-boot-starters</module>
-        <module>jjche-boot-eladmin</module>
-        <module>jjche-boot-modules</module>
+        <module>jjche-cloud-starters</module>
     </modules>
 
     <dependencyManagement>
@@ -100,17 +99,17 @@
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
-                <artifactId>jjche-boot-module-system-base</artifactId>
+                <artifactId>jjche-cloud-module-system-base-api</artifactId>
                 <version>2.0.8-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
-                <artifactId>jjche-boot-module-system-local-api</artifactId>
+                <artifactId>jjche-boot-module-system-base-api</artifactId>
                 <version>2.0.8-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
-                <artifactId>jjche-boot-module-system-cloud-api</artifactId>
+                <artifactId>jjche-cloud-module-system-api</artifactId>
                 <version>2.0.8-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -181,28 +180,18 @@
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
-                <artifactId>jjche-boot-eladmin-generator</artifactId>
-                <version>2.0.8-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jjcheframework.boot</groupId>
-                <artifactId>jjche-boot-eladmin-tools</artifactId>
-                <version>2.0.8-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-userdetail-starter</artifactId>
                 <version>2.0.8-SNAPSHOT</version>
             </dependency>
             <!-- cloud -->
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
-                <artifactId>jjche-boot-cloud-starter</artifactId>
+                <artifactId>jjche-cloud-starter</artifactId>
                 <version>2.0.8-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
-                <artifactId>jjche-boot-cloud-gray-starter</artifactId>
+                <artifactId>jjche-cloud-gray-starter</artifactId>
                 <version>2.0.8-SNAPSHOT</version>
             </dependency>
             <dependency>

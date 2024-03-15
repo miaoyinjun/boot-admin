@@ -9,7 +9,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.StaticLog;
 import org.jjche.cache.service.RedisService;
-import org.jjche.common.api.CommonAppKeyApi;
+import org.jjche.common.api.CommonApi;
 import org.jjche.common.constant.FilterEncConstant;
 import org.jjche.common.context.ContextUtil;
 import org.jjche.common.exception.RequestLimitException;
@@ -40,12 +40,12 @@ import java.util.List;
  * @since 2020-08-14
  */
 public class EncCheckHeaderInterceptor implements HandlerInterceptor {
-    private CommonAppKeyApi commonAppKeyApi;
+    private CommonApi commonApi;
     private RedisService redisService;
     private AntPathMatcher PATH_MATCHER = new AntPathMatcher();
 
-    public EncCheckHeaderInterceptor(CommonAppKeyApi commonAppKeyApi, RedisService redisService) {
-        this.commonAppKeyApi = commonAppKeyApi;
+    public EncCheckHeaderInterceptor(CommonApi commonApi, RedisService redisService) {
+        this.commonApi = commonApi;
         this.redisService = redisService;
     }
 
@@ -89,7 +89,7 @@ public class EncCheckHeaderInterceptor implements HandlerInterceptor {
         StaticLog.info("md5Filter.appId:{},timestamp:{}, nonce:{},sign:{}", appIdValue, timestampValue, nonceValue, signValue);
 
         /** 校验appId有效性 */
-        SecurityAppKeyBasicVO appSecretVO = commonAppKeyApi.getKeyByAppId(appIdValue);
+        SecurityAppKeyBasicVO appSecretVO = commonApi.getAppKeyByAppId(appIdValue);
         String appSecret = null;
         if (appSecretVO != null) {
             appSecret = appSecretVO.getAppSecret();

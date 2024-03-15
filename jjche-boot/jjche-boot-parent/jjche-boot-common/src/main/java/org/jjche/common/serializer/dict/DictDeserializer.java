@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.jjche.common.annotation.Dict;
-import org.jjche.common.api.CommonDictApi;
+import org.jjche.common.api.CommonApi;
 import org.jjche.common.dto.DictParam;
 
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class DictDeserializer extends StdDeserializer<Object> implements Context
      */
     private Dict dict;
     private String type;
-    private CommonDictApi commonDictApi;
+    private CommonApi commonApi;
 
     public DictDeserializer() {
         super(Object.class);
@@ -54,7 +54,7 @@ public class DictDeserializer extends StdDeserializer<Object> implements Context
         }
         // 如果value没有配置到字典，返回null
         if (type != null) {
-            DictParam dictParam = commonDictApi.getDictByNameValue(type, value);
+            DictParam dictParam = commonApi.getDictByNameValue(type, value);
             return dictParam != null ? value : null;
         }
         return null;
@@ -63,8 +63,8 @@ public class DictDeserializer extends StdDeserializer<Object> implements Context
     @Override
     public JsonDeserializer<?> createContextual(DeserializationContext deserializationContext,
                                                 BeanProperty beanProperty) throws JsonMappingException {
-        if (ObjectUtil.isNull(commonDictApi)) {
-            commonDictApi = SpringUtil.getBean(CommonDictApi.class);
+        if (ObjectUtil.isNull(commonApi)) {
+            commonApi = SpringUtil.getBean(CommonApi.class);
         }
         if (Objects.isNull(beanProperty)) {
             return deserializationContext.findContextualValueDeserializer(beanProperty.getType(), beanProperty);

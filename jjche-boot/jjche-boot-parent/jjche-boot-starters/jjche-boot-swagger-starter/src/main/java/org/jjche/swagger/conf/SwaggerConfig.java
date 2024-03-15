@@ -217,7 +217,7 @@ public class SwaggerConfig implements EnvironmentAware {
      * @return 正则
      */
     private String ignoreFilterPath() {
-        List<String> ignoreFilterPath = swaggerProperty.getIgnoreFilterPath();
+        Set<String> ignoreFilterPath = CollUtil.newHashSet("/error.*");
         return StrUtil.join("|", ignoreFilterPath);
     }
 

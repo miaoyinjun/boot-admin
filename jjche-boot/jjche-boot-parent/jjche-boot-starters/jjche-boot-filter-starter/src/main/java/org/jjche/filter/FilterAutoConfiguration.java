@@ -2,7 +2,7 @@ package org.jjche.filter;
 
 import cn.hutool.core.collection.CollUtil;
 import org.jjche.cache.service.RedisService;
-import org.jjche.common.api.CommonAppKeyApi;
+import org.jjche.common.api.CommonApi;
 import org.jjche.filter.enc.api.EncCheckHeaderInterceptor;
 import org.jjche.filter.enc.field.EncryptFieldAop;
 import org.jjche.filter.enc.field.EncryptFieldUtil;
@@ -38,7 +38,7 @@ public class FilterAutoConfiguration {
     private RedisService redisService;
     @Autowired
     @Lazy
-    private CommonAppKeyApi commonAppKeyApi;
+    private CommonApi commonApi;
 
     /**
      * <p>
@@ -64,7 +64,7 @@ public class FilterAutoConfiguration {
                 List<String> filterUrls = filterEncProperties.getUrls();
                 InterceptorRegistration checkHeaderInterceptorRegistration = null;
                 /** 默认拦截项目中定义的接口地址*/
-                EncCheckHeaderInterceptor checkParamInterceptor = new EncCheckHeaderInterceptor(commonAppKeyApi, redisService);
+                EncCheckHeaderInterceptor checkParamInterceptor = new EncCheckHeaderInterceptor(commonApi, redisService);
                 checkHeaderInterceptorRegistration = registry.addInterceptor(checkParamInterceptor);
                 /**添加要过滤的URL*/
                 if (CollUtil.isNotEmpty(filterUrls)) {

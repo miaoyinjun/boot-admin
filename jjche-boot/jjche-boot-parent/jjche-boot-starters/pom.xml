@@ -23,10 +23,8 @@
         <module>jjche-boot-swagger-starter</module>
         <module>jjche-boot-serialize-starter</module>
         <module>jjche-boot-xxl-job-starter</module>
-        <module>jjche-boot-cloud-starter</module>
         <module>jjche-boot-starter</module>
         <module>jjche-boot-userdetail-starter</module>
-        <module>jjche-boot-cloud-gray-starter</module>
         <module>jjche-boot-shardingsphere-starter</module>
         <module>jjche-boot-cat-starter</module>
         <module>jjche-boot-minio-starter</module>

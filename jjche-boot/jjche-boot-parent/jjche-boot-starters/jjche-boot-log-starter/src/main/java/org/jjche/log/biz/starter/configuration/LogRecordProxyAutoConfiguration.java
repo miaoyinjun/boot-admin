@@ -1,7 +1,7 @@
 package org.jjche.log.biz.starter.configuration;
 
 import cn.hutool.log.StaticLog;
-import org.jjche.common.api.CommonLogApi;
+import org.jjche.common.api.CommonApi;
 import org.jjche.log.biz.service.IFunctionService;
 import org.jjche.log.biz.service.ILogRecordService;
 import org.jjche.log.biz.service.IOperatorGetService;
@@ -39,7 +39,7 @@ public class LogRecordProxyAutoConfiguration implements ImportAware {
     private AnnotationAttributes enableLogRecord;
     @Autowired
     @Lazy
-    private CommonLogApi commonLogApi;
+    private CommonApi commonApi;
     @Autowired
     @Lazy
     private ILogRecordService bizLogService;
@@ -88,7 +88,7 @@ public class LogRecordProxyAutoConfiguration implements ImportAware {
         interceptor.setJoinTransaction(enableLogRecord.getBoolean("joinTransaction"));
         //interceptor.setLogFunctionParser(logFunctionParser(functionService));
         //interceptor.setDiffParseFunction(diffParseFunction);
-        interceptor.setCommonAPI(commonLogApi);
+        interceptor.setCommonAPI(commonApi);
         interceptor.setBizLogService(bizLogService);
         return interceptor;
     }

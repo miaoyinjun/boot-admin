@@ -16,9 +16,6 @@ knife4j:
 jjche:
   swagger:
     filter-path: ${jjche.core.api.path.global-prefix}
-    ignore-filter-path:
-      - ${jjche.core.api.path.global-prefix}${jjche.core.api.path.sys-prefix}.*
-      - /error.*
     title: ${info.name:}
     version: ${info.version:}
     description: ${info.description:}

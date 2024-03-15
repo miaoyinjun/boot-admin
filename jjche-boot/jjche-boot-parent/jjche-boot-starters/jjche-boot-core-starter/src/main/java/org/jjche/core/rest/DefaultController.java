@@ -1,5 +1,6 @@
 package org.jjche.core.rest;
 
+import io.swagger.annotations.Api;
 import org.jjche.common.exception.BusinessException;
 import org.jjche.core.annotation.controller.SysRestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,11 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author 芋道源码
  */
 @SysRestController
+@Api(hidden = true)
 public class DefaultController {
 
     @RequestMapping("/bpm/**")
     public void bpm404() {
         throw new BusinessException
-         ("[工作流模块 yudao-module-bpm - 已禁用][参考 https://doc.iocoder.cn/bpm/ 开启]");
+         ("[工作流模块 yudao-module-bpm - 已禁用][参考 https:///bpm/ 开启]");
     }
 }

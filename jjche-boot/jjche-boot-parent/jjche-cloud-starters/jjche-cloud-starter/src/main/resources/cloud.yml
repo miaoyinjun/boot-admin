@@ -1,0 +1,40 @@
+spring:
+  cloud:
+    #配置Bus id(远程推送事件)
+    bus:
+      id: ${spring.application.name}:${server.port}
+    nacos:
+      discovery:
+        namespace: ${JJCHE_NACOS_NAMESPACE:}
+        server-addr: ${JJCHE_NACOS_HOST:127.0.0.1}:${JJCHE_NACOS_PORT:8848}
+        metadata:
+          management.context-path: ${management.endpoints.web.base-path}
+          version: ${spring.profiles.active}
+      config:
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        # 配置中心地址
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        # 配置对应的分组
+        group: DEFAULT_GROUP
+        # 配置文件后缀
+        file-extension: yml
+        #获取的${spring.application.name}是@project.name@
+#        shared-configs[0]:
+#          data-id: ${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+#          group: ${spring.cloud.nacos.config.group}
+#          refresh: true
+feign:
+  sentinel:
+    enabled: true
+  compression:
+    request:
+      enabled: false
+    response:
+      enabled: false
+jjche:
+  cloud:
+    enabled: true
+  core:
+    api:
+      path:
+        global-prefix: /

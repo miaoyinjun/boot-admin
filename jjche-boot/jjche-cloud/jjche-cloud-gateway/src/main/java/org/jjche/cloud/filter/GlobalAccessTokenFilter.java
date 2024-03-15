@@ -4,7 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.log.StaticLog;
-import org.jjche.common.api.CommonAuthApi;
+import org.jjche.common.api.CommonApi;
 import org.jjche.common.constant.SecurityConstant;
 import org.jjche.common.dto.JwtUserDTO;
 import org.jjche.common.util.HttpUtil;
@@ -33,18 +33,18 @@ import java.util.function.Consumer;
  */
 @Component
 public class GlobalAccessTokenFilter implements GlobalFilter, Ordered {
-    private static CommonAuthApi commonAuthApi;
+    private static CommonApi commonApi;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         HttpHeaders headers = exchange.getRequest().getHeaders();
         String token = headers.getFirst(SecurityConstant.HEADER_AUTH);
         if (StrUtil.isNotBlank(token)) {
-            if (ObjectUtil.isNull(commonAuthApi)) {
-                commonAuthApi = SpringUtil.getBean(CommonAuthApi.class);
+            if (ObjectUtil.isNull(commonApi)) {
+                commonApi = SpringUtil.getBean(CommonApi.class);
             }
             CompletableFuture<JwtUserDTO> completableFuture = CompletableFuture.supplyAsync(() -> {
-                return commonAuthApi.getUserDetails(token);
+                return commonApi.getUserDetails(token);
             });
             JwtUserDTO userDetails = null;
             try {

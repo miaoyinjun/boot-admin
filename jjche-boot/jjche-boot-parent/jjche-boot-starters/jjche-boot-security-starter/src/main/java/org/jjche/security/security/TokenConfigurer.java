@@ -1,7 +1,7 @@
 package org.jjche.security.security;
 
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.api.CommonAuthApi;
+import org.jjche.common.api.CommonApi;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.DefaultSecurityFilterChain;
@@ -16,11 +16,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class TokenConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
-    private final CommonAuthApi commonAuthApi;
+    private final CommonApi commonApi;
 
     @Override
     public void configure(HttpSecurity http) {
-        TokenFilter customFilter = new TokenFilter(commonAuthApi);
+        TokenFilter customFilter = new TokenFilter(commonApi);
         http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

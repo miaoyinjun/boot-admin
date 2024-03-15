@@ -29,19 +29,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-        <!--sentinel断路器依赖-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.csp</groupId>
-            <artifactId>sentinel-web-servlet</artifactId>
-        </dependency>
         <!--Spring Webflux-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -115,11 +102,11 @@
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-boot-module-system-cloud-api</artifactId>
+            <artifactId>jjche-cloud-module-system-base-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-boot-cloud-gray-starter</artifactId>
+            <artifactId>jjche-cloud-gray-starter</artifactId>
         </dependency>
     </dependencies>
 

@@ -15,19 +15,19 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.jjche.common.annotation.PermissionData;
 import org.jjche.common.annotation.QueryCriteria;
-import org.jjche.common.api.CommonDataPermissionFieldApi;
-import org.jjche.security.context.ElPermissionContext;
+import org.jjche.common.api.CommonApi;
 import org.jjche.common.base.BaseQueryCriteriaDTO;
 import org.jjche.common.dto.PermissionDataResourceDTO;
 import org.jjche.common.dto.PermissionDataRuleDTO;
 import org.jjche.common.permission.DataPermissionFieldFilterable;
 import org.jjche.common.permission.DataPermissionFieldMetaSetter;
-import org.jjche.common.vo.DataScopeVO;
 import org.jjche.common.util.ClassUtil;
 import org.jjche.common.util.StrUtil;
 import org.jjche.common.vo.DataPermissionFieldResultVO;
+import org.jjche.common.vo.DataScopeVO;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.util.SecurityUtil;
+import org.jjche.security.context.ElPermissionContext;
 import org.jjche.security.permission.field.DataPermissionFieldResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -57,7 +57,7 @@ import java.util.stream.Collectors;
 public class PermissionDataAspect {
 
     @Autowired
-    private CommonDataPermissionFieldApi commonDataPermissionFieldApi;
+    private CommonApi commonApi;
 
     /**
      * <p>permissionDataCut.</p>
@@ -128,7 +128,7 @@ public class PermissionDataAspect {
 
             //获取用户数据规则配置
             List<PermissionDataRuleDTO> permissionDataRuleDTOList =
-                    commonDataPermissionFieldApi.listPermissionDataRuleByUserId(SecurityUtil.getUserId());
+                    commonApi.listPermissionDataRuleByUserId(SecurityUtil.getUserId());
             if (CollUtil.isNotEmpty(permissionDataRuleDTOList)) {
                 String finalPermissionCode = permissionCode;
                 Predicate condition = (str) -> StrUtil.equals(String.valueOf(str), finalPermissionCode);
@@ -218,7 +218,7 @@ public class PermissionDataAspect {
     private List<DataPermissionFieldResultVO> doFilter(DataPermissionFieldFilterable<?> filterable,
                                                        PermissionDataResourceDTO dto,
                                                        boolean editable) {
-        List<DataPermissionFieldResultVO> resources = this.commonDataPermissionFieldApi.listPermissionDataResource(dto);
+        List<DataPermissionFieldResultVO> resources = this.commonApi.listPermissionDataResource(dto);
         if (CollUtil.isEmpty(resources)) {
             return null;
         }
