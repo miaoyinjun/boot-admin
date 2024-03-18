@@ -16,8 +16,8 @@
     </parent>
 
     <modules>
-        <module>jjche-cloud-module-system-api</module>
-        <module>jjche-cloud-module-system-biz</module>
+        <module>jjche-cloud-system-api</module>
+        <module>jjche-cloud-system-biz</module>
     </modules>
 
 </project>
