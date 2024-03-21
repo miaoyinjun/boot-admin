@@ -27,8 +27,9 @@
 
     <dependencies>
         <dependency>
-        <groupId>org.jjcheframework.boot</groupId>
-        <artifactId>jjche-boot-module-bpm-api</artifactId>
+            <groupId>org.jjcheframework.boot</groupId>
+            <artifactId>jjche-cloud-bpm-api</artifactId>
+            <version>2.0.8-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
