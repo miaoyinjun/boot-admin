@@ -5,7 +5,7 @@ import cn.hutool.log.StaticLog;
 import org.jjche.cloud.gray.config.VersionServiceInstanceListSupplierConfiguration;
 import org.jjche.cloud.loader.DynamicRouteLoader;
 import org.jjche.common.constant.SpringPropertyConstant;
-import org.jjche.system.api.ISysBaseApi;
+import org.jjche.sys.api.ISysBaseApi;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -6,7 +6,7 @@ server:
 db:
   num: 1
   url:
-    '0': jdbc:mysql://${JJCHE_DB_HOST:localhost}:${JJCHE_DB_PORT:3306}/jjche-boot-nacos?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true
+    '0': jdbc:mysql://${JJCHE_DB_HOST:localhost}:${JJCHE_DB_PORT:3306}/jjche-cloud-nacos?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true
   user:
     '0': ${JJCHE_DB_UNAME:root}
   password:

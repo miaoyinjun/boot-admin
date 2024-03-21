@@ -93,7 +93,7 @@ export default {
   cruds() {
     return CRUD({
       title: '已办任务',
-      url: 'sys/bpm/task/done-page',
+      url: '/bpm/task/done-page',
       idField: 'id',
       crudMethod: { ...crudModel },
       optShow: {

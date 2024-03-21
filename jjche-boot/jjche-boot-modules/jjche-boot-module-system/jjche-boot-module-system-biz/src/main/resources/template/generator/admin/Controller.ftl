@@ -7,7 +7,6 @@ import ${packageApi}.dto.${className}DTO;
 import ${packagePath}.constant.ApiVersion;
 import org.jjche.common.base.BaseDTO;
 import org.jjche.log.biz.starter.annotation.LogRecord;
-import org.jjche.core.annotation.controller.ApiRestController;
 import org.jjche.core.base.BaseController;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.common.param.PageParam;
@@ -39,7 +38,8 @@ import java.util.List;
 */
 @Api(tags = "${apiAlias}")
 @ApiSupport(order = 1, author = "${author}")
-@ApiRestController("${controllerBaseUrl}")
+@RestController
+@RequestMapping("${controllerBaseUrl}")
 @RequiredArgsConstructor
 public class ${className}Controller extends BaseController{
 

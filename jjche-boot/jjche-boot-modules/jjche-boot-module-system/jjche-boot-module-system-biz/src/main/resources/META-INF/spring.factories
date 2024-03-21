@@ -1,1 +1,1 @@
-org.springframework.boot.env.EnvironmentPostProcessor=org.jjche.system.env.AdminEnvironmentPostProcessor
+org.springframework.boot.env.EnvironmentPostProcessor=org.jjche.sys.env.AdminEnvironmentPostProcessor

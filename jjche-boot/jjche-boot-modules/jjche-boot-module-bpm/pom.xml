@@ -3,6 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jjche-boot-module-bpm</artifactId>
+    <packaging>pom</packaging>
+    <version>2.0.8-SNAPSHOT</version>
 
     <parent>
         <groupId>org.jjcheframework.boot</groupId>
@@ -10,18 +12,9 @@
         <version>2.0.8-SNAPSHOT</version>
     </parent>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-boot-flowable-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-boot-mybatis-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-boot-module-system-base-api</artifactId>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>jjche-boot-module-bpm-base</module>
+        <module>jjche-boot-module-bpm-biz</module>
+    </modules>
+
 </project>

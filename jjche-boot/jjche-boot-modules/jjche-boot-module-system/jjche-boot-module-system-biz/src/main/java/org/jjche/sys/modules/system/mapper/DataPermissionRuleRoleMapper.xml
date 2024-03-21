@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jjche.sys.modules.system.mapper.DataPermissionRuleRoleMapper">
+
+    <sql id="querySql">
+        SELECT * FROM sys_data_permission_rule_role ${ew.customSqlSegment}
+    </sql>
+
+    <select id="pageQuery" resultType="org.jjche.sys.modules.system.api.vo.DataPermissionRuleRoleVO">
+        <include refid="querySql"/>
+    </select>
+
+    <select id="queryAll" resultType="org.jjche.sys.modules.system.domain.DataPermissionRuleRoleDO">
+        <include refid="querySql"/>
+    </select>
+</mapper>

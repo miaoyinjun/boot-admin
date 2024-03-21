@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jjche.sys.modules.system.mapper.UserJobMapper">
+    <select id="selectUserIdByJobIds" resultType="Long">
+        SELECT t.user_id FROM sys_users_jobs t
+        WHERE t.job_id IN
+        <foreach collection="jobIds" separator="," open="(" close=")" item="item">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

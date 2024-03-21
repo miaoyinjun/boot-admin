@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jjche.sys.modules.mnt.mapper.DeployMapper">
+
+    <resultMap id="BaseResultMap" type="org.jjche.sys.modules.mnt.domain.DeployDO">
+        <id column="id" property="id"/>
+        <association property="app" column="app_id"
+                     javaType="org.jjche.sys.modules.mnt.domain.AppDO"
+                     select="org.jjche.sys.modules.mnt.mapper.AppMapper.selectById"/>
+        <collection property="deploys" column="id" ofType="org.jjche.sys.modules.mnt.domain.ServerDeployDO"
+                    select="org.jjche.sys.modules.mnt.mapper.ServerDeployMapper.selectById"/>
+    </resultMap>
+</mapper>

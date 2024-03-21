@@ -1,18 +1,19 @@
 package org.jjche.core.url;
 
 import cn.hutool.core.annotation.AnnotationUtil;
-import cn.hutool.core.util.BooleanUtil;
-import org.jjche.core.annotation.controller.ApiRestController;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
+import org.jjche.common.constant.PackageConstant;
 import org.jjche.core.annotation.controller.OutRestController;
-import org.jjche.core.annotation.controller.SysRestController;
 import org.jjche.core.property.CoreApiPathProperties;
 import org.jjche.core.property.CoreProperties;
-import org.jjche.core.util.SpringContextHolder;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * <p>
@@ -30,22 +31,22 @@ public class AutoPrefixUrlMapping extends RequestMappingHandlerMapping {
     protected RequestMappingInfo getMappingForMethod(Method method, Class<?> handlerType) {
         CoreApiPathProperties coreApiPathProperties = coreProperties.getApi().getPath();
         //获取url前缀
-        String prefix = coreApiPathProperties.getGlobalPrefix();
         RequestMappingInfo requestMappingInfo = super.getMappingForMethod(method, handlerType);
-        boolean apiRest = AnnotationUtil.hasAnnotation(handlerType, ApiRestController.class);
-        boolean sysRest = AnnotationUtil.hasAnnotation(handlerType, SysRestController.class);
-        boolean outRest = AnnotationUtil.hasAnnotation(handlerType, OutRestController.class);
-        if ((apiRest || sysRest || outRest) && null != requestMappingInfo) {
-            //单体
-            if (BooleanUtil.isFalse(SpringContextHolder.isCloud())) {
-                if (sysRest) {
-                    prefix += coreApiPathProperties.getSysPrefix();
-                } else {
-                    prefix += coreApiPathProperties.getPrefix();
-                }
-            } else {
-                prefix += coreApiPathProperties.getPrefix();
-            }
+        String packageName = handlerType.getName();
+        boolean apiRest = AnnotationUtil.hasAnnotation(handlerType, RestController.class);
+        if ((StrUtil.startWith(packageName, PackageConstant.BASE_PATH) && apiRest) && null != requestMappingInfo) {
+            /**
+             * 单体前缀：/api
+             * 微服务前缀：/，由网关转发
+             */
+            String prefix = coreApiPathProperties.getPrefix();
+            List<String> packageList = StrUtil.split(packageName, StrUtil.C_DOT);
+            /**
+             * org.jjche.bpm.modules.definition.rest.BpmModelController
+             * 获取路径中的bpm作为路径前缀
+             */
+            prefix += StrUtil.SLASH + CollUtil.get(packageList, 2);
+            boolean outRest = AnnotationUtil.hasAnnotation(handlerType, OutRestController.class);
             if (outRest) {
                 prefix += coreApiPathProperties.getOutPrefix();
             }

@@ -47,9 +47,8 @@ public class CatFilterConfig {
     private String getUrlPatterns() {
         CoreApiPathProperties coreApiPathProperties = coreProperties.getApi().getPath();
         //获取url前缀
-        String globalPrefix = coreApiPathProperties.getGlobalPrefix();
-        String prefix = coreApiPathProperties.getPrefix();
-        String urlPatterns = StrUtil.format("{}{}/*", globalPrefix, prefix);
+        String globalPrefix = coreApiPathProperties.getPrefix();
+        String urlPatterns = StrUtil.format("{}/*", globalPrefix);
         urlPatterns = StrUtil.replace(urlPatterns, "//", "/");
         return urlPatterns;
     }

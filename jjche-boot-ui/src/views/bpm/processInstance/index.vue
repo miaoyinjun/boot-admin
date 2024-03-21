@@ -160,7 +160,7 @@ export default {
   cruds() {
     return CRUD({
       title: '我的流程',
-      url: 'sys/bpm/process-instance/my-page',
+      url: '/bpm/process-instance/my-page',
       idField: 'id',
       crudMethod: { ...crudModel },
       optShow: {

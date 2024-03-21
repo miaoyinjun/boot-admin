@@ -14,7 +14,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication
 @EnableAdminServer
-@EnableDiscoveryClient
 public class JjcheCloudMonitorApplication {
     /**
      * 入口

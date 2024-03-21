@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <description>jjche-cloud-demo-provider演示</description>
+
+    <groupId>org.jjche.demo</groupId>
+    <artifactId>jjche-cloud-demo</artifactId>
+    <packaging>pom</packaging>
+    <version>2.0.8-SNAPSHOT</version>
+
+    <parent>
+        <groupId>org.jjcheframework.boot</groupId>
+        <artifactId>jjche-boot-parent</artifactId>
+        <version>2.0.8-SNAPSHOT</version>
+        <relativePath />
+    </parent>
+
+    <modules>
+        <module>jjche-cloud-demo-api</module>
+        <module>jjche-cloud-demo-biz</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <!--不发布本module到远程仓库-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

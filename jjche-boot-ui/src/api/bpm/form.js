@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 创建工作流的表单定义
 export function add(data) {
   return request({
-    url: '/sys/bpm/form',
+    url: '/bpm/form',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function add(data) {
 // 更新工作流的表单定义
 export function edit(data) {
   return request({
-    url: '/sys/bpm/form',
+    url: '/bpm/form',
     method: 'put',
     data: data
   })
@@ -21,7 +21,7 @@ export function edit(data) {
 // 删除工作流的表单定义
 export function del(ids) {
   return request({
-    url: '/sys/bpm/form',
+    url: '/bpm/form',
     method: 'delete',
     data: ids
   })
@@ -30,7 +30,7 @@ export function del(ids) {
 // 获得工作流的表单定义
 export function get(id) {
   return request({
-    url: '/sys/bpm/form/' + id,
+    url: '/bpm/form/' + id,
     method: 'get'
   })
 }
@@ -41,7 +41,7 @@ export function getForm(id) {
 
 export function listFormAllSimple() {
   return request({
-    url: '/sys/bpm/form/list-all-simple',
+    url: '/bpm/form/list-all-simple',
     method: 'get'
   })
 }

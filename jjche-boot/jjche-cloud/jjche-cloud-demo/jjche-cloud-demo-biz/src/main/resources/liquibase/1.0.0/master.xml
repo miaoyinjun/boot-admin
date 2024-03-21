@@ -1,0 +1,15 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <include file="xml/20200702_001_add_tb_student.xml" relativeToChangelogFile="true"/>
+    <include file="xml/20200702_002_init_data_student.xml" relativeToChangelogFile="true"/>
+    <include file="xml/20200702_003_add_col_student.xml" relativeToChangelogFile="true"/>
+    <include file="xml/20200702_004_modify_col_length_student.xml" relativeToChangelogFile="true"/>
+    <include file="xml/20200702_005_change_col_name_student.xml" relativeToChangelogFile="true"/>
+    <changeSet author="miaoyj" id="1.0.0">
+        <tagDatabase tag="1.0.0"/>
+    </changeSet>
+</databaseChangeLog>

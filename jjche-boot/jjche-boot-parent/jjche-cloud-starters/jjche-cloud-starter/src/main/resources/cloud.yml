@@ -37,4 +37,4 @@ jjche:
   core:
     api:
       path:
-        global-prefix: /
+        prefix: /

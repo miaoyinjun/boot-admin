@@ -140,7 +140,7 @@ export default {
   cruds() {
     return CRUD({
       title: '用户分组',
-      url: 'sys/bpm/user-group',
+      url: '/bpm/user-group',
       idField: 'id',
       crudMethod: { ...crudBpmUserGroup },
       optShow: {

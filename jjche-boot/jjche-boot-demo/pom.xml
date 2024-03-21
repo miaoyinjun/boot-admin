@@ -24,25 +24,14 @@
 
     <dependencies>
         <!--spring-boot-->
-<!--                <dependency>-->
-<!--                    <groupId>org.jjcheframework.boot</groupId>-->
-<!--                    <artifactId>jjche-boot-module-system-biz</artifactId>-->
-<!--                </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.jjcheframework.boot</groupId>-->
-        <!--            <artifactId>jjche-boot-module-bpm</artifactId>-->
-        <!--        </dependency>-->
-        <!--spring-cloud-->
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-cloud-starter</artifactId>
+            <artifactId>jjche-boot-module-system-biz</artifactId>
         </dependency>
-
-        <!--                <dependency>-->
-        <!--                    <groupId>org.jjche.demo</groupId>-->
-        <!--                    <artifactId>jjche-cloud-demo-provider-api</artifactId>-->
-        <!--                    <version>2.0.3-SNAPSHOT</version>-->
-        <!--                </dependency>-->
+        <dependency>
+            <groupId>org.jjcheframework.boot</groupId>
+            <artifactId>jjche-boot-module-bpm-biz</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

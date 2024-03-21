@@ -114,7 +114,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public R methodNotAllowedException(Exception e) {
+    public R methodNotAllowedException(HttpRequestMethodNotSupportedException e) {
+        e.getMethod();
+        e.getSupportedMethods();
         return R.methodNotAllowed();
     }
 

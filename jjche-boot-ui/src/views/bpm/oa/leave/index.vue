@@ -125,7 +125,7 @@ export default {
   cruds() {
     return CRUD({
       title: '请假',
-      url: 'sys/bpm/oa/leave/page',
+      url: '/bpm/oa/leave/page',
       idField: 'id',
       optShow: {
         add: false,

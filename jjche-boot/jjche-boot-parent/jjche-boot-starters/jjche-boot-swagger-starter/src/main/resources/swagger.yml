@@ -15,7 +15,7 @@ knife4j:
     enableOpenApi: false
 jjche:
   swagger:
-    filter-path: ${jjche.core.api.path.global-prefix}
+    filter-path: ${jjche.core.api.path.prefix}
     title: ${info.name:}
     version: ${info.version:}
     description: ${info.description:}

@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getMyProcessInstancePage(query) {
   return request({
-    url: '/sys/bpm/process-instance/my-page',
+    url: '/bpm/process-instance/my-page',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function getMyProcessInstancePage(query) {
 
 export function createProcessInstance(data) {
   return request({
-    url: '/sys/bpm/process-instance/create',
+    url: '/bpm/process-instance/create',
     method: 'POST',
     data: data
   })
@@ -18,7 +18,7 @@ export function createProcessInstance(data) {
 
 export function cancelProcessInstance(id, reason) {
   return request({
-    url: '/sys/bpm/process-instance/cancel',
+    url: '/bpm/process-instance/cancel',
     method: 'DELETE',
     data: {
       id,
@@ -29,7 +29,7 @@ export function cancelProcessInstance(id, reason) {
 
 export function getProcessInstance(id) {
   return request({
-    url: '/sys/bpm/process-instance/get?id=' + id,
+    url: '/bpm/process-instance/get?id=' + id,
     method: 'get',
   })
 }

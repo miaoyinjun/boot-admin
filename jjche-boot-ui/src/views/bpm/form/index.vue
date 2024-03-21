@@ -85,7 +85,7 @@ export default {
   cruds() {
     return CRUD({
       title: '表单',
-      url: 'sys/bpm/form',
+      url: '/bpm/form',
       idField: 'id',
       crudMethod: { ...crudBpmForm },
       optShow: {

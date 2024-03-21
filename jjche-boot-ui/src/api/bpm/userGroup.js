@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 创建用户组
 export function add(data) {
   return request({
-    url: '/sys/bpm/user-group',
+    url: '/bpm/user-group',
     method: 'post',
     data: data
   })
@@ -12,7 +12,7 @@ export function add(data) {
 // 更新用户组
 export function edit(data) {
   return request({
-    url: '/sys/bpm/user-group',
+    url: '/bpm/user-group',
     method: 'put',
     data: data
   })
@@ -21,7 +21,7 @@ export function edit(data) {
 // 删除用户组
 export function del(ids) {
   return request({
-    url: '/sys/bpm/user-group',
+    url: '/bpm/user-group',
     method: 'delete',
     data: ids
   })
@@ -30,7 +30,7 @@ export function del(ids) {
 // 获得用户组
 export function get(id) {
   return request({
-    url: '/sys/bpm/user-group/' + id,
+    url: '/bpm/user-group/' + id,
     method: 'get'
   })
 }
@@ -39,7 +39,7 @@ export function get(id) {
 // 获取用户组精简信息列表
 export function listSimpleUserGroups() {
   return request({
-    url: '/sys/bpm/user-group/list-all-simple',
+    url: '/bpm/user-group/list-all-simple',
     method: 'get'
   })
 }

@@ -317,7 +317,7 @@ export default {
   cruds() {
     return CRUD({
       title: '流程模型',
-      url: 'sys/bpm/model',
+      url: '/bpm/model',
       idField: 'id',
       crudMethod: { ...crudModel },
       optShow: {
@@ -377,7 +377,7 @@ export default {
         // 设置上传的请求头部
         headers: getBaseHeader(),
         // 上传的地址
-        url: "/sys/bpm/model/import",
+        url: "/bpm/model/import",
         // 表单
         form: {},
         // 校验规则

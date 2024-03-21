@@ -41,10 +41,8 @@ jjche:
   core:
     api:
       path:
-        global-prefix: /api
-        sys-prefix: /sys
-        prefix: /sys
-        out-prefix: /out
+        prefix: /api
+        out-prefix: /external
     alarm:
       ding-talk:
         url: https://oapi.dingtalk.com/robot/send

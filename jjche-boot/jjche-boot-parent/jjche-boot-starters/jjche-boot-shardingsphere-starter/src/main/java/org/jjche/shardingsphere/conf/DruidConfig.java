@@ -40,7 +40,7 @@ public class DruidConfig {
      */
     @Bean
     public FilterRegistrationBean webStatFilter() {
-        String globalPrefix = SpringUtil.getProperty("jjche.core.api.path.global-prefix");
+        String globalPrefix = SpringUtil.getProperty("jjche.core.api.path.prefix");
         String prefix = SpringUtil.getProperty("jjche.core.api.path.prefix");
         String urlPatterns = StrUtil.format("{}{}/*", globalPrefix, prefix);
         urlPatterns = StrUtil.replace(urlPatterns, "//", "/");
