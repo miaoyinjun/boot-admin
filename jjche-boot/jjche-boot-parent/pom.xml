@@ -555,7 +555,7 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <includes>
-                    <include>config/application.yml</include>
+                    <include>config/*.yml</include>
                 </includes>
             </resource>
             <resource>
