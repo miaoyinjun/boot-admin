@@ -20,20 +20,21 @@
     <version>2.0.8-SNAPSHOT</version>
 
     <parent>
-        <groupId>org.jjcheframework.boot</groupId>
+        <groupId>org.jjche.bpm</groupId>
         <artifactId>jjche-cloud-bpm</artifactId>
         <version>2.0.8-SNAPSHOT</version>
     </parent>
 
     <dependencies>
         <dependency>
-            <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-cloud-bpm-api</artifactId>
-            <version>2.0.8-SNAPSHOT</version>
+        <groupId>org.jjche.bpm</groupId>
+        <artifactId>jjche-cloud-bpm-api</artifactId>
+        <version>2.0.8-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.jjcheframework.boot</groupId>
+            <groupId>org.jjche.bpm</groupId>
             <artifactId>jjche-boot-module-bpm-biz</artifactId>
+            <version>2.0.8-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jjcheframework.boot</groupId>
@@ -57,6 +58,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

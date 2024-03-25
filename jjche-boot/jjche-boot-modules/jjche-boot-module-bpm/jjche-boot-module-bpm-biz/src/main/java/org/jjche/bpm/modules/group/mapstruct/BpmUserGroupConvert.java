@@ -1,9 +1,9 @@
 package org.jjche.bpm.modules.group.mapstruct;
 
 import org.jjche.bpm.modules.group.domain.BpmUserGroupDO;
-import org.jjche.bpm.modules.group.api.vo.BpmUserGroupCreateReqVO;
-import org.jjche.bpm.modules.group.api.vo.BpmUserGroupRespVO;
-import org.jjche.bpm.modules.group.api.vo.BpmUserGroupUpdateReqVO;
+import org.jjche.bpm.modules.group.vo.BpmUserGroupCreateReqVO;
+import org.jjche.bpm.modules.group.vo.BpmUserGroupRespVO;
+import org.jjche.bpm.modules.group.vo.BpmUserGroupUpdateReqVO;
 import org.jjche.core.base.BaseVoMapStruct;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

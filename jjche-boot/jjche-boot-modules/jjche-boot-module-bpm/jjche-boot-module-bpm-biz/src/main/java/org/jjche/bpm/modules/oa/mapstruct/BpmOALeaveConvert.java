@@ -1,8 +1,8 @@
 package org.jjche.bpm.modules.oa.mapstruct;
 
 import org.jjche.bpm.modules.oa.domain.BpmOALeaveDO;
-import org.jjche.bpm.modules.oa.api.vo.BpmOALeaveCreateReqDTO;
-import org.jjche.bpm.modules.oa.api.vo.BpmOALeaveRespVO;
+import org.jjche.bpm.modules.oa.vo.BpmOALeaveCreateReqDTO;
+import org.jjche.bpm.modules.oa.vo.BpmOALeaveRespVO;
 import org.jjche.core.base.BaseMapStruct;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

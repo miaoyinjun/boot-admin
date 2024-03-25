@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.ibatis.annotations.Mapper;
 import org.jjche.bpm.modules.form.domain.BpmFormDO;
-import org.jjche.bpm.modules.form.api.dto.BpmFormQueryCriteriaDTO;
+import org.jjche.bpm.modules.form.dto.BpmFormQueryCriteriaDTO;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.util.StrUtil;

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.ibatis.annotations.Mapper;
 import org.jjche.bpm.modules.oa.domain.BpmOALeaveDO;
-import org.jjche.bpm.modules.oa.api.vo.BpmOALeavePageReqVO;
+import org.jjche.bpm.modules.oa.vo.BpmOALeavePageReqVO;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.util.StrUtil;
 import org.jjche.mybatis.base.MyBaseMapper;

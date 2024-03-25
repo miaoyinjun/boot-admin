@@ -3,7 +3,7 @@ package org.jjche.bpm.modules.task.service;
 import lombok.RequiredArgsConstructor;
 import org.flowable.engine.HistoryService;
 import org.flowable.engine.history.HistoricActivityInstance;
-import org.jjche.bpm.modules.task.api.vo.activity.BpmActivityRespVO;
+import org.jjche.bpm.modules.task.vo.activity.BpmActivityRespVO;
 import org.jjche.bpm.modules.task.mapstruct.BpmActivityConvert;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;

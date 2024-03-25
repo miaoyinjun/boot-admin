@@ -4,9 +4,9 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import org.flowable.bpmn.model.UserTask;
 import org.jjche.bpm.modules.definition.domain.BpmTaskAssignRuleDO;
-import org.jjche.bpm.modules.definition.api.vo.rule.BpmTaskAssignRuleCreateReqVO;
-import org.jjche.bpm.modules.definition.api.vo.rule.BpmTaskAssignRuleRespVO;
-import org.jjche.bpm.modules.definition.api.vo.rule.BpmTaskAssignRuleUpdateReqVO;
+import org.jjche.bpm.modules.definition.vo.rule.BpmTaskAssignRuleCreateReqVO;
+import org.jjche.bpm.modules.definition.vo.rule.BpmTaskAssignRuleRespVO;
+import org.jjche.bpm.modules.definition.vo.rule.BpmTaskAssignRuleUpdateReqVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

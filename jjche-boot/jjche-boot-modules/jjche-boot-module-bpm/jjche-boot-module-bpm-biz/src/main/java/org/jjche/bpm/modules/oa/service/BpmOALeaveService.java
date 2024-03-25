@@ -2,13 +2,13 @@ package org.jjche.bpm.modules.oa.service;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
 import lombok.RequiredArgsConstructor;
-import org.jjche.bpm.modules.definition.api.BpmProcessInstanceApi;
+import org.jjche.bpm.modules.definition.api.IBpmProcessInstanceApi;
 import org.jjche.bpm.modules.definition.api.dto.BpmProcessInstanceCreateReqDTO;
-import org.jjche.bpm.modules.oa.api.vo.BpmOALeaveCreateReqDTO;
-import org.jjche.bpm.modules.oa.api.vo.BpmOALeavePageReqVO;
 import org.jjche.bpm.modules.oa.domain.BpmOALeaveDO;
 import org.jjche.bpm.modules.oa.mapper.BpmOALeaveMapper;
 import org.jjche.bpm.modules.oa.mapstruct.BpmOALeaveConvert;
+import org.jjche.bpm.modules.oa.vo.BpmOALeaveCreateReqDTO;
+import org.jjche.bpm.modules.oa.vo.BpmOALeavePageReqVO;
 import org.jjche.bpm.modules.task.enums.BpmProcessInstanceResultEnum;
 import org.jjche.common.exception.BusinessException;
 import org.jjche.common.param.MyPage;
@@ -36,7 +36,7 @@ public class BpmOALeaveService extends MyServiceImpl<BpmOALeaveMapper, BpmOALeav
      */
     public static final String PROCESS_KEY = "oa_leave";
 
-    private final BpmProcessInstanceApi processInstanceApi;
+    private final IBpmProcessInstanceApi processInstanceApi;
     private final BpmOALeaveConvert leaveConvert;
 
     /**

@@ -5,15 +5,16 @@
     <artifactId>jjche-boot-module-bpm-biz</artifactId>
 
     <parent>
-        <groupId>org.jjcheframework.boot</groupId>
+        <groupId>org.jjche.bpm</groupId>
         <artifactId>jjche-boot-module-bpm</artifactId>
         <version>2.0.8-SNAPSHOT</version>
     </parent>
 
     <dependencies>
         <dependency>
-            <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-boot-module-bpm-base</artifactId>
+            <groupId>org.jjche.bpm</groupId>
+            <artifactId>jjche-boot-module-bpm-api</artifactId>
+            <version>2.0.8-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>

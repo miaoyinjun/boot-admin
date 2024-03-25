@@ -4,11 +4,11 @@ import cn.hutool.core.collection.CollUtil;
 import org.flowable.common.engine.impl.db.SuspensionState;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.ProcessDefinition;
-import org.jjche.bpm.modules.definition.api.dto.BpmProcessDefinitionCreateReqDTO;
+import org.jjche.bpm.modules.definition.dto.BpmProcessDefinitionCreateReqDTO;
 import org.jjche.bpm.modules.form.domain.BpmFormDO;
-import org.jjche.bpm.modules.definition.api.vo.process.BpmProcessDefinitionPageItemRespVO;
+import org.jjche.bpm.modules.definition.vo.process.BpmProcessDefinitionPageItemRespVO;
 import org.jjche.bpm.modules.definition.domain.BpmProcessDefinitionExtDO;
-import org.jjche.bpm.modules.definition.api.vo.process.BpmProcessDefinitionRespVO;
+import org.jjche.bpm.modules.definition.vo.process.BpmProcessDefinitionRespVO;
 import org.mapstruct.*;
 
 import java.sql.Timestamp;

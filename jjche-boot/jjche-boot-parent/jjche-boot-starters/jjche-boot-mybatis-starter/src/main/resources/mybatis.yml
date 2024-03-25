@@ -38,8 +38,8 @@ spring:
       remove-abandoned: false
 
 mybatis-plus:
-  typeEnumsPackage: org.jjche.*.modules.*.api.enums;org.jjche.common.enums;
-  typeAliasesPackage: org.jjche.*.modules.*.domain;org.jjche.*.modules.*.api.vo;
+  typeEnumsPackage: org.jjche.*.modules.**.enums;org.jjche.common.enums;
+  typeAliasesPackage: org.jjche.*.modules.*.domain;org.jjche.*.modules.**.vo;
   global-config:
     banner: false
   mapper-locations: classpath*:org/jjche/*/modules/*/mapper/*.xml

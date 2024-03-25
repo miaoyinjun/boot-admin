@@ -1,9 +1,9 @@
 package org.jjche.bpm.modules.message.service;
 
 import lombok.RequiredArgsConstructor;
-import org.jjche.bpm.modules.message.api.dto.BpmMessageSendWhenProcessInstanceApproveReqDTO;
-import org.jjche.bpm.modules.message.api.dto.BpmMessageSendWhenProcessInstanceRejectReqDTO;
-import org.jjche.bpm.modules.message.api.dto.BpmMessageSendWhenTaskCreatedReqDTO;
+import org.jjche.bpm.modules.message.dto.BpmMessageSendWhenProcessInstanceApproveReqDTO;
+import org.jjche.bpm.modules.message.dto.BpmMessageSendWhenProcessInstanceRejectReqDTO;
+import org.jjche.bpm.modules.message.dto.BpmMessageSendWhenTaskCreatedReqDTO;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;

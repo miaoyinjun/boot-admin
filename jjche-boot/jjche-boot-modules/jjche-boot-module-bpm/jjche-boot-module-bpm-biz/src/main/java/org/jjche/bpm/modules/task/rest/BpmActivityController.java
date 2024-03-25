@@ -4,7 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
-import org.jjche.bpm.modules.task.api.vo.activity.BpmActivityRespVO;
+import org.jjche.bpm.modules.task.vo.activity.BpmActivityRespVO;
 import org.jjche.bpm.modules.task.service.BpmActivityService;
 import org.jjche.common.wrapper.response.R;
 import org.springframework.security.access.prepost.PreAuthorize;

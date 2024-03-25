@@ -1,10 +1,10 @@
 package org.jjche.bpm.modules.form.mapstruct;
 
 import org.jjche.bpm.modules.form.domain.BpmFormDO;
-import org.jjche.bpm.modules.form.api.dto.BpmFormDTO;
-import org.jjche.bpm.modules.form.api.vo.BpmFormDetailRespVO;
-import org.jjche.bpm.modules.form.api.vo.BpmFormRespVO;
-import org.jjche.bpm.modules.form.api.vo.BpmFormSimpleRespVO;
+import org.jjche.bpm.modules.form.dto.BpmFormDTO;
+import org.jjche.bpm.modules.form.vo.BpmFormDetailRespVO;
+import org.jjche.bpm.modules.form.vo.BpmFormRespVO;
+import org.jjche.bpm.modules.form.vo.BpmFormSimpleRespVO;
 import org.jjche.core.base.BaseMapStruct;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;

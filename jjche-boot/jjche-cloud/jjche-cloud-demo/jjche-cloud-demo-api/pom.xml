@@ -13,6 +13,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.jjche.demo</groupId>
+            <artifactId>jjche-boot-module-demo-api</artifactId>
+            <version>2.0.8-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>org.jjcheframework.boot</groupId>
             <artifactId>jjche-boot-common</artifactId>
         </dependency>

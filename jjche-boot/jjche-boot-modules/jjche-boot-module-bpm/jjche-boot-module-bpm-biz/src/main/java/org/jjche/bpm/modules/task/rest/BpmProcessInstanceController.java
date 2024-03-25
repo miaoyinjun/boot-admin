@@ -1,13 +1,11 @@
 package org.jjche.bpm.modules.task.rest;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
-import org.jjche.bpm.modules.definition.api.dto.BpmProcessInstanceCreateReqDTO;
-import org.jjche.bpm.modules.task.api.vo.instance.*;
 import org.jjche.bpm.modules.task.service.BpmProcessInstanceService;
+import org.jjche.bpm.modules.task.vo.instance.*;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.util.SecurityUtil;
@@ -54,11 +52,5 @@ public class BpmProcessInstanceController {
     public R<Boolean> cancelProcessInstance(@Valid @RequestBody BpmProcessInstanceCancelReqVO cancelReqVO) {
         processInstanceService.cancelProcessInstance(SecurityUtil.getUserId(), cancelReqVO);
         return R.ok(true);
-    }
-
-    @ApiOperation("创建-自定义")
-    @PostMapping("/create-custom")
-    public String createProcessInstance(Long userId, @Valid BpmProcessInstanceCreateReqDTO reqDTO) {
-        return processInstanceService.createProcessInstance(userId, reqDTO);
     }
 }

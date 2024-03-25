@@ -8,13 +8,13 @@ import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.history.HistoricTaskInstance;
-import org.jjche.bpm.modules.task.api.vo.task.BpmTaskDonePageItemRespVO;
+import org.jjche.bpm.modules.task.vo.task.BpmTaskDonePageItemRespVO;
 import org.jjche.common.dto.DeptSmallDTO;
 import org.jjche.common.dto.UserVO;
 import org.jjche.bpm.modules.task.domain.BpmTaskExtDO;
-import org.jjche.bpm.modules.task.api.vo.task.BpmTaskRespVO;
-import org.jjche.bpm.modules.task.api.vo.task.BpmTaskTodoPageItemRespVO;
-import org.jjche.bpm.modules.message.api.dto.BpmMessageSendWhenTaskCreatedReqDTO;
+import org.jjche.bpm.modules.task.vo.task.BpmTaskRespVO;
+import org.jjche.bpm.modules.task.vo.task.BpmTaskTodoPageItemRespVO;
+import org.jjche.bpm.modules.message.dto.BpmMessageSendWhenTaskCreatedReqDTO;
 import org.mapstruct.*;
 import org.springframework.beans.BeanUtils;
 

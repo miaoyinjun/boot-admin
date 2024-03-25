@@ -33,6 +33,7 @@
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
             <artifactId>jjche-boot-module-system-biz</artifactId>
+            <version>2.0.8-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jjcheframework.boot</groupId>
@@ -66,6 +67,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

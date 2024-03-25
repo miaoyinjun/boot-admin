@@ -18,6 +18,6 @@ public class DefaultController {
     @RequestMapping("/bpm/**")
     public void bpm404() {
         throw new BusinessException
-         ("[工作流模块 yudao-module-bpm - 已禁用][参考 https:///bpm/ 开启]");
+         ("[工作流模块 jjche-boot-module-bpm - 已禁用][参考 https:///bpm/ 开启]");
     }
 }

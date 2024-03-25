@@ -8,7 +8,7 @@ import org.jjche.bpm.modules.task.domain.BpmProcessInstanceExtDO;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.util.StrUtil;
 import org.jjche.mybatis.base.MyBaseMapper;
-import org.jjche.bpm.modules.task.api.vo.instance.BpmProcessInstanceMyPageReqVO;
+import org.jjche.bpm.modules.task.vo.instance.BpmProcessInstanceMyPageReqVO;
 
 import java.sql.Timestamp;
 import java.util.List;

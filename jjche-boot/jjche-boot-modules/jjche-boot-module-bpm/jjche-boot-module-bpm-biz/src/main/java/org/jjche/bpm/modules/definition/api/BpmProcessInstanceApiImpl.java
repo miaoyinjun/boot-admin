@@ -6,8 +6,6 @@ import org.jjche.bpm.modules.task.service.BpmProcessInstanceService;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
-
 /**
  * Flowable 流程实例 Api 实现类
  *
@@ -17,12 +15,12 @@ import javax.validation.Valid;
 @Service
 @Validated
 @RequiredArgsConstructor
-public class BpmProcessInstanceApiImpl implements BpmProcessInstanceApi {
+public class BpmProcessInstanceApiImpl implements IBpmProcessInstanceApi {
 
     private final BpmProcessInstanceService processInstanceService;
 
     @Override
-    public String createProcessInstance(Long userId, @Valid BpmProcessInstanceCreateReqDTO reqDTO) {
+    public String createProcessInstance(Long userId, BpmProcessInstanceCreateReqDTO reqDTO) {
         return processInstanceService.createProcessInstance(userId, reqDTO);
     }
 }

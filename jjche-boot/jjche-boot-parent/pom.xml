@@ -114,11 +114,6 @@
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
-                <artifactId>jjche-boot-module-bpm-base</artifactId>
-                <version>2.0.8-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-core-starter</artifactId>
                 <version>2.0.8-SNAPSHOT</version>
             </dependency>
@@ -171,16 +166,6 @@
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-serialize-starter</artifactId>
-                <version>2.0.8-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jjcheframework.boot</groupId>
-                <artifactId>jjche-boot-module-system-biz</artifactId>
-                <version>2.0.8-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jjcheframework.boot</groupId>
-                <artifactId>jjche-boot-module-bpm-biz</artifactId>
                 <version>2.0.8-SNAPSHOT</version>
             </dependency>
             <dependency>

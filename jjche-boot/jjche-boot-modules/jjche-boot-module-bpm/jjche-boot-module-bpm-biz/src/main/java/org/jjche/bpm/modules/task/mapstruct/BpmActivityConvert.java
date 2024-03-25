@@ -1,7 +1,7 @@
 package org.jjche.bpm.modules.task.mapstruct;
 
 import org.flowable.engine.history.HistoricActivityInstance;
-import org.jjche.bpm.modules.task.api.vo.activity.BpmActivityRespVO;
+import org.jjche.bpm.modules.task.vo.activity.BpmActivityRespVO;
 import org.jjche.core.base.BaseVoMapStruct;
 import org.mapstruct.*;
 
