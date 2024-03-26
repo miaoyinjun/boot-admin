@@ -1,8 +1,8 @@
 package org.jjche.sys.modules.system.mapstruct;
 
 import org.jjche.core.base.BaseMapStruct;
-import org.jjche.sys.modules.system.api.dto.DataPermissionFieldRoleDTO;
-import org.jjche.sys.modules.system.api.vo.DataPermissionFieldRoleVO;
+import org.jjche.sys.modules.system.dto.DataPermissionFieldRoleDTO;
+import org.jjche.sys.modules.system.vo.DataPermissionFieldRoleVO;
 import org.jjche.sys.modules.system.domain.DataPermissionFieldRoleDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

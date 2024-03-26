@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
 import org.jjche.core.util.SecurityUtil;
 import org.jjche.sys.modules.logging.service.LogService;
-import org.jjche.sys.modules.system.api.vo.DashboardChartVO;
-import org.jjche.sys.modules.system.api.vo.DashboardCountVO;
+import org.jjche.sys.modules.system.vo.DashboardChartVO;
+import org.jjche.sys.modules.system.vo.DashboardCountVO;
 import org.springframework.stereotype.Service;
 
 /**

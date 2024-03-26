@@ -17,7 +17,7 @@
     <modules>
         <module>jjche-cloud-gray-starter</module>
         <module>jjche-cloud-starter</module>
-        <module>jjche-cloud-module-system-base-api</module>
+        <module>jjche-cloud-system-api-starter</module>
     </modules>
 
 </project>

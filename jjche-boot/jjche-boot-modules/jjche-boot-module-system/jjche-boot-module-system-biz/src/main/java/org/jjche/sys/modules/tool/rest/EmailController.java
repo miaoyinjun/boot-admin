@@ -8,7 +8,7 @@ import org.jjche.common.enums.LogType;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
-import org.jjche.sys.modules.tool.api.vo.EmailVO;
+import org.jjche.sys.modules.tool.vo.EmailVO;
 import org.jjche.sys.modules.tool.domain.EmailConfigDO;
 import org.jjche.sys.modules.tool.service.EmailService;
 import org.springframework.validation.annotation.Validated;

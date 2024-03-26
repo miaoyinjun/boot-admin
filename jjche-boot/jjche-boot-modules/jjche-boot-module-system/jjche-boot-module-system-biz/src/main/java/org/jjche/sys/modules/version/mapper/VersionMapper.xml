@@ -6,7 +6,7 @@
         SELECT * FROM sys_version ${ew.customSqlSegment}
     </sql>
 
-    <select id="pageQuery" resultType="org.jjche.sys.modules.version.api.vo.VersionVO">
+    <select id="pageQuery" resultType="org.jjche.sys.modules.version.vo.VersionVO">
         <include refid="querySql"/>
     </select>
 </mapper>

@@ -6,7 +6,7 @@
         SELECT * FROM sys_data_permission_rule_role ${ew.customSqlSegment}
     </sql>
 
-    <select id="pageQuery" resultType="org.jjche.sys.modules.system.api.vo.DataPermissionRuleRoleVO">
+    <select id="pageQuery" resultType="org.jjche.sys.modules.system.vo.DataPermissionRuleRoleVO">
         <include refid="querySql"/>
     </select>
 

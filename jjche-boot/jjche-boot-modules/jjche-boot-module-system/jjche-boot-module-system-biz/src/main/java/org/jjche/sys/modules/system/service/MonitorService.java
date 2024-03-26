@@ -5,7 +5,7 @@ import cn.hutool.core.date.DateUtil;
 import org.jjche.core.constant.OSConstant;
 import org.jjche.common.util.HttpUtil;
 import org.jjche.core.util.FileUtil;
-import org.jjche.sys.modules.system.api.vo.MonitorVO;
+import org.jjche.sys.modules.system.vo.MonitorVO;
 import org.springframework.stereotype.Service;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;

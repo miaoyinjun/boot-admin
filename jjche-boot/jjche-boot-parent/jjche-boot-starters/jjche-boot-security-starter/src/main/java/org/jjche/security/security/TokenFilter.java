@@ -6,7 +6,7 @@ import org.jjche.common.api.CommonApi;
 import org.jjche.common.constant.SecurityConstant;
 import org.jjche.common.context.ContextUtil;
 import org.jjche.common.dto.JwtUserDTO;
-import org.jjche.common.dto.UserVO;
+import org.jjche.common.vo.UserVO;
 import org.jjche.common.enums.UserTypeEnum;
 import org.jjche.common.util.HttpUtil;
 import org.jjche.common.vo.DataScopeVO;

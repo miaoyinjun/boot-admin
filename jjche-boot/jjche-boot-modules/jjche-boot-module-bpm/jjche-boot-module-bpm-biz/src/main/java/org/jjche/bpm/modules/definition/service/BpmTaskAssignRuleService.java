@@ -27,9 +27,9 @@ import org.jjche.bpm.modules.group.domain.BpmUserGroupDO;
 import org.jjche.bpm.modules.group.service.BpmUserGroupService;
 import org.jjche.bpm.onstants.DictTypeConstants;
 import org.jjche.common.dto.DeptSmallDTO;
-import org.jjche.common.dto.UserVO;
+import org.jjche.common.vo.UserVO;
 import org.jjche.common.exception.BusinessException;
-import org.jjche.sys.api.ISysBaseApi;
+import org.jjche.sys.api.SysBaseApi;
 import org.jjche.flowable.util.FlowableUtils;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.springframework.context.annotation.Lazy;
@@ -57,7 +57,7 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
     @Lazy // 解决循环依赖
     private BpmProcessDefinitionService processDefinitionService;
     private final BpmUserGroupService userGroupService;
-    private final ISysBaseApi sysBaseApi;
+    private final SysBaseApi sysBaseApi;
     private final BpmTaskAssignRuleConvert bpmTaskAssignRuleConvert;
     /**
      * 任务分配脚本

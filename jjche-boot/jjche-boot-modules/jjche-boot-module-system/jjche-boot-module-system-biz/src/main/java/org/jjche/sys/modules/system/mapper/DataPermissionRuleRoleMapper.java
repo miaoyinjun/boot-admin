@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.mybatis.base.MyBaseMapper;
-import org.jjche.sys.modules.system.api.vo.DataPermissionRuleRoleVO;
+import org.jjche.sys.modules.system.vo.DataPermissionRuleRoleVO;
 import org.jjche.sys.modules.system.domain.DataPermissionRuleRoleDO;
 
 import java.util.List;

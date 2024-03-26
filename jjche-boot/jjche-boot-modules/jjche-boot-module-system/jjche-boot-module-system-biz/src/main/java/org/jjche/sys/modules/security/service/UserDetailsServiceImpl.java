@@ -1,7 +1,7 @@
 package org.jjche.sys.modules.security.service;
 
 import org.jjche.common.constant.SecurityConstant;
-import org.jjche.common.dto.UserVO;
+import org.jjche.common.vo.UserVO;
 import org.jjche.common.enums.UserTypeEnum;
 import org.jjche.common.wrapper.constant.HttpStatusConstant;
 import org.jjche.security.service.JwtUserService;

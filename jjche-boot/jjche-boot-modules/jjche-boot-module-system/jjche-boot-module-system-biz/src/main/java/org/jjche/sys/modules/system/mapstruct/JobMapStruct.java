@@ -1,7 +1,7 @@
 package org.jjche.sys.modules.system.mapstruct;
 
-import org.jjche.sys.modules.system.api.dto.JobDTO;
-import org.jjche.sys.modules.system.api.vo.JobSimpleVO;
+import org.jjche.sys.modules.system.dto.JobDTO;
+import org.jjche.sys.modules.system.vo.JobSimpleVO;
 import org.jjche.sys.modules.system.domain.JobDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

@@ -1,7 +1,7 @@
 package org.jjche.sys.modules.system.mapstruct;
 
 import org.jjche.core.base.BaseVoMapStruct;
-import org.jjche.sys.modules.system.api.dto.DictDetailDTO;
+import org.jjche.sys.modules.system.dto.DictDetailDTO;
 import org.jjche.sys.modules.system.domain.DictDetailDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <description>jjche-boot入口，按需加载modules</description>
+    <description>单体应用的入口，按需加载modules</description>
 
     <groupId>org.jjche.server</groupId>
     <artifactId>jjche-boot-server</artifactId>
@@ -24,7 +24,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.jjcheframework.boot</groupId>
+            <groupId>org.jjche.sys</groupId>
             <artifactId>jjche-boot-module-system-biz</artifactId>
             <version>2.0.8-SNAPSHOT</version>
         </dependency>

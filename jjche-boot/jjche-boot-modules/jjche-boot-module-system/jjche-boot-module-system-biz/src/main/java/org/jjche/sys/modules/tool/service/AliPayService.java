@@ -5,7 +5,7 @@ import com.alicp.jetcache.anno.CacheUpdate;
 import com.alicp.jetcache.anno.Cached;
 import lombok.RequiredArgsConstructor;
 import org.jjche.mybatis.base.service.MyServiceImpl;
-import org.jjche.sys.modules.tool.api.vo.TradeVO;
+import org.jjche.sys.modules.tool.vo.TradeVO;
 import org.jjche.sys.modules.tool.constant.ToolCacheKey;
 import org.jjche.sys.modules.tool.domain.AlipayConfigDO;
 import org.jjche.sys.modules.tool.mapper.AliPayMapper;

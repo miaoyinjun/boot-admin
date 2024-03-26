@@ -2,7 +2,7 @@ package org.jjche.bpm.modules.oa.service;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
 import lombok.RequiredArgsConstructor;
-import org.jjche.bpm.modules.definition.api.IBpmProcessInstanceApi;
+import org.jjche.bpm.modules.definition.api.BpmProcessInstanceApi;
 import org.jjche.bpm.modules.definition.api.dto.BpmProcessInstanceCreateReqDTO;
 import org.jjche.bpm.modules.oa.domain.BpmOALeaveDO;
 import org.jjche.bpm.modules.oa.mapper.BpmOALeaveMapper;
@@ -36,7 +36,7 @@ public class BpmOALeaveService extends MyServiceImpl<BpmOALeaveMapper, BpmOALeav
      */
     public static final String PROCESS_KEY = "oa_leave";
 
-    private final IBpmProcessInstanceApi processInstanceApi;
+    private final BpmProcessInstanceApi processInstanceApi;
     private final BpmOALeaveConvert leaveConvert;
 
     /**

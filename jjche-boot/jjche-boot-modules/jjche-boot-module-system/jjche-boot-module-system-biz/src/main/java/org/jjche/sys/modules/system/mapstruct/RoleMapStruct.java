@@ -1,6 +1,6 @@
 package org.jjche.sys.modules.system.mapstruct;
 
-import org.jjche.sys.modules.system.api.dto.RoleDTO;
+import org.jjche.sys.modules.system.dto.RoleDTO;
 import org.jjche.sys.modules.system.domain.RoleDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

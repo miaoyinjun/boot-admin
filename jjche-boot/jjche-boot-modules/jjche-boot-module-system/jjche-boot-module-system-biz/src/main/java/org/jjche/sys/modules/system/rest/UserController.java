@@ -6,8 +6,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.annotation.PermissionData;
 import org.jjche.common.dto.RoleSmallDTO;
-import org.jjche.common.dto.UserSampleVO;
-import org.jjche.common.dto.UserVO;
+import org.jjche.common.vo.UserSampleVO;
+import org.jjche.common.vo.UserVO;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
 import org.jjche.common.param.MyPage;
@@ -20,12 +20,12 @@ import org.jjche.core.util.SecurityUtil;
 import org.jjche.log.biz.starter.annotation.LogRecord;
 import org.jjche.security.property.SecurityProperties;
 import org.jjche.security.property.SecurityRsaProperties;
-import org.jjche.sys.modules.system.api.dto.UserCenterDTO;
-import org.jjche.sys.modules.system.api.dto.UserDTO;
-import org.jjche.sys.modules.system.api.dto.UserQueryCriteriaDTO;
-import org.jjche.sys.modules.system.api.dto.UserResetPassDTO;
-import org.jjche.sys.modules.system.api.enums.CodeEnum;
-import org.jjche.sys.modules.system.api.vo.UserPassVO;
+import org.jjche.sys.modules.system.dto.UserCenterDTO;
+import org.jjche.sys.modules.system.dto.UserDTO;
+import org.jjche.sys.modules.system.dto.UserQueryCriteriaDTO;
+import org.jjche.sys.modules.system.dto.UserResetPassDTO;
+import org.jjche.sys.modules.system.enums.CodeEnum;
+import org.jjche.sys.modules.system.vo.UserPassVO;
 import org.jjche.sys.modules.system.domain.UserDO;
 import org.jjche.sys.modules.system.service.RoleService;
 import org.jjche.sys.modules.system.service.UserService;
@@ -95,7 +95,7 @@ public class UserController extends BaseController {
         return R.ok(userService.queryAll(criteria, pageable));
     }
 
-    @ApiOperation("查询用户")
+    @ApiOperation("查询用户简单")
     @GetMapping("sample")
     public R<List<UserSampleVO>> querySample() {
         return R.ok(userService.querySample());

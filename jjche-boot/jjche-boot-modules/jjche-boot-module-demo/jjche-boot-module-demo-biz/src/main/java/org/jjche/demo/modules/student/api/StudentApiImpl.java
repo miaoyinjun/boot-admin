@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
-import org.jjche.common.wrapper.response.R;
 import org.jjche.demo.modules.student.api.enums.StudentCourseEnum;
 import org.jjche.demo.modules.student.api.vo.StudentApiVO;
 import org.jjche.demo.modules.student.domain.StudentDO;
@@ -23,17 +22,17 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class StudentApiImpl implements IDemoStudentApi {
+public class StudentApiImpl implements DemoStudentApi {
 
     private final StudentService studentService;
     private final StudentMapStruct studentMapStruct;
 
     @Override
-    public R<MyPage<StudentApiVO>> page(PageParam page, StudentCourseEnum course, String name) {
+    public MyPage<StudentApiVO> page(PageParam page, StudentCourseEnum course, String name) {
         LambdaQueryWrapper<StudentDO> queryWrapper = Wrappers.lambdaQuery();
         if (course != null) {
             queryWrapper.eq(StudentDO::getCourse, course);
         }
-        return R.ok(studentMapStruct.toApiVO(this.studentService.getBaseMapper().selectPage(page, queryWrapper)));
+        return studentMapStruct.toApiVO(this.studentService.getBaseMapper().selectPage(page, queryWrapper));
     }
 }

@@ -10,7 +10,7 @@ import org.jjche.bpm.modules.message.dto.BpmMessageSendWhenProcessInstanceReject
 import org.jjche.bpm.config.bpm.core.event.BpmProcessInstanceResultEvent;
 import org.jjche.bpm.modules.task.vo.instance.BpmProcessInstancePageItemRespVO;
 import org.jjche.common.dto.DeptSmallDTO;
-import org.jjche.common.dto.UserVO;
+import org.jjche.common.vo.UserVO;
 import org.jjche.common.param.MyPage;
 import org.jjche.bpm.modules.definition.domain.BpmProcessDefinitionExtDO;
 import org.jjche.bpm.modules.task.domain.BpmProcessInstanceExtDO;

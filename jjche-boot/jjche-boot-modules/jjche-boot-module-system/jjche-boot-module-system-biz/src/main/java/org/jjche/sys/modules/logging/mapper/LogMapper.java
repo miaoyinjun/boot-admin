@@ -3,9 +3,9 @@ package org.jjche.sys.modules.logging.mapper;
 import org.apache.ibatis.annotations.Param;
 import org.jjche.mybatis.base.MyBaseMapper;
 import org.jjche.sys.modules.logging.domain.LogDO;
-import org.jjche.sys.modules.logging.api.vo.DashboardChartBrowserVO;
-import org.jjche.sys.modules.logging.api.vo.DashboardChartLastTenVisitVO;
-import org.jjche.sys.modules.logging.api.vo.DashboardChartOperatingSystemVO;
+import org.jjche.sys.modules.logging.vo.DashboardChartBrowserVO;
+import org.jjche.sys.modules.logging.vo.DashboardChartLastTenVisitVO;
+import org.jjche.sys.modules.logging.vo.DashboardChartOperatingSystemVO;
 
 import java.util.List;
 

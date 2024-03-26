@@ -11,7 +11,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jjche-cloud-starter</artifactId>
@@ -35,23 +36,17 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.jjcheframework.boot</groupId>
-                    <artifactId>jjche-boot-module-system-base-api</artifactId>
+                    <artifactId>jjche-boot-minio-starter</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>org.jjcheframework.boot</groupId>
-                    <artifactId>jjche-boot-minio-starter</artifactId>
+                    <artifactId>jjche-boot-system-api-starter</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-cloud-module-system-base-api</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jjcheframework.boot</groupId>
-                    <artifactId>jjche-boot-module-system-base-api</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>jjche-cloud-system-api-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>

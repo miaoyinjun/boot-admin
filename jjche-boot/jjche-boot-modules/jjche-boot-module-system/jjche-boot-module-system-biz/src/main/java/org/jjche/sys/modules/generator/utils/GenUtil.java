@@ -407,7 +407,7 @@ public class GenUtil {
     private static String getAdminFilePath(String templateName, GenConfigDO genConfig, String className, String rootPath) {
         String packagePath = getPackPath(genConfig.getModuleName(), rootPath);
         String packageApiPath = packagePath;
-        packageApiPath = packageApiPath + "api/";
+//        packageApiPath = packageApiPath + "api/";
 
         String packageApiConstantPath = StrUtil.subBefore(packagePath, "modules", true);
         if ("Entity".equals(templateName)) {

@@ -22,7 +22,7 @@ import org.jjche.core.util.FileUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
-import org.jjche.sys.modules.tool.api.dto.QiniuQueryCriteriaDTO;
+import org.jjche.sys.modules.tool.dto.QiniuQueryCriteriaDTO;
 import org.jjche.sys.modules.tool.constant.ToolCacheKey;
 import org.jjche.sys.modules.tool.domain.QiniuConfigDO;
 import org.jjche.sys.modules.tool.domain.QiniuContentDO;

@@ -7,8 +7,8 @@ import org.flowable.engine.runtime.ProcessInstance;
 import org.jjche.bpm.config.flowable.core.behavior.script.BpmTaskAssignScript;
 import org.jjche.bpm.modules.task.service.BpmProcessInstanceService;
 import org.jjche.common.dto.DeptSmallDTO;
-import org.jjche.common.dto.UserVO;
-import org.jjche.sys.api.ISysBaseApi;
+import org.jjche.common.vo.UserVO;
+import org.jjche.sys.api.SysBaseApi;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.util.Assert;
 
@@ -26,7 +26,7 @@ import static java.util.Collections.emptySet;
 public abstract class BpmTaskAssignLeaderAbstractScript implements BpmTaskAssignScript {
 
     @Resource
-    private ISysBaseApi sysBaseApi;
+    private SysBaseApi sysBaseApi;
     @Resource
     @Lazy // 解决循环依赖
     private BpmProcessInstanceService bpmProcessInstanceService;

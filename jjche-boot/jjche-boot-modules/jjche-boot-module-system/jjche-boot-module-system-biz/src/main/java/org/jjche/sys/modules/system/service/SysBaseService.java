@@ -4,7 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.jjche.common.dto.*;
 import org.jjche.common.vo.DataPermissionFieldResultVO;
 import org.jjche.common.vo.SecurityAppKeyBasicVO;
-import org.jjche.sys.api.ISysBaseApi;
+import org.jjche.common.vo.UserVO;
+import org.jjche.sys.api.SysBaseApi;
 import org.jjche.sys.modules.app.service.SecurityAppKeyService;
 import org.jjche.sys.modules.logging.service.LogService;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ import java.util.Set;
  */
 @Service
 @RequiredArgsConstructor
-public class SysBaseService implements ISysBaseApi {
+public class SysBaseService implements SysBaseApi {
     private final DeptService deptService;
     private final UserService userService;
     private final DictDetailService dictDetailService;

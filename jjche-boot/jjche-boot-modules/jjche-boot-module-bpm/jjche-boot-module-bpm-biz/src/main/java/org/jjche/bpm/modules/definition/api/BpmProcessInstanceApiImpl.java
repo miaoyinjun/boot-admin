@@ -15,7 +15,7 @@ import org.springframework.validation.annotation.Validated;
 @Service
 @Validated
 @RequiredArgsConstructor
-public class BpmProcessInstanceApiImpl implements IBpmProcessInstanceApi {
+public class BpmProcessInstanceApiImpl implements BpmProcessInstanceApi {
 
     private final BpmProcessInstanceService processInstanceService;
 

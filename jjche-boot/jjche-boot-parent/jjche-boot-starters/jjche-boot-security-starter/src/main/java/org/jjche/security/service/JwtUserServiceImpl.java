@@ -6,7 +6,7 @@ import org.jjche.cache.service.RedisService;
 import org.jjche.common.constant.CommonMenuCacheKey;
 import org.jjche.common.constant.PermissionDataCacheKey;
 import org.jjche.common.dto.JwtUserDTO;
-import org.jjche.common.dto.UserVO;
+import org.jjche.common.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

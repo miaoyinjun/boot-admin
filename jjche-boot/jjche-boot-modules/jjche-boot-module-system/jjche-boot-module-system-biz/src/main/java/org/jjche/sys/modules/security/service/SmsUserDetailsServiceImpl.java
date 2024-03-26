@@ -2,7 +2,7 @@ package org.jjche.sys.modules.security.service;
 
 import cn.hutool.core.lang.Assert;
 import org.jjche.common.constant.SecurityConstant;
-import org.jjche.common.dto.UserVO;
+import org.jjche.common.vo.UserVO;
 import org.jjche.common.enums.UserTypeEnum;
 import org.jjche.security.service.JwtUserService;
 import org.jjche.sys.modules.system.service.*;

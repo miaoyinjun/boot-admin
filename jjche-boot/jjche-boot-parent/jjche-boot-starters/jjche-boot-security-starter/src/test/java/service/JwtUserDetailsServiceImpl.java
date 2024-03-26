@@ -3,7 +3,7 @@ package service;
 import org.jjche.common.dto.DeptSmallDTO;
 import org.jjche.common.dto.JwtUserDTO;
 import org.jjche.common.dto.SimpleGrantedAuthorityDTO;
-import org.jjche.common.dto.UserVO;
+import org.jjche.common.vo.UserVO;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;

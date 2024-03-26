@@ -7,7 +7,7 @@ import org.jjche.common.dto.PermissionDataRuleDTO;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.mybatis.base.MyBaseMapper;
-import org.jjche.sys.modules.system.api.vo.DataPermissionRuleVO;
+import org.jjche.sys.modules.system.vo.DataPermissionRuleVO;
 import org.jjche.sys.modules.system.domain.DataPermissionRuleDO;
 
 import java.util.List;

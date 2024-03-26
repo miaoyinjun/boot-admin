@@ -2,7 +2,7 @@ package org.jjche.sys.modules.system.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.jjche.mybatis.base.MyBaseMapper;
-import org.jjche.sys.modules.system.api.vo.DataPermissionFieldVO;
+import org.jjche.sys.modules.system.vo.DataPermissionFieldVO;
 import org.jjche.sys.modules.system.domain.DataPermissionFieldDO;
 
 import java.util.List;

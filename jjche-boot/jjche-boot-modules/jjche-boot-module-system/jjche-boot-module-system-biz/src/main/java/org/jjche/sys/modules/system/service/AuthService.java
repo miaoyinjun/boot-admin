@@ -21,7 +21,7 @@ import org.jjche.security.property.SecurityJwtProperties;
 import org.jjche.security.property.SecurityProperties;
 import org.jjche.security.security.TokenProvider;
 import org.jjche.security.service.JwtUserService;
-import org.jjche.sys.modules.system.api.dto.OnlineUserDTO;
+import org.jjche.sys.modules.system.dto.OnlineUserDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.userdetails.UserDetails;

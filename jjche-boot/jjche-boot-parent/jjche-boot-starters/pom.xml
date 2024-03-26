@@ -14,6 +14,7 @@
 
     <modules>
         <module>jjche-boot-core-starter</module>
+        <module>jjche-boot-system-api-starter</module>
         <module>jjche-boot-cache-starter</module>
         <module>jjche-boot-filter-starter</module>
         <module>jjche-boot-security-starter</module>

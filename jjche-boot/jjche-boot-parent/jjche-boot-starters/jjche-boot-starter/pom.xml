@@ -119,6 +119,10 @@
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
+            <artifactId>jjche-boot-system-api-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jjcheframework.boot</groupId>
             <artifactId>jjche-boot-core-starter</artifactId>
         </dependency>
         <dependency>

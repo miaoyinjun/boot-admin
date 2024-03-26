@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.jjche.sys.modules.system.api.enums.DataScopeEnum;
+import org.jjche.sys.modules.system.enums.DataScopeEnum;
 import org.jjche.mybatis.base.entity.BaseEntity;
 
 import javax.validation.constraints.NotBlank;

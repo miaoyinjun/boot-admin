@@ -5,10 +5,10 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
-import org.jjche.sys.modules.system.api.enums.CodeBiEnum;
-import org.jjche.sys.modules.system.api.enums.CodeEnum;
+import org.jjche.sys.modules.system.enums.CodeBiEnum;
+import org.jjche.sys.modules.system.enums.CodeEnum;
 import org.jjche.sys.modules.system.service.VerifyService;
-import org.jjche.sys.modules.tool.api.vo.EmailVO;
+import org.jjche.sys.modules.tool.vo.EmailVO;
 import org.jjche.sys.modules.tool.service.EmailService;
 import org.springframework.web.bind.annotation.*;
 

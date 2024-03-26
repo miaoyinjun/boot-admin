@@ -9,7 +9,7 @@ import org.jjche.common.enums.LogType;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
-import org.jjche.sys.modules.tool.api.vo.TradeVO;
+import org.jjche.sys.modules.tool.vo.TradeVO;
 import org.jjche.sys.modules.tool.domain.AlipayConfigDO;
 import org.jjche.sys.modules.tool.service.AliPayService;
 import org.jjche.sys.modules.tool.utils.AliPayStatusEnum;

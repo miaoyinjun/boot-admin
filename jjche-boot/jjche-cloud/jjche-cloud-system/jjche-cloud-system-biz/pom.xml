@@ -19,7 +19,7 @@
     <version>2.0.8-SNAPSHOT</version>
 
     <parent>
-        <groupId>org.jjcheframework.boot</groupId>
+        <groupId>org.jjche.sys</groupId>
         <artifactId>jjche-cloud-system</artifactId>
         <version>2.0.8-SNAPSHOT</version>
     </parent>
@@ -27,31 +27,30 @@
     <dependencies>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-cloud-system-api</artifactId>
-            <version>2.0.8-SNAPSHOT</version>
+            <artifactId>jjche-cloud-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jjcheframework.boot</groupId>
+                    <artifactId>jjche-cloud-system-api-starter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jjcheframework.boot</groupId>
+                    <artifactId>jjche-boot-userdetail-starter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
+            <artifactId>jjche-boot-system-api-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jjche.sys</groupId>
             <artifactId>jjche-boot-module-system-biz</artifactId>
             <version>2.0.8-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jjcheframework.boot</groupId>
                     <artifactId>jjche-boot-minio-starter</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-cloud-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jjcheframework.boot</groupId>
-                    <artifactId>jjche-cloud-module-system-base-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.jjcheframework.boot</groupId>
-                    <artifactId>jjche-boot-userdetail-starter</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

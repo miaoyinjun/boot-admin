@@ -8,7 +8,7 @@ import cn.hutool.log.StaticLog;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.constant.EnumConstant;
 import org.jjche.common.constant.PackageConstant;
-import org.jjche.sys.modules.system.api.dto.DictDetailDTO;
+import org.jjche.sys.modules.system.dto.DictDetailDTO;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;

@@ -5,6 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <description>系统服务</description>
+    <groupId>org.jjche.sys</groupId>
     <artifactId>jjche-cloud-system</artifactId>
     <packaging>pom</packaging>
     <version>2.0.8-SNAPSHOT</version>

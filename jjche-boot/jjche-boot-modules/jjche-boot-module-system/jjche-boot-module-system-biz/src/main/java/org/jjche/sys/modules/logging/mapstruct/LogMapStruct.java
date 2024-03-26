@@ -2,7 +2,7 @@ package org.jjche.sys.modules.logging.mapstruct;
 
 import org.jjche.core.base.BaseVoMapStruct;
 import org.jjche.sys.modules.logging.domain.LogDO;
-import org.jjche.sys.modules.logging.api.vo.LogVO;
+import org.jjche.sys.modules.logging.vo.LogVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

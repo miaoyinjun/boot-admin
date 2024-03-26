@@ -5,16 +5,16 @@
     <artifactId>jjche-boot-module-system-biz</artifactId>
 
     <parent>
-        <groupId>org.jjcheframework.boot</groupId>
+        <groupId>org.jjche.sys</groupId>
         <artifactId>jjche-boot-module-system</artifactId>
         <version>2.0.8-SNAPSHOT</version>
     </parent>
 
     <dependencies>
-        <!-- 同时需要common模块和logging模块只需要引入logging模块即可 -->
         <dependency>
-            <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-boot-module-system-base-api</artifactId>
+            <groupId>org.jjche.sys</groupId>
+            <artifactId>jjche-boot-module-system-api</artifactId>
+            <version>2.0.8-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>

@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.jjche.common.util.RsaUtils;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.security.property.SecurityProperties;
-import org.jjche.sys.modules.tool.api.vo.EmailVO;
+import org.jjche.sys.modules.tool.vo.EmailVO;
 import org.jjche.sys.modules.tool.constant.ToolCacheKey;
 import org.jjche.sys.modules.tool.domain.EmailConfigDO;
 import org.jjche.sys.modules.tool.mapper.EmailMapper;

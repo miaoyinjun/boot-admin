@@ -1,10 +1,11 @@
 package org.jjche.sys.modules.system.mapper;
 
-import org.jjche.common.dto.UserVO;
+import org.jjche.common.vo.UserVO;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.mybatis.base.MyBaseMapper;
 import org.jjche.sys.modules.system.domain.UserDO;
+import org.jjche.sys.modules.user.api.vo.SysUserSimpleVO;
 
 import java.util.Date;
 import java.util.List;
@@ -157,4 +158,13 @@ public interface UserMapper extends MyBaseMapper<UserDO> {
      * @return /
      */
     MyPage<UserVO> selectNotByRoleId(PageParam page, Long roleId, String blurry);
+
+    /**
+     * <p>
+     * 查询用户简单
+     * </p>
+     *
+    * @return /
+     */
+    List<SysUserSimpleVO> querySimple();
 }

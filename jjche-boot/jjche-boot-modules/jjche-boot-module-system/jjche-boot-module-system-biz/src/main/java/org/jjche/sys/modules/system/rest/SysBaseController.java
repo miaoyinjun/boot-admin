@@ -7,6 +7,7 @@ import org.jjche.common.constant.SecurityConstant;
 import org.jjche.common.dto.*;
 import org.jjche.common.vo.DataPermissionFieldResultVO;
 import org.jjche.common.vo.SecurityAppKeyBasicVO;
+import org.jjche.common.vo.UserVO;
 import org.jjche.sys.modules.system.service.SysBaseService;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,9 +37,9 @@ public class SysBaseController {
      *
      * @param ids 角色编号数组
      */
-    @GetMapping("dept/valid-ids")
     @ApiOperation("校验部门们是否有效")
-    public void validDeptList(@RequestParam Set<Long> ids){
+    @PostMapping("dept/valid-ids")
+    public void validDeptList(@RequestBody Set<Long> ids){
         sysBaseService.validDeptList(ids);
     }
 
@@ -49,8 +50,8 @@ public class SysBaseController {
      * @return /
      */
     @ApiOperation("根据IDS查询部门")
-    @GetMapping("dept/small-ids")
-    public List<DeptSmallDTO> listDeptSmallByIds(@RequestParam Set<Long> ids){
+    @PostMapping("dept/small-ids")
+    public List<DeptSmallDTO> listDeptSmallByIds(@RequestBody Set<Long> ids){
         return sysBaseService.listDeptSmallByIds(ids);
     }
 
@@ -88,8 +89,8 @@ public class SysBaseController {
      * @return /
      */
     @ApiOperation("根据部门Ids查询用户")
-    @GetMapping("user/list-by-dept-ids")
-    public List<UserVO> listUserByDeptIds(@RequestParam Set<Long> deptIds){
+    @PostMapping("user/list-by-dept-ids")
+    public List<UserVO> listUserByDeptIds(@RequestBody Set<Long> deptIds){
         return sysBaseService.listUserByDeptIds(deptIds);
     }
 
@@ -102,8 +103,8 @@ public class SysBaseController {
      * @param values 字典数据值的数组
      */
     @ApiOperation("校验字典数据们是否有效")
-    @GetMapping("dict/valid")
-    public void validDictList(@RequestParam String dictType, @RequestParam Set<String> values){
+    @PostMapping("dict/valid")
+    public void validDictList(@RequestParam String dictType, @RequestBody Set<String> values){
         sysBaseService.validDictList(dictType, values);
     }
 
@@ -208,14 +209,14 @@ public class SysBaseController {
     }
 
     @ApiOperation("校验角色们是否有效")
-    @GetMapping("role/valid-ids")
-    public void validRoleList(@RequestParam Set<Long> ids){
+    @PostMapping("role/valid-ids")
+    public void validRoleList(@RequestBody Set<Long> ids){
         sysBaseService.validRoleList(ids);
     }
 
     @ApiOperation("获得拥有多个角色的用户编号集合")
-    @GetMapping("role/user-role-ids")
-    public Set<Long> getUserRoleIdByRoleIds(@RequestParam Set<Long> roleIds){
+    @PostMapping("role/user-role-ids")
+    public Set<Long> getUserRoleIdByRoleIds(@RequestBody Set<Long> roleIds){
         return sysBaseService.getUserRoleIdByRoleIds(roleIds);
     }
 
@@ -226,8 +227,8 @@ public class SysBaseController {
     }
 
     @ApiOperation("校验用户们是否有效")
-    @GetMapping("user/valid")
-    public void validUserList(@RequestParam Set<Long> ids){
+    @PostMapping("user/valid")
+    public void validUserList(@RequestBody Set<Long> ids){
         sysBaseService.validUserList(ids);
     }
 
@@ -244,20 +245,20 @@ public class SysBaseController {
     }
 
     @ApiOperation("根据用户IDS查询用户")
-    @GetMapping("user/list-by-ids")
-    public List<UserVO> listUserByIds(@RequestParam Set<Long> ids){
+    @PostMapping("user/list-by-ids")
+    public List<UserVO> listUserByIds(@RequestBody Set<Long> ids){
         return sysBaseService.listUserByIds(ids);
     }
 
     @ApiOperation("获得指定岗位的用户数组")
-    @GetMapping("job/list-user-ids")
-    public Set<Long> listUserIdsByJobIds(@RequestParam Set<Long> jobIds){
+    @PostMapping("job/list-user-ids")
+    public Set<Long> listUserIdsByJobIds(@RequestBody Set<Long> jobIds){
         return sysBaseService.listUserIdsByJobIds(jobIds);
     }
 
     @ApiOperation("校验岗位们是否有效")
-    @GetMapping("job/valid")
-    public void validJobIds(@RequestParam Set<Long> ids){
+    @PostMapping("job/valid")
+    public void validJobIds(@RequestBody Set<Long> ids){
         sysBaseService.validJobIds(ids);
     }
 }

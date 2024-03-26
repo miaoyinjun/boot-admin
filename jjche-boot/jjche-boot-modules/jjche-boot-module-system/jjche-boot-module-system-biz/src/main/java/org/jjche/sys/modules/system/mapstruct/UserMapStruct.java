@@ -1,9 +1,9 @@
 package org.jjche.sys.modules.system.mapstruct;
 
-import org.jjche.common.dto.UserSampleVO;
-import org.jjche.common.dto.UserVO;
+import org.jjche.common.vo.UserSampleVO;
+import org.jjche.common.vo.UserVO;
 import org.jjche.core.base.BaseMapStruct;
-import org.jjche.sys.modules.system.api.dto.UserDTO;
+import org.jjche.sys.modules.system.dto.UserDTO;
 import org.jjche.sys.modules.system.domain.UserDO;
 import org.mapstruct.Mapper;
 

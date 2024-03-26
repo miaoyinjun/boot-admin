@@ -13,7 +13,7 @@ import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
 import net.dreamlu.mica.ip2region.core.IpInfo;
 import org.jjche.common.constant.SecurityConstant;
 import org.jjche.common.dto.JwtUserDTO;
-import org.jjche.common.dto.UserVO;
+import org.jjche.common.vo.UserVO;
 import org.jjche.common.vo.DataScopeVO;
 import org.springframework.security.core.GrantedAuthority;
 

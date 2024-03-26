@@ -21,25 +21,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 学生 控制器
+ * 学生 控制器,feign
  * </p>
  *
  * @author miaoyj
  * @version 1.0.0-SNAPSHOT
  * @since 2021-02-02
  */
-@Api(tags = "学生")
+@Api(tags = "对内学生")
 @ApiSupport(order = 1, author = "miaoyj")
 @RestController
 @RequestMapping("internal/students")
 @RequiredArgsConstructor
 public class StudentApiController extends BaseController {
 
-    private final IDemoStudentApi studentApiService;
+    private final DemoStudentApi studentApiService;
     @GetMapping
     @ApiOperation(value = "对内-学生-列表", tags = ApiVersion.VERSION_1_0_0)
     public R<MyPage<StudentApiVO>> page(PageParam page, @ApiParam(value = "课程") @RequestParam(required = false) StudentCourseEnum course, @Validated StudentQueryCriteriaDTO query) {
-        return studentApiService.page(page, course, query.getName());
+        return R.ok(studentApiService.page(page, course, query.getName()));
     }
 
 }

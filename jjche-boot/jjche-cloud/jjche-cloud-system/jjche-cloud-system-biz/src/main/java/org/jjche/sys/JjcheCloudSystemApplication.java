@@ -25,4 +25,5 @@ public class JjcheCloudSystemApplication {
         ConfigurableApplicationContext application = SpringApplication.run(JjcheCloudSystemApplication.class, args);
         SpringContextHolder.appLog(application);
     }
+
 }

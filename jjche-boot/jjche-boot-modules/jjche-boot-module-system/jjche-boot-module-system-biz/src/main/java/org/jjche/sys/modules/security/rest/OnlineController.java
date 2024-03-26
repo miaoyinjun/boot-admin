@@ -13,7 +13,7 @@ import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
 import org.jjche.security.property.SecurityProperties;
-import org.jjche.sys.modules.system.api.dto.OnlineUserDTO;
+import org.jjche.sys.modules.system.dto.OnlineUserDTO;
 import org.jjche.sys.modules.system.service.AuthService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

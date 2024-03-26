@@ -11,7 +11,7 @@ import org.jjche.common.param.PageParam;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
-import org.jjche.sys.modules.quartz.api.dto.JobQueryCriteriaDTO;
+import org.jjche.sys.modules.quartz.dto.JobQueryCriteriaDTO;
 import org.jjche.sys.modules.quartz.domain.QuartzJobDO;
 import org.jjche.sys.modules.quartz.domain.QuartzLogDO;
 import org.jjche.sys.modules.quartz.service.QuartzJobService;

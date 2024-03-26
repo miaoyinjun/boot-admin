@@ -10,7 +10,7 @@ import org.jjche.common.param.PageParam;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
-import org.jjche.sys.modules.tool.api.dto.QiniuQueryCriteriaDTO;
+import org.jjche.sys.modules.tool.dto.QiniuQueryCriteriaDTO;
 import org.jjche.sys.modules.tool.domain.QiniuConfigDO;
 import org.jjche.sys.modules.tool.domain.QiniuContentDO;
 import org.jjche.sys.modules.tool.service.QiNiuService;

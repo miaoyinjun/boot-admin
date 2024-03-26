@@ -23,11 +23,11 @@ import org.jjche.bpm.modules.task.mapper.BpmTaskExtMapper;
 import org.jjche.bpm.modules.task.mapstruct.BpmTaskConvert;
 import org.jjche.bpm.modules.task.vo.task.*;
 import org.jjche.common.dto.DeptSmallDTO;
-import org.jjche.common.dto.UserVO;
+import org.jjche.common.vo.UserVO;
 import org.jjche.common.exception.BusinessException;
 import org.jjche.common.param.MyPage;
 import org.jjche.mybatis.base.service.MyServiceImpl;
-import org.jjche.sys.api.ISysBaseApi;
+import org.jjche.sys.api.SysBaseApi;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
@@ -51,7 +51,7 @@ public class BpmTaskService extends MyServiceImpl<BpmTaskExtMapper, BpmTaskExtDO
     private final TaskService taskService;
     private final HistoryService historyService;
     private final BpmProcessInstanceService processInstanceService;
-    private final ISysBaseApi sysBaseApi;
+    private final SysBaseApi sysBaseApi;
     private final BpmMessageService messageService;
     private final BpmTaskConvert bpmTaskConvert;
     /**

@@ -100,7 +100,7 @@
         </if>
     </select>
 
-    <select id="selectByRoleId" resultType="org.jjche.common.dto.UserVO">
+    <select id="selectByRoleId" resultType="org.jjche.common.vo.UserVO">
         SELECT t.id, t.username, t.nick_name, t.gender, t.phone, t.email, t.enabled
         FROM sys_user t
         INNER JOIN sys_users_roles sur ON t.id = sur.user_id
@@ -115,7 +115,7 @@
         </if>
     </select>
 
-    <select id="selectNotByRoleId" resultType="org.jjche.common.dto.UserVO">
+    <select id="selectNotByRoleId" resultType="org.jjche.common.vo.UserVO">
         SELECT t.id, t.username, t.nick_name, t.gender, t.phone, t.email, t.enabled
         FROM sys_user t
         WHERE t.id NOT IN (SELECT user_id FROM sys_users_roles sur WHERE sur.role_id = #{roleId})
@@ -127,5 +127,10 @@
             OR t.email like CONCAT('%', #{blurry}, '%')
             )
         </if>
+    </select>
+
+    <select id="querySimple" resultType="SysUserSimpleVO">
+        SELECT t.id, t.nick_name
+        FROM sys_user t
     </select>
 </mapper>

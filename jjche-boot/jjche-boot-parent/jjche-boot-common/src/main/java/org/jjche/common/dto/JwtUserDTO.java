@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jjche.common.vo.DataScopeVO;
+import org.jjche.common.vo.UserVO;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;

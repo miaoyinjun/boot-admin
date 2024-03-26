@@ -102,7 +102,7 @@
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-cloud-module-system-base-api</artifactId>
+            <artifactId>jjche-cloud-system-api-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>

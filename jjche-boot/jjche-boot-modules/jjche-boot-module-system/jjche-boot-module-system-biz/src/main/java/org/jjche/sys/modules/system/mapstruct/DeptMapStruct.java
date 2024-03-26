@@ -1,7 +1,7 @@
 package org.jjche.sys.modules.system.mapstruct;
 
 import org.jjche.common.dto.DeptSmallDTO;
-import org.jjche.sys.modules.system.api.dto.DeptDTO;
+import org.jjche.sys.modules.system.dto.DeptDTO;
 import org.jjche.sys.modules.system.domain.DeptDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
