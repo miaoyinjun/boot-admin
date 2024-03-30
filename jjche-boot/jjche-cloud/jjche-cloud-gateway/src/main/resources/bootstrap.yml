@@ -45,7 +45,7 @@ spring:
     #Sentinel配置
     sentinel:
       transport:
-        dashboard: ${JJCHE_SENTINEL_HOST:127.0.0.1}:${JJCHE_SENTINEL_PORT:8900}
+        dashboard: ${JJCHE_SENTINEL_HOST:127.0.0.1}:${JJCHE_SENTINEL_PORT:8803}
       # 支持链路限流
       web-context-unify: false
       filter:

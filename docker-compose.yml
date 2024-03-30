@@ -1,0 +1,75 @@
+version: '3'
+networks:
+  net:
+    driver: bridge
+services:
+
+  jjche-boot-server-mysql:
+    image: mysql:5.7.16
+    container_name: jjche-boot-server-mysql
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_DATABASE: jjche-boot
+      TZ: Asia/Shanghai
+    ports:
+      - 33306:3306
+
+  jjche-boot-server-redis:
+    image: redis:6.2.0-alpine
+    container_name: jjche-boot-server-redis
+    restart: always
+    command: --requirepass "redis"
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - 26379:6379
+
+  jjche-boot-server:
+    image: jjche-boot-server:latest
+    container_name: jjche-boot-api
+    restart: always
+    build:
+      context: ./jjche-boot/jjche-boot-server
+      dockerfile: ./Dockerfile
+    ports:
+      - 8801:8801
+    depends_on:
+      - jjche-boot-server-mysql
+      - jjche-boot-server-redis
+    environment:
+      TZ: Asia/Shanghai
+      JJCHE_WEB_PORT: 8801
+      # 数据库配置
+      JJCHE_DB_HOST: jjche-boot-server-mysql
+      JJCHE_DB_PORT: 3306
+      JJCHE_DB_ROOT_PASSWORD: root
+      JJCHE_DB_UNAME: admin
+      JJCHE_DB_PASSWORD: admin
+      JJCHE_DB_DATABASE: jjche-boot
+      # Redis配置
+      JJCHE_REDIS_HOST: jjche-boot-server-redis
+      JJCHE_REDIS_PASSWORD: redis
+      JJCHE_REDIS_PORT: 6379
+      JJCHE_REDIS_DB: 1
+      #JVM 80%内存运行
+      JAVA_MAX_MEM_RATIO: 80
+    deploy:
+      resources:
+        limits:
+          memory: 2048M
+
+  jjche-boot-ui:
+    image: jjche-boot-ui:latest
+    container_name: jjche-boot-ui
+    restart: always
+    build:
+      context: ./jjche-boot-ui
+      dockerfile: ./Dockerfile
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - "80:80"

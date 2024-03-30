@@ -1,0 +1,391 @@
+version: '3'
+networks:
+  net:
+    driver: bridge
+services:
+
+  jjche-cloud-server-nacos-mysql:
+    image: mysql:5.7.16
+    container_name: jjche-cloud-server-nacos-mysql
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    volumes:
+      #数据库还原目录 可将需要还原的sql文件放在这里
+      - ./jjche-boot/jjche-cloud/jjche-cloud-nacos/src/main/resources/sql:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: jjche
+      MYSQL_PASSWORD: jjche
+      MYSQL_DATABASE: jjche-cloud-nacos
+      TZ: Asia/Shanghai
+    ports:
+      - 33306:3306
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+
+  jjche-cloud-server-xxljob-mysql:
+    image: mysql:5.7.16
+    container_name: jjche-cloud-server-xxljob-mysql
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    volumes:
+      #数据库还原目录 可将需要还原的sql文件放在这里
+      - ./jjche-boot/jjche-cloud/jjche-cloud-xxljob/src/main/resources/sql:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: jjche
+      MYSQL_PASSWORD: jjche
+      MYSQL_DATABASE: jjche-cloud-xxljob
+      TZ: Asia/Shanghai
+    ports:
+      - 33307:3306
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+
+  jjche-cloud-server-system-mysql:
+    image: mysql:5.7.16
+    container_name: jjche-cloud-server-system-mysql
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: jjche
+      MYSQL_PASSWORD: jjche
+      MYSQL_DATABASE: jjche-cloud-system
+      TZ: Asia/Shanghai
+    ports:
+      - 33308:3306
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+
+  jjche-cloud-server-bpm-mysql:
+    image: mysql:5.7.16
+    container_name: jjche-cloud-server-bpm-mysql
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: jjche
+      MYSQL_PASSWORD: jjche
+      MYSQL_DATABASE: jjche-cloud-bpm
+      TZ: Asia/Shanghai
+    ports:
+      - 33309:3036
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+
+  jjche-cloud-server-demo-mysql:
+    image: mysql:5.7.16
+    container_name: jjche-cloud-server-demo-mysql
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: jjche
+      MYSQL_PASSWORD: jjche
+      MYSQL_DATABASE: jjche-cloud-demo
+      TZ: Asia/Shanghai
+    ports:
+      - 33310:3036
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+
+  jjche-cloud-server-redis:
+    image: redis:6.2.0-alpine
+    container_name: jjche-cloud-server-redis
+    restart: always
+    command: --requirepass "redis"
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - 26379:6379
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+
+  jjche-cloud-server-minio:
+    image: minio/minio:RELEASE.2023-06-02T23-17-26Z.fips
+    container_name: jjche-cloud-server-minio
+    restart: always
+    command: server /data/minio/
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - 9000:9000
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+
+  jjche-cloud-server-nacos:
+    image: nacos/nacos-server:v2.0.3
+    container_name: jjche-cloud-server-nacos
+    restart: always
+    ports:
+      - 8848:8848
+    depends_on:
+      - jjche-cloud-server-nacos-mysql
+    environment:
+      TZ: Asia/Shanghai
+      MODE: standalone
+      SPRING_DATASOURCE_PLATFORM: mysql
+      MYSQL_SERVICE_HOST: jjche-cloud-server-nacos-mysql
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_DB_PARAM: serverTimezone=UTC
+      MYSQL_DATABASE_NUM: 1
+      MYSQL_SERVICE_DB_NAME: jjche-cloud-nacos
+      MYSQL_SERVICE_USER: jjche
+      MYSQL_SERVICE_PASSWORD: jjche
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+
+  jjche-cloud-server-xxljob:
+    image: xuxueli/xxl-job-admin:2.3.1
+    container_name: jjche-cloud-server-xxljob
+    restart: always
+    ports:
+      - 8804:8804
+    depends_on:
+      - jjche-cloud-server-xxljob-mysql
+    environment:
+      TZ: Asia/Shanghai
+      PARAMS: "
+      --server.port=8804
+      --spring.datasource.url=jdbc:mysql://jjche-cloud-server-xxljob-mysql:3306/jjche-cloud-xxljob?characterEncoding=utf8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8
+      --spring.datasource.username=jjche
+      --spring.datasource.password=jjche
+      "
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+
+  jjche-cloud-server-sentinel:
+    image: jjche-cloud-server-sentinel:latest
+    container_name: jjche-cloud-server-sentinel
+    restart: always
+    build:
+      context: ./jjche-boot/jjche-cloud/jjche-cloud-sentinel
+      dockerfile: ./Dockerfile
+    ports:
+      - 8803:8803
+    environment:
+      TZ: Asia/Shanghai
+      #Nacos
+      JJCHE_NACOS_HOST: jjche-cloud-server-nacos
+      JJCHE_NACOS_PORT: 8848
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+
+  jjche-cloud-file:
+    image: jjche-cloud-file:latest
+    container_name: jjche-cloud-file
+    restart: always
+    build:
+      context: ./jjche-boot/jjche-cloud/jjche-cloud-file
+      dockerfile: ./Dockerfile
+    depends_on:
+      - jjche-cloud-server-minio
+      - jjche-cloud-server-nacos
+    environment:
+      TZ: Asia/Shanghai
+      JJCHE_MINIO_PORT: 8902
+      JJCHE_SERVER_MINIO_HOST: http://jjche-cloud-server-minio
+      JJCHE_SERVER_MINIO_PORT: 9000
+      JJCHE_SERVER_MINIO_ACCESS_KEY: minioadmin
+      JJCHE_SERVER_MINIO_SECRET_KEY: minioadmin
+      #Nacos
+      JJCHE_NACOS_HOST: jjche-cloud-server-nacos
+      JJCHE_NACOS_PORT: 8848
+      #Redis配置
+      JJCHE_REDIS_HOST: jjche-cloud-server-redis
+      JJCHE_REDIS_PASSWORD: redis
+      JJCHE_REDIS_PORT: 6379
+      JJCHE_REDIS_DB: 1
+      #JVM 80%内存运行
+      JAVA_MAX_MEM_RATIO: 80
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+
+  jjche-cloud-monitor:
+    image: jjche-cloud-monitor:latest
+    container_name: jjche-cloud-monitor
+    restart: always
+    build:
+      context: ./jjche-boot/jjche-cloud/jjche-cloud-monitor
+      dockerfile: ./Dockerfile
+    depends_on:
+      - jjche-cloud-server-nacos
+    ports:
+      - 8800:8800
+    environment:
+      TZ: Asia/Shanghai
+      #Nacos
+      JJCHE_NACOS_HOST: jjche-cloud-server-nacos
+      JJCHE_NACOS_PORT: 8848
+      #JVM 80%内存运行
+      JAVA_MAX_MEM_RATIO: 80
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+
+  jjche-cloud-gateway:
+    image: jjche-cloud-gateway:latest
+    container_name: jjche-boot-api
+    restart: always
+    build:
+      context: ./jjche-boot/jjche-cloud/jjche-cloud-gateway
+      dockerfile: ./Dockerfile
+    depends_on:
+      - jjche-cloud-server-nacos
+    ports:
+      - 8801:8801
+    environment:
+      TZ: Asia/Shanghai
+      JJCHE_REDIS_HOST: jjche-cloud-server-redis
+      JJCHE_REDIS_PASSWORD: redis
+      JJCHE_REDIS_PORT: 6379
+      JJCHE_REDIS_DB: 1
+      #Nacos
+      JJCHE_NACOS_HOST: jjche-cloud-server-nacos
+      JJCHE_NACOS_PORT: 8848
+      #JVM 80%内存运行
+      JAVA_MAX_MEM_RATIO: 80
+      JJCHE_SENTINEL_HOST: jjche-cloud-server-sentinel
+      JJCHE_SENTINEL_PORT: 8803
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+
+  jjche-cloud-system:
+    image: jjche-cloud-system:latest
+    container_name: jjche-cloud-system
+    restart: always
+    build:
+      context: ./jjche-boot/jjche-cloud/jjche-cloud-system
+      dockerfile: ./Dockerfile
+    depends_on:
+      - jjche-cloud-server-system-mysql
+      - jjche-cloud-server-redis
+    environment:
+      TZ: Asia/Shanghai
+      JJCHE_DB_HOST: jjche-cloud-server-system-mysql
+      JJCHE_DB_PORT: 3306
+      JJCHE_DB_UNAME: jjche
+      JJCHE_DB_PASSWORD: jjche
+      JJCHE_DB_DATABASE: jjche-cloud-system
+      # Redis配置
+      JJCHE_REDIS_HOST: jjche-cloud-server-redis
+      JJCHE_REDIS_PASSWORD: redis
+      JJCHE_REDIS_PORT: 6379
+      JJCHE_REDIS_DB: 1
+      #Nacos
+      JJCHE_NACOS_HOST: jjche-cloud-server-nacos
+      JJCHE_NACOS_PORT: 8848
+      #JVM 80%内存运行
+      JAVA_MAX_MEM_RATIO: 80
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+
+  jjche-cloud-bpm:
+    image: jjche-cloud-bpm:latest
+    container_name: jjche-cloud-bpm
+    restart: always
+    build:
+      context: ./jjche-boot/jjche-cloud/jjche-cloud-bpm
+      dockerfile: ./Dockerfile
+    depends_on:
+      - jjche-cloud-server-bpm-mysql
+      - jjche-cloud-server-redis
+    environment:
+      TZ: Asia/Shanghai
+      JJCHE_DB_HOST: jjche-cloud-server-bpm-mysql
+      JJCHE_DB_PORT: 3306
+      JJCHE_DB_UNAME: jjche
+      JJCHE_DB_PASSWORD: jjche
+      JJCHE_DB_DATABASE: jjche-cloud-bpm
+      # Redis配置
+      JJCHE_REDIS_HOST: jjche-cloud-server-redis
+      JJCHE_REDIS_PASSWORD: redis
+      JJCHE_REDIS_PORT: 6379
+      JJCHE_REDIS_DB: 1
+      #Nacos
+      JJCHE_NACOS_HOST: jjche-cloud-server-nacos
+      JJCHE_NACOS_PORT: 8848
+      #JVM 80%内存运行
+      JAVA_MAX_MEM_RATIO: 80
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+
+  jjche-cloud-demo:
+    image: jjche-cloud-demo:latest
+    container_name: jjche-cloud-demo
+    restart: always
+    build:
+      context: ./jjche-boot/jjche-cloud/jjche-cloud-demo
+      dockerfile: ./Dockerfile
+    depends_on:
+      - jjche-cloud-server-demo-mysql
+      - jjche-cloud-server-redis
+    environment:
+      TZ: Asia/Shanghai
+      JJCHE_DB_HOST: jjche-cloud-server-demo-mysql
+      JJCHE_DB_PORT: 3306
+      JJCHE_DB_UNAME: jjche
+      JJCHE_DB_PASSWORD: jjche
+      JJCHE_DB_DATABASE: jjche-cloud-demo
+      # Redis配置
+      JJCHE_REDIS_HOST: jjche-cloud-server-redis
+      JJCHE_REDIS_PASSWORD: redis
+      JJCHE_REDIS_PORT: 6379
+      JJCHE_REDIS_DB: 1
+      #Nacos
+      JJCHE_NACOS_HOST: jjche-cloud-server-nacos
+      JJCHE_NACOS_PORT: 8848
+      #JVM 80%内存运行
+      JAVA_MAX_MEM_RATIO: 80
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+
+  jjche-boot-ui:
+    image: jjche-boot-ui:latest
+    container_name: jjche-boot-ui
+    restart: always
+    build:
+      context: ./jjche-boot-ui
+      dockerfile: ./Dockerfile
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - "80:80"

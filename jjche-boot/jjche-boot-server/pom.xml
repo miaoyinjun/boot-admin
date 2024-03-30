@@ -17,11 +17,6 @@
         <relativePath/>
     </parent>
 
-    <properties>
-        <docker.registry>registry.cn-hangzhou.aliyuncs.com</docker.registry>
-        <docker.namespace>jjche-boot</docker.namespace>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.jjche.sys</groupId>

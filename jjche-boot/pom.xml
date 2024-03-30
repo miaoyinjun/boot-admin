@@ -14,7 +14,7 @@
         <module>jjche-boot-server</module>
         <module>jjche-cloud</module>
         <module>jjche-boot-modules</module>
-        <module>jjche-boot-sba-server</module>
+<!--        <module>jjche-boot-sba-server</module>-->
     </modules>
 
     <build>

@@ -17,10 +17,6 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <build.plugins.plugin.version>3.0.0-M1</build.plugins.plugin.version>
-
-        <docker.registry>registry.cn-hangzhou.aliyuncs.com</docker.registry>
-        <docker.namespace>jjche-boot</docker.namespace>
-
         <spring.boot.starter.version>2.6.3</spring.boot.starter.version>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
@@ -33,7 +29,7 @@
 
         <hutool.version>5.8.3</hutool.version>
         <mybatis.plus.version>3.5.1</mybatis.plus.version>
-        <liquibase.version>4.9.1</liquibase.version>
+        <liquibase.version>4.26.0</liquibase.version>
         <jjwt.version>0.11.1</jjwt.version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
         <poi.version>4.1.2</poi.version>
@@ -860,47 +856,13 @@
                     <configuration>
                         <images>
                             <image>
+                                <name>${project.artifactId}:latest</name>
                                 <alias>service</alias>
-                                <name>${docker.registry}/${docker.namespace}/${project.artifactId}:latest</name>
-
                                 <build>
-                                    <from>openjdk:8-jre-alpine</from>
-                                    <tags>
-                                        <tag>latest</tag>
-                                        <tag>${project.version}</tag>
-                                    </tags>
-                                    <assembly>
-                                        <name>files</name>
-                                        <inline>
-                                            <id>copy-files</id>
-                                            <files>
-                                                <file>
-                                                    <source>target/${project.artifactId}.jar</source>
-                                                    <destName>app.jar</destName>
-                                                    <!--<targetDir>/app</targetDir>-->
-                                                </file>
-                                            </files>
-                                        </inline>
-                                        <targetDir>/app</targetDir>
-                                    </assembly>
-                                    <env>
-                                        <LANG>C.UTF-8</LANG>
-                                        <LC_ALL>C.UTF-8</LC_ALL>
-                                        <TZ>Asia/Shanghai</TZ>
-                                        <JAVA_OPTS>-Djava.security.egd=file:/dev/./urandom -Duser.timezone=${TZ}
-                                            -Dfile.encoding=UTF-8
-                                        </JAVA_OPTS>
-                                    </env>
-                                    <runCmds>
-                                        <run>apk add ttf-freefont</run>
-                                        <run>apk add bash tzdata</run>
-                                        <run>ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime</run>
-                                        <run>echo ${TZ} &gt; /etc/timezone</run>
-                                        <run>rm -rf /var/cache/apk/*</run>
-                                    </runCmds>
-                                    <entryPoint>
-                                        <shell>java ${JAVA_OPTS} -jar /app/app.jar ${JAVA_WEB_SERVICE_OPTS}</shell>
-                                    </entryPoint>
+                                    <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                                    <buildOptions>
+                                        <network>host</network>
+                                    </buildOptions>
                                 </build>
                             </image>
                         </images>

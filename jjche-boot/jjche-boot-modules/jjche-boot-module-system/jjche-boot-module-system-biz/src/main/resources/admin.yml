@@ -3,6 +3,7 @@ spring:
     redis:
       repositories:
         enabled: false
+jjche:
   user:
     account:
       expired-days: 90
@@ -19,7 +20,6 @@ spring:
       advance-day-must-reset: 1
       advance-day-tip-reset: 15
       expired-days: 90
-jjche:
   task:
     pool:
       # 核心线程池大小

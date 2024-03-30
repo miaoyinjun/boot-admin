@@ -46,8 +46,6 @@ CREATE TABLE `code_column_config`
 -- ----------------------------
 -- Records of code_column_config
 -- ----------------------------
-BEGIN;
-COMMIT;
 
 -- ----------------------------
 -- Table structure for code_gen_config
@@ -74,8 +72,8 @@ CREATE TABLE `code_gen_config`
 -- ----------------------------
 -- Records of code_gen_config
 -- ----------------------------
-BEGIN;
-COMMIT;
+
+
 
 -- ----------------------------
 -- Table structure for mnt_app
@@ -102,8 +100,8 @@ CREATE TABLE `mnt_app`
 -- ----------------------------
 -- Records of mnt_app
 -- ----------------------------
-BEGIN;
-COMMIT;
+
+
 
 -- ----------------------------
 -- Table structure for mnt_database
@@ -127,8 +125,8 @@ CREATE TABLE `mnt_database`
 -- ----------------------------
 -- Records of mnt_database
 -- ----------------------------
-BEGIN;
-COMMIT;
+
+
 
 -- ----------------------------
 -- Table structure for mnt_deploy
@@ -149,8 +147,8 @@ CREATE TABLE `mnt_deploy`
 -- ----------------------------
 -- Records of mnt_deploy
 -- ----------------------------
-BEGIN;
-COMMIT;
+
+
 
 -- ----------------------------
 -- Table structure for mnt_deploy_history
@@ -175,8 +173,8 @@ CREATE TABLE `mnt_deploy_history`
 -- ----------------------------
 -- Records of mnt_deploy_history
 -- ----------------------------
-BEGIN;
-COMMIT;
+
+
 
 -- ----------------------------
 -- Table structure for mnt_deploy_server
@@ -193,8 +191,8 @@ CREATE TABLE `mnt_deploy_server`
 -- ----------------------------
 -- Records of mnt_deploy_server
 -- ----------------------------
-BEGIN;
-COMMIT;
+
+
 
 -- ----------------------------
 -- Table structure for mnt_server
@@ -220,8 +218,8 @@ CREATE TABLE `mnt_server`
 -- ----------------------------
 -- Records of mnt_server
 -- ----------------------------
-BEGIN;
-COMMIT;
+
+
 
 -- ----------------------------
 -- Table structure for security_app_key
@@ -252,11 +250,11 @@ CREATE TABLE `security_app_key`
 -- ----------------------------
 -- Records of security_app_key
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `security_app_key`
 VALUES (1, '测试', NULL, 'default_app_id', 'default_app_secret', 'y5PtpclbYABqpF2x', b'1', '/api/demo/out/students/*',
         NULL, 0, 'System', 'System', '2022-08-11 08:40:11', '2022-08-11 08:40:11');
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_data_permission_field
@@ -282,12 +280,12 @@ CREATE TABLE `sys_data_permission_field`
 -- ----------------------------
 -- Records of sys_data_permission_field
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_data_permission_field`
 VALUES (10, 133, '姓名', 'name', 999, 1, 'System', 'System', '2022-08-16 10:48:07', '2022-08-16 10:48:07');
 INSERT INTO `sys_data_permission_field`
 VALUES (11, 133, '性别', 'age', 999, 1, 'System', 'System', '2022-08-16 10:48:07', '2022-08-16 10:48:07');
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_data_permission_field_role
@@ -313,12 +311,12 @@ CREATE TABLE `sys_data_permission_field_role`
 -- ----------------------------
 -- Records of sys_data_permission_field_role
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_data_permission_field_role`
 VALUES (7, 2, 133, 10, 1, 0, 'System', 'System', '2022-08-16 10:48:07', '2022-08-16 10:48:07');
 INSERT INTO `sys_data_permission_field_role`
 VALUES (8, 2, 133, 11, 1, 1, 'System', 'System', '2022-08-16 10:48:07', '2022-08-16 10:48:07');
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_data_permission_rule
@@ -344,11 +342,11 @@ CREATE TABLE `sys_data_permission_rule`
 -- ----------------------------
 -- Records of sys_data_permission_rule
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_data_permission_rule`
 VALUES (1, 133, '只看年龄等于3的', 'EQUAL', 'age', '3', 1, 'System', 'System', '2022-08-16 10:48:07',
         '2022-08-16 10:48:07');
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_data_permission_rule_role
@@ -371,10 +369,10 @@ CREATE TABLE `sys_data_permission_rule_role`
 -- ----------------------------
 -- Records of sys_data_permission_rule_role
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_data_permission_rule_role`
 VALUES (1, 2, 133, 1, 'System', 'System', '2022-08-16 10:48:07', '2022-08-16 10:48:07');
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_dept
@@ -401,7 +399,7 @@ CREATE TABLE `sys_dept`
 -- ----------------------------
 -- Records of sys_dept
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_dept`
 VALUES (2, 7, 1, 1, '研发部', 3, b'1', 'admin', 'admin', '2019-03-25 09:15:32', '2020-08-02 14:48:47');
 INSERT INTO `sys_dept`
@@ -416,7 +414,7 @@ INSERT INTO `sys_dept`
 VALUES (15, 8, NULL, 0, 'UI部门', 7, b'1', 'admin', 'admin', '2020-05-13 22:56:53', '2020-05-14 12:54:13');
 INSERT INTO `sys_dept`
 VALUES (17, 2, NULL, 0, '研发一组', 999, b'1', 'admin', 'admin', '2020-08-02 14:49:07', '2020-08-02 14:49:07');
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_dict
@@ -439,7 +437,7 @@ CREATE TABLE `sys_dict`
 -- ----------------------------
 -- Records of sys_dict
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_dict`
 VALUES (1, 'user_status', '用户状态', 'System', 'System', '2019-10-27 20:31:36', '2021-09-10 16:55:06');
 INSERT INTO `sys_dict`
@@ -471,7 +469,7 @@ VALUES (13, 'bpm_process_instance_result', '流程实例的结果', 'System', 'S
 INSERT INTO `sys_dict`
 VALUES (14, 'bpm_oa_leave_type', 'OA 请假类型', 'System', 'System', SYSDATE(), SYSDATE());
 
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_dict_detail
@@ -496,7 +494,7 @@ CREATE TABLE `sys_dict_detail`
 -- ----------------------------
 -- Records of sys_dict_detail
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_dict_detail`
 VALUES (1, 1, '激活', 'true', 1, 'System', 'System', '2021-09-10 16:55:06', '2021-09-10 16:55:06');
 INSERT INTO `sys_dict_detail`
@@ -594,7 +592,7 @@ VALUES (46, 14, '事假', '2', 2, 'System', 'System', SYSDATE(), SYSDATE());
 INSERT INTO `sys_dict_detail`
 VALUES (47, 14, '婚假', '3', 3, 'System', 'System', SYSDATE(), SYSDATE());
 
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_job
@@ -618,7 +616,7 @@ CREATE TABLE `sys_job`
 -- ----------------------------
 -- Records of sys_job
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_job`
 VALUES (8, '人事专员', b'1', 3, 'System', 'System', '2019-03-29 14:52:28', '2021-09-10 16:55:06');
 INSERT INTO `sys_job`
@@ -627,7 +625,7 @@ INSERT INTO `sys_job`
 VALUES (11, '全栈开发', b'1', 2, 'System', 'System', '2019-03-31 13:39:30', '2021-09-10 16:55:06');
 INSERT INTO `sys_job`
 VALUES (12, '软件测试', b'1', 5, 'System', 'System', '2019-03-31 13:39:43', '2021-09-10 16:55:06');
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_log
@@ -698,7 +696,7 @@ CREATE TABLE `sys_menu`
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_menu`
 VALUES (1, NULL, 7, 0, '系统管理', NULL, NULL, 1, 'system', 'system', b'0', b'0', b'0', NULL, 'System', 'System',
         '2018-12-18 15:11:29', '2021-09-10 16:55:06');
@@ -1144,7 +1142,7 @@ INSERT INTO `sys_menu`(`id`, `pid`, `sub_count`, `type`, `title`, `name`, `compo
 VALUES (173, 171, 0, 2, '请假申请创建', NULL, NULL, 1, NULL, NULL, b'0', b'0', b'0', 'bpm:oa-leave:create', 'admin',
         'admin', '2023-03-08 02:48:30', '2023-03-08 03:34:35');
 
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_quartz_job
@@ -1176,7 +1174,7 @@ CREATE TABLE `sys_quartz_job`
 -- ----------------------------
 -- Records of sys_quartz_job
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_quartz_job`
 VALUES (2, 'testTask', '0/5 * * * * ?', b'1', '测试1', 'run1', 'test', '带参测试，多参使用json', '测试', NULL, NULL,
         NULL, 'System', 'System', '2019-08-22 14:08:29', '2020-05-24 13:58:33');
@@ -1208,7 +1206,7 @@ VALUES (10, 'userTask', '0 54 23 ? * *', b'1', '用户密码过期检查', 'cred
 INSERT INTO `sys_quartz_job`
 VALUES (11, 'logTask', '0 55 23 ? * *', b'1', '清空N个月之前的操作日志', 'cleanLogs', '-3', '清空N个月之前的操作日志',
         'admin', NULL, NULL, b'0', 'System', 'System', '2021-12-27 16:23:30', '2021-12-27 16:23:30');
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_quartz_log
@@ -1234,8 +1232,8 @@ CREATE TABLE `sys_quartz_log`
 -- ----------------------------
 -- Records of sys_quartz_log
 -- ----------------------------
-BEGIN;
-COMMIT;
+
+
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -1262,14 +1260,14 @@ CREATE TABLE `sys_role`
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_role`
 VALUES (1, '超级管理员', 'ROLE_ADMIN', 1, '-', 'DATA_SCOPE_ALL', 'System', 'System', '2018-11-23 11:04:37',
         '2021-12-27 16:23:30');
 INSERT INTO `sys_role`
 VALUES (2, '演示角色', 'ROLE_DEMO', 2, '-', 'DATA_SCOPE_CUSTOM', 'System', 'System', '2018-11-23 13:09:06',
         '2021-12-27 16:23:30');
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_roles_depts
@@ -1286,14 +1284,14 @@ CREATE TABLE `sys_roles_depts`
 -- ----------------------------
 -- Records of sys_roles_depts
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_roles_depts`
 VALUES (1, 7);
 INSERT INTO `sys_roles_depts`
 VALUES (1, 8);
 INSERT INTO `sys_roles_depts`
 VALUES (2, 6);
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_roles_menus
@@ -1310,7 +1308,7 @@ CREATE TABLE `sys_roles_menus`
 -- ----------------------------
 -- Records of sys_roles_menus
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_roles_menus`
 VALUES (1, 1);
 INSERT INTO `sys_roles_menus`
@@ -1487,7 +1485,7 @@ INSERT INTO `sys_roles_menus`
 VALUES (136, 1);
 INSERT INTO `sys_roles_menus`
 VALUES (136, 2);
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -1529,12 +1527,12 @@ CREATE TABLE `sys_user`
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_user`
 VALUES (1, 2, 'admin', '管理员', '男', '18888888888', '312656362@qq.com', NULL, NULL,
         '$2a$10$Egp1/gvFlt7zhlXVfEFw4OfWQCGPw0ClmMcc6FjTnvXNRVf9zdMRa', b'1', b'1', b'1', b'1', b'1', b'0', 0, b'0',
         '2020-05-03 16:38:31', '2022-08-16 10:49:37', 'admin', 'admin', '2020-09-05 10:43:31', '2020-09-05 10:43:31');
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_users_jobs
@@ -1550,10 +1548,10 @@ CREATE TABLE `sys_users_jobs`
 -- ----------------------------
 -- Records of sys_users_jobs
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_users_jobs`
 VALUES (1, 11);
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_users_roles
@@ -1570,10 +1568,10 @@ CREATE TABLE `sys_users_roles`
 -- ----------------------------
 -- Records of sys_users_roles
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_users_roles`
 VALUES (1, 1);
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for sys_version
@@ -1597,10 +1595,10 @@ CREATE TABLE `sys_version`
 -- ----------------------------
 -- Records of sys_version
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `sys_version`
 VALUES (1, '1.0.0.0', b'1', '初始化', 'admin', 'admin', '2021-09-10 16:55:06', '2021-09-10 16:55:06');
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for tool_alipay_config
@@ -1631,7 +1629,7 @@ CREATE TABLE `tool_alipay_config`
 -- ----------------------------
 -- Records of tool_alipay_config
 -- ----------------------------
-BEGIN;
+
 INSERT INTO `tool_alipay_config`
 VALUES (1, '2016091700532697', 'utf-8', 'JSON', 'https://openapi.alipaydev.com/gateway.do',
         'http://api.auauz.net/api/aliPay/notify',
@@ -1639,7 +1637,7 @@ VALUES (1, '2016091700532697', 'utf-8', 'JSON', 'https://openapi.alipaydev.com/g
         'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAut9evKRuHJ/2QNfDlLwvN/S8l9hRAgPbb0u61bm4AtzaTGsLeMtScetxTWJnVvAVpMS9luhEJjt+Sbk5TNLArsgzzwARgaTKOLMT1TvWAK5EbHyI+eSrc3s7Awe1VYGwcubRFWDm16eQLv0k7iqiw+4mweHSz/wWyvBJVgwLoQ02btVtAQErCfSJCOmt0Q/oJQjj08YNRV4EKzB19+f5A+HQVAKy72dSybTzAK+3FPtTtNen/+b5wGeat7c32dhYHnGorPkPeXLtsqqUTp1su5fMfd4lElNdZaoCI7osZxWWUo17vBCZnyeXc9fk0qwD9mK6yRAxNbrY72Xx5VqIqwIDAQAB',
         'http://api.auauz.net/api/aliPay/return', 'RSA2', '2088102176044281', 'System', 'System', '2021-09-10 16:55:06',
         '2021-09-10 16:55:06');
-COMMIT;
+
 
 -- ----------------------------
 -- Table structure for tool_email_config
@@ -1664,8 +1662,8 @@ CREATE TABLE `tool_email_config`
 -- ----------------------------
 -- Records of tool_email_config
 -- ----------------------------
-BEGIN;
-COMMIT;
+
+
 
 -- ----------------------------
 -- Table structure for tool_local_storage
@@ -1692,8 +1690,8 @@ CREATE TABLE `tool_local_storage`
 -- ----------------------------
 -- Records of tool_local_storage
 -- ----------------------------
-BEGIN;
-COMMIT;
+
+
 
 -- ----------------------------
 -- Table structure for tool_qiniu_config
@@ -1719,8 +1717,8 @@ CREATE TABLE `tool_qiniu_config`
 -- ----------------------------
 -- Records of tool_qiniu_config
 -- ----------------------------
-BEGIN;
-COMMIT;
+
+
 
 -- ----------------------------
 -- Table structure for tool_qiniu_content
@@ -1746,6 +1744,5 @@ CREATE TABLE `tool_qiniu_content`
 -- ----------------------------
 -- Records of tool_qiniu_content
 -- ----------------------------
-
 
 SET FOREIGN_KEY_CHECKS = 1;

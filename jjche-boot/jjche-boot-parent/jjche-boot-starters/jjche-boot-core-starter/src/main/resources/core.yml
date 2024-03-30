@@ -1,5 +1,5 @@
 server:
-  port: ${JJCHE_WEB_PORT:8801}
+  port: ${JJCHE_SERVER_PORT:8801}
   servlet:
     register-default-servlet: true
   compression:

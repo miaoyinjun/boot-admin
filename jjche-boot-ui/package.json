@@ -7,7 +7,6 @@
     "test:unit": "jest --clearCache && vue-cli-service test:unit",
     "lint": "eslint --ext .js,.vue src",
     "build:uat": "vue-cli-service build --mode uat",
-    "build:docker": "vue-cli-service build --dest=./docker/dist/",
     "build:prod": "vue-cli-service build",
     "build:test": "vue-cli-service build --mode test",
     "dev": "vue-cli-service serve",
