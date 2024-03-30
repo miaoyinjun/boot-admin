@@ -20,10 +20,6 @@ public class SecurityUrlProperties {
      */
     private List<String> excludeUrls;
     /**
-     * 角色与url对应
-     */
-    private List<SecurityRoleUrlProperties> roleUrls;
-    /**
      * 默认不过滤的url如 - /test/** -/demo/
      */
     private List<String> excludeDefaultUrls;

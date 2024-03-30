@@ -41,7 +41,7 @@ jjche:
         - /**/*.html
         - /**/*.css
         - /**/*.js
-#        - ${jjche.core.api.path.global-prefix}${jjche.core.api.path.sys-prefix}/webSocket/**
+        - ${jjche.core.api.path.global-prefix}/sys/webSocket/**
         - /avatar/**
         - /file/**
     #密码加密传输，前端公钥加密，后端私钥解密

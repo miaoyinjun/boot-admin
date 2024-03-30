@@ -1,8 +1,6 @@
 package org.jjche.security.config;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.api.CommonApi;
 import org.jjche.common.constant.SecurityConstant;
@@ -12,7 +10,6 @@ import org.jjche.security.auth.sms.SmsCodeAuthenticationProvider;
 import org.jjche.security.handler.JwtAuthenticationAccessDeniedHandler;
 import org.jjche.security.handler.JwtAuthenticationEntryPoint;
 import org.jjche.security.property.SecurityProperties;
-import org.jjche.security.property.SecurityRoleUrlProperties;
 import org.jjche.security.property.SecurityUrlProperties;
 import org.jjche.security.security.TokenConfigurer;
 import org.jjche.security.util.RequestMethodEnum;
@@ -115,10 +112,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry authorizeRequests = httpSecurity.authorizeRequests();
-        //加载配置文件，角色对应关系
-        SecurityUrlProperties securityUrlProperties = properties.getUrl();
-        authorizeRequests = setPropertityUrl(authorizeRequests, securityUrlProperties);
-
         authorizeRequests.and()
                 // 禁用 CSRF
                 .csrf().disable()
@@ -187,28 +180,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         }
         usernamePasswordAuthenticationProvider.setHideUserNotFoundExceptions(false);
         return usernamePasswordAuthenticationProvider;
-    }
-
-    private ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry setPropertityUrl(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry authorizeRequests, SecurityUrlProperties securityUrlProperties) {
-        if (ObjectUtil.isNotNull(securityUrlProperties)) {
-            List<SecurityRoleUrlProperties> roleUrlList = securityUrlProperties.getRoleUrls();
-            if (CollUtil.isNotEmpty(roleUrlList)) {
-                for (SecurityRoleUrlProperties roleUrl : roleUrlList) {
-                    String roleName = roleUrl.getRoleName();
-                    List<String> rUrlList = roleUrl.getUrls();
-                    if (StrUtil.isNotBlank(roleName) && CollUtil.isNotEmpty(rUrlList)) {
-                        /** hasAnyRole 删除ROLE_前缀*/
-                        if (roleName.startsWith(ROLE_NAME_PREFIX)) {
-                            roleName = StrUtil.removePrefix(roleName, ROLE_NAME_PREFIX);
-                        }
-                        for (String url : rUrlList) {
-                            authorizeRequests.antMatchers(url).hasAnyRole(roleName);
-                        }
-                    }
-                }
-            }
-        }
-        return authorizeRequests;
     }
 
     private Map<String, Set<String>> getIgnoreUrl(Map<RequestMappingInfo, HandlerMethod> handlerMethodMap, SecurityUrlProperties securityUrlProperties) {

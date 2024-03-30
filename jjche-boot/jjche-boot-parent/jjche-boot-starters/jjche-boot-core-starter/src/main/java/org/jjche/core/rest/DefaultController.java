@@ -1,6 +1,7 @@
 package org.jjche.core.rest;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.jjche.common.exception.BusinessException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DefaultController {
 
     @RequestMapping("/bpm/**")
+    @ApiOperation(value = "bpm", hidden = true)
     public void bpm404() {
         throw new BusinessException
          ("[工作流模块 jjche-boot-module-bpm - 已禁用][参考 https:///bpm/ 开启]");

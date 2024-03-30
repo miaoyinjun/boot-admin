@@ -17,10 +17,3 @@ jjche:
     url:
       exclude-urls:
         - /security/login
-      role-urls:
-        - role-name: ROLE_USER1
-          urls:
-            - /security/not_allow
-        - role-name: ROLE_USER
-          urls:
-            - /security/allow
