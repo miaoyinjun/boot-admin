@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import javax.servlet.http.HttpServletResponse;
 import org.jjche.common.param.PageParam;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.jjche.mybatis.util.MybatisUtil;
@@ -27,7 +25,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import cn.hutool.core.lang.Assert;
-import org.jjche.mybatis.param.SortEnum;
 import java.util.List;
 /**
 * <p>
@@ -42,18 +39,6 @@ import java.util.List;
 public class ${className}Service extends MyServiceImpl<${className}Mapper, ${className}DO> {
 
     private final ${className}MapStruct ${changeClassName}MapStruct;
-
-    /**
-     * <p>
-     * 获取列表查询语句
-     * </p>
-     *
-     * @param query 条件
-     * @return sql
-     */
-    private LambdaQueryWrapper queryWrapper(${className}QueryCriteriaDTO query) {
-        return MybatisUtil.assemblyLambdaQueryWrapper(query, SortEnum.ID_DESC);
-    }
 
    /**
    * <p>
@@ -140,8 +125,7 @@ public class ${className}Service extends MyServiceImpl<${className}Mapper, ${cla
     * @return ${className}VO 分页
     */
     public MyPage<${className}VO> page(PageParam page, ${className}QueryCriteriaDTO query) {
-        LambdaQueryWrapper<${className}DO> queryWrapper = queryWrapper(query);
-        return this.baseMapper.pageQuery(page, queryWrapper);
+        return this.baseMapper.page(page, query);
     }
 
     /**
@@ -152,8 +136,7 @@ public class ${className}Service extends MyServiceImpl<${className}Mapper, ${cla
     * @return ${className}VO 列表对象
     */
     public List<${className}VO> list(${className}QueryCriteriaDTO query){
-        LambdaQueryWrapper<${className}DO> queryWrapper = queryWrapper(query);
-        List<${className}DO> list = this.list(queryWrapper);
+        List<${className}DO> list = this.baseMapper.list(query);
         return ${changeClassName}MapStruct.toVO(list);
     }
 

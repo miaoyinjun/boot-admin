@@ -3,15 +3,12 @@ package org.jjche.sys.modules.generator.utils;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.lang.Assert;
-import cn.hutool.core.map.MapUtil;
-import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.extra.template.*;
+import org.jjche.common.util.AppUtil;
 import org.jjche.common.util.StrUtil;
 import org.jjche.core.util.FileUtil;
 import org.jjche.sys.modules.generator.domain.ColumnInfoDO;
 import org.jjche.sys.modules.generator.domain.GenConfigDO;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -174,7 +171,7 @@ public class GenUtil {
         // 生成后端代码
         List<String> templates = getAdminTemplateNames();
 //        String userDir = System.getProperty("user.dir");
-        String userDir = StrUtil.replace(getApplicationClass().getProtectionDomain().getCodeSource().getLocation().getPath(), "/target/classes/", "");
+        String userDir = StrUtil.replace(AppUtil.getApplicationClass().getProtectionDomain().getCodeSource().getLocation().getPath(), "/target/classes/", "");
         for (String templateName : templates) {
             Template template = engine.getTemplate("generator/admin/" + templateName + ".ftl");
             String filePath = getAdminFilePath(templateName, genConfig, genMap.get("className").toString(), userDir);
@@ -224,7 +221,7 @@ public class GenUtil {
         apiVersion = StrUtil.replace(apiVersion, "_", ".");
         genMap.put("apiVersion", apiVersion);
         // 包名称
-        String packagePath = getSpringBootApplicationPackagePath().
+        String packagePath = getAppPackagePath().
                 replaceAll("\\\\|/", ".");
 
         String packageService = packagePath + ".modules." + genConfig.getModuleName();
@@ -252,6 +249,7 @@ public class GenUtil {
             changeClassName = StrUtil.toCamelCase(StrUtil.removePrefix(tableName, genConfig.getPrefix()));
         }
         String controllerBaseUrl = StrUtil.pluralizeWord(tableName);
+        controllerBaseUrl = AppUtil.getAppPackageNamePrefix() + StrUtil.SLASH + controllerBaseUrl;
         // 保存类名
         genMap.put("className", className);
         // 保存小写开头的类名
@@ -536,27 +534,8 @@ public class GenUtil {
      * @author miaoyj
      * @since 2020-10-10
      */
-    public static String getSpringBootApplicationPackagePath() {
-        Package pack = getApplicationClass().getPackage();
-        return pack.getName().replace(".", File.separator);
-    }
-
-    /**
-     * <p>
-     * 获取Application的class所在位置
-     * </p>
-     *
-     * @return /
-     */
-    private static Class getApplicationClass() {
-        Map<String, Object> map = SpringUtil.getApplicationContext().getBeansWithAnnotation(SpringBootApplication.class);
-        Assert.isTrue(MapUtil.isNotEmpty(map), "找不到SpringBootApplication注解");
-        Object application = null;
-        for (String key : map.keySet()) {
-            application = map.get(key);
-            break;
-        }
-        return application.getClass();
+    public static String getAppPackagePath() {
+        return AppUtil.getAppPackageName().replace(".", File.separator);
     }
 
     /**
@@ -571,7 +550,7 @@ public class GenUtil {
      * @since 2020-10-10
      */
     public static String getPackPath(String moduleName, String rootPath) {
-        String applicationPackPath = getSpringBootApplicationPackagePath();
+        String applicationPackPath = getAppPackagePath();
         String projectPath = rootPath + File.separator;
         String packagePath = projectPath
                 + "src" + File.separator + "main" + File.separator + "java"

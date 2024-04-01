@@ -1,22 +1,19 @@
 package org.jjche.demo.modules.student.service;
 
 import cn.hutool.core.lang.Assert;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.util.FileUtil;
+import org.jjche.demo.modules.student.api.enums.StudentCourseEnum;
+import org.jjche.demo.modules.student.domain.StudentDO;
 import org.jjche.demo.modules.student.dto.StudentDTO;
 import org.jjche.demo.modules.student.dto.StudentImportDTO;
 import org.jjche.demo.modules.student.dto.StudentQueryCriteriaDTO;
-import org.jjche.demo.modules.student.api.enums.StudentCourseEnum;
-import org.jjche.demo.modules.student.vo.StudentVO;
-import org.jjche.demo.modules.student.domain.StudentDO;
 import org.jjche.demo.modules.student.mapper.StudentMapper;
 import org.jjche.demo.modules.student.mapstruct.StudentMapStruct;
+import org.jjche.demo.modules.student.vo.StudentVO;
 import org.jjche.mybatis.base.service.MyServiceImpl;
-import org.jjche.mybatis.param.SortEnum;
-import org.jjche.mybatis.util.MybatisUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -40,19 +37,6 @@ import java.util.*;
 public class StudentService extends MyServiceImpl<StudentMapper, StudentDO> {
 
     private final StudentMapStruct studentMapStruct;
-
-
-    /**
-     * <p>
-     * 获取列表查询语句
-     * </p>
-     *
-     * @param query 条件
-     * @return sql
-     */
-    private LambdaQueryWrapper queryWrapper(StudentQueryCriteriaDTO query) {
-        return MybatisUtil.assemblyLambdaQueryWrapper(query, SortEnum.ID_DESC);
-    }
 
     /**
      * <p>
@@ -119,11 +103,7 @@ public class StudentService extends MyServiceImpl<StudentMapper, StudentDO> {
      * @return StudentVO 分页
      */
     public MyPage<StudentVO> page(PageParam page, StudentCourseEnum course, StudentQueryCriteriaDTO query) {
-        LambdaQueryWrapper<StudentDO> queryWrapper = queryWrapper(query);
-        if (course != null) {
-            queryWrapper.eq(StudentDO::getCourse, course);
-        }
-        return this.baseMapper.pageQuery(page, queryWrapper);
+        return this.baseMapper.page(page, course, query);
     }
 
     /**
@@ -135,8 +115,7 @@ public class StudentService extends MyServiceImpl<StudentMapper, StudentDO> {
      * @return StudentVO 列表对象
      */
     public List<StudentVO> list(StudentQueryCriteriaDTO query) {
-        LambdaQueryWrapper queryWrapper = queryWrapper(query);
-        List<StudentDO> list = this.list(queryWrapper);
+        List<StudentDO> list = this.baseMapper.list(query);
         return studentMapStruct.toVO(list);
     }
 
@@ -166,7 +145,6 @@ public class StudentService extends MyServiceImpl<StudentMapper, StudentDO> {
             throw new IllegalArgumentException("文件下载失败");
         }
     }
-
 
     /**
      * <p>
