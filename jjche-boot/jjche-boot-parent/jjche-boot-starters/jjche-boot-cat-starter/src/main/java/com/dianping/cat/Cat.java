@@ -48,7 +48,7 @@ import java.util.ServiceLoader;
 public class Cat {
     public final static String CLIENT_CONFIG = "cat-client-config";
     public final static String UNKNOWN = "unknown";
-    private static final Cat instance = new Cat();
+    private static final Cat INSTANCE = new Cat();
     private static MessageProducer producer;
     private static MessageManager manager;
     private static int errorCount;
@@ -66,7 +66,7 @@ public class Cat {
 
         return JSTACK_ENABLED && Boolean.valueOf(enable);
     }
-    
+
     private static void checkAndInitialize() {
         try {
             if (!init) {
@@ -191,7 +191,7 @@ public class Cat {
     }
 
     public static Cat getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public static MessageManager getManager() {
@@ -309,7 +309,7 @@ public class Cat {
         if (isEnabled()) {
             try {
                 if (!init) {
-                    synchronized (instance) {
+                    synchronized (INSTANCE) {
                         if (!init) {
                             producer = DefaultMessageProducer.getInstance();
                             manager = DefaultMessageManager.getInstance();

@@ -157,6 +157,8 @@ public class DistributedLockHandler extends BaseAspect {
             case WRITE:
                 rLock = redissonClient.getReadWriteLock(getValueBySpEL(keys[0], parameterNames, args, keyConstant).get(0)).writeLock();
                 break;
+            default:
+                break;
         }
         return rLock;
     }

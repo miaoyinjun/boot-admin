@@ -10,11 +10,11 @@ import org.jjche.bpm.modules.oa.mapstruct.BpmOALeaveConvert;
 import org.jjche.bpm.modules.oa.vo.BpmOALeaveCreateReqDTO;
 import org.jjche.bpm.modules.oa.vo.BpmOALeavePageReqVO;
 import org.jjche.bpm.modules.task.enums.BpmProcessInstanceResultEnum;
-import org.jjche.common.exception.BusinessException;
 import org.jjche.common.param.MyPage;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.HashMap;
@@ -57,7 +57,7 @@ public class BpmOALeaveService extends MyServiceImpl<BpmOALeaveMapper, BpmOALeav
         this.save(leave);
 
         // 发起 BPM 流程
-        Map<String, Object> processInstanceVariables = new HashMap<>();
+        Map<String, Object> processInstanceVariables = new HashMap<>(1);
         processInstanceVariables.put("day", day);
         BpmProcessInstanceCreateReqDTO bpmProcessInstanceCreateReqDTO = new BpmProcessInstanceCreateReqDTO();
         bpmProcessInstanceCreateReqDTO.setProcessDefinitionKey(PROCESS_KEY);
@@ -89,9 +89,7 @@ public class BpmOALeaveService extends MyServiceImpl<BpmOALeaveMapper, BpmOALeav
     }
 
     private void validateLeaveExists(Long id) {
-        if (this.getById(id) == null) {
-            throw new BusinessException("请假申请不存在");
-        }
+        Assert.notNull(this.getById(id), "请假申请不存在");
     }
 
     /**

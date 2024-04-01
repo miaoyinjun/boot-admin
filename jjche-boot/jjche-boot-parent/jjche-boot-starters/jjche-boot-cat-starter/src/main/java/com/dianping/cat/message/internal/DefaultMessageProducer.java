@@ -235,7 +235,7 @@ public class DefaultMessageProducer implements MessageProducer {
             ConcurrentHashMap<String, AtomicInteger> stack = DefaultMessageProducer.stack.get(minute);
 
             if (stack == null) {
-                stack = new ConcurrentHashMap<String, AtomicInteger>();
+                stack = new ConcurrentHashMap<String, AtomicInteger>(5);
 
                 ConcurrentHashMap<String, AtomicInteger> oldStack = DefaultMessageProducer.stack.putIfAbsent(minute, stack);
 

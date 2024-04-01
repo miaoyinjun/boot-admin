@@ -20,6 +20,7 @@ package com.dianping.cat.status.system;
 
 import com.dianping.cat.Cat;
 import com.dianping.cat.status.AbstractCollector;
+import org.jjche.common.util.StrUtil;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
@@ -48,12 +49,12 @@ public class ProcessorInfoCollector extends AbstractCollector {
             Method[] methods = com.sun.management.OperatingSystemMXBean.class.getMethods();
             try {
                 for (Method method : methods) {
-                    if (method.getName().equals("getSystemCpuLoad")) {
+                    if (StrUtil.equals(method.getName(), "getSystemCpuLoad")) {
                         Double systemCpuLoad;
                         systemCpuLoad = (Double) method.invoke(osBean, null);
                         map.put("cpu.system.load.percent", systemCpuLoad * 100);
                     }
-                    if (method.getName().equals("getProcessCpuLoad")) {
+                    if (StrUtil.equals(method.getName(), "getProcessCpuLoad")) {
                         Double processCpuLoad;
                         processCpuLoad = (Double) method.invoke(osBean, null);
                         map.put("cpu.jvm.load.percent", processCpuLoad * 100);

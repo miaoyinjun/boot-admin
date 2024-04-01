@@ -46,12 +46,12 @@ public class TransactionAggregator {
     private ConcurrentHashMap<String, ConcurrentHashMap<String, TransactionData>> getAndResetTransactions() {
         ConcurrentHashMap<String, ConcurrentHashMap<String, TransactionData>> cloned = transactions;
 
-        transactions = new ConcurrentHashMap<String, ConcurrentHashMap<String, TransactionData>>();
+        transactions = new ConcurrentHashMap<String, ConcurrentHashMap<String, TransactionData>>(3);
 
         for (Entry<String, ConcurrentHashMap<String, TransactionData>> entry : cloned.entrySet()) {
             String type = entry.getKey();
 
-            transactions.putIfAbsent(type, new ConcurrentHashMap<String, TransactionData>());
+            transactions.putIfAbsent(type, new ConcurrentHashMap<String, TransactionData>(3));
         }
 
         return cloned;
@@ -73,7 +73,7 @@ public class TransactionAggregator {
         ConcurrentHashMap<String, TransactionData> item = transactions.get(type);
 
         if (null == item) {
-            item = new ConcurrentHashMap<String, TransactionData>();
+            item = new ConcurrentHashMap<String, TransactionData>(3);
 
             ConcurrentHashMap<String, TransactionData> oldValue = transactions.putIfAbsent(type, item);
 
@@ -160,6 +160,8 @@ public class TransactionAggregator {
                     return config.getLongThresholdByDuration(ProblemLongType.LONG_URL.getName(), duration);
                 case LONG_MQ:
                     return config.getLongThresholdByDuration(ProblemLongType.LONG_MQ.getName(), duration);
+                default:
+                    break;
             }
         }
 

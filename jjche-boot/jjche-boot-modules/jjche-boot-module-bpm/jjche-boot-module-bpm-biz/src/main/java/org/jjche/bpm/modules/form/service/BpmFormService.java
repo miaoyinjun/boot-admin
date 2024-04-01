@@ -4,15 +4,14 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
+import org.jjche.bpm.modules.form.domain.BpmFormDO;
 import org.jjche.bpm.modules.form.dto.BpmFormDTO;
 import org.jjche.bpm.modules.form.dto.BpmFormQueryCriteriaDTO;
+import org.jjche.bpm.modules.form.mapper.BpmFormMapper;
+import org.jjche.bpm.modules.form.mapstruct.BpmFormConvert;
 import org.jjche.bpm.modules.form.vo.BpmFormDetailRespVO;
 import org.jjche.bpm.modules.form.vo.BpmFormRespVO;
 import org.jjche.bpm.modules.form.vo.BpmFormSimpleRespVO;
-import org.jjche.bpm.modules.form.domain.BpmFormDO;
-import org.jjche.bpm.modules.form.mapper.BpmFormMapper;
-import org.jjche.bpm.modules.form.mapstruct.BpmFormConvert;
-import org.jjche.common.exception.BusinessException;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.mybatis.base.service.MyServiceImpl;
@@ -67,12 +66,6 @@ public class BpmFormService extends MyServiceImpl<BpmFormMapper, BpmFormDO>{
      */
     public void deleteForm(List<Long> ids) {
         this.removeByIds(ids);
-    }
-
-    private void validateFormExists(Long id) {
-        if (this.baseMapper.selectById(id) == null) {
-            throw new BusinessException("动态表单不存在");
-        }
     }
 
     /**

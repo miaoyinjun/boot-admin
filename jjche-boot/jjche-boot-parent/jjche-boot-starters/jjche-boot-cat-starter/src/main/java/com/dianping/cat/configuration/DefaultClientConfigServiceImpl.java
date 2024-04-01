@@ -40,9 +40,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class DefaultClientConfigService implements ClientConfigService {
+public class DefaultClientConfigServiceImpl implements ClientConfigService {
     private static CatLogger LOGGER = CatLogger.getInstance();
-    private static DefaultClientConfigService instance = new DefaultClientConfigService();
+    private static DefaultClientConfigServiceImpl instance = new DefaultClientConfigServiceImpl();
     private ClientConfig config;
     private String routers;
     private volatile double samplingRate = 1d;
@@ -51,7 +51,7 @@ public class DefaultClientConfigService implements ClientConfigService {
     private MessageTreeTypeParser treeParser = new MessageTreeTypeParser();
     private Map<String, List<Integer>> longConfigs = new LinkedHashMap<String, List<Integer>>();
 
-    private DefaultClientConfigService() {
+    private DefaultClientConfigServiceImpl() {
         String config = System.getProperty(Cat.CLIENT_CONFIG);
 
         if (StrUtil.isNotEmpty(config)) {
@@ -73,7 +73,7 @@ public class DefaultClientConfigService implements ClientConfigService {
         }
     }
 
-    public static DefaultClientConfigService getInstance() {
+    public static DefaultClientConfigServiceImpl getInstance() {
         return instance;
     }
 
@@ -126,6 +126,7 @@ public class DefaultClientConfigService implements ClientConfigService {
         return routers;
     }
 
+    @Override
     public double getSamplingRate() {
         return samplingRate;
     }
@@ -160,6 +161,7 @@ public class DefaultClientConfigService implements ClientConfigService {
         return "true".equals(devMode);
     }
 
+    @Override
     public boolean isMessageBlock() {
         return block;
     }
@@ -173,6 +175,7 @@ public class DefaultClientConfigService implements ClientConfigService {
         }
     }
 
+    @Override
     public void refreshConfig() {
         int retry = 0;
         int start = (int) (Math.random() * 10);

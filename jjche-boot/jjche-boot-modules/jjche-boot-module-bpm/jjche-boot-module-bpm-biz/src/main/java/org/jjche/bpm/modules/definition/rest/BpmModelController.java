@@ -39,8 +39,7 @@ public class BpmModelController extends BaseController {
     @ApiOperation(value = "获得模型")
     @PreAuthorize("@el.check('bpm:model:query')")
     public R<BpmModelRespVO> getModel(@PathVariable String id) {
-        BpmModelRespVO model = modelService.getModel(id);
-        return R.ok(model);
+        return R.ok(modelService.getModel(id));
     }
 
     @PostMapping

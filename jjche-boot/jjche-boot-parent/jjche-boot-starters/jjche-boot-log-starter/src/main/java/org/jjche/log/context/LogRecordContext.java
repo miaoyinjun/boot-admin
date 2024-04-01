@@ -32,14 +32,14 @@ public class LogRecordContext {
         }
         Deque<Map<String, Object>> mapStack = VARIABLE_MAP_STACK.get();
         if (mapStack.isEmpty()) {
-            VARIABLE_MAP_STACK.get().push(new HashMap<>());
+            VARIABLE_MAP_STACK.get().push(new HashMap<>(3));
         }
         VARIABLE_MAP_STACK.get().element().put(name, value);
     }
 
     public static void putGlobalVariable(String name, Object value) {
         if (GLOBAL_VARIABLE_MAP.get() == null) {
-            GLOBAL_VARIABLE_MAP.set(new HashMap<>());
+            GLOBAL_VARIABLE_MAP.set(new HashMap<>(3));
         }
         GLOBAL_VARIABLE_MAP.get().put(name, value);
     }
@@ -77,10 +77,10 @@ public class LogRecordContext {
             Deque<Map<String, Object>> stack = new ArrayDeque<>();
             VARIABLE_MAP_STACK.set(stack);
         }
-        VARIABLE_MAP_STACK.get().push(new HashMap<>());
+        VARIABLE_MAP_STACK.get().push(new HashMap<>(3));
 
         if (GLOBAL_VARIABLE_MAP.get() == null) {
-            GLOBAL_VARIABLE_MAP.set(new HashMap<>());
+            GLOBAL_VARIABLE_MAP.set(new HashMap<>(3));
         }
     }
 }

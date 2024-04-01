@@ -8,7 +8,7 @@ import org.jjche.log.biz.service.IOperatorGetService;
 import org.jjche.log.biz.service.IParseFunction;
 import org.jjche.log.biz.service.impl.*;
 import org.jjche.log.biz.starter.annotation.EnableLogRecord;
-import org.jjche.log.biz.starter.diff.DefaultDiffItemsToLogContentService;
+import org.jjche.log.biz.starter.diff.DefaultDiffItemsToLogContentServiceImpl;
 import org.jjche.log.biz.starter.diff.IDiffItemsToLogContentService;
 import org.jjche.log.biz.starter.support.aop.BeanFactoryLogRecordAdvisor;
 import org.jjche.log.biz.starter.support.aop.LogRecordInterceptor;
@@ -109,7 +109,7 @@ public class LogRecordProxyAutoConfiguration implements ImportAware {
     @ConditionalOnMissingBean(IDiffItemsToLogContentService.class)
     @Role(BeanDefinition.ROLE_APPLICATION)
     public IDiffItemsToLogContentService diffItemsToLogContentService(LogRecordProperties logRecordProperties) {
-        return new DefaultDiffItemsToLogContentService(logRecordProperties);
+        return new DefaultDiffItemsToLogContentServiceImpl(logRecordProperties);
     }
 
     @Bean

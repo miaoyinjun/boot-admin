@@ -111,6 +111,7 @@ public enum NullMessage implements Transaction, Event, Metric, Trace, Heartbeat,
         return DEFAULT;
     }
 
+    @Override
     public long getRawDurationInMicros() {
         return 0;
     }

@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class MetricTagAggregator {
-    private static final MetricTagAggregator instance = new MetricTagAggregator();
+    private static final MetricTagAggregator INSTANCE = new MetricTagAggregator();
     private static final String OTHERS = "others";
     private static final String EMPTY = "empty";
     public static int MAX_KEY_SIZE = 1000;
@@ -39,7 +39,7 @@ public class MetricTagAggregator {
     private ConcurrentHashMap<String, Integer> metricThresholds = new ConcurrentHashMap<String, Integer>();
 
     public static MetricTagAggregator getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public void addCountMetric(String name, int quantity, Map<String, String> tags) {
@@ -150,12 +150,12 @@ public class MetricTagAggregator {
         Map<String, Map<String, MetricTagItem>> cloned = metrics;
 
         synchronized (this) {
-            metrics = new ConcurrentHashMap<String, Map<String, MetricTagItem>>();
+            metrics = new ConcurrentHashMap<String, Map<String, MetricTagItem>>(3);
 
             for (Entry<String, Map<String, MetricTagItem>> entry : cloned.entrySet()) {
                 String key = entry.getKey();
                 Map<String, MetricTagItem> items = entry.getValue();
-                Map<String, MetricTagItem> newItem = new ConcurrentHashMap<String, MetricTagItem>();
+                Map<String, MetricTagItem> newItem = new ConcurrentHashMap<String, MetricTagItem>(3);
 
                 for (Entry<String, MetricTagItem> tagItem : items.entrySet()) {
                     if (tagItem.getValue().getCount().get() > 0) {
@@ -200,7 +200,7 @@ public class MetricTagAggregator {
             synchronized (this) {
                 items = metrics.get(key);
                 if (null == items) {
-                    items = new ConcurrentHashMap<String, MetricTagItem>();
+                    items = new ConcurrentHashMap<String, MetricTagItem>(3);
 
                     metrics.put(key, items);
                 }

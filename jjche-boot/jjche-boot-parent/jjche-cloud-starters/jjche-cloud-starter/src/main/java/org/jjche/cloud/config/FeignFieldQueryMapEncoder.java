@@ -31,7 +31,7 @@ public class FeignFieldQueryMapEncoder implements QueryMapEncoder {
         Class<?> cls = object.getClass();
         // 这里的ReflectUtil使用的是cn.hutool.core.util.ReflectUtil，会循环查找所有层级父类的字段
         Field[] fields = ReflectUtil.getFields(cls);
-        Map<String, Field> fieldMap = new HashMap<>();
+        Map<String, Field> fieldMap = new HashMap<>(5);
         //子类字段覆盖父类配置
         for (Field field : fields) {
             String name = field.getName();

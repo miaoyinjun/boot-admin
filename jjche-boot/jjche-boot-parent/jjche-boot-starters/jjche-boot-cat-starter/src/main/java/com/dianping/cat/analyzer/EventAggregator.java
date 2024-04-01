@@ -43,12 +43,12 @@ public class EventAggregator {
     private ConcurrentHashMap<String, ConcurrentHashMap<String, EventData>> getAndResetEvents() {
         ConcurrentHashMap<String, ConcurrentHashMap<String, EventData>> cloned = events;
 
-        events = new ConcurrentHashMap<String, ConcurrentHashMap<String, EventData>>();
+        events = new ConcurrentHashMap<String, ConcurrentHashMap<String, EventData>>(5);
 
         for (Map.Entry<String, ConcurrentHashMap<String, EventData>> entry : cloned.entrySet()) {
             String type = entry.getKey();
 
-            events.putIfAbsent(type, new ConcurrentHashMap<String, EventData>());
+            events.putIfAbsent(type, new ConcurrentHashMap<String, EventData>(6));
         }
 
         return cloned;
@@ -70,7 +70,7 @@ public class EventAggregator {
         ConcurrentHashMap<String, EventData> item = events.get(type);
 
         if (null == item) {
-            item = new ConcurrentHashMap<String, EventData>();
+            item = new ConcurrentHashMap<String, EventData>(5);
 
             ConcurrentHashMap<String, EventData> oldValue = events.putIfAbsent(type, item);
 

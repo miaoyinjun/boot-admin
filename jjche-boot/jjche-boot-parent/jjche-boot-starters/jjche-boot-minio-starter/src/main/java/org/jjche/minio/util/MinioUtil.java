@@ -179,7 +179,7 @@ public class MinioUtil {
      */
     public String preview(String fileName) {
         // 查看文件地址
-        GetPresignedObjectUrlArgs build = new GetPresignedObjectUrlArgs().builder().bucket(prop.getBucketName()).object(fileName).method(Method.GET).build();
+        GetPresignedObjectUrlArgs build = GetPresignedObjectUrlArgs.builder().bucket(prop.getBucketName()).object(fileName).method(Method.GET).build();
         try {
             String url = minioClient.getPresignedObjectUrl(build);
             return url;

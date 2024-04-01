@@ -130,6 +130,7 @@ public class DefaultMessageTree implements MessageTree {
         return null;
     }
 
+    @Override
     public List<Event> findOrCreateEvents() {
         if (events == null) {
             events = new ArrayList<Event>();
@@ -137,6 +138,7 @@ public class DefaultMessageTree implements MessageTree {
         return events;
     }
 
+    @Override
     public List<Heartbeat> findOrCreateHeartbeats() {
         if (heartbeats == null) {
             heartbeats = new ArrayList<Heartbeat>();
@@ -144,6 +146,7 @@ public class DefaultMessageTree implements MessageTree {
         return heartbeats;
     }
 
+    @Override
     public List<Metric> findOrCreateMetrics() {
         if (metrics == null) {
             metrics = new ArrayList<Metric>();
@@ -151,6 +154,7 @@ public class DefaultMessageTree implements MessageTree {
         return metrics;
     }
 
+    @Override
     public List<Transaction> findOrCreateTransactions() {
         if (transactions == null) {
             transactions = new ArrayList<Transaction>();
@@ -158,6 +162,7 @@ public class DefaultMessageTree implements MessageTree {
         return transactions;
     }
 
+    @Override
     public ByteBuf getBuffer() {
         return buf;
     }
@@ -181,6 +186,7 @@ public class DefaultMessageTree implements MessageTree {
         return forkableTransactions;
     }
 
+    @Override
     public MessageId getFormatMessageId() {
         if (formatMessageId == null) {
             formatMessageId = MessageId.parse(messageId);
@@ -189,6 +195,7 @@ public class DefaultMessageTree implements MessageTree {
         return formatMessageId;
     }
 
+    @Override
     public void setFormatMessageId(MessageId formatMessageId) {
         this.formatMessageId = formatMessageId;
     }
@@ -303,6 +310,7 @@ public class DefaultMessageTree implements MessageTree {
         this.hitSample = hitSample;
     }
 
+    @Override
     public void setDiscardPrivate(boolean discard) {
         this.discard = discard;
     }
@@ -312,18 +320,22 @@ public class DefaultMessageTree implements MessageTree {
         return PlainTextMessageCodec.encodeTree(this);
     }
 
+    @Override
     public List<Event> getEvents() {
         return events;
     }
 
+    @Override
     public List<Heartbeat> getHeartbeats() {
         return heartbeats;
     }
 
+    @Override
     public List<Metric> getMetrics() {
         return metrics;
     }
 
+    @Override
     public List<Transaction> getTransactions() {
         return transactions;
     }

@@ -50,7 +50,6 @@ public class BpmProcessDefinitionController {
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@el.check('bpm:process-definition:query')")
     public R<String> getProcessDefinitionBpmnXML(@RequestParam("id") String id) {
-        String bpmnXML = bpmDefinitionService.getProcessDefinitionBpmnXML(id);
-        return R.ok(bpmnXML);
+        return R.ok(bpmDefinitionService.getProcessDefinitionBpmnXML(id));
     }
 }

@@ -50,7 +50,7 @@ public class JobGroupController {
 		int list_count = xxlJobGroupDao.pageListCount(start, length, appname, title);
 
 		// package result
-		Map<String, Object> maps = new HashMap<String, Object>();
+		Map<String, Object> maps = new HashMap<String, Object>(3);
 		maps.put("recordsTotal", list_count);		// 总记录数
 		maps.put("recordsFiltered", list_count);	// 过滤后的总记录数
 		maps.put("data", list);  					// 分页列表
@@ -147,7 +147,7 @@ public class JobGroupController {
 	}
 
 	private List<String> findRegistryByAppName(String appnameParam){
-		HashMap<String, List<String>> appAddressMap = new HashMap<String, List<String>>();
+		HashMap<String, List<String>> appAddressMap = new HashMap<String, List<String>>(5);
 		List<XxlJobRegistry> list = xxlJobRegistryDao.findAll(RegistryConfig.DEAD_TIMEOUT, new Date());
 		if (list != null) {
 			for (XxlJobRegistry item: list) {

@@ -124,6 +124,7 @@ public class DefaultForkedTransaction extends AbstractMessage implements ForkedT
         }
     }
 
+    @Override
     public void setDurationInMicros(long duration) {
         durationInMicros = duration;
     }

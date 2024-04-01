@@ -13,7 +13,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum BpmProcessInstanceDeleteReasonEnum {
 
-    REJECT_TASK("不通过任务，原因：{}"), // 修改文案时，需要注意 isRejectReason 方法
+    // 不通过任务
+    REJECT_TASK("不通过任务，原因：{}"),
+    // 主动取消任务
     CANCEL_TASK("主动取消任务，原因：{}"),
 
     // ========== 流程任务的独有原因 ==========

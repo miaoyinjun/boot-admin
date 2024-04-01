@@ -405,6 +405,7 @@ public class PlainTextMessageCodec implements MessageCodec {
         }
     }
 
+    @Override
     public void reset() {
         if (ctx != null) {
             ctx.remove();

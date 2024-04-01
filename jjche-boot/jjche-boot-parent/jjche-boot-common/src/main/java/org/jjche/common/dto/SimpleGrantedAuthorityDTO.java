@@ -19,6 +19,7 @@ import org.springframework.security.core.GrantedAuthority;
 public class SimpleGrantedAuthorityDTO implements GrantedAuthority {
     private String role;
 
+    @Override
     public String getAuthority() {
         return this.role;
     }

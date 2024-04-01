@@ -23,14 +23,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class StatusExtensionRegister {
 
-    private static final StatusExtensionRegister register = new StatusExtensionRegister();
+    private static final StatusExtensionRegister REGISTER = new StatusExtensionRegister();
     private List<StatusExtension> extensions = new CopyOnWriteArrayList<StatusExtension>();
 
     private StatusExtensionRegister() {
     }
 
     public static StatusExtensionRegister getInstance() {
-        return register;
+        return REGISTER;
     }
 
     public List<StatusExtension> getStatusExtension() {

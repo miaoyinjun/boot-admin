@@ -106,6 +106,7 @@ public class DefaultTransaction extends AbstractMessage implements Transaction {
         }
     }
 
+    @Override
     public ForkableTransaction forFork() {
         MessageTree tree = manager.getThreadLocalMessageTree();
         String rootMessageId = tree.getRootMessageId();
@@ -162,6 +163,7 @@ public class DefaultTransaction extends AbstractMessage implements Transaction {
         }
     }
 
+    @Override
     public void setDurationInMicros(long duration) {
         durationInMicro = duration;
     }
@@ -171,6 +173,7 @@ public class DefaultTransaction extends AbstractMessage implements Transaction {
         return getDurationInMicros() / 1000L;
     }
 
+    @Override
     public void setDurationInMillis(long duration) {
         durationInMicro = duration * 1000L;
     }
@@ -179,6 +182,7 @@ public class DefaultTransaction extends AbstractMessage implements Transaction {
         return manager;
     }
 
+    @Override
     public long getRawDurationInMicros() {
         return durationInMicro;
     }
@@ -222,6 +226,8 @@ public class DefaultTransaction extends AbstractMessage implements Transaction {
                         case LONG_MQ:
                             threshold = config.getLongConfigThreshold(ProblemLongType.LONG_MQ.getName());
                             break;
+                        default:
+                            break;
                     }
                 }
 
@@ -242,7 +248,7 @@ public class DefaultTransaction extends AbstractMessage implements Transaction {
             ConcurrentHashMap<String, AtomicInteger> count = DefaultTransaction.count.get(minute);
 
             if (count == null) {
-                count = new ConcurrentHashMap<String, AtomicInteger>();
+                count = new ConcurrentHashMap<String, AtomicInteger>(5);
 
                 ConcurrentHashMap<String, AtomicInteger> oldCount = DefaultTransaction.count.putIfAbsent(minute, count);
 
@@ -269,6 +275,7 @@ public class DefaultTransaction extends AbstractMessage implements Transaction {
         }
     }
 
+    @Override
     public void setDurationStart(long durationStart) {
         this.durationStart = durationStart;
     }

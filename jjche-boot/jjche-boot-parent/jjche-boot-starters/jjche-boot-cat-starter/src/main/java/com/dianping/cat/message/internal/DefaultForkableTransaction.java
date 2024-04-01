@@ -134,6 +134,7 @@ public class DefaultForkableTransaction extends AbstractMessage implements Forka
         }
     }
 
+    @Override
     public void setDurationInMillis(long durationInMillis) {
         durationInMicros = durationInMillis * 1000L;
     }

@@ -2,6 +2,7 @@ package org.jjche.bpm.modules.definition.service;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.NumberUtil;
@@ -13,25 +14,24 @@ import com.google.common.annotations.VisibleForTesting;
 import lombok.RequiredArgsConstructor;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.UserTask;
-import org.flowable.common.engine.api.FlowableException;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.jjche.bpm.config.flowable.core.behavior.script.BpmTaskAssignScript;
-import org.jjche.bpm.modules.definition.vo.rule.BpmTaskAssignRuleCreateReqVO;
-import org.jjche.bpm.modules.definition.vo.rule.BpmTaskAssignRuleRespVO;
-import org.jjche.bpm.modules.definition.vo.rule.BpmTaskAssignRuleUpdateReqVO;
 import org.jjche.bpm.modules.definition.domain.BpmTaskAssignRuleDO;
 import org.jjche.bpm.modules.definition.enums.BpmTaskAssignRuleTypeEnum;
 import org.jjche.bpm.modules.definition.mapper.BpmTaskAssignRuleMapper;
 import org.jjche.bpm.modules.definition.mapstruct.BpmTaskAssignRuleConvert;
+import org.jjche.bpm.modules.definition.vo.rule.BpmTaskAssignRuleCreateReqVO;
+import org.jjche.bpm.modules.definition.vo.rule.BpmTaskAssignRuleRespVO;
+import org.jjche.bpm.modules.definition.vo.rule.BpmTaskAssignRuleUpdateReqVO;
 import org.jjche.bpm.modules.group.domain.BpmUserGroupDO;
 import org.jjche.bpm.modules.group.service.BpmUserGroupService;
 import org.jjche.bpm.onstants.DictTypeConstants;
 import org.jjche.common.dto.DeptSmallDTO;
-import org.jjche.common.vo.UserVO;
 import org.jjche.common.exception.BusinessException;
-import org.jjche.sys.api.SysBaseApi;
+import org.jjche.common.vo.UserVO;
 import org.jjche.flowable.util.FlowableUtils;
 import org.jjche.mybatis.base.service.MyServiceImpl;
+import org.jjche.sys.api.SysBaseApi;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -154,9 +154,7 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
         validTaskAssignRuleOptions(reqVO.getType(), reqVO.getOptions());
         // 校验是否存在
         BpmTaskAssignRuleDO existRule = this.baseMapper.selectById(reqVO.getId());
-        if (existRule == null) {
-            throw new BusinessException("流程任务分配规则不存在");
-        }
+        Assert.notNull(existRule, "流程任务分配规则不存在");
         // 只允许修改流程模型的规则
         if (!Objects.equals(BpmTaskAssignRuleDO.PROCESS_DEFINITION_ID_NULL, existRule.getProcessDefinitionId())) {
             throw new BusinessException("只有流程模型的任务分配规则，才允许被修改");
@@ -275,10 +273,10 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
     BpmTaskAssignRuleDO getTaskRule(DelegateExecution execution) {
         List<BpmTaskAssignRuleDO> taskRules = getTaskAssignRuleListByProcessDefinitionId(execution.getProcessDefinitionId(), execution.getCurrentActivityId());
         if (CollUtil.isEmpty(taskRules)) {
-            throw new FlowableException(format("流程任务({}/{}/{}) 找不到符合的任务规则", execution.getId(), execution.getProcessDefinitionId(), execution.getCurrentActivityId()));
+            throw new BusinessException(format("流程任务({}/{}/{}) 找不到符合的任务规则", execution.getId(), execution.getProcessDefinitionId(), execution.getCurrentActivityId()));
         }
         if (taskRules.size() > 1) {
-            throw new FlowableException(format("流程任务({}/{}/{}) 找到过多任务规则({})", execution.getId(), execution.getProcessDefinitionId(), execution.getCurrentActivityId()));
+            throw new BusinessException(format("流程任务({}/{}/{}) 找到过多任务规则({})", execution.getId(), execution.getProcessDefinitionId(), execution.getCurrentActivityId()));
         }
         return taskRules.get(0);
     }
@@ -346,10 +344,7 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
         List<BpmTaskAssignScript> scripts = new ArrayList<>(rule.getOptions().size());
         rule.getOptions().forEach(id -> {
             BpmTaskAssignScript script = scriptMap.get(id);
-            if (script == null) {
-                String msg = StrUtil.format("操作失败，原因：任务分配脚本({}) 不存在", id);
-                throw new BusinessException(msg);
-            }
+            Assert.notNull(script, StrUtil.format("操作失败，原因：任务分配脚本({}) 不存在", id));
             scripts.add(script);
         });
         // 逐个计算任务

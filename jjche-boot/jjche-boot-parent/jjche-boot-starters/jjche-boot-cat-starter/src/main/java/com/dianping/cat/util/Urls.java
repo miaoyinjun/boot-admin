@@ -44,7 +44,7 @@ public class Urls {
 
         public UrlIO header(String name, String value) {
             if (headers == null) {
-                headers = new HashMap<String, String>();
+                headers = new HashMap<String, String>(1);
             }
 
             headers.put(name, value);

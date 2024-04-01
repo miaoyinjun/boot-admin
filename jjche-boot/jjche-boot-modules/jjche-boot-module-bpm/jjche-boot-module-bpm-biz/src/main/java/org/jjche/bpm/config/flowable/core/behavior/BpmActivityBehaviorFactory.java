@@ -38,9 +38,5 @@ public class BpmActivityBehaviorFactory extends DefaultActivityBehaviorFactory {
         BpmParallelMultiInstanceBehavior behavior = new BpmParallelMultiInstanceBehavior(activity, innerActivityBehavior);
         behavior.setBpmTaskRuleService(bpmTaskRuleService);
         return behavior;
-
     }
-
-    // TODO @ke：SequentialMultiInstanceBehavior 这个抽空也可以看看
-
 }

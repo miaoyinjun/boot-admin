@@ -19,7 +19,7 @@
 package com.dianping.cat.message.internal;
 
 import com.dianping.cat.configuration.ClientConfigService;
-import com.dianping.cat.configuration.DefaultClientConfigService;
+import com.dianping.cat.configuration.DefaultClientConfigServiceImpl;
 import com.dianping.cat.configuration.NetworkInterfaceManager;
 import com.dianping.cat.log.CatLogger;
 import com.dianping.cat.message.ForkableTransaction;
@@ -44,7 +44,7 @@ public class DefaultMessageManager implements MessageManager {
     private String hostName;
     private String ip;
     private boolean firstMessage = true;
-    private ClientConfigService configService = DefaultClientConfigService.getInstance();
+    private ClientConfigService configService = DefaultClientConfigServiceImpl.getInstance();
     private TcpSocketSender sender = TcpSocketSender.getInstance();
     private MessageIdFactory factory = MessageIdFactory.getInstance();
     private AtomicInteger sampleCount = new AtomicInteger();
@@ -93,10 +93,12 @@ public class DefaultMessageManager implements MessageManager {
         }
     }
 
+    @Override
     public ClientConfigService getConfigService() {
         return configService;
     }
 
+    @Override
     public Context getContext() {
         Context ctx = context.get();
 
@@ -183,6 +185,7 @@ public class DefaultMessageManager implements MessageManager {
         return true;
     }
 
+    @Override
     public boolean isTraceMode() {
         Context content = getContext();
 
@@ -193,6 +196,7 @@ public class DefaultMessageManager implements MessageManager {
         }
     }
 
+    @Override
     public void setTraceMode(boolean traceMode) {
         Context context = getContext();
 

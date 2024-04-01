@@ -64,7 +64,7 @@ public class ApiModelParseFunction implements IParseFunction {
     private String getFieldDetail(Object object) {
         StringBuilder result = StrUtil.builder();
         if (object != null) {
-            Map<String, Object> descMap = new HashMap<>();
+            Map<String, Object> descMap = new HashMap<>(10);
             Map<String, String> apiModelMap = ClassUtil.getApiModelPropertyValue(object.getClass());
             Map<String, Object> objectMap = Convert.convert(Map.class, object);
             for (Map.Entry<String, Object> entry : objectMap.entrySet()) {

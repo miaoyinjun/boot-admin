@@ -269,7 +269,7 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
      * @return /
      */
     public static Map<String, Object> getUserHeaders(JwtUserDTO userDetails) {
-        Map<String, Object> httpHeaders = new HashMap<>();
+        Map<String, Object> httpHeaders = new HashMap<>(5);
         if (userDetails != null) {
             UserVO user = userDetails.getUser();
             //用户基本信息

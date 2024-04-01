@@ -12,8 +12,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum BpmModelFormTypeEnum {
 
-    NORMAL(10, "流程表单"), // 对应 BpmFormDO
-    CUSTOM(20, "业务表单") // 业务自己定义的表单，自己进行数据的存储
+    // 对应 BpmFormDO
+    NORMAL(10, "流程表单"),
+    // 业务自己定义的表单，自己进行数据的存储
+    CUSTOM(20, "业务表单")
     ;
 
     private final Integer type;

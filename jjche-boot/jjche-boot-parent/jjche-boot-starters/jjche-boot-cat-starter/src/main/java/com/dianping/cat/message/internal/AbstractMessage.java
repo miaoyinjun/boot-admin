@@ -123,6 +123,7 @@ public abstract class AbstractMessage implements Message {
         return timestampInMillis;
     }
 
+    @Override
     public void setTimestamp(long timestamp) {
         timestampInMillis = timestamp;
     }

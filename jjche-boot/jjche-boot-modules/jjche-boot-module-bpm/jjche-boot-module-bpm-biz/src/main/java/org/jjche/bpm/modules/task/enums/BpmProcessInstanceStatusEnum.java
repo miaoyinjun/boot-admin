@@ -12,7 +12,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum BpmProcessInstanceStatusEnum {
 
+    //进行中
     RUNNING(1, "进行中"),
+    //已完成
     FINISH(2, "已完成");
 
     /**

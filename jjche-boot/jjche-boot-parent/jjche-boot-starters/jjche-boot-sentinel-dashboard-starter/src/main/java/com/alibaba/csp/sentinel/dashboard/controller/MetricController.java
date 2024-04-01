@@ -15,17 +15,11 @@
  */
 package com.alibaba.csp.sentinel.dashboard.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
-
+import com.alibaba.csp.sentinel.dashboard.datasource.entity.MetricEntity;
 import com.alibaba.csp.sentinel.dashboard.domain.Result;
+import com.alibaba.csp.sentinel.dashboard.domain.vo.MetricVo;
 import com.alibaba.csp.sentinel.dashboard.repository.metric.MetricsRepository;
+import com.alibaba.csp.sentinel.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +28,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.csp.sentinel.util.StringUtil;
-
-import com.alibaba.csp.sentinel.dashboard.datasource.entity.MetricEntity;
-import com.alibaba.csp.sentinel.dashboard.domain.vo.MetricVo;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author leyou
@@ -48,7 +40,7 @@ public class MetricController {
 
     private static Logger logger = LoggerFactory.getLogger(MetricController.class);
 
-    private static final long maxQueryIntervalMs = 1000 * 60 * 60;
+    private static final long MAX_QUERY_INTERVAL_MS = 1000 * 60 * 60;
 
     @Autowired
     private MetricsRepository<MetricEntity> metricStore;
@@ -81,7 +73,7 @@ public class MetricController {
         if (startTime == null) {
             startTime = endTime - 1000 * 60 * 5;
         }
-        if (endTime - startTime > maxQueryIntervalMs) {
+        if (endTime - startTime > MAX_QUERY_INTERVAL_MS) {
             return Result.ofFail(-1, "time intervalMs is too big, must <= 1h");
         }
         List<String> resources = metricStore.listResourcesOfApp(app);
@@ -108,7 +100,7 @@ public class MetricController {
             topResource = resources.subList((pageIndex - 1) * pageSize,
                 Math.min(pageIndex * pageSize, resources.size()));
         }
-        final Map<String, Iterable<MetricVo>> map = new ConcurrentHashMap<>();
+        final Map<String, Iterable<MetricVo>> map = new ConcurrentHashMap<>(3);
         logger.debug("topResource={}", topResource);
         long time = System.currentTimeMillis();
         for (final String resource : topResource) {
@@ -150,7 +142,7 @@ public class MetricController {
         if (startTime == null) {
             startTime = endTime - 1000 * 60;
         }
-        if (endTime - startTime > maxQueryIntervalMs) {
+        if (endTime - startTime > MAX_QUERY_INTERVAL_MS) {
             return Result.ofFail(-1, "time intervalMs is too big, must <= 1h");
         }
         List<MetricEntity> entities = metricStore.queryByAppAndResourceBetween(

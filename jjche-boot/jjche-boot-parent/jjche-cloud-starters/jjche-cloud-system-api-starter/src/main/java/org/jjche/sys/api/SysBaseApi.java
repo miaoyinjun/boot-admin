@@ -96,6 +96,7 @@ public interface SysBaseApi extends CommonApi {
      * @param value 字典值
      * @return /
      */
+    @Override
     @GetMapping("dict/value")
     DictParam getDictByNameValue(@RequestParam("name") String name, @RequestParam("value") String value);
 
@@ -106,6 +107,7 @@ public interface SysBaseApi extends CommonApi {
      *
      * @param logRecord /
      */
+    @Override
     @PostMapping("log/record")
     void recordLog(@RequestBody LogRecordDTO logRecord);
 
@@ -137,6 +139,7 @@ public interface SysBaseApi extends CommonApi {
      *
      * @return /
      */
+    @Override
     @GetMapping("auth/user-details")
     JwtUserDTO getUserDetails();
 
@@ -148,6 +151,7 @@ public interface SysBaseApi extends CommonApi {
      * @param token /
      * @return /
      */
+    @Override
     @GetMapping("auth/user-details")
     JwtUserDTO getUserDetails(@RequestHeader(SecurityConstant.HEADER_AUTH) String token);
 
@@ -161,6 +165,7 @@ public interface SysBaseApi extends CommonApi {
     @PostMapping("permission/permission-data-resource")
     List<DataPermissionFieldResultVO> listPermissionDataResource(@RequestBody PermissionDataResourceDTO dto);
 
+    @Override
     @GetMapping("permission/permission-data-rule-by-userid")
     List<PermissionDataRuleDTO> listPermissionDataRuleByUserId(@RequestParam("userId") Long userId);
 
@@ -191,6 +196,7 @@ public interface SysBaseApi extends CommonApi {
      * @param appId 应用id
      * @return /
      */
+    @Override
     @GetMapping("app-key/key-by-app-id")
     SecurityAppKeyBasicVO getAppKeyByAppId(@RequestParam("appId") String appId);
 

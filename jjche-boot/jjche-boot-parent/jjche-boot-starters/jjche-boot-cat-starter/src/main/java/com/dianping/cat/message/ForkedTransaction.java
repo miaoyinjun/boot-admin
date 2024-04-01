@@ -21,6 +21,7 @@ package com.dianping.cat.message;
 import java.io.Closeable;
 
 public interface ForkedTransaction extends Transaction, Closeable {
+    @Override
     void close();
 
     String getMessageId();

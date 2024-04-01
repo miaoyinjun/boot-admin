@@ -290,7 +290,7 @@ public class GenUtil {
             /**
              * 是否包含逻辑删除字段
              */
-            if (column.getColumnName().equalsIgnoreCase("is_deleted")) {
+            if (StrUtil.equalsIgnoreCase(column.getColumnName(), "is_deleted")) {
                 superEntityClassName = "BaseEntityLogicDelete";
             }
             Map<String, Object> listMap = new HashMap<>(16);

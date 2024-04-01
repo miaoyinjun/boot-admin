@@ -20,7 +20,7 @@ package com.dianping.cat.message.io;
 
 import com.dianping.cat.Cat;
 import com.dianping.cat.configuration.ClientConfigService;
-import com.dianping.cat.configuration.DefaultClientConfigService;
+import com.dianping.cat.configuration.DefaultClientConfigServiceImpl;
 import com.dianping.cat.configuration.client.entity.Server;
 import com.dianping.cat.log.CatLogger;
 import com.dianping.cat.message.internal.MessageIdFactory;
@@ -44,7 +44,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ChannelManager implements Threads.Task {
     private static CatLogger LOGGER = CatLogger.getInstance();
     private static ChannelManager instance = new ChannelManager();
-    private ClientConfigService configService = DefaultClientConfigService.getInstance();
+    private ClientConfigService configService = DefaultClientConfigServiceImpl.getInstance();
     private Bootstrap bootstrap;
     private boolean active = true;
     private int channelStalledTimes = 0;
@@ -454,6 +454,7 @@ public class ChannelManager implements Threads.Task {
             return this;
         }
 
+        @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
 

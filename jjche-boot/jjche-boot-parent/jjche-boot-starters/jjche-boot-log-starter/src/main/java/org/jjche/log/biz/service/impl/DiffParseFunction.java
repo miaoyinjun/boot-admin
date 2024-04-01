@@ -20,14 +20,14 @@ import java.util.Objects;
  * @since 2022-07-12
  */
 public class DiffParseFunction {
-    public static final String diffFunctionName = "_DIFF";
+    public static final String DIFF_FUNCTION_NAME = "_DIFF";
     public static final String OLD_OBJECT = "_oldObj";
 
     private static IDiffItemsToLogContentService diffItemsToLogContentService;
 
     //@Override
     public String functionName() {
-        return diffFunctionName;
+        return DIFF_FUNCTION_NAME;
     }
 
     //@Override

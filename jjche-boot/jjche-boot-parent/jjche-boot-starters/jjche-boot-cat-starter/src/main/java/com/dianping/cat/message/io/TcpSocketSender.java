@@ -20,7 +20,7 @@ package com.dianping.cat.message.io;
 
 import com.dianping.cat.analyzer.LocalAggregator;
 import com.dianping.cat.configuration.ClientConfigService;
-import com.dianping.cat.configuration.DefaultClientConfigService;
+import com.dianping.cat.configuration.DefaultClientConfigServiceImpl;
 import com.dianping.cat.configuration.MessageType;
 import com.dianping.cat.configuration.client.entity.Server;
 import com.dianping.cat.log.CatLogger;
@@ -57,7 +57,7 @@ public class TcpSocketSender implements Threads.Task, MessageSender {
     private static TcpSocketSender INSTANCE = new TcpSocketSender();
     private MessageCodec nativeCodec = new NativeMessageCodec();
     private MessageStatistics statistics = new DefaultMessageStatistics();
-    private ClientConfigService configService = DefaultClientConfigService.getInstance();
+    private ClientConfigService configService = DefaultClientConfigServiceImpl.getInstance();
     private MessageQueue messageQueue = new PriorityMessageQueue(SIZE);
     private MessageIdFactory factory = MessageIdFactory.getInstance();
     private AtomicMessageManager atomicQueueManager = new AtomicMessageManager(SIZE);
@@ -140,6 +140,8 @@ public class TcpSocketSender implements Threads.Task, MessageSender {
                 break;
             case STAND_ALONE_EVENT:
                 processTreeInClient(tree);
+                break;
+            default:
                 break;
         }
 

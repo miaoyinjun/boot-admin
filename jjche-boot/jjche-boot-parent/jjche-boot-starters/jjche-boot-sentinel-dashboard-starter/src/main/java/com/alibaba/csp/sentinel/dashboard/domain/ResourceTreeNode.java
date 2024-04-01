@@ -15,12 +15,12 @@
  */
 package com.alibaba.csp.sentinel.dashboard.domain;
 
+import com.alibaba.csp.sentinel.command.vo.NodeVo;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.alibaba.csp.sentinel.command.vo.NodeVo;
 
 /**
  * @author leyou
@@ -51,7 +51,7 @@ public class ResourceTreeNode {
             return null;
         }
         ResourceTreeNode root = null;
-        Map<String, ResourceTreeNode> map = new HashMap<>();
+        Map<String, ResourceTreeNode> map = new HashMap<>(3);
         for (NodeVo vo : nodeVos) {
             ResourceTreeNode node = fromNodeVo(vo);
             map.put(node.id, node);

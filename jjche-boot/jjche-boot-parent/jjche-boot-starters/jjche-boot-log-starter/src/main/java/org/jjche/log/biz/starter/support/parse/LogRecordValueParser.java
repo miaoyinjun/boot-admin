@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  */
 public class LogRecordValueParser implements BeanFactoryAware {
 
-    private static final Pattern pattern = Pattern.compile("\\{\\s*(\\w*)\\s*\\{(.*?)}}");
+    private static final Pattern PATTERN = Pattern.compile("\\{\\s*(\\w*)\\s*\\{(.*?)}}");
     public static final String COMMA = ",";
     private final LogRecordExpressionEvaluator expressionEvaluator = new LogRecordExpressionEvaluator();
     protected BeanFactory beanFactory;
@@ -56,21 +56,21 @@ public class LogRecordValueParser implements BeanFactoryAware {
 
     public Map<String, String> processTemplate(Collection<String> templates, MethodExecuteResult methodExecuteResult,
                                                Map<String, String> beforeFunctionNameAndReturnMap) {
-        Map<String, String> expressionValues = new HashMap<>();
+        Map<String, String> expressionValues = new HashMap<>(3);
         EvaluationContext evaluationContext = expressionEvaluator.createEvaluationContext(methodExecuteResult.getMethod(),
                 methodExecuteResult.getArgs(), methodExecuteResult.getTargetClass(), methodExecuteResult.getResult(),
                 methodExecuteResult.getErrorMsg(), beanFactory);
 
         for (String expressionTemplate : templates) {
             if (expressionTemplate.contains("{")) {
-                Matcher matcher = pattern.matcher(expressionTemplate);
+                Matcher matcher = PATTERN.matcher(expressionTemplate);
                 StringBuffer parsedStr = new StringBuffer();
                 AnnotatedElementKey annotatedElementKey = new AnnotatedElementKey(methodExecuteResult.getMethod(), methodExecuteResult.getTargetClass());
                 while (matcher.find()) {
 
                     String expression = matcher.group(2);
                     String functionName = matcher.group(1);
-                    if (DiffParseFunction.diffFunctionName.equals(functionName)) {
+                    if (DiffParseFunction.DIFF_FUNCTION_NAME.equals(functionName)) {
                         expression = getDiffFunctionValue(evaluationContext, annotatedElementKey, expression);
                     } else {
                         Object value = expressionEvaluator.parseExpression(expression, annotatedElementKey, evaluationContext);
@@ -109,12 +109,12 @@ public class LogRecordValueParser implements BeanFactoryAware {
     }
 
     public Map<String, String> processBeforeExecuteFunctionTemplate(Collection<String> templates, Class<?> targetClass, Method method, Object[] args) {
-        Map<String, String> functionNameAndReturnValueMap = new HashMap<>();
+        Map<String, String> functionNameAndReturnValueMap = new HashMap<>(3);
         EvaluationContext evaluationContext = expressionEvaluator.createEvaluationContext(method, args, targetClass, null, null, beanFactory);
 
         for (String expressionTemplate : templates) {
             if (expressionTemplate.contains("{")) {
-                Matcher matcher = pattern.matcher(expressionTemplate);
+                Matcher matcher = PATTERN.matcher(expressionTemplate);
                 while (matcher.find()) {
                     String expression = matcher.group(2);
                     if (expression.contains("#_ret") || expression.contains("#_errorMsg")) {

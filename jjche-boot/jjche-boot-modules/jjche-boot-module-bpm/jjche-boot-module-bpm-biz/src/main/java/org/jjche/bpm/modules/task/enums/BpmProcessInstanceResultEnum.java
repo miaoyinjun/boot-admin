@@ -14,13 +14,16 @@ import java.util.Arrays;
 @AllArgsConstructor
 public enum BpmProcessInstanceResultEnum {
 
+    //处理中
     PROCESS(1, "处理中"),
+    //通过
     APPROVE(2, "通过"),
+    //不通过
     REJECT(3, "不通过"),
+    //已取消
     CANCEL(4, "已取消"),
 
     // ========== 流程任务独有的状态 ==========
-
     BACK(5, "退回/驳回");
 
     /**

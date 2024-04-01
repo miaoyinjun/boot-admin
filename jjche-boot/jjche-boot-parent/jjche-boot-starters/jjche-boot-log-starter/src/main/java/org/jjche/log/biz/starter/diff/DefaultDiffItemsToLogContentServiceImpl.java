@@ -27,13 +27,13 @@ import java.util.*;
  */
 @Setter
 @Getter
-public class DefaultDiffItemsToLogContentService implements IDiffItemsToLogContentService, BeanFactoryAware, SmartInitializingSingleton {
+public class DefaultDiffItemsToLogContentServiceImpl implements IDiffItemsToLogContentService, BeanFactoryAware, SmartInitializingSingleton {
 
     private IFunctionService functionService;
     private final LogRecordProperties logRecordProperties;
     private BeanFactory beanFactory;
 
-    public DefaultDiffItemsToLogContentService(LogRecordProperties logRecordProperties) {
+    public DefaultDiffItemsToLogContentServiceImpl(LogRecordProperties logRecordProperties) {
         this.logRecordProperties = logRecordProperties;
     }
 

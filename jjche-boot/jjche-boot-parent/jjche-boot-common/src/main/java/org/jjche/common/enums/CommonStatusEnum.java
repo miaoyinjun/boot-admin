@@ -18,7 +18,9 @@ import java.util.stream.Stream;
 @Getter
 @AllArgsConstructor
 public enum CommonStatusEnum implements IBaseEnum {
+    //开启
     ENABLE("1", "开启"),
+    //关闭
     DISABLE("0", "关闭");
 
     @EnumValue

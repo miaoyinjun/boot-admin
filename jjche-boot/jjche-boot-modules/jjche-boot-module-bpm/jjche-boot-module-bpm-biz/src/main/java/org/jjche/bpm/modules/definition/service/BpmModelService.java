@@ -28,7 +28,6 @@ import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 
@@ -173,10 +172,7 @@ public class BpmModelService {
     public void updateModel(@Valid BpmModelUpdateReqVO updateReqVO) {
         // 校验流程模型存在
         Model model = repositoryService.getModel(updateReqVO.getId());
-        if (model == null) {
-            throw new BusinessException("流程模型不存在");
-        }
-
+        Assert.notNull(model, "流程模型不存在");
         // 修改流程定义
         bpmModelConvert.copy(model, updateReqVO);
         // 更新模型
@@ -194,15 +190,11 @@ public class BpmModelService {
     public void deployModel(String id) {
         // 1.1 校验流程模型存在
         Model model = repositoryService.getModel(id);
-        if (ObjectUtils.isEmpty(model)) {
-            throw new BusinessException("流程模型不存在");
-        }
+        Assert.notNull(model, "流程模型不存在");
         // 1.2 校验流程图
         // TODO 芋艿：校验流程图的有效性；例如说，是否有开始的元素，是否有结束的元素；
         byte[] bpmnBytes = repositoryService.getModelEditorSource(model.getId());
-        if (bpmnBytes == null) {
-            throw new BusinessException("流程模型不存在");
-        }
+        Assert.notNull(bpmnBytes, "流程模型不存在");
         // 1.3 校验表单已配
         BpmFormDO form = checkFormConfig(model.getMetaInfo());
         // 1.4 校验任务分配规则已配置
@@ -244,9 +236,7 @@ public class BpmModelService {
         // 校验流程模型存在
         String id = CollUtil.getFirst(ids);
         Model model = repositoryService.getModel(id);
-        if (model == null) {
-            throw new BusinessException("流程模型不存在");
-        }
+        Assert.notNull(model, "流程模型不存在");
         // 执行删除
         repositoryService.deleteModel(id);
         // 禁用流程实例
@@ -262,15 +252,10 @@ public class BpmModelService {
     public void updateModelState(String id, Integer state) {
         // 校验流程模型存在
         Model model = repositoryService.getModel(id);
-        if (model == null) {
-            throw new BusinessException("流程模型不存在");
-        }
+        Assert.notNull(model, "流程模型不存在");
         // 校验流程定义存在
         ProcessDefinition definition = processDefinitionService.getProcessDefinitionByDeploymentId(model.getDeploymentId());
-        if (definition == null) {
-            throw new BusinessException("流程定义不存在");
-        }
-
+        Assert.notNull(definition, "流程定义不存在");
         // 更新状态
         processDefinitionService.updateProcessDefinitionState(definition.getId(), state);
     }
@@ -311,9 +296,7 @@ public class BpmModelService {
         // 校验表单存在
         if (Objects.equals(metaInfo.getFormType(), BpmModelFormTypeEnum.NORMAL.getType())) {
             BpmFormDO form = bpmFormService.getById(metaInfo.getFormId());
-            if (form == null) {
-                throw new BusinessException("动态表单不存在");
-            }
+            Assert.notNull(form, "动态表单不存在");
             return form;
         }
         return null;

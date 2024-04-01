@@ -31,7 +31,7 @@ public class DruidInfoCollector extends DataSourceCollector {
 
     private Map<String, Number> doCollect() {
         Map<String, DruidMonitorInfo> druidMonitorInfoMap = getDruidMonitorInfoMap();
-        Map<String, Number> map = new HashMap<String, Number>();
+        Map<String, Number> map = new HashMap<String, Number>(5);
         String detail = Properties.forString().fromEnv().fromSystem().getProperty("CAT_DATASOURCE_DETAIL", "false");
 
         for (Map.Entry<String, DruidMonitorInfo> entry : druidMonitorInfoMap.entrySet()) {
@@ -141,7 +141,7 @@ public class DruidInfoCollector extends DataSourceCollector {
     }
 
     private Map<String, DruidMonitorInfo> getDruidMonitorInfoMap() {
-        Map<String, DruidMonitorInfo> dataSourceInfoMap = new HashMap<String, DruidMonitorInfo>();
+        Map<String, DruidMonitorInfo> dataSourceInfoMap = new HashMap<String, DruidMonitorInfo>(5);
         try {
             Hashtable<String, String> table = new Hashtable<String, String>();
 

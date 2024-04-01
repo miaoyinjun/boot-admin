@@ -25,7 +25,7 @@ public class CookieInterceptor implements AsyncHandlerInterceptor {
 
 		// cookie
 		if (modelAndView!=null && request.getCookies()!=null && request.getCookies().length>0) {
-			HashMap<String, Cookie> cookieMap = new HashMap<String, Cookie>();
+			HashMap<String, Cookie> cookieMap = new HashMap<String, Cookie>(5);
 			for (Cookie ck : request.getCookies()) {
 				cookieMap.put(ck.getName(), ck);
 			}
@@ -38,5 +38,5 @@ public class CookieInterceptor implements AsyncHandlerInterceptor {
 		}
 
 	}
-	
+
 }

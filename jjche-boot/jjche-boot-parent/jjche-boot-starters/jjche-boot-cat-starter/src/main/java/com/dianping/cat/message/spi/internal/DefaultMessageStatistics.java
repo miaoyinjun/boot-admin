@@ -43,7 +43,7 @@ public class DefaultMessageStatistics implements MessageStatistics {
 
     @Override
     public Map<String, Long> getStatistics() {
-        Map<String, Long> map = new HashMap<String, Long>();
+        Map<String, Long> map = new HashMap<String, Long>(5);
 
         map.put("cat.status.message.produced", produced.get());
         produced = new AtomicLong();

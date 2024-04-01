@@ -21,7 +21,7 @@ package com.dianping.cat.status;
 import com.dianping.cat.Cat;
 import com.dianping.cat.configuration.ApplicationEnvironment;
 import com.dianping.cat.configuration.ClientConfigService;
-import com.dianping.cat.configuration.DefaultClientConfigService;
+import com.dianping.cat.configuration.DefaultClientConfigServiceImpl;
 import com.dianping.cat.configuration.NetworkInterfaceManager;
 import com.dianping.cat.log.CatLogger;
 import com.dianping.cat.message.Event;
@@ -45,6 +45,7 @@ import com.dianping.cat.status.system.ProcessorInfoCollector;
 import com.dianping.cat.status.system.StaticInfoCollector;
 import com.dianping.cat.util.Threads;
 import io.netty.channel.ChannelFuture;
+import org.jjche.common.util.StrUtil;
 
 import java.io.File;
 import java.lang.management.ManagementFactory;
@@ -58,7 +59,7 @@ import java.util.Map.Entry;
 
 public class StatusUpdateTask implements Threads.Task {
     private static CatLogger LOGGER = CatLogger.getInstance();
-    private ClientConfigService configService = DefaultClientConfigService.getInstance();
+    private ClientConfigService configService = DefaultClientConfigServiceImpl.getInstance();
     private ChannelManager channelManager = ChannelManager.getInstance();
     private boolean active = true;
 
@@ -97,7 +98,7 @@ public class StatusUpdateTask implements Threads.Task {
                         try {
                             double doubleValue = Double.parseDouble(value);
 
-                            if (value.equalsIgnoreCase("NaN")) {
+                            if (StrUtil.equalsIgnoreCase(value, "NaN")) {
                                 doubleValue = 0;
                             }
 

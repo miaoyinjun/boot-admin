@@ -20,7 +20,7 @@ package com.dianping.cat.message.internal;
 
 
 import com.dianping.cat.configuration.ClientConfigService;
-import com.dianping.cat.configuration.DefaultClientConfigService;
+import com.dianping.cat.configuration.DefaultClientConfigServiceImpl;
 import com.dianping.cat.message.Message;
 import com.dianping.cat.message.Transaction;
 import com.dianping.cat.message.spi.MessageManager;
@@ -42,7 +42,7 @@ public class NullMessageManager implements MessageManager {
 
     @Override
     public ClientConfigService getConfigService() {
-        return DefaultClientConfigService.getInstance();
+        return DefaultClientConfigServiceImpl.getInstance();
     }
 
     @Override

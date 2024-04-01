@@ -127,6 +127,7 @@ public class DatabaseParserHelper {
             this.ip = ip;
         }
 
+        @Override
         public String toString() {
             return name + '_' + ip;
         }

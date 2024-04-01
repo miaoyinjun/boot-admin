@@ -7,8 +7,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.jjche.mybatis.base.entity.BaseEntity;
 
-import java.util.Objects;
-
 /**
  * <p>
  * 数据字段表
@@ -36,12 +34,4 @@ public class DataPermissionFieldDO extends BaseEntity {
     private Integer sort = 999;
     @ApiModelProperty(value = "是否有效")
     private Boolean isActivated;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.getId());
-    }
 }

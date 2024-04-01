@@ -2,6 +2,7 @@ package org.jjche.bpm.modules.task.service;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
@@ -231,10 +232,7 @@ public class BpmTaskService extends MyServiceImpl<BpmTaskExtMapper, BpmTaskExtDO
         Task task = checkTask(userId, reqVO.getId());
         // 校验流程实例存在
         ProcessInstance instance = processInstanceService.getProcessInstance(task.getProcessInstanceId());
-        if (instance == null) {
-            throw new BusinessException("流程实例不存在");
-        }
-
+        Assert.notNull(instance, "流程实例不存在");
         // 完成任务，审批通过
         taskService.complete(task.getId(), instance.getProcessVariables());
 
@@ -305,9 +303,7 @@ public class BpmTaskService extends MyServiceImpl<BpmTaskExtMapper, BpmTaskExtDO
      */
     private Task checkTask(Long userId, String taskId) {
         Task task = getTask(taskId);
-        if (task == null) {
-            throw new BusinessException("审批任务失败，原因：该任务不处于未审批");
-        }
+        Assert.notNull(task, "审批任务失败，原因：该任务不处于未审批");
         if (!Objects.equals(userId, NumberUtil.parseLong(task.getAssignee()))) {
             throw new BusinessException("审批任务失败，原因：该任务的审批人不是你");
         }

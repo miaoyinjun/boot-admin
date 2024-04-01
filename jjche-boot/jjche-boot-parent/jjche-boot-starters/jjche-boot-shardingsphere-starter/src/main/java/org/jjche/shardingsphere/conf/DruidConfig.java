@@ -30,7 +30,7 @@ public class DruidConfig {
     public ServletRegistrationBean statViewServlet() {
         String urlMappings = SpringUtil.getProperty("spring.datasource.druid.stat-view-servlet.url-pattern");
         ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(), urlMappings);
-        Map<String, String> initParams = new HashMap<>();
+        Map<String, String> initParams = new HashMap<>(5);
         bean.setInitParameters(initParams);
         return bean;
     }
@@ -46,7 +46,7 @@ public class DruidConfig {
         urlPatterns = StrUtil.replace(urlPatterns, "//", "/");
         FilterRegistrationBean bean = new FilterRegistrationBean();
         bean.setFilter(new WebStatFilter());
-        Map<String, String> initParams = new HashMap<>();
+        Map<String, String> initParams = new HashMap<>(5);
         bean.setInitParameters(initParams);
         bean.setUrlPatterns(Arrays.asList(urlPatterns));
         return bean;
