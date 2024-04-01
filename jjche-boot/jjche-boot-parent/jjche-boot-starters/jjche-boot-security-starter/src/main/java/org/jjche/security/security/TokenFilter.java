@@ -1,6 +1,7 @@
 package org.jjche.security.security;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.text.AntPathMatcher;
 import cn.hutool.core.util.BooleanUtil;
 import org.jjche.common.api.CommonApi;
 import org.jjche.common.constant.SecurityConstant;
@@ -12,6 +13,7 @@ import org.jjche.common.util.HttpUtil;
 import org.jjche.common.vo.DataScopeVO;
 import org.jjche.common.wrapper.HeaderMapRequestWrapper;
 import org.jjche.common.wrapper.response.R;
+import org.jjche.core.constant.FileConstant;
 import org.jjche.core.runner.RequestMappingRunner;
 import org.jjche.security.auth.sms.SmsCodeAuthenticationToken;
 import org.springframework.http.HttpStatus;
@@ -100,6 +102,12 @@ public class TokenFilter extends GenericFilterBean {
      * @return /
      */
     private boolean validUrl(HttpServletResponse response, String uri, String method) {
+        AntPathMatcher antPathMatcher = new AntPathMatcher();
+        boolean fileAvatarUri = antPathMatcher.match(FileConstant.AVATAR_PATH_MATCH, uri)
+                || antPathMatcher.match(FileConstant.FILE_PATH_MATCH, uri);
+        if(fileAvatarUri){
+            return false;
+        }
         boolean isMachUrl = false;
         boolean isMachUrlMethod = false;
         for (PatternsRequestCondition p : RequestMappingRunner.MAPPING_INFO_MAP.keySet()) {

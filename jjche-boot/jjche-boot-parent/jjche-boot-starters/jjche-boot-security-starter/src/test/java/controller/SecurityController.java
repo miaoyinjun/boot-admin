@@ -4,6 +4,7 @@ import dto.LoginDTO;
 import org.jjche.common.dto.JwtUserDTO;
 import org.jjche.common.enums.UserTypeEnum;
 import org.jjche.common.wrapper.response.R;
+import org.jjche.security.annotation.rest.IgnorePostMapping;
 import org.jjche.security.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -43,7 +44,7 @@ public class SecurityController {
      * @author miaoyj
      * @since 2020-09-08
      */
-    @PostMapping("/login")
+    @IgnorePostMapping("/login")
     public R<String> login(@RequestBody LoginDTO loginDTO, HttpServletRequest request) {
         String username = loginDTO.getUsername();
         String password = loginDTO.getPassword();

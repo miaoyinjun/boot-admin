@@ -10,7 +10,6 @@ import org.jjche.security.auth.sms.SmsCodeAuthenticationProvider;
 import org.jjche.security.handler.JwtAuthenticationAccessDeniedHandler;
 import org.jjche.security.handler.JwtAuthenticationEntryPoint;
 import org.jjche.security.property.SecurityProperties;
-import org.jjche.security.property.SecurityUrlProperties;
 import org.jjche.security.security.TokenConfigurer;
 import org.jjche.security.util.RequestMethodEnum;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -62,7 +61,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final UserDetailsService smsUserDetailsService;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-
+    /**
+     * 自定义的权限映射 Bean 们
+     *
+     * @see #configure(HttpSecurity)
+     */
+    private final List<AuthorizeRequestsCustomizer> authorizeRequestsCustomizers;
     @Bean
     GrantedAuthorityDefaults grantedAuthorityDefaults() {
         // 去除 ROLE_ 前缀
@@ -83,11 +87,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        SecurityUrlProperties securityUrlProperties = properties.getUrl();
         // 搜寻匿名标记 url： @IgnoreAccess
         Map<RequestMappingInfo, HandlerMethod> handlerMethodMap = ((RequestMappingHandlerMapping) applicationContext.getBean("requestMappingHandlerMapping")).getHandlerMethods();
         // 获取匿名标记，同时包括了配置文件里的忽略url
-        Map<String, Set<String>> ignoreUrls = getIgnoreUrl(handlerMethodMap, securityUrlProperties);
+        Map<String, Set<String>> ignoreUrls = getIgnoreUrl(handlerMethodMap);
         web.ignoring()
                 // 放行OPTIONS请求
                 .antMatchers(HttpMethod.OPTIONS, "/**")
@@ -120,7 +123,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 防止iframe 造成跨域
                 .and().headers().frameOptions().disable()
                 // 不创建会话
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests();
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                // 每个项目的自定义规则
+                .and().authorizeRequests(registry -> // 下面，循环设置自定义规则
+                        authorizeRequestsCustomizers.forEach(customizer -> customizer.customize(registry)))
+                .authorizeRequests();
 
         // cloud所有都不需要认证，不走TokenFilter
         if (SpringContextHolder.isCloud()) {
@@ -137,7 +144,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * @param auth a {@link org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder} object.
      */
     @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    public void configure(AuthenticationManagerBuilder auth){
         auth.authenticationProvider(smsCodeAuthenticationProvider());
         auth.authenticationProvider(usernamePasswordAuthenticationProvider());
         authenticationManagerBuilder.authenticationProvider(smsCodeAuthenticationProvider());
@@ -182,7 +189,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return usernamePasswordAuthenticationProvider;
     }
 
-    private Map<String, Set<String>> getIgnoreUrl(Map<RequestMappingInfo, HandlerMethod> handlerMethodMap, SecurityUrlProperties securityUrlProperties) {
+    private Map<String, Set<String>> getIgnoreUrl(Map<RequestMappingInfo, HandlerMethod> handlerMethodMap) {
         Map<String, Set<String>> ignoreUrls = new HashMap<>(8);
         Set<String> get = new HashSet<>();
         Set<String> post = new HashSet<>();
@@ -220,13 +227,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             /** 配置文件忽略URL*/
             List<String> excludeAllUrls = new ArrayList<>();
-            List<String> excludeDefaultUrls = securityUrlProperties.getExcludeDefaultUrls();
-            List<String> excludeUrls = securityUrlProperties.getExcludeUrls();
-            if (CollUtil.isNotEmpty(excludeUrls)) {
-                excludeAllUrls.addAll(excludeUrls);
-            }
-            if (CollUtil.isNotEmpty(excludeDefaultUrls)) {
-                excludeAllUrls.addAll(excludeDefaultUrls);
+            /** swagger UI*/
+            List<String> excludeSwaggerUrls = CollUtil.newArrayList("/", "/error", "/static/**",
+                    "/*.ico", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js");
+            if (CollUtil.isNotEmpty(excludeSwaggerUrls)) {
+                excludeAllUrls.addAll(excludeSwaggerUrls);
                 for (String excludeUrl : excludeAllUrls) {
                     get.add(excludeUrl);
                     post.add(excludeUrl);

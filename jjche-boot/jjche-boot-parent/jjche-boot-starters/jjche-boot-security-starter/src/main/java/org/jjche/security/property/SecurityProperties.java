@@ -23,10 +23,6 @@ public class SecurityProperties {
      */
     private SecurityLoginProperties login;
     /**
-     * 地址
-     */
-    private SecurityUrlProperties url;
-    /**
      * rsa
      */
     private SecurityRsaProperties rsa;

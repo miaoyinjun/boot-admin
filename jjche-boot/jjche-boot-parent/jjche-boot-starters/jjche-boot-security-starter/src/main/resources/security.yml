@@ -31,19 +31,7 @@ jjche:
         font-name:
         # 字体大小
         font-size: 25
-    url:
-      exclude-default-urls:
-        - /
-        - /error
-        - /static/**
-        - /*.ico
-        - /*.html
-        - /**/*.html
-        - /**/*.css
-        - /**/*.js
-        - ${jjche.core.api.path.global-prefix}/sys/webSocket/**
-        - /avatar/**
-        - /file/**
+
     #密码加密传输，前端公钥加密，后端私钥解密
     rsa:
       public_key: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDK4b3DKtM26QeA++8vElist/F3

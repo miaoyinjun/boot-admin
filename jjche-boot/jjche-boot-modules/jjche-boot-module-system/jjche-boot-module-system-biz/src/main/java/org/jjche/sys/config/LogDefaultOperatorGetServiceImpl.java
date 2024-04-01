@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Configuration
-public class DefaultOperatorGetServiceImpl implements IOperatorGetService {
+public class LogDefaultOperatorGetServiceImpl implements IOperatorGetService {
 
     /**
      * {@inheritDoc}

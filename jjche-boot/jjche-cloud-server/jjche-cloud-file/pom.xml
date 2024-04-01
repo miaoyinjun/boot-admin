@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <name>jjche-cloud-monitor</name>
-    <description>jjche-cloud监控服务</description>
+    <description>jjche-cloud-file服务</description>
     <groupId>org.jjche.cloud</groupId>
-    <artifactId>jjche-cloud-monitor</artifactId>
+    <artifactId>jjche-cloud-file</artifactId>
     <packaging>jar</packaging>
     <version>2.0.8-SNAPSHOT</version>
     <parent>
         <groupId>org.jjcheframework.boot</groupId>
-        <artifactId>jjche-cloud</artifactId>
+        <artifactId>jjche-cloud-server</artifactId>
         <version>2.0.8-SNAPSHOT</version>
     </parent>
 
     <dependencies>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>
-            <artifactId>jjche-boot-sba-starter</artifactId>
+            <artifactId>jjche-cloud-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jjcheframework.boot</groupId>
+                    <artifactId>jjche-boot-mybatis-starter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <!--注册中心客户端-->
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>org.jjcheframework.boot</groupId>
+            <artifactId>jjche-boot-minio-starter</artifactId>
         </dependency>
     </dependencies>
 

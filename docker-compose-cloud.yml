@@ -11,7 +11,7 @@ services:
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
     volumes:
       #数据库还原目录 可将需要还原的sql文件放在这里
-      - ./jjche-boot/jjche-cloud/jjche-cloud-nacos/src/main/resources/sql:/docker-entrypoint-initdb.d
+      - ./jjche-boot/jjche-cloud-server/jjche-cloud-nacos/src/main/resources/sql:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: jjche
@@ -32,7 +32,7 @@ services:
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
     volumes:
       #数据库还原目录 可将需要还原的sql文件放在这里
-      - ./jjche-boot/jjche-cloud/jjche-cloud-xxljob/src/main/resources/sql:/docker-entrypoint-initdb.d
+      - ./jjche-boot/jjche-cloud-server/jjche-cloud-xxljob/src/main/resources/sql:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: jjche
@@ -184,7 +184,7 @@ services:
     container_name: jjche-cloud-server-sentinel
     restart: always
     build:
-      context: ./jjche-boot/jjche-cloud/jjche-cloud-sentinel
+      context: ./jjche-boot/jjche-cloud-server/jjche-cloud-sentinel
       dockerfile: ./Dockerfile
     ports:
       - 8803:8803
@@ -203,7 +203,7 @@ services:
     container_name: jjche-cloud-file
     restart: always
     build:
-      context: ./jjche-boot/jjche-cloud/jjche-cloud-file
+      context: ./jjche-boot/jjche-cloud-server/jjche-cloud-file
       dockerfile: ./Dockerfile
     depends_on:
       - jjche-cloud-server-minio
@@ -235,7 +235,7 @@ services:
     container_name: jjche-cloud-monitor
     restart: always
     build:
-      context: ./jjche-boot/jjche-cloud/jjche-cloud-monitor
+      context: ./jjche-boot/jjche-cloud-server/jjche-cloud-monitor
       dockerfile: ./Dockerfile
     depends_on:
       - jjche-cloud-server-nacos
@@ -258,7 +258,7 @@ services:
     container_name: jjche-boot-api
     restart: always
     build:
-      context: ./jjche-boot/jjche-cloud/jjche-cloud-gateway
+      context: ./jjche-boot/jjche-cloud-server/jjche-cloud-gateway
       dockerfile: ./Dockerfile
     depends_on:
       - jjche-cloud-server-nacos
@@ -287,7 +287,7 @@ services:
     container_name: jjche-cloud-system
     restart: always
     build:
-      context: ./jjche-boot/jjche-cloud/jjche-cloud-system
+      context: ./jjche-boot/jjche-cloud-server/jjche-cloud-system
       dockerfile: ./Dockerfile
     depends_on:
       - jjche-cloud-server-system-mysql
@@ -319,7 +319,7 @@ services:
     container_name: jjche-cloud-bpm
     restart: always
     build:
-      context: ./jjche-boot/jjche-cloud/jjche-cloud-bpm
+      context: ./jjche-boot/jjche-cloud-server/jjche-cloud-bpm
       dockerfile: ./Dockerfile
     depends_on:
       - jjche-cloud-server-bpm-mysql
@@ -351,7 +351,7 @@ services:
     container_name: jjche-cloud-demo
     restart: always
     build:
-      context: ./jjche-boot/jjche-cloud/jjche-cloud-demo
+      context: ./jjche-boot/jjche-cloud-server/jjche-cloud-demo
       dockerfile: ./Dockerfile
     depends_on:
       - jjche-cloud-server-demo-mysql
