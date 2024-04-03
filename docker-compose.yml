@@ -22,7 +22,7 @@ services:
     image: redis:6.2.0-alpine
     container_name: jjche-boot-server-redis
     restart: always
-    command: --requirepass "redis"
+    command: --requirepass "redis" --appendonly no
     environment:
       TZ: Asia/Shanghai
     ports:
