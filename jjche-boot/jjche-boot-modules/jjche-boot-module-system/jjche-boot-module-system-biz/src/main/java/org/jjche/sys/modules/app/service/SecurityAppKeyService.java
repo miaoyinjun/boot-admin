@@ -1,13 +1,13 @@
 package org.jjche.sys.modules.app.service;
 
-import cn.hutool.core.lang.Assert;
 import com.alicp.jetcache.anno.CacheInvalidate;
 import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
-import org.jjche.sys.modules.app.constant.AppCacheKey;
+import org.jjche.common.exception.util.AssertUtil;
+import org.jjche.common.exception.util.BusinessExceptionUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.util.FileUtil;
@@ -15,12 +15,14 @@ import org.jjche.common.vo.SecurityAppKeyBasicVO;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.app.constant.AppCacheKey;
+import org.jjche.sys.modules.app.domain.SecurityAppKeyDO;
 import org.jjche.sys.modules.app.dto.SecurityAppKeyDTO;
 import org.jjche.sys.modules.app.dto.SecurityAppKeyQueryCriteriaDTO;
-import org.jjche.sys.modules.app.vo.SecurityAppKeyVO;
-import org.jjche.sys.modules.app.domain.SecurityAppKeyDO;
 import org.jjche.sys.modules.app.mapper.SecurityAppKeyMapper;
 import org.jjche.sys.modules.app.mapstruct.SecurityAppKeyMapStruct;
+import org.jjche.sys.modules.app.vo.SecurityAppKeyVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -73,15 +75,16 @@ public class SecurityAppKeyService extends MyServiceImpl<SecurityAppKeyMapper, S
         LambdaQueryWrapper<SecurityAppKeyDO> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(SecurityAppKeyDO::getName, name);
         SecurityAppKeyDO dbDO = this.getOne(queryWrapper, false);
-        Assert.isTrue(dbDO == null, name + "已存在");
+        AssertUtil.isNull(dbDO, SysErrorCodeEnum.SECURITY_APP_KEY_NAME_REPEAT, name);
         //唯一索引验证
         String appId = dto.getAppId();
         queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(SecurityAppKeyDO::getAppId, appId);
         dbDO = this.getOne(queryWrapper, false);
-        Assert.isTrue(dbDO == null, appId + "已存在");
+        AssertUtil.isNull(dbDO, SysErrorCodeEnum.SECURITY_APP_KEY_ID_REPEAT, appId);
+
         SecurityAppKeyDO securityAppKeyDO = this.securityAppKeyMapStruct.toDO(dto);
-        Assert.isTrue(this.save(securityAppKeyDO), "保存失败");
+        AssertUtil.isTrue(this.save(securityAppKeyDO), SysErrorCodeEnum.SAVE_ERROR);
     }
 
     /**
@@ -98,7 +101,7 @@ public class SecurityAppKeyService extends MyServiceImpl<SecurityAppKeyMapper, S
         //删除缓存
         redisService.delByKeys(AppCacheKey.SECURITY_APP_ID, appIdList);
 
-        Assert.isTrue(this.removeBatchByIdsWithFill(new SecurityAppKeyDO(), ids) == ids.size(), "删除失败，记录不存在");
+        AssertUtil.isTrue(this.removeBatchByIdsWithFill(new SecurityAppKeyDO(), ids) == ids.size(), SysErrorCodeEnum.DELETE_ERROR);
     }
 
     /**
@@ -112,24 +115,24 @@ public class SecurityAppKeyService extends MyServiceImpl<SecurityAppKeyMapper, S
     @CacheInvalidate(name = AppCacheKey.SECURITY_APP_ID, key = "#dto.appId")
     public SecurityAppKeyDO update(SecurityAppKeyDTO dto) {
         SecurityAppKeyDO securityAppKeyDO = this.getById(dto.getId());
-        Assert.notNull(securityAppKeyDO, "记录不存在");
+        AssertUtil.notNull(securityAppKeyDO, SysErrorCodeEnum.RECORD_NOT_FOUND);
         //唯一索引验证
         String name = dto.getName();
         LambdaQueryWrapper<SecurityAppKeyDO> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(SecurityAppKeyDO::getName, name);
         queryWrapper.ne(SecurityAppKeyDO::getId, dto.getId());
         SecurityAppKeyDO dbDO = this.getOne(queryWrapper, false);
-        Assert.isTrue(dbDO == null, name + "已存在");
+        AssertUtil.isNull(dbDO, SysErrorCodeEnum.SECURITY_APP_KEY_NAME_REPEAT, name);
         //唯一索引验证
         String appId = dto.getAppId();
         queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(SecurityAppKeyDO::getAppId, appId);
         queryWrapper.ne(SecurityAppKeyDO::getId, dto.getId());
         dbDO = this.getOne(queryWrapper, false);
-        Assert.isTrue(dbDO == null, appId + "已存在");
+        AssertUtil.isNull(dbDO, SysErrorCodeEnum.SECURITY_APP_KEY_ID_REPEAT, appId);
 
         securityAppKeyDO = this.securityAppKeyMapStruct.toDO(dto);
-        Assert.isTrue(this.updateById(securityAppKeyDO), "修改失败，记录不存在");
+        AssertUtil.isTrue(this.updateById(securityAppKeyDO), SysErrorCodeEnum.UPDATE_ERROR);
         return securityAppKeyDO;
     }
 
@@ -143,7 +146,7 @@ public class SecurityAppKeyService extends MyServiceImpl<SecurityAppKeyMapper, S
      */
     public SecurityAppKeyVO getVoById(Long id) {
         SecurityAppKeyDO securityAppKeyDO = this.getById(id);
-        Assert.notNull(securityAppKeyDO, "记录不存在");
+        AssertUtil.notNull(securityAppKeyDO, SysErrorCodeEnum.RECORD_NOT_FOUND);
         return this.securityAppKeyMapStruct.toVO(securityAppKeyDO);
     }
 
@@ -201,7 +204,8 @@ public class SecurityAppKeyService extends MyServiceImpl<SecurityAppKeyMapper, S
             HttpServletResponse httpServletResponse = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
             FileUtil.downloadExcel(list, httpServletResponse);
         } catch (IOException e) {
-            throw new IllegalArgumentException("文件下载失败");
+            throw BusinessExceptionUtil.exception(SysErrorCodeEnum.FILE_EXPORT_ERROR);
+
         }
     }
 

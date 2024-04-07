@@ -1,35 +1,36 @@
 package org.jjche.sys.modules.system.rest;
 
-import cn.hutool.core.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.annotation.PermissionData;
 import org.jjche.common.dto.RoleSmallDTO;
-import org.jjche.common.vo.UserSampleVO;
-import org.jjche.common.vo.UserVO;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.util.RsaUtils;
 import org.jjche.common.vo.DataScopeVO;
+import org.jjche.common.vo.UserSampleVO;
+import org.jjche.common.vo.UserVO;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.core.util.SecurityUtil;
 import org.jjche.log.biz.starter.annotation.LogRecord;
 import org.jjche.security.property.SecurityProperties;
 import org.jjche.security.property.SecurityRsaProperties;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.system.domain.UserDO;
 import org.jjche.sys.modules.system.dto.UserCenterDTO;
 import org.jjche.sys.modules.system.dto.UserDTO;
 import org.jjche.sys.modules.system.dto.UserQueryCriteriaDTO;
 import org.jjche.sys.modules.system.dto.UserResetPassDTO;
 import org.jjche.sys.modules.system.enums.CodeEnum;
-import org.jjche.sys.modules.system.vo.UserPassVO;
-import org.jjche.sys.modules.system.domain.UserDO;
 import org.jjche.sys.modules.system.service.RoleService;
 import org.jjche.sys.modules.system.service.UserService;
 import org.jjche.sys.modules.system.service.VerifyService;
+import org.jjche.sys.modules.system.vo.UserPassVO;
 import org.jjche.sys.property.AdminProperties;
 import org.jjche.sys.property.PasswordProperties;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -173,7 +174,7 @@ public class UserController extends BaseController {
         for (Long id : ids) {
             Integer currentLevel = Collections.min(roleService.findByUsersId(SecurityUtil.getUserId()).stream().map(RoleSmallDTO::getLevel).collect(Collectors.toList()));
             Integer optLevel = Collections.min(roleService.findByUsersId(id).stream().map(RoleSmallDTO::getLevel).collect(Collectors.toList()));
-            Assert.isFalse(currentLevel > optLevel, "角色权限不足，不能删除：" + userService.getUserById(id).getUsername());
+            AssertUtil.isFalse(currentLevel > optLevel, SysErrorCodeEnum.ROLE_LEVEL_DEL_ERROR,userService.getUserById(id).getUsername());
         }
         userService.delete(ids);
         return R.ok();
@@ -200,9 +201,9 @@ public class UserController extends BaseController {
         userService.checkPwd(newPass);
         UserVO user = userService.findByName(SecurityUtil.getUsername());
         Boolean isOldPwdError = !passwordEncoder.matches(oldPass, user.getPassword());
-        Assert.isFalse(isOldPwdError, "修改失败，旧密码错误");
+        AssertUtil.isFalse(isOldPwdError, SysErrorCodeEnum.USER_OLD_PWD_ERROR);
         Boolean isNewPwdMatchOldPwd = passwordEncoder.matches(newPass, user.getPassword());
-        Assert.isFalse(isNewPwdMatchOldPwd, "新密码不能与旧密码相同");
+        AssertUtil.isFalse(isNewPwdMatchOldPwd, SysErrorCodeEnum.USER_OLD_NEW_PWD_SAME_ERROR);
         userService.updatePass(user.getUsername(), passwordEncoder.encode(newPass));
         return R.ok();
     }
@@ -264,7 +265,7 @@ public class UserController extends BaseController {
         String password = RsaUtils.decryptByPrivateKey(rsaProperties.getPrivateKey(), user.getPassword());
         UserVO userDto = userService.findByName(SecurityUtil.getUsername());
         Boolean isPwdError = !passwordEncoder.matches(password, userDto.getPassword());
-        Assert.isFalse(isPwdError, "密码错误");
+        AssertUtil.isFalse(isPwdError, SysErrorCodeEnum.USER_PWD_ERROR);
         verificationCodeService.validated(CodeEnum.EMAIL_RESET_EMAIL_CODE.getKey() + user.getEmail(), code);
         userService.updateEmail(userDto.getUsername(), user.getEmail());
         return R.ok();

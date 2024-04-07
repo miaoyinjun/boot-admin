@@ -1,7 +1,6 @@
 package org.jjche.common.util;
 
 import cn.hutool.core.io.IoUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.StaticLog;
@@ -9,6 +8,8 @@ import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.jjche.common.enums.FileType;
+import org.jjche.common.enums.InfraErrorCodeEnum;
+import org.jjche.common.exception.util.AssertUtil;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -235,7 +236,7 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
     public static void checkSize(long maxSize, long size) {
         // 1M
         int len = 1024 * 1024;
-        Assert.isFalse(size > (maxSize * len), "文件超出规定大小");
+        AssertUtil.isFalse(size > (maxSize * len), InfraErrorCodeEnum.COMMON_FILE_SIZE_ERROR);
     }
 
     /**

@@ -3,13 +3,14 @@ package org.jjche.sys.modules.mnt.service;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
-import org.jjche.common.util.ValidationUtil;
 import org.jjche.core.util.FileUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.mnt.domain.ServerDeployDO;
 import org.jjche.sys.modules.mnt.dto.ServerDeployDTO;
 import org.jjche.sys.modules.mnt.dto.ServerDeployQueryCriteriaDTO;
@@ -87,7 +88,7 @@ public class ServerDeployService extends MyServiceImpl<ServerDeployMapper, Serve
      */
     public ServerDeployDTO findById(Long id) {
         ServerDeployDO server = this.getById(id);
-        ValidationUtil.isNull(server.getId(), "ServerDeployDO", "id", id);
+        AssertUtil.notNull(server, SysErrorCodeEnum.RECORD_NOT_FOUND);
         return serverDeployMapper.toVO(server);
     }
 

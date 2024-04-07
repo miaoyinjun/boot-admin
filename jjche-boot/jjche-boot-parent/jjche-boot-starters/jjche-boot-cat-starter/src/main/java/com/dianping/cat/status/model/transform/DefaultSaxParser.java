@@ -57,7 +57,7 @@ public class DefaultSaxParser extends DefaultHandler {
             factory.newSAXParser().parse(is, handler);
             return (T) handler.getEntity();
         } catch (ParserConfigurationException e) {
-            throw new IllegalStateException("Unable to get SAX parser instance!", e);
+            throw new RuntimeException("Unable to get SAX parser instance!", e);
         }
     }
 

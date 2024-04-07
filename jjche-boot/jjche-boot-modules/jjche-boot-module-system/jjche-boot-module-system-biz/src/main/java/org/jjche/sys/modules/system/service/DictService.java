@@ -4,13 +4,14 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
-import org.jjche.common.util.ValidationUtil;
 import org.jjche.core.util.FileUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.system.dto.DictDTO;
 import org.jjche.sys.modules.system.dto.DictQueryCriteriaDTO;
 import org.jjche.sys.modules.system.constant.DictCacheKey;
@@ -101,7 +102,7 @@ public class DictService extends MyServiceImpl<DictMapper, DictDO> {
         // 清理缓存
         delCaches(resources);
         DictDO dict = this.getById(resources.getId());
-        ValidationUtil.isNull(dict.getId(), "DictDO", "id", resources.getId());
+        AssertUtil.notNull(dict, SysErrorCodeEnum.RECORD_NOT_FOUND);
         resources.setId(dict.getId());
         this.updateById(resources);
     }

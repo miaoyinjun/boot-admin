@@ -18,6 +18,8 @@ import org.springframework.validation.annotation.Validated;
                 message = HttpStatusConstant.HTTP_INTERNAL_ERROR, response = RInternalServerError.class),
         @ApiResponse(code = HttpStatus.HTTP_BAD_REQUEST,
                 message = HttpStatusConstant.HTTP_BAD_REQUEST, response = RBadRequest.class),
+        @ApiResponse(code = HttpStatus.HTTP_CONFLICT,
+                message = HttpStatusConstant.MSG_BUSINESS_ERROR, response = RBadRequest.class),
         @ApiResponse(code = HttpStatus.HTTP_UNAUTHORIZED,
                 message = HttpStatusConstant.MSG_TOKEN_ERROR, response = RUnauthorized.class),
         @ApiResponse(code = HttpStatus.HTTP_FORBIDDEN,

@@ -2,13 +2,14 @@ package org.jjche.sys.modules.mnt.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
-import org.jjche.common.util.ValidationUtil;
 import org.jjche.core.util.FileUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.mnt.domain.DatabaseDO;
 import org.jjche.sys.modules.mnt.dto.DatabaseDTO;
 import org.jjche.sys.modules.mnt.dto.DatabaseQueryCriteriaDTO;
@@ -81,7 +82,7 @@ public class DatabaseService extends MyServiceImpl<DatabaseMapper, DatabaseDO> {
      */
     public DatabaseDTO findById(String id) {
         DatabaseDO database = this.getById(id);
-        ValidationUtil.isNull(database.getId(), "DatabaseDO", "id", id);
+        AssertUtil.notNull(database, SysErrorCodeEnum.RECORD_NOT_FOUND);
         return databaseMapper.toVO(database);
     }
 

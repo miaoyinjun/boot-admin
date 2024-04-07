@@ -1,19 +1,20 @@
 package org.jjche.sys.modules.system.rest;
 
-import cn.hutool.core.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.system.domain.DictDetailDO;
 import org.jjche.sys.modules.system.dto.DictDetailDTO;
 import org.jjche.sys.modules.system.dto.DictDetailQueryCriteriaDTO;
-import org.jjche.sys.modules.system.domain.DictDetailDO;
 import org.jjche.sys.modules.system.service.DictDetailService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -83,7 +84,7 @@ public class DictDetailController extends BaseController {
     @PostMapping
     @PreAuthorize("@el.check('dict:add')")
     public R create(@Validated @RequestBody DictDetailDO resources) {
-        Assert.isNull(resources.getId(), "A new " + ENTITY_NAME + " cannot already have an ID");
+        AssertUtil.isFalse(resources.getId() != null, SysErrorCodeEnum.ID_ALREADY_ERROR);
         dictDetailService.create(resources);
         return R.ok();
     }

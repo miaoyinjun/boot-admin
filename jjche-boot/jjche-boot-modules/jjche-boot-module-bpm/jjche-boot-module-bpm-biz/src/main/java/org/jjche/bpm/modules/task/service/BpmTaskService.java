@@ -2,7 +2,6 @@ package org.jjche.bpm.modules.task.service;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
@@ -16,6 +15,7 @@ import org.flowable.task.api.Task;
 import org.flowable.task.api.TaskQuery;
 import org.flowable.task.api.history.HistoricTaskInstance;
 import org.flowable.task.api.history.HistoricTaskInstanceQuery;
+import org.jjche.bpm.enums.BpmErrorCodeEnum;
 import org.jjche.bpm.modules.message.service.BpmMessageService;
 import org.jjche.bpm.modules.task.domain.BpmTaskExtDO;
 import org.jjche.bpm.modules.task.enums.BpmProcessInstanceDeleteReasonEnum;
@@ -24,9 +24,10 @@ import org.jjche.bpm.modules.task.mapper.BpmTaskExtMapper;
 import org.jjche.bpm.modules.task.mapstruct.BpmTaskConvert;
 import org.jjche.bpm.modules.task.vo.task.*;
 import org.jjche.common.dto.DeptSmallDTO;
-import org.jjche.common.vo.UserVO;
-import org.jjche.common.exception.BusinessException;
+import org.jjche.common.exception.util.AssertUtil;
+import org.jjche.common.exception.util.BusinessExceptionUtil;
 import org.jjche.common.param.MyPage;
+import org.jjche.common.vo.UserVO;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.sys.api.SysBaseApi;
 import org.springframework.stereotype.Service;
@@ -232,7 +233,7 @@ public class BpmTaskService extends MyServiceImpl<BpmTaskExtMapper, BpmTaskExtDO
         Task task = checkTask(userId, reqVO.getId());
         // 校验流程实例存在
         ProcessInstance instance = processInstanceService.getProcessInstance(task.getProcessInstanceId());
-        Assert.notNull(instance, "流程实例不存在");
+        AssertUtil.notNull(instance, BpmErrorCodeEnum.INSTANCE_NOT_FOUND);
         // 完成任务，审批通过
         taskService.complete(task.getId(), instance.getProcessVariables());
 
@@ -256,7 +257,7 @@ public class BpmTaskService extends MyServiceImpl<BpmTaskExtMapper, BpmTaskExtDO
         // 校验流程实例存在
         ProcessInstance instance = processInstanceService.getProcessInstance(task.getProcessInstanceId());
         if (instance == null) {
-            throw new BusinessException("流程实例不存在");
+            throw BusinessExceptionUtil.exception(BpmErrorCodeEnum.INSTANCE_NOT_FOUND);
         }
 
         // 更新流程实例为不通过
@@ -303,9 +304,9 @@ public class BpmTaskService extends MyServiceImpl<BpmTaskExtMapper, BpmTaskExtDO
      */
     private Task checkTask(Long userId, String taskId) {
         Task task = getTask(taskId);
-        Assert.notNull(task, "审批任务失败，原因：该任务不处于未审批");
+        AssertUtil.notNull(task, BpmErrorCodeEnum.TASK_CHECK_ERROR);
         if (!Objects.equals(userId, NumberUtil.parseLong(task.getAssignee()))) {
-            throw new BusinessException("审批任务失败，原因：该任务的审批人不是你");
+            throw BusinessExceptionUtil.exception(BpmErrorCodeEnum.INSTANCE_NOT_ALLOWED_CHECK);
         }
         return task;
     }

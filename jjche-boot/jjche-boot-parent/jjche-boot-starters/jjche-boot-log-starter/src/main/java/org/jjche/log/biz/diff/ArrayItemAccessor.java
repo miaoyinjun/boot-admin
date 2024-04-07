@@ -6,7 +6,6 @@ import de.danielbechler.diff.identity.EqualsIdentityStrategy;
 import de.danielbechler.diff.identity.IdentityStrategy;
 import de.danielbechler.diff.selector.CollectionItemElementSelector;
 import de.danielbechler.diff.selector.ElementSelector;
-import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +26,6 @@ public class ArrayItemAccessor implements TypeAwareAccessor, Accessor {
 
     public ArrayItemAccessor(final Object referenceItem,
                              final IdentityStrategy identityStrategy) {
-        Assert.notNull(identityStrategy, "identityStrategy");
         this.referenceItem = referenceItem;
         this.identityStrategy = identityStrategy;
     }

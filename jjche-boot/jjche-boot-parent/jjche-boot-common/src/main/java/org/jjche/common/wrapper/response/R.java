@@ -3,8 +3,8 @@ package org.jjche.common.wrapper.response;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.jjche.common.abs.AbstractR;
+import org.jjche.common.exception.enums.GlobalErrorCodeEnum;
 import org.jjche.common.wrapper.constant.HttpStatusConstant;
-import org.jjche.common.wrapper.enums.RCodeEnum;
 
 import java.io.Serializable;
 
@@ -49,7 +49,7 @@ public class R<T> extends AbstractR implements Serializable {
      * Instantiates a new wrapper. default code=200
      */
     public R() {
-        this(RCodeEnum.SUCCESS.getCode(), RCodeEnum.SUCCESS.getMsg());
+        this(GlobalErrorCodeEnum.SUCCESS.getCode(), GlobalErrorCodeEnum.SUCCESS.getMsg());
     }
 
     /**
@@ -82,7 +82,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @param message  the message
      * @return the wrapper
      */
-    public static <E> R<E> wrap(RCodeEnum codeEnum, String message) {
+    public static <E> R<E> wrap(GlobalErrorCodeEnum codeEnum, String message) {
         return new R(codeEnum.getCode(), message);
     }
 
@@ -93,7 +93,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @param codeEnum the codeEnum
      * @return the wrapper
      */
-    public static <E> R<E> wrap(RCodeEnum codeEnum) {
+    public static <E> R<E> wrap(GlobalErrorCodeEnum codeEnum) {
         return wrap(codeEnum, codeEnum.getMsg());
     }
 
@@ -114,7 +114,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详细
      */
     public static <E> R<E> error() {
-        return wrap(RCodeEnum.UNKNOWN_ERROR);
+        return wrap(GlobalErrorCodeEnum.UNKNOWN_ERROR);
     }
 
     /**
@@ -126,20 +126,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详细
      */
     public static <E> R<E> errorServiceUnAvailable() {
-        return wrap(RCodeEnum.UNKNOWN_UNAVAILABLE_ERROR);
-    }
-
-    /**
-     * <p>
-     * 业务验证错误
-     * </p>
-     *
-     * @param msg 错误信息
-     * @param <E> a E object.
-     * @return 详细
-     */
-    public static <E> R<E> validError(String msg) {
-        return wrap(RCodeEnum.VALID_ERROR, msg);
+        return wrap(GlobalErrorCodeEnum.UNKNOWN_UNAVAILABLE_ERROR);
     }
 
     /**
@@ -152,7 +139,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详细
      */
     public static <E> R<E> parameterError(String msg) {
-        return wrap(RCodeEnum.PARAMETER_ERROR, msg);
+        return wrap(GlobalErrorCodeEnum.PARAMETER_ERROR, msg);
     }
 
     /**
@@ -164,7 +151,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详情
      */
     public static <E> R<E> requestTimeout() {
-        return wrap(RCodeEnum.REQUEST_TIMEOUT);
+        return wrap(GlobalErrorCodeEnum.REQUEST_TIMEOUT);
     }
 
     /**
@@ -176,7 +163,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详情
      */
     public static <E> R<E> signError() {
-        return wrap(RCodeEnum.SIGN_ERROR);
+        return wrap(GlobalErrorCodeEnum.SIGN_ERROR);
     }
 
     /**
@@ -188,7 +175,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详情
      */
     public static <E> R<E> requestLimit() {
-        return wrap(RCodeEnum.REQUEST_LIMIT);
+        return wrap(GlobalErrorCodeEnum.REQUEST_LIMIT);
     }
 
 
@@ -201,7 +188,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详情
      */
     public static <E> R<E> notFound() {
-        return wrap(RCodeEnum.NOT_FOUND);
+        return wrap(GlobalErrorCodeEnum.NOT_FOUND);
     }
 
 
@@ -214,7 +201,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详情
      */
     public static <E> R<E> methodNotAllowed() {
-        return wrap(RCodeEnum.METHOD_NOT_ALLOWED);
+        return wrap(GlobalErrorCodeEnum.METHOD_NOT_ALLOWED);
     }
 
     /**
@@ -239,7 +226,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详细
      */
     public static <E> R<E> ok(E o) {
-        return new R<>(RCodeEnum.SUCCESS.getCode(), RCodeEnum.SUCCESS.getMsg(), o);
+        return new R<>(GlobalErrorCodeEnum.SUCCESS.getCode(), GlobalErrorCodeEnum.SUCCESS.getMsg(), o);
     }
 
     /**
@@ -251,7 +238,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详情
      */
     public static <E> R<E> userError() {
-        return wrap(RCodeEnum.USERNAME_NOT_FOUND_OR_BAD_CREDENTIALS);
+        return wrap(GlobalErrorCodeEnum.USERNAME_NOT_FOUND_OR_BAD_CREDENTIALS);
     }
 
     /**
@@ -263,7 +250,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详情
      */
     public static <E> R<E> userDisabledError() {
-        return wrap(RCodeEnum.USER_DISABLED);
+        return wrap(GlobalErrorCodeEnum.USER_DISABLED);
     }
 
     /**
@@ -275,7 +262,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详情
      */
     public static <E> R<E> userLockedError() {
-        return wrap(RCodeEnum.USER_LOCKED);
+        return wrap(GlobalErrorCodeEnum.USER_LOCKED);
     }
 
     /**
@@ -287,7 +274,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详情
      */
     public static <E> R<E> userNameExpiredError() {
-        return wrap(RCodeEnum.USERNAME_EXPIRED);
+        return wrap(GlobalErrorCodeEnum.USERNAME_EXPIRED);
     }
 
     /**
@@ -299,7 +286,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详情
      */
     public static <E> R<E> userCredentialsExpiredError() {
-        return wrap(RCodeEnum.USER_CREDENTIALS_EXPIRED);
+        return wrap(GlobalErrorCodeEnum.USER_CREDENTIALS_EXPIRED);
     }
 
     /**
@@ -311,7 +298,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详情
      */
     public static <E> R<E> tokenExpiredError() {
-        return wrap(RCodeEnum.TOKEN_EXPIRED);
+        return wrap(GlobalErrorCodeEnum.TOKEN_EXPIRED);
     }
 
     /**
@@ -323,7 +310,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详情
      */
     public static <E> R<E> tokenError() {
-        return wrap(RCodeEnum.TOKEN_ERROR);
+        return wrap(GlobalErrorCodeEnum.TOKEN_ERROR);
     }
 
     /**
@@ -335,7 +322,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return 详情
      */
     public static <E> R<E> userAccessDeniedError() {
-        return wrap(RCodeEnum.USER_ACCESS_DENIED);
+        return wrap(GlobalErrorCodeEnum.USER_ACCESS_DENIED);
     }
 
     /**
@@ -347,7 +334,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return /
      */
     public static <E> R<E> tokenNotFoundError() {
-        return wrap(RCodeEnum.TOKEN_NOT_FOUND);
+        return wrap(GlobalErrorCodeEnum.TOKEN_NOT_FOUND);
     }
 
     /**
@@ -358,7 +345,7 @@ public class R<T> extends AbstractR implements Serializable {
      * @return /
      */
     public static <E> R<E> whiteIpError() {
-        return wrap(RCodeEnum.WHITE_IP);
+        return wrap(GlobalErrorCodeEnum.WHITE_IP);
     }
 
     /**
@@ -400,6 +387,6 @@ public class R<T> extends AbstractR implements Serializable {
      * @return code =200,true;否则 false.
      */
     public boolean getSuccess() {
-        return RCodeEnum.SUCCESS.getCode() == this.code;
+        return GlobalErrorCodeEnum.SUCCESS.getCode() == this.code;
     }
 }

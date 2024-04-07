@@ -14,17 +14,18 @@ import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.repository.ProcessDefinitionQuery;
+import org.jjche.bpm.enums.BpmErrorCodeEnum;
+import org.jjche.bpm.modules.definition.domain.BpmProcessDefinitionExtDO;
 import org.jjche.bpm.modules.definition.dto.BpmProcessDefinitionCreateReqDTO;
+import org.jjche.bpm.modules.definition.mapper.BpmProcessDefinitionExtMapper;
+import org.jjche.bpm.modules.definition.mapstruct.BpmProcessDefinitionConvert;
 import org.jjche.bpm.modules.definition.vo.process.BpmProcessDefinitionListReqVO;
 import org.jjche.bpm.modules.definition.vo.process.BpmProcessDefinitionPageItemRespVO;
 import org.jjche.bpm.modules.definition.vo.process.BpmProcessDefinitionPageReqVO;
 import org.jjche.bpm.modules.definition.vo.process.BpmProcessDefinitionRespVO;
-import org.jjche.bpm.modules.definition.domain.BpmProcessDefinitionExtDO;
-import org.jjche.bpm.modules.definition.mapper.BpmProcessDefinitionExtMapper;
-import org.jjche.bpm.modules.definition.mapstruct.BpmProcessDefinitionConvert;
 import org.jjche.bpm.modules.form.domain.BpmFormDO;
 import org.jjche.bpm.modules.form.service.BpmFormService;
-import org.jjche.common.exception.BusinessException;
+import org.jjche.common.exception.util.BusinessExceptionUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.flowable.util.FlowableUtils;
 import org.springframework.stereotype.Service;
@@ -172,12 +173,11 @@ public class BpmProcessDefinitionService {
         // 注意 2，目前该项目的设计上，需要保证 Model、Deployment、ProcessDefinition 使用相同的 key，保证关联性。
         //          否则，会导致 ProcessDefinition 的分页无法查询到。
         if (!Objects.equals(definition.getKey(), createReqDTO.getKey())) {
-            String msg = StrUtil.format("流程定义的标识期望是({})，当前是({})，请修改 BPMN 流程图", createReqDTO.getKey(), definition.getKey());
-            throw new BusinessException(msg);
+            throw BusinessExceptionUtil.exception(BpmErrorCodeEnum.PROCESS_DEFINE_CODE_ERROR, createReqDTO.getKey(), definition.getKey());
+
         }
         if (!Objects.equals(definition.getName(), createReqDTO.getName())) {
-            String msg = StrUtil.format("流程定义的名字期望是({})，当前是({})，请修改 BPMN 流程图", createReqDTO.getName(), definition.getName());
-            throw new BusinessException(msg);
+            throw BusinessExceptionUtil.exception(BpmErrorCodeEnum.PROCESS_DEFINE_NAME_ERROR, createReqDTO.getName(), definition.getName());
         }
 
         // 插入拓展表

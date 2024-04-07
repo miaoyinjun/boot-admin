@@ -136,7 +136,7 @@ public class GlobalExceptionHandler {
 
     /**
      * <p>
-     * 断言验证/业务异常
+     * 业务验证异常
      * </p>
      *
      * @param e a {@link java.lang.Exception} object.
@@ -144,10 +144,10 @@ public class GlobalExceptionHandler {
      * @author miaoyj
      * @since 2020-07-09
      */
-    @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class, BusinessException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public R allException(Exception e) {
-        return R.validError(e.getMessage());
+    @ExceptionHandler({BusinessException.class})
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public R businessException(BusinessException e) {
+        return R.wrap(e.getCode(), e.getMessage());
     }
 
     /**

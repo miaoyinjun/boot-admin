@@ -1,22 +1,22 @@
 package org.jjche.sys.modules.system.service;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
-import org.jjche.common.util.ValidationUtil;
 import org.jjche.core.util.FileUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.system.domain.JobDO;
 import org.jjche.sys.modules.system.dto.JobDTO;
 import org.jjche.sys.modules.system.dto.JobQueryCriteriaDTO;
-import org.jjche.sys.modules.system.vo.JobSimpleVO;
-import org.jjche.sys.modules.system.domain.JobDO;
 import org.jjche.sys.modules.system.mapper.JobMapper;
 import org.jjche.sys.modules.system.mapstruct.JobMapStruct;
+import org.jjche.sys.modules.system.vo.JobSimpleVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -99,7 +99,7 @@ public class JobService extends MyServiceImpl<JobMapper, JobDO> {
     @Transactional(rollbackFor = Exception.class)
     public void create(JobDTO resources) {
         JobDO job = getByName(resources.getName());
-        Assert.isNull(job, resources.getName() + "已存在");
+        AssertUtil.isNull(job, SysErrorCodeEnum.JOB_NAME_ALREADY_ERROR, resources.getName());
         this.save(jobMapstruct.toDO(resources));
     }
 
@@ -127,8 +127,7 @@ public class JobService extends MyServiceImpl<JobMapper, JobDO> {
         JobDO job = this.getById(resources.getId());
         JobDO old = this.getByName(resources.getName());
         Boolean isEqualOld = old != null && !old.getId().equals(resources.getId());
-        Assert.isFalse(isEqualOld, resources.getName() + "已存在");
-        ValidationUtil.isNull(job.getId(), "JobDO", "id", resources.getId());
+        AssertUtil.isFalse(isEqualOld, SysErrorCodeEnum.JOB_NAME_ALREADY_ERROR, resources.getName());
         resources.setId(job.getId());
         this.updateById(resources);
     }
@@ -168,7 +167,7 @@ public class JobService extends MyServiceImpl<JobMapper, JobDO> {
      * @param ids /
      */
     public void verification(Set<Long> ids) {
-        Assert.isFalse(userService.countByJobs(ids) > 0, "所选的岗位中存在用户关联，请解除关联再试！");
+        AssertUtil.isFalse(userService.countByJobs(ids) > 0, SysErrorCodeEnum.JOB_ALREADY_USER_NOT_DEL_ERROR);
     }
 
     /**
@@ -202,7 +201,7 @@ public class JobService extends MyServiceImpl<JobMapper, JobDO> {
         Map<Long, JobDO> finalPostMap = postMap;
         ids.forEach(id -> {
             JobDO post = finalPostMap.get(id);
-            Assert.notNull(post, "当前岗位不存在");
+            AssertUtil.notNull(post, SysErrorCodeEnum.JOB_NOT_FOUND_ERROR);
         });
     }
 }

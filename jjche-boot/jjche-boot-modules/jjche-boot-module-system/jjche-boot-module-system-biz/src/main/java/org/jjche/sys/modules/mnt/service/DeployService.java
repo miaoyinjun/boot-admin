@@ -2,10 +2,10 @@ package org.jjche.sys.modules.mnt.service;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.log.StaticLog;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
+import org.jjche.common.exception.util.BusinessExceptionUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.core.util.FileUtil;
@@ -13,6 +13,7 @@ import org.jjche.core.util.SecurityUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.mnt.domain.AppDO;
 import org.jjche.sys.modules.mnt.domain.DeployDO;
 import org.jjche.sys.modules.mnt.domain.DeployHistoryDO;
@@ -144,12 +145,12 @@ public class DeployService extends MyServiceImpl<DeployMapper, DeployDO> {
         DeployDTO deploy = findById(appId);
         if (deploy == null) {
             sendMsg("部署信息不存在", MsgType.ERROR);
-            Assert.notNull(deploy, "部署信息不存在");
+            throw BusinessExceptionUtil.exception(SysErrorCodeEnum.APP_DEPLOY_NOT_FOUND_ERROR);
         }
         AppDTO app = deploy.getApp();
         if (app == null) {
             sendMsg("包对应应用信息不存在", MsgType.ERROR);
-            Assert.notNull(app, "包对应应用信息不存在");
+            throw BusinessExceptionUtil.exception(SysErrorCodeEnum.APP_PACKAGE_NOT_FOUND_ERROR);
         }
         int port = app.getPort();
         //这个是服务器部署路径
@@ -376,7 +377,7 @@ public class DeployService extends MyServiceImpl<DeployMapper, DeployDO> {
         AppDO app = deployInfo.getApp();
         if (app == null) {
             sendMsg("应用信息不存在：" + resources.getAppName(), MsgType.ERROR);
-            Assert.notNull(app, "应用信息不存在：" + resources.getAppName());
+            throw BusinessExceptionUtil.exception(SysErrorCodeEnum.APP_NOT_FOUND_ERROR, resources.getAppName());
         }
         String backupPath = app.getBackupPath() + FILE_SEPARATOR;
         backupPath += resources.getAppName() + FILE_SEPARATOR + deployDate;
@@ -423,7 +424,7 @@ public class DeployService extends MyServiceImpl<DeployMapper, DeployDO> {
         ServerDeployDTO serverDeployDTO = serverDeployService.findByIp(ip);
         if (serverDeployDTO == null) {
             sendMsg("IP对应服务器信息不存在：" + ip, MsgType.ERROR);
-            Assert.notNull(serverDeployDTO, "IP对应服务器信息不存在：" + ip);
+            throw BusinessExceptionUtil.exception(SysErrorCodeEnum.APP_IP_NOT_FOUND_ERROR, ip);
         }
         return new ExecuteShellUtil(ip, serverDeployDTO.getAccount(), serverDeployDTO.getPassword(), serverDeployDTO.getPort());
     }
@@ -432,7 +433,7 @@ public class DeployService extends MyServiceImpl<DeployMapper, DeployDO> {
         ServerDeployDTO serverDeployDTO = serverDeployService.findByIp(ip);
         if (serverDeployDTO == null) {
             sendMsg("IP对应服务器信息不存在：" + ip, MsgType.ERROR);
-            Assert.notNull(serverDeployDTO, "IP对应服务器信息不存在：" + ip);
+            throw BusinessExceptionUtil.exception(SysErrorCodeEnum.APP_IP_NOT_FOUND_ERROR, ip);
         }
         return ScpClientUtil.getInstance(ip, serverDeployDTO.getPort(), serverDeployDTO.getAccount(), serverDeployDTO.getPassword());
     }

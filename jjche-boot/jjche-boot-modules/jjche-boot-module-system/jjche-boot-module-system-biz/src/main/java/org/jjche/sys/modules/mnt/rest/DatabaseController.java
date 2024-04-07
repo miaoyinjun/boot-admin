@@ -1,11 +1,11 @@
 package org.jjche.sys.modules.mnt.rest;
 
-import cn.hutool.core.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.util.StrUtil;
@@ -13,9 +13,10 @@ import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.core.util.FileUtil;
 import org.jjche.log.biz.starter.annotation.LogRecord;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.mnt.domain.DatabaseDO;
 import org.jjche.sys.modules.mnt.dto.DatabaseDTO;
 import org.jjche.sys.modules.mnt.dto.DatabaseQueryCriteriaDTO;
-import org.jjche.sys.modules.mnt.domain.DatabaseDO;
 import org.jjche.sys.modules.mnt.service.DatabaseService;
 import org.jjche.sys.modules.mnt.util.SqlUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +24,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
@@ -144,7 +144,7 @@ public class DatabaseController extends BaseController {
      * <p>upload.</p>
      *
      * @param file    a {@link org.springframework.web.multipart.MultipartFile} object.
-     * @param request a {@link javax.servlet.http.HttpServletRequest} object.
+     * @param id /.
      * @return a {@link R} object.
      * @throws java.lang.Exception if any.
      */
@@ -154,11 +154,10 @@ public class DatabaseController extends BaseController {
     )
     @PostMapping(value = "/upload")
     @PreAuthorize("@el.check('database:add')")
-    public R<String> upload(@RequestBody MultipartFile file, HttpServletRequest request) throws Exception {
-        String id = request.getParameter("id");
+    public R<String> upload(@RequestBody MultipartFile file, @RequestParam String id) throws Exception {
         DatabaseDTO database = databaseService.findById(id);
         String fileName;
-        Assert.notNull(database, "DatabaseDO not exist");
+        AssertUtil.notNull(database, SysErrorCodeEnum.RECORD_NOT_FOUND);
 
         fileName = file.getOriginalFilename();
         String filePath = fileSavePath + fileName;
@@ -167,7 +166,7 @@ public class DatabaseController extends BaseController {
         FileUtil.del(executeFile);
         file.transferTo(executeFile);
         String result = SqlUtils.executeFile(database.getJdbcUrl(), database.getUserName(), database.getPwd(), executeFile);
-        Assert.isTrue(StrUtil.equals("success", result), "执行失败");
+        AssertUtil.isTrue(StrUtil.equals("success", result), SysErrorCodeEnum.DB_EXECUTE_ERROR);
         return R.ok(result);
     }
 }

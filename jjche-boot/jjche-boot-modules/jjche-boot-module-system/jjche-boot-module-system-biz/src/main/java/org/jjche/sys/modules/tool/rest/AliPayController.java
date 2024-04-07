@@ -1,19 +1,20 @@
 package org.jjche.sys.modules.tool.rest;
 
-import cn.hutool.core.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
-import org.jjche.sys.modules.tool.vo.TradeVO;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.tool.domain.AlipayConfigDO;
 import org.jjche.sys.modules.tool.service.AliPayService;
 import org.jjche.sys.modules.tool.utils.AliPayStatusEnum;
 import org.jjche.sys.modules.tool.utils.AlipayUtils;
+import org.jjche.sys.modules.tool.vo.TradeVO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -111,7 +112,7 @@ public class AliPayController extends BaseController {
         AlipayConfigDO alipay = alipayService.find();
         response.setContentType("text/html;charset=" + alipay.getCharset());
         //内容验签，防止黑客篡改参数
-        Assert.isTrue(alipayUtils.rsaCheck(request, alipay), "rsaCheck failed");
+        AssertUtil.isTrue(alipayUtils.rsaCheck(request, alipay), SysErrorCodeEnum.PAY_VALID_ERROR);
         //商户订单号
         String outTradeNo = new String(request.getParameter("out_trade_no").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
         //支付宝交易号

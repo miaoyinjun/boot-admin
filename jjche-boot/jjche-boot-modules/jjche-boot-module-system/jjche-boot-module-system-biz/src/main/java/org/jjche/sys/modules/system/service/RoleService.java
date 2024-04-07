@@ -2,7 +2,6 @@ package org.jjche.sys.modules.system.service;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -13,19 +12,20 @@ import org.jjche.cache.service.RedisService;
 import org.jjche.common.constant.SecurityConstant;
 import org.jjche.common.dto.RoleSmallDTO;
 import org.jjche.common.dto.SimpleGrantedAuthorityDTO;
-import org.jjche.common.vo.UserVO;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
-import org.jjche.common.util.ValidationUtil;
+import org.jjche.common.vo.UserVO;
 import org.jjche.core.util.FileUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.util.MybatisUtil;
 import org.jjche.security.service.JwtUserService;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.system.constant.RoleCacheKey;
+import org.jjche.sys.modules.system.domain.*;
 import org.jjche.sys.modules.system.dto.RoleDTO;
 import org.jjche.sys.modules.system.dto.RoleQueryCriteriaDTO;
 import org.jjche.sys.modules.system.enums.DataScopeEnum;
-import org.jjche.sys.modules.system.constant.RoleCacheKey;
-import org.jjche.sys.modules.system.domain.*;
 import org.jjche.sys.modules.system.mapper.RoleDeptMapper;
 import org.jjche.sys.modules.system.mapper.RoleMapper;
 import org.jjche.sys.modules.system.mapper.RoleMenuMapper;
@@ -153,7 +153,7 @@ public class RoleService extends MyServiceImpl<RoleMapper, RoleDO> {
     @Cached(name = RoleCacheKey.ROLE_ID, key = "#id")
     public RoleDTO findById(long id) {
         RoleDO role = this.getById(id);
-        ValidationUtil.isNull(role.getId(), "RoleDO", "id", id);
+        AssertUtil.isNull(role, SysErrorCodeEnum.RECORD_NOT_FOUND);
         return roleMapper.toVO(role);
     }
 
@@ -165,9 +165,9 @@ public class RoleService extends MyServiceImpl<RoleMapper, RoleDO> {
      */
     public void create(RoleDO resources) {
         RoleDO role = this.findByName(resources.getName());
-        Assert.isNull(role, StrUtil.format("名称：{}已存在", resources.getName()));
+        AssertUtil.isNull(role, SysErrorCodeEnum.ROLE_NAME_ALREADY_ERROR, resources.getName());
         role = this.findByCode(resources.getCode());
-        Assert.isNull(role, StrUtil.format("标识：{}已存在", resources.getCode()));
+        AssertUtil.isNull(role, SysErrorCodeEnum.ROLE_CODE_ALREADY_ERROR, resources.getCode());
         this.save(resources);
         List<Long> deptIds = resources.getDepts().stream().map(DeptDO::getId).collect(Collectors.toList());
         this.updateRoleAndDept(resources.getId(), deptIds);
@@ -209,11 +209,11 @@ public class RoleService extends MyServiceImpl<RoleMapper, RoleDO> {
     @Transactional(rollbackFor = Exception.class)
     public void update(RoleDO resources) {
         RoleDO role = this.getById(resources.getId());
-        ValidationUtil.isNull(role.getId(), "RoleDO", "id", resources.getId());
+        AssertUtil.isNull(role, SysErrorCodeEnum.RECORD_NOT_FOUND);
 
         RoleDO role1 = this.findByName(resources.getName());
         Boolean isExist = role1 != null && !role1.getId().equals(role.getId());
-        Assert.isFalse(isExist, resources.getName() + "已存在");
+        AssertUtil.isFalse(isExist, SysErrorCodeEnum.ROLE_NAME_ALREADY_ERROR, resources.getName());
 
         role.setName(resources.getName());
         role.setDescription(resources.getDescription());
@@ -317,7 +317,7 @@ public class RoleService extends MyServiceImpl<RoleMapper, RoleDO> {
      * @param ids /
      */
     public void verification(Set<Long> ids) {
-        Assert.isFalse(userMapper.countByRoles(ids) > 0, "所选角色存在用户关联，请解除关联再试！");
+        AssertUtil.isFalse(userMapper.countByRoles(ids) > 0, SysErrorCodeEnum.ROLE_USER_NOT_ALLOWED_DEL_ERROR);
     }
 
     /**
@@ -436,7 +436,7 @@ public class RoleService extends MyServiceImpl<RoleMapper, RoleDO> {
         Map<Long, RoleDO> finalRoleMap = roleMap;
         ids.forEach(id -> {
             RoleDO role = finalRoleMap.get(id);
-            Assert.notNull(role, "角色不存在");
+            AssertUtil.notNull(role, SysErrorCodeEnum.ROLE_NOT_FOUND_ERROR);
         });
     }
 

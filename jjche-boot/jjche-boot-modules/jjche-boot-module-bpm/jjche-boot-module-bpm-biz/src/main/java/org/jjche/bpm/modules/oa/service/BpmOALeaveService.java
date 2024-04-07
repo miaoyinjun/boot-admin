@@ -2,6 +2,7 @@ package org.jjche.bpm.modules.oa.service;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
 import lombok.RequiredArgsConstructor;
+import org.jjche.bpm.enums.BpmErrorCodeEnum;
 import org.jjche.bpm.modules.definition.api.BpmProcessInstanceApi;
 import org.jjche.bpm.modules.definition.api.dto.BpmProcessInstanceCreateReqDTO;
 import org.jjche.bpm.modules.oa.domain.BpmOALeaveDO;
@@ -10,11 +11,11 @@ import org.jjche.bpm.modules.oa.mapstruct.BpmOALeaveConvert;
 import org.jjche.bpm.modules.oa.vo.BpmOALeaveCreateReqDTO;
 import org.jjche.bpm.modules.oa.vo.BpmOALeavePageReqVO;
 import org.jjche.bpm.modules.task.enums.BpmProcessInstanceResultEnum;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.HashMap;
@@ -89,7 +90,7 @@ public class BpmOALeaveService extends MyServiceImpl<BpmOALeaveMapper, BpmOALeav
     }
 
     private void validateLeaveExists(Long id) {
-        Assert.notNull(this.getById(id), "请假申请不存在");
+        AssertUtil.notNull(this.getById(id), BpmErrorCodeEnum.OA_NOT_FOUND);
     }
 
     /**

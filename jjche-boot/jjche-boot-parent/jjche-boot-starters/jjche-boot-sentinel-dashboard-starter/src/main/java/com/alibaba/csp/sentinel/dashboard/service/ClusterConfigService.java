@@ -132,7 +132,7 @@ public class ClusterConfigService {
             .map(e -> e.getIp() + '@' + e.getPort())
             .anyMatch(e -> e.equals(machineId));
         if (!machineOk) {
-            return AsyncUtils.newFailedFuture(new IllegalStateException("machine does not exist or disconnected"));
+            return AsyncUtils.newFailedFuture(new RuntimeException("machine does not exist or disconnected"));
         }
 
         return getClusterUniversalState(app)
@@ -141,7 +141,7 @@ public class ClusterConfigService {
                 .filter(e1 -> e1.getMachineId().equals(machineId))
                 .findAny()
                 .map(CompletableFuture::completedFuture)
-                .orElse(AsyncUtils.newFailedFuture(new IllegalStateException("not a server: " + machineId)))
+                .orElse(AsyncUtils.newFailedFuture(new RuntimeException("not a server: " + machineId)))
             );
     }
 

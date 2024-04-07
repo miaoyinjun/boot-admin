@@ -3,6 +3,7 @@
 <mapper namespace="org.jjche.sys.modules.generator.mapper.GenConfigMapper">
 
     <sql id="tableSql">
+        <![CDATA[
         select table_name AS 'tableName',create_time AS 'createTime', engine,
         table_collation AS 'tableCollation', table_comment AS 'tableComment'
         from information_schema.tables
@@ -11,6 +12,7 @@
             AND table_name like CONCAT('%', #{tableName}, '%')
         </if>
         order by create_time desc
+         ]]>
     </sql>
 
     <select id="pageTable" resultType="map">

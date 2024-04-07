@@ -22,7 +22,7 @@ public class LogRecordContext {
     private static final InheritableThreadLocal<Map<String, Object>> GLOBAL_VARIABLE_MAP = new InheritableThreadLocal<>();
 
     private LogRecordContext() {
-        throw new IllegalStateException("Utility class");
+
     }
 
     public static void putVariable(String name, Object value) {

@@ -5,12 +5,13 @@ import cn.hutool.core.util.NumberUtil;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.jjche.bpm.config.flowable.core.behavior.script.BpmTaskAssignScript;
+import org.jjche.bpm.enums.BpmErrorCodeEnum;
 import org.jjche.bpm.modules.task.service.BpmProcessInstanceService;
 import org.jjche.common.dto.DeptSmallDTO;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.vo.UserVO;
 import org.jjche.sys.api.SysBaseApi;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.Set;
@@ -32,7 +33,7 @@ public abstract class BpmTaskAssignLeaderAbstractScript implements BpmTaskAssign
     private BpmProcessInstanceService bpmProcessInstanceService;
 
     protected Set<Long> calculateTaskCandidateUsers(DelegateExecution execution, int level) {
-        Assert.isTrue(level > 0, "level 必须大于 0");
+        AssertUtil.isTrue(level > 0, BpmErrorCodeEnum.TASK_ASSIGNEE_LEVEL_ZERO);
         // 获得发起人
         ProcessInstance processInstance = bpmProcessInstanceService.getProcessInstance(execution.getProcessInstanceId());
         Long startUserId = NumberUtil.parseLong(processInstance.getStartUserId());

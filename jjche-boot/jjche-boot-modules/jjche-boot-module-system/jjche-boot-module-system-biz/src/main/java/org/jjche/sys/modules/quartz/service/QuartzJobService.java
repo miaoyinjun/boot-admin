@@ -2,25 +2,25 @@ package org.jjche.sys.modules.quartz.service;
 
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
-import org.jjche.sys.modules.quartz.enums.QuartzRedisTopicEnum;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.util.StrUtil;
-import org.jjche.common.util.ValidationUtil;
 import org.jjche.core.util.FileUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.quartz.domain.QuartzJobDO;
 import org.jjche.sys.modules.quartz.domain.QuartzLogDO;
 import org.jjche.sys.modules.quartz.dto.JobQueryCriteriaDTO;
 import org.jjche.sys.modules.quartz.dto.QuartzRedisMessageDTO;
 import org.jjche.sys.modules.quartz.enums.QuartzActionEnum;
+import org.jjche.sys.modules.quartz.enums.QuartzRedisTopicEnum;
 import org.jjche.sys.modules.quartz.mapper.QuartzJobMapper;
 import org.jjche.sys.modules.quartz.mapper.QuartzLogMapper;
 import org.quartz.CronExpression;
@@ -113,7 +113,7 @@ public class QuartzJobService extends MyServiceImpl<QuartzJobMapper, QuartzJobDO
      */
     public QuartzJobDO findById(Long id) {
         QuartzJobDO quartzJob = this.getById(id);
-        ValidationUtil.isNull(quartzJob.getId(), "QuartzJobDO", "id", id);
+        AssertUtil.notNull(quartzJob, SysErrorCodeEnum.RECORD_NOT_FOUND);
         return quartzJob;
     }
 
@@ -125,7 +125,7 @@ public class QuartzJobService extends MyServiceImpl<QuartzJobMapper, QuartzJobDO
     @Transactional(rollbackFor = Exception.class)
     public void create(QuartzJobDO resources) {
         Boolean isError = !CronExpression.isValidExpression(resources.getCronExpression());
-        Assert.isFalse(isError, "cron表达式格式错误");
+        AssertUtil.isFalse(isError, SysErrorCodeEnum.QUARTZ_CRON_ERROR);
         this.save(resources);
         QuartzRedisMessageDTO dto = new QuartzRedisMessageDTO();
         dto.setQuartzJob(resources);
@@ -142,10 +142,10 @@ public class QuartzJobService extends MyServiceImpl<QuartzJobMapper, QuartzJobDO
     @Transactional(rollbackFor = Exception.class)
     public void update(QuartzJobDO resources) {
         Boolean isError = !CronExpression.isValidExpression(resources.getCronExpression());
-        Assert.isFalse(isError, "cron表达式格式错误");
+        AssertUtil.isFalse(isError, SysErrorCodeEnum.QUARTZ_CRON_ERROR);
         if (StrUtil.isNotBlank(resources.getSubTask())) {
             List<String> tasks = Arrays.asList(resources.getSubTask().split("[,，]"));
-            Assert.isFalse(tasks.contains(resources.getId().toString()), "子任务中不能添加当前任务ID");
+            AssertUtil.isFalse(tasks.contains(resources.getId().toString()), SysErrorCodeEnum.QUARTZ_SUB_TASK_ADD_ERROR);
         }
         this.updateById(resources);
         QuartzRedisMessageDTO dto = new QuartzRedisMessageDTO();

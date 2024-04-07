@@ -1,24 +1,25 @@
 package org.jjche.sys.modules.system.service;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.Assert;
 import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.constant.PermissionDataCacheKey;
 import org.jjche.common.dto.PermissionDataRuleDTO;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.system.domain.DataPermissionRuleDO;
 import org.jjche.sys.modules.system.dto.DataPermissionRuleDTO;
 import org.jjche.sys.modules.system.dto.DataPermissionRuleQueryCriteriaDTO;
 import org.jjche.sys.modules.system.dto.DataPermissionRuleRoleQueryCriteriaDTO;
-import org.jjche.sys.modules.system.vo.DataPermissionRuleVO;
-import org.jjche.sys.modules.system.domain.DataPermissionRuleDO;
 import org.jjche.sys.modules.system.mapper.DataPermissionRuleMapper;
 import org.jjche.sys.modules.system.mapstruct.DataPermissionRuleMapStruct;
+import org.jjche.sys.modules.system.vo.DataPermissionRuleVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +53,7 @@ public class DataPermissionRuleService extends MyServiceImpl<DataPermissionRuleM
     public void save(DataPermissionRuleDTO dto) {
 
         DataPermissionRuleDO sysDataPermissionRuleDO = this.sysDataPermissionRuleMapStruct.toDO(dto);
-        Assert.isTrue(this.save(sysDataPermissionRuleDO), "保存失败");
+        AssertUtil.isTrue(this.save(sysDataPermissionRuleDO), SysErrorCodeEnum.SAVE_ERROR);
     }
 
     /**
@@ -64,7 +65,7 @@ public class DataPermissionRuleService extends MyServiceImpl<DataPermissionRuleM
      */
     @Transactional(rollbackFor = Exception.class)
     public void delete(Set<Long> ids) {
-        Assert.isTrue(this.removeBatchByIdsWithFill(new DataPermissionRuleDO(), ids) == ids.size(), "删除失败，记录不存在或权限不足");
+        AssertUtil.isTrue(this.removeBatchByIdsWithFill(new DataPermissionRuleDO(), ids) == ids.size(), SysErrorCodeEnum.DELETE_ERROR);
         sysDataPermissionRuleRoleService.deleteByPermissionRuleIds(ids);
         sysDataPermissionRuleRoleService.delUserCache();
     }
@@ -79,10 +80,10 @@ public class DataPermissionRuleService extends MyServiceImpl<DataPermissionRuleM
     @Transactional(rollbackFor = Exception.class)
     public void update(DataPermissionRuleDTO dto) {
         DataPermissionRuleDO sysDataPermissionRuleDO = this.getById(dto.getId());
-        Assert.notNull(sysDataPermissionRuleDO, "记录不存在");
+        AssertUtil.notNull(sysDataPermissionRuleDO, SysErrorCodeEnum.RECORD_NOT_FOUND);
 
         sysDataPermissionRuleDO = this.sysDataPermissionRuleMapStruct.toDO(dto);
-        Assert.isTrue(this.updateById(sysDataPermissionRuleDO), "修改失败，记录不存在或权限不足");
+        AssertUtil.isTrue(this.updateById(sysDataPermissionRuleDO), SysErrorCodeEnum.UPDATE_ERROR);
         sysDataPermissionRuleRoleService.delUserCache();
     }
 
@@ -96,7 +97,7 @@ public class DataPermissionRuleService extends MyServiceImpl<DataPermissionRuleM
      */
     public DataPermissionRuleVO getVoById(Long id) {
         DataPermissionRuleDO sysDataPermissionRuleDO = this.getById(id);
-        Assert.notNull(sysDataPermissionRuleDO, "记录不存在或权限不足");
+        AssertUtil.notNull(sysDataPermissionRuleDO, SysErrorCodeEnum.RECORD_NOT_FOUND);
         return this.sysDataPermissionRuleMapStruct.toVO(sysDataPermissionRuleDO);
     }
 

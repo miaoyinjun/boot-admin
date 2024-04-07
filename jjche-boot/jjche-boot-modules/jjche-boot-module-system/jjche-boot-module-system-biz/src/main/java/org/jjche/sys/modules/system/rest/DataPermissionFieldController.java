@@ -1,20 +1,21 @@
 package org.jjche.sys.modules.system.rest;
 
-import cn.hutool.core.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.system.dto.DataPermissionFieldDTO;
 import org.jjche.sys.modules.system.dto.DataPermissionFieldQueryCriteriaDTO;
-import org.jjche.sys.modules.system.vo.DataPermissionFieldVO;
 import org.jjche.sys.modules.system.service.DataPermissionFieldService;
+import org.jjche.sys.modules.system.vo.DataPermissionFieldVO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,7 @@ public class DataPermissionFieldController extends BaseController {
     @PostMapping
     @PreAuthorize("@el.check('menu:add')")
     public R create(@Validated @RequestBody DataPermissionFieldDTO resources) {
-        Assert.isNull(resources.getId(), "A new DataPermissionFieldDO cannot already have an ID");
+        AssertUtil.isFalse(resources.getId() != null, SysErrorCodeEnum.ID_ALREADY_ERROR);
         dataPermissionFieldService.create(resources);
         return R.ok();
     }

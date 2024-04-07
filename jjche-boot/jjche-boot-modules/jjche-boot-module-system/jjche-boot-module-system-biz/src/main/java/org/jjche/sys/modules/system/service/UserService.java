@@ -2,7 +2,6 @@ package org.jjche.sys.modules.system.service;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.IdUtil;
@@ -15,13 +14,13 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
 import org.jjche.common.dto.JwtUserDTO;
-import org.jjche.common.vo.UserSampleVO;
-import org.jjche.common.vo.UserVO;
 import org.jjche.common.enums.UserTypeEnum;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.util.PwdCheckUtil;
-import org.jjche.common.util.ValidationUtil;
+import org.jjche.common.vo.UserSampleVO;
+import org.jjche.common.vo.UserVO;
 import org.jjche.core.util.FileUtil;
 import org.jjche.core.util.RequestHolder;
 import org.jjche.core.util.SecurityUtil;
@@ -34,13 +33,14 @@ import org.jjche.security.property.SecurityLoginProperties;
 import org.jjche.security.property.SecurityProperties;
 import org.jjche.security.security.TokenProvider;
 import org.jjche.security.service.JwtUserService;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.security.dto.AuthUserSmsDTO;
 import org.jjche.sys.modules.security.dto.SmsCodeDTO;
 import org.jjche.sys.modules.security.vo.LoginVO;
+import org.jjche.sys.modules.system.domain.*;
 import org.jjche.sys.modules.system.dto.UserCenterDTO;
 import org.jjche.sys.modules.system.dto.UserDTO;
 import org.jjche.sys.modules.system.dto.UserQueryCriteriaDTO;
-import org.jjche.sys.modules.system.domain.*;
 import org.jjche.sys.modules.system.mapper.UserJobMapper;
 import org.jjche.sys.modules.system.mapper.UserMapper;
 import org.jjche.sys.modules.system.mapper.UserRoleMapper;
@@ -153,7 +153,7 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> {
      */
     public UserVO getUserById(Long id) {
         UserDO user = this.getById(id);
-        ValidationUtil.isNull(user.getId(), "UserDO", "id", id);
+        AssertUtil.notNull(user, SysErrorCodeEnum.RECORD_NOT_FOUND);
         return userMapStruct.toVO(user);
     }
 
@@ -209,15 +209,15 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> {
     public void create(UserDTO resources, String pwd) {
         String username = resources.getUsername();
         UserDO user = this.getByUsername(username);
-        Assert.isNull(user, username + "已存在");
+        AssertUtil.isNull(user, SysErrorCodeEnum.USER_USERNAME_ALREADY_ERROR, username);
 
         String email = resources.getEmail();
         user = this.getByEmail(email);
-        Assert.isNull(user, email + "已存在");
+        AssertUtil.isNull(user, SysErrorCodeEnum.USER_EMAIL_ALREADY_ERROR, email);
 
         String phone = resources.getPhone();
         user = this.getByPhone(phone);
-        Assert.isNull(user, phone + "已存在");
+        AssertUtil.isNull(user, SysErrorCodeEnum.USER_PHONE_ALREADY_ERROR, phone);
 
         UserDO userDO = userMapStruct.toDO(resources);
         userDO.setPwdResetTime(DateUtil.date().toTimestamp());
@@ -250,20 +250,19 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> {
         String emailOld = user.getEmail();
         String phoneOld = user.getPhone();
 
-        Assert.notNull(user, "用户不存在");
+        AssertUtil.notNull(user, SysErrorCodeEnum.USER_NOT_FOUND_ERROR);
         UserDO user1 = this.getByUsername(usernameNew);
         UserDO user2 = this.getByEmail(emailNew);
         UserDO user3 = this.getByPhone(phoneNew);
 
         Boolean isUserEqual = user1 != null && !user.getId().equals(user1.getId());
-        Assert.isFalse(isUserEqual, usernameNew + "已存在");
+        AssertUtil.isFalse(isUserEqual, SysErrorCodeEnum.USER_USERNAME_ALREADY_ERROR, usernameNew);
 
         isUserEqual = user2 != null && !user.getId().equals(user2.getId());
-        Assert.isFalse(isUserEqual, emailNew + "已存在");
+        AssertUtil.isFalse(isUserEqual, SysErrorCodeEnum.USER_EMAIL_ALREADY_ERROR, emailNew);
 
         isUserEqual = user3 != null && !user.getId().equals(user3.getId());
-        Assert.isFalse(isUserEqual, phoneNew + "已存在");
-
+        AssertUtil.isFalse(isUserEqual, SysErrorCodeEnum.USER_PHONE_ALREADY_ERROR, phoneNew);
         /**
          * 如果用户被禁用
          * 或用户名、手机号、邮箱被修改
@@ -332,11 +331,11 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> {
     @Transactional(rollbackFor = Exception.class)
     public void updateCenter(UserCenterDTO resources) {
         Boolean isUpdateOther = !resources.getId().equals(SecurityUtil.getUserId());
-        Assert.isFalse(isUpdateOther, "不能修改他人资料");
+        AssertUtil.isFalse(isUpdateOther, SysErrorCodeEnum.USER_NOT_ALLOWED_UPDATE_OTHER_ERROR);
         UserDO user = this.getById(resources.getId());
         UserDO user1 = this.getByPhone(resources.getPhone());
         Boolean isUserEqual = user1 != null && !user.getId().equals(user1.getId());
-        Assert.isFalse(isUserEqual, resources.getPhone() + "已存在");
+        AssertUtil.isFalse(isUserEqual, SysErrorCodeEnum.USER_PHONE_ALREADY_ERROR, resources.getPhone());
 
         user.setNickName(resources.getNickName());
         user.setPhone(resources.getPhone());
@@ -409,27 +408,27 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> {
         String minLength = pwdConf.getMinLength();
         String maxLength = pwdConf.getMaxLength();
         boolean isLength = PwdCheckUtil.checkPasswordLength(pass, minLength, maxLength);
-        Assert.isTrue(isLength, StrUtil.format("密码长度不得小于{}位，大于{}位", minLength, maxLength));
+        AssertUtil.isTrue(isLength, SysErrorCodeEnum.USER_PWD_LENGTH_ERROR, minLength, maxLength);
         //大写
         if (pwdConf.getUpperCase()) {
             boolean isUpperCase = PwdCheckUtil.checkContainUpperCase(pass);
-            Assert.isTrue(isUpperCase, "密码必须包含字母大写");
+            AssertUtil.isTrue(isUpperCase, SysErrorCodeEnum.USER_PWD_UC_ERROR);
         }
 
         //小写
         if (pwdConf.getLowerCase()) {
             boolean isLowerCase = PwdCheckUtil.checkContainLowerCase(pass);
-            Assert.isTrue(isLowerCase, "密码必须包含字母小写");
+            AssertUtil.isTrue(isLowerCase, SysErrorCodeEnum.USER_PWD_LC_ERROR);
         }
         //数字
         if (pwdConf.getDigit()) {
             boolean isDigit = PwdCheckUtil.checkContainDigit(pass);
-            Assert.isTrue(isDigit, "密码必须包含数字");
+            AssertUtil.isTrue(isDigit, SysErrorCodeEnum.USER_PWD_NUMBER_ERROR);
         }
         //特殊符号
         if (pwdConf.getSpecialChar()) {
             boolean isSpecialChar = PwdCheckUtil.checkContainSpecialChar(pass);
-            Assert.isTrue(isSpecialChar, "密码必须包含特殊符号");
+            AssertUtil.isTrue(isSpecialChar, SysErrorCodeEnum.USER_PWD_SC_ERROR);
         }
     }
 
@@ -628,10 +627,10 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> {
         String captchaCode = redisService.stringGetString(captchaCodeUuid);
         // 清除验证码
         redisService.delete(captchaCodeUuid);
-        Assert.notBlank(captchaCode, "图形验证码不存在或已过期");
-        Assert.isTrue(StrUtil.equalsIgnoreCase(dto.getCaptchaCode(), captchaCode), "图形验证码错误");
+        AssertUtil.notBlank(captchaCode, SysErrorCodeEnum.AUTH_VALID_NOT_FOUND_ERROR);
+        AssertUtil.isTrue(StrUtil.equalsIgnoreCase(dto.getCaptchaCode(), captchaCode), SysErrorCodeEnum.AUTH_VALID_ERROR);
         UserDO user = this.getByPhone(phone);
-        Assert.notNull(user, "查不到该手机号用户");
+        AssertUtil.notNull(user, SysErrorCodeEnum.AUTH_USER_PHONE_NOT_FOUND_ERROR);
         if (!user.getEnabled()) {
             throw new DisabledException("");
         }
@@ -640,7 +639,7 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> {
         StaticLog.info("phone:{}, smsCode:{}", phone, smsCode);
         //短信的配置
         AliYunSmsCodeProperties smsCodeConfig = adminConfig.getSms();
-        Assert.notNull(smsCodeConfig, "请先配置短信相关属性");
+        AssertUtil.notNull(smsCodeConfig, SysErrorCodeEnum.AUTH_SMS_NOT_CONFIG_ERROR);
         //保留时长
         Long smsCodeTimeInterval = smsCodeConfig.getTimeInterval();
         SecurityJwtProperties securityJwtProperties = properties.getJwt();
@@ -738,7 +737,7 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> {
         String pCode = dto.getSmsCode();
         // 查询验证码
         String code = redisService.stringGetString(redisUuid);
-        Assert.notBlank(code, "手机验证码不存在或已过期");
+        AssertUtil.notBlank(code, SysErrorCodeEnum.AUTH_PHONE_VALID_NOT_FOUND_ERROR);
         boolean smsCodeEqual = StrUtil.equals(pCode, code);
         if (BooleanUtil.isFalse(smsCodeEqual)) {
             String smsCodeErrorCountKey = StrUtil.format("{}:sms_error_count", redisUuid);
@@ -747,7 +746,7 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> {
                 smsCodeErrorCount = 1L;
                 //短信的配置
                 AliYunSmsCodeProperties smsCodeConfig = adminConfig.getSms();
-                Assert.notNull(smsCodeConfig, "请先配置短信相关属性");
+                AssertUtil.notNull(smsCodeConfig, SysErrorCodeEnum.AUTH_PHONE_VALID_NOT_FOUND_ERROR);
                 //保留时长
                 Long smsCodeTimeInterval = smsCodeConfig.getTimeInterval();
                 redisService.objectSetObject(smsCodeErrorCountKey, smsCodeErrorCount, smsCodeTimeInterval);
@@ -759,9 +758,9 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> {
                 redisService.delete(smsCodeErrorCountKey);
                 redisService.delete(redisUuid);
             }
-            Assert.isFalse(isErrorMax, "手机验证码连续错误，请重新获取");
+            AssertUtil.isFalse(isErrorMax, SysErrorCodeEnum.AUTH_PHONE_VALID_ALWAYS_ERROR);
         }
-        Assert.isTrue(smsCodeEqual, "手机验证码错误");
+        AssertUtil.isTrue(smsCodeEqual, SysErrorCodeEnum.AUTH_PHONE_VALID_ERROR);
 
         SmsCodeAuthenticationToken authenticationToken = new SmsCodeAuthenticationToken(phone);
 
@@ -818,7 +817,7 @@ public class UserService extends MyServiceImpl<UserMapper, UserDO> {
         Map<Long, UserDO> finalUserMap = userMap;
         ids.forEach(id -> {
             UserDO user = finalUserMap.get(id);
-            Assert.notNull(user, "用户不存在");
+            AssertUtil.notNull(user, SysErrorCodeEnum.USER_NOT_FOUND_ERROR);
         });
     }
 

@@ -1,10 +1,11 @@
 package org.jjche.sys.modules.security.service;
 
-import cn.hutool.core.lang.Assert;
 import org.jjche.common.constant.SecurityConstant;
-import org.jjche.common.vo.UserVO;
 import org.jjche.common.enums.UserTypeEnum;
+import org.jjche.common.exception.util.AssertUtil;
+import org.jjche.common.vo.UserVO;
 import org.jjche.security.service.JwtUserService;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.system.service.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,7 @@ public class SmsUserDetailsServiceImpl extends AbstractUserDetailsService {
     @Override
     UserVO findUserDto(String username) {
         UserVO user = userService.findDtoByPhone(username);
-        Assert.notNull(user, "未找到该手机号用户");
+        AssertUtil.notNull(user, SysErrorCodeEnum.AUTH_USER_PHONE_NOT_FOUND_ERROR);
         //重置用户名为手机号
         user.setUsername(username);
         user.setUserType(UserTypeEnum.SMS);

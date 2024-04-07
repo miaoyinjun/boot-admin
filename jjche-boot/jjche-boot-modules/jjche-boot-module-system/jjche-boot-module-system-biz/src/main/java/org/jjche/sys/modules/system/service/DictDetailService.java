@@ -1,7 +1,6 @@
 package org.jjche.sys.modules.system.service;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.anno.Cached;
@@ -9,19 +8,20 @@ import com.alicp.jetcache.anno.CreateCache;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.dto.DictParam;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.util.StrUtil;
-import org.jjche.common.util.ValidationUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.util.MybatisUtil;
-import org.jjche.sys.modules.system.dto.DictDetailDTO;
-import org.jjche.sys.modules.system.dto.DictDetailQueryCriteriaDTO;
-import org.jjche.sys.modules.system.dto.DictSmallDto;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.system.conf.DictRunner;
 import org.jjche.sys.modules.system.constant.DictCacheKey;
 import org.jjche.sys.modules.system.domain.DictDO;
 import org.jjche.sys.modules.system.domain.DictDetailDO;
+import org.jjche.sys.modules.system.dto.DictDetailDTO;
+import org.jjche.sys.modules.system.dto.DictDetailQueryCriteriaDTO;
+import org.jjche.sys.modules.system.dto.DictSmallDto;
 import org.jjche.sys.modules.system.mapper.DictDetailMapper;
 import org.jjche.sys.modules.system.mapstruct.DictDetailMapStruct;
 import org.springframework.stereotype.Service;
@@ -106,7 +106,7 @@ public class DictDetailService extends MyServiceImpl<DictDetailMapper, DictDetai
     public void update(DictDetailDO resources) {
         Long id = resources.getId();
         DictDetailDO dictDetail = this.getById(id);
-        ValidationUtil.isNull(dictDetail, "DictDetailDO", "id", resources.getId());
+        AssertUtil.notNull(dictDetail, SysErrorCodeEnum.RECORD_NOT_FOUND);
         resources.setId(id);
         this.updateById(resources);
         // 清理缓存
@@ -122,7 +122,7 @@ public class DictDetailService extends MyServiceImpl<DictDetailMapper, DictDetai
     @Cached(name = DictCacheKey.DIC_NAME, key = "#name")
     public List<DictDetailDTO> getDictByName(String name) {
         DictDO dictDO = dictService.getByName(name);
-        Assert.notNull(dictDO, "未找到字典");
+        AssertUtil.notNull(dictDO, SysErrorCodeEnum.DICT_NOT_FOUND_ERROR);
         Long dictId = dictDO.getId();
         LambdaQueryWrapper<DictDetailDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(DictDetailDO::getDictId, dictId);
@@ -186,7 +186,7 @@ public class DictDetailService extends MyServiceImpl<DictDetailMapper, DictDetai
         Map<String, DictDetailDO> finalDictDataMap = dictDataMap;
         values.forEach(value -> {
             DictDetailDO dictData = finalDictDataMap.get(value);
-            Assert.notNull(dictData, "当前字典数据不存在");
+            AssertUtil.notNull(dictData, SysErrorCodeEnum.DICT_DETAIL_NOT_FOUND_ERROR);
         });
     }
 

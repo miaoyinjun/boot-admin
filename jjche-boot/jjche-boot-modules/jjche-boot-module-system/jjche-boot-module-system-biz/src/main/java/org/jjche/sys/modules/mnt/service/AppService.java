@@ -1,16 +1,16 @@
 package org.jjche.sys.modules.mnt.service;
 
-import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
-import org.jjche.common.vo.UserVO;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
-import org.jjche.common.util.ValidationUtil;
+import org.jjche.common.vo.UserVO;
 import org.jjche.core.util.FileUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.mnt.domain.AppDO;
 import org.jjche.sys.modules.mnt.dto.AppDTO;
 import org.jjche.sys.modules.mnt.dto.AppQueryCriteriaDTO;
@@ -24,11 +24,12 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * <p>AppService class.</p>
+ * <p>
+ * 应用
+ * </p>
  *
- * @author zhanghouying
- * @version 1.0.8-SNAPSHOT
- * @since 2019-08-24
+ * @author miaoyj
+ * @since 2024-04-07
  */
 @Service
 @RequiredArgsConstructor
@@ -82,7 +83,6 @@ public class AppService extends MyServiceImpl<AppMapper, AppDO> {
      */
     public AppDTO findById(Long id) {
         AppDO app = this.getById(id);
-        ValidationUtil.isNull(app.getId(), "AppDO", "id", id);
         return appMapStruct.toVO(app);
     }
 
@@ -112,13 +112,13 @@ public class AppService extends MyServiceImpl<AppMapper, AppDO> {
         String opt = "/opt";
         String home = "/home";
         Boolean isUploadOptOrHomePath = !(resources.getUploadPath().startsWith(opt) || resources.getUploadPath().startsWith(home));
-        Assert.isFalse(isUploadOptOrHomePath, "文件只能上传在opt目录或者home目录");
+        AssertUtil.isFalse(isUploadOptOrHomePath, SysErrorCodeEnum.APP_FILE_UPLOAD_ERROR);
 
         Boolean isDeployOptOrHomePath = !(resources.getDeployPath().startsWith(opt) || resources.getDeployPath().startsWith(home));
-        Assert.isFalse(isDeployOptOrHomePath, "文件只能部署在opt目录或者home目录");
+        AssertUtil.isFalse(isDeployOptOrHomePath, SysErrorCodeEnum.APP_FILE_DEPLOY_ERROR);
 
         Boolean isBackupOptOrHomePath = !(resources.getBackupPath().startsWith(opt) || resources.getBackupPath().startsWith(home));
-        Assert.isFalse(isBackupOptOrHomePath, "文件只能备份在opt目录或者home目录");
+        AssertUtil.isFalse(isBackupOptOrHomePath, SysErrorCodeEnum.APP_FILE_BAK_ERROR);
     }
 
     /**

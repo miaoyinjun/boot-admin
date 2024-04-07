@@ -68,16 +68,6 @@ public interface HttpStatusConstant {
     String MSG_PARAMETER_ERROR = "参数错误";
 
     /**
-     * 业务验证错误 {@value}
-     */
-    int CODE_VALID_ERROR = 4002;
-
-    /**
-     * 业务验证错误 {@value}
-     */
-    String MSG_VALID_ERROR = "业务验证错误";
-
-    /**
      * 请求超时 {@value}
      */
     int CODE_REQUEST_TIMEOUT = 4033;
@@ -287,4 +277,9 @@ public interface HttpStatusConstant {
      * 流控异常 {@value}
      */
     String MSG_SENTINEL_UNKNOWN = "未知异常";
+
+    /**
+     * 业务异常 {@value}
+     */
+    String MSG_BUSINESS_ERROR = "模块自定义编码";
 }

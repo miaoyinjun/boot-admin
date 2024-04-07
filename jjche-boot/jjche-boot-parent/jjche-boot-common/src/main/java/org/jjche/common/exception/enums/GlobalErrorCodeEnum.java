@@ -1,17 +1,21 @@
-package org.jjche.common.wrapper.enums;
+package org.jjche.common.exception.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.jjche.common.wrapper.constant.HttpStatusConstant;
 
 /**
- * <p>
- * api返回code定义
- * </p>
+ * 全局错误码枚举
+ * 0-999 系统异常编码保留
  *
- * @author miaoyj
- * @version 1.0.0-SNAPSHOT
- * @since 2020-08-10
+ * 一般情况下，使用 HTTP 响应状态码 https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status
+ * 虽然说，HTTP 响应状态码作为业务使用表达能力偏弱，但是使用在系统层面还是非常不错的
+ *
+ * @author 芋道源码
  */
-public enum RCodeEnum {
+@Getter
+@AllArgsConstructor
+public enum GlobalErrorCodeEnum implements IBaseErrorCodeEnum{
     /**
      * OK
      */
@@ -28,10 +32,6 @@ public enum RCodeEnum {
      * 参数错误
      */
     PARAMETER_ERROR(HttpStatusConstant.CODE_PARAMETER_ERROR, HttpStatusConstant.MSG_PARAMETER_ERROR),
-    /**
-     * 业务验证错误
-     */
-    VALID_ERROR(HttpStatusConstant.CODE_VALID_ERROR, HttpStatusConstant.MSG_VALID_ERROR),
     /**
      * 请求超时
      */
@@ -92,37 +92,12 @@ public enum RCodeEnum {
      * 白名单限制
      */
     WHITE_IP(HttpStatusConstant.CODE_WHITE_IP, HttpStatusConstant.MSG_CODE_WHITE_IP),
-    ;
-    /**
-     * 代码
-     */
-    private int code;
 
     /**
-     * 结果
+     * 错误码
      */
-    private String msg;
+    NOT_IMPLEMENTED(501, "功能未实现/未开启");
 
-    RCodeEnum(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
-    }
-
-    /**
-     * <p>Getter for the field <code>code</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getCode() {
-        return code;
-    }
-
-    /**
-     * <p>Getter for the field <code>msg</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getMsg() {
-        return msg;
-    }
+    private final int code;
+    private final String msg;
 }

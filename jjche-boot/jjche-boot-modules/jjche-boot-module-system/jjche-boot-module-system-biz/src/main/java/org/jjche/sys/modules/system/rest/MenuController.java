@@ -1,24 +1,25 @@
 package org.jjche.sys.modules.system.rest;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.core.util.SecurityUtil;
 import org.jjche.log.biz.starter.annotation.LogRecord;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.system.domain.MenuDO;
 import org.jjche.sys.modules.system.dto.MenuDTO;
 import org.jjche.sys.modules.system.dto.MenuQueryCriteriaDTO;
-import org.jjche.sys.modules.system.vo.MenuVO;
-import org.jjche.sys.modules.system.domain.MenuDO;
 import org.jjche.sys.modules.system.mapstruct.MenuMapStruct;
 import org.jjche.sys.modules.system.service.MenuService;
+import org.jjche.sys.modules.system.vo.MenuVO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -176,7 +177,7 @@ public class MenuController extends BaseController {
     @PostMapping
     @PreAuthorize("@el.check('menu:add')")
     public R create(@Validated @RequestBody MenuDO resources) {
-        Assert.isNull(resources.getId(), "A new " + ENTITY_NAME + " cannot already have an ID");
+        AssertUtil.isFalse(resources.getId() != null, SysErrorCodeEnum.ID_ALREADY_ERROR);
         menuService.create(resources);
         return R.ok();
     }

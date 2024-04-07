@@ -24,8 +24,12 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import cn.hutool.core.lang.Assert;
+import org.jjche.demo.enums.DemoErrorCodeEnum;
 import java.util.List;
+import static org.jjche.common.exception.util.BusinessExceptionUtil.exception;
+import org.jjche.common.exception.util.AssertUtil;
+
+
 /**
 * <p>
 * ${apiAlias} 服务实现类
@@ -57,12 +61,12 @@ public class ${className}Service extends MyServiceImpl<${className}Mapper, ${cla
         LambdaQueryWrapper<${className}DO> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(${className}DO::get${column.capitalColumnName}, ${column.changeColumnName});
         ${className}DO dbDO = this.getOne(queryWrapper, false);
-        Assert.isTrue(dbDO == null, ${column.changeColumnName} + "已存在");
+        // AssertUtil.isTrue(dbDO == null, ${column.changeColumnName} + "已存在");
             </#if>
         </#list>
     </#if>
         ${className}DO ${changeClassName}DO = this.${changeClassName}MapStruct.toDO(dto);
-        Assert.isTrue(this.save(${changeClassName}DO), "保存失败");
+        AssertUtil.isTrue(this.save(${changeClassName}DO), DemoErrorCodeEnum.SAVE_ERROR);
         return ${changeClassName}DO.getId();
     }
 
@@ -74,7 +78,7 @@ public class ${className}Service extends MyServiceImpl<${className}Mapper, ${cla
     */
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<${pkColumnType}> ids){
-        Assert.isTrue(this.removeBatchByIdsWithFill(new ${className}DO(), ids) == ids.size(), "删除失败，记录不存在");
+        AssertUtil.isTrue(this.removeBatchByIdsWithFill(new ${className}DO(), ids) == ids.size(), DemoErrorCodeEnum.DELETE_ERROR);
     }
 
     /**
@@ -86,7 +90,7 @@ public class ${className}Service extends MyServiceImpl<${className}Mapper, ${cla
     @Transactional(rollbackFor = Exception.class)
     public void update(${className}DTO dto) {
         ${className}DO ${changeClassName}DO = this.getById(dto.getId());
-        Assert.notNull(${changeClassName}DO, "记录不存在");
+        AssertUtil.notNull(${changeClassName}DO, DemoErrorCodeEnum.RECORD_NOT_FOUND);
 <#if columns??>
     <#list columns as column>
         <#if column.columnKey = 'UNI'>
@@ -96,12 +100,12 @@ public class ${className}Service extends MyServiceImpl<${className}Mapper, ${cla
         queryWrapper.eq(${className}DO::get${column.capitalColumnName}, ${column.changeColumnName});
         queryWrapper.ne(${className}DO::getId, dto.getId());
         ${className}DO dbDO = this.getOne(queryWrapper, false);
-        Assert.isTrue(dbDO == null, ${column.changeColumnName} + "已存在");
+        //AssertUtil.isTrue(dbDO == null, ${column.changeColumnName} + "已存在");
         </#if>
     </#list>
 </#if>
         ${changeClassName}DO = this.${changeClassName}MapStruct.toDO(dto);
-        Assert.isTrue(this.updateById(${changeClassName}DO), "修改失败，记录不存在");
+        AssertUtil.isTrue(this.updateById(${changeClassName}DO), DemoErrorCodeEnum.UPDATE_ERROR);
 }
     /**
     * <p>
@@ -112,7 +116,7 @@ public class ${className}Service extends MyServiceImpl<${className}Mapper, ${cla
     */
     public ${className}VO getVoById(${pkColumnType} ${pkChangeColName}) {
         ${className}DO ${changeClassName}DO = this.getById(id);
-        Assert.notNull(${changeClassName}DO, "记录不存在");
+        AssertUtil.notNull(${changeClassName}DO, DemoErrorCodeEnum.RECORD_NOT_FOUND);
         return this.${changeClassName}MapStruct.toVO(${changeClassName}DO);
     }
 
@@ -171,7 +175,7 @@ public class ${className}Service extends MyServiceImpl<${className}Mapper, ${cla
             HttpServletResponse httpServletResponse = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
             FileUtil.downloadExcel(list, httpServletResponse);
         }catch (IOException e){
-            throw new IllegalArgumentException("文件下载失败");
+            throw exception(DemoErrorCodeEnum.FILE_EXPORT_ERROR);
         }
     }
 }

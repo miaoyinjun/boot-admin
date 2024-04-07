@@ -22,8 +22,8 @@ public class RBadRequest<T> extends R<T> {
      */
     @ApiModelProperty(value = HttpStatusConstant.CODE_PARAMETER_ERROR
             + ":" + HttpStatusConstant.MSG_PARAMETER_ERROR + ";"
-            + HttpStatusConstant.CODE_VALID_ERROR
-            + ":" + HttpStatusConstant.MSG_VALID_ERROR + ";"
+//            + HttpStatusConstant.CODE_VALID_ERROR
+//            + ":" + HttpStatusConstant.MSG_VALID_ERROR + ";"
             + HttpStatusConstant.CODE_REQUEST_TIMEOUT
             + ":" + HttpStatusConstant.MSG_REQUEST_TIMEOUT + ";"
             + HttpStatusConstant.CODE_SIGN_ERROR

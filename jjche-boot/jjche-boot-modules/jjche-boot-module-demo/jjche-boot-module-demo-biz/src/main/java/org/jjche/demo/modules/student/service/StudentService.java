@@ -1,10 +1,11 @@
 package org.jjche.demo.modules.student.service;
 
-import cn.hutool.core.lang.Assert;
 import lombok.RequiredArgsConstructor;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.util.FileUtil;
+import org.jjche.demo.enums.DemoErrorCodeEnum;
 import org.jjche.demo.modules.student.api.enums.StudentCourseEnum;
 import org.jjche.demo.modules.student.domain.StudentDO;
 import org.jjche.demo.modules.student.dto.StudentDTO;
@@ -22,6 +23,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
+
+import static org.jjche.common.exception.util.BusinessExceptionUtil.exception;
 
 /**
  * <p>
@@ -49,7 +52,7 @@ public class StudentService extends MyServiceImpl<StudentMapper, StudentDO> {
     @Transactional(rollbackFor = Exception.class)
     public Long save(StudentDTO dto) {
         StudentDO studentDO = this.studentMapStruct.toDO(dto);
-        Assert.isTrue(this.save(studentDO), "保存失败");
+        AssertUtil.isTrue(this.save(studentDO), DemoErrorCodeEnum.SAVE_ERROR);
         return studentDO.getId();
     }
 
@@ -62,7 +65,7 @@ public class StudentService extends MyServiceImpl<StudentMapper, StudentDO> {
      */
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<Long> ids) {
-        Assert.isTrue(this.removeBatchByIdsWithFill(new StudentDO(), ids) == ids.size(), "删除失败，记录不存在");
+        AssertUtil.isTrue(this.removeBatchByIdsWithFill(new StudentDO(), ids) == ids.size(), DemoErrorCodeEnum.DELETE_ERROR);
     }
 
     /**
@@ -75,7 +78,7 @@ public class StudentService extends MyServiceImpl<StudentMapper, StudentDO> {
     @Transactional(rollbackFor = Exception.class)
     public void update(StudentDTO dto) {
         StudentDO studentDO = this.studentMapStruct.toDO(dto);
-        Assert.isTrue(this.updateById(studentDO), "修改失败，记录不存在");
+        AssertUtil.isTrue(this.updateById(studentDO), DemoErrorCodeEnum.UPDATE_ERROR);
     }
 
     /**
@@ -88,7 +91,7 @@ public class StudentService extends MyServiceImpl<StudentMapper, StudentDO> {
      */
     public StudentVO getVoById(Long id) {
         StudentDO studentDO = this.getById(id);
-        Assert.notNull(studentDO, "记录不存在");
+        AssertUtil.notNull(studentDO, DemoErrorCodeEnum.RECORD_NOT_FOUND);
         return this.studentMapStruct.toVO(studentDO);
     }
 
@@ -142,7 +145,7 @@ public class StudentService extends MyServiceImpl<StudentMapper, StudentDO> {
             HttpServletResponse httpServletResponse = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
             FileUtil.downloadExcel(list, httpServletResponse);
         } catch (IOException e) {
-            throw new IllegalArgumentException("文件下载失败");
+            throw exception(DemoErrorCodeEnum.FILE_EXPORT_ERROR);
         }
     }
 
@@ -158,7 +161,7 @@ public class StudentService extends MyServiceImpl<StudentMapper, StudentDO> {
         List<StudentDO> list = studentMapStruct.toDO((Set<StudentImportDTO>) importSet);
         //判断excel中是否有重复的姓名
         long distinctNum = list.stream().map(StudentDO::getName).distinct().count();
-        Assert.isFalse(list.size() > distinctNum, "姓名不能重复");
+        AssertUtil.isFalse(list.size() > distinctNum, DemoErrorCodeEnum.STUDENT_NAME_REPEAT);
         this.saveBatch(list);
     }
 }

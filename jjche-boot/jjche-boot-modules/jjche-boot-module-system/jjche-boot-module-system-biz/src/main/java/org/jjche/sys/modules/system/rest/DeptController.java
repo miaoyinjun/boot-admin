@@ -1,7 +1,6 @@
 package org.jjche.sys.modules.system.rest;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,13 +9,15 @@ import org.jjche.common.annotation.PermissionData;
 import org.jjche.common.dto.DeptSmallDTO;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.system.domain.DeptDO;
 import org.jjche.sys.modules.system.dto.DeptDTO;
 import org.jjche.sys.modules.system.dto.DeptQueryCriteriaDTO;
-import org.jjche.sys.modules.system.domain.DeptDO;
 import org.jjche.sys.modules.system.service.DeptService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -115,7 +116,7 @@ public class DeptController extends BaseController {
     @PostMapping
     @PreAuthorize("@el.check('dept:add')")
     public R create(@Validated @RequestBody DeptDO resources) {
-        Assert.isFalse(resources.getId() != null, "A new " + ENTITY_NAME + " cannot already have an ID");
+        AssertUtil.isFalse(resources.getId() != null, SysErrorCodeEnum.ID_ALREADY_ERROR);
         deptService.create(resources);
         return R.ok();
     }

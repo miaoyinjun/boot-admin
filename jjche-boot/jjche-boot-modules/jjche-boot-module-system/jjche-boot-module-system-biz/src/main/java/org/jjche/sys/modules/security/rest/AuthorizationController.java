@@ -1,6 +1,5 @@
 package org.jjche.sys.modules.security.rest;
 
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.anji.captcha.model.common.ResponseModel;
@@ -16,6 +15,7 @@ import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogModule;
 import org.jjche.common.enums.LogType;
 import org.jjche.common.enums.UserTypeEnum;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.util.RsaUtils;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
@@ -25,6 +25,7 @@ import org.jjche.security.annotation.rest.IgnoreGetMapping;
 import org.jjche.security.annotation.rest.IgnorePostMapping;
 import org.jjche.security.property.*;
 import org.jjche.security.security.TokenProvider;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.security.dto.AuthUserDTO;
 import org.jjche.sys.modules.security.dto.AuthUserSmsDTO;
 import org.jjche.sys.modules.security.dto.SmsCodeDTO;
@@ -78,21 +79,21 @@ public class AuthorizationController extends BaseController {
 
         String paramCode = authUser.getCode();
         String captchaVerification = authUser.getCaptchaVerification();
-        Assert.isTrue(StrUtil.isNotBlank(paramCode) || StrUtil.isNotBlank(captchaVerification), "请选择验证码-手输或滑动");
+        AssertUtil.isTrue(StrUtil.isNotBlank(paramCode) || StrUtil.isNotBlank(captchaVerification), SysErrorCodeEnum.AUTH_VALID_NOT_CONFIG_ERROR);
         //验证码-手输
         if (StrUtil.isNotBlank(paramCode)) {
             // 查询验证码-手输
             String code = redisService.stringGetString(authUser.getUuid());
             // 清除验证码
             redisService.delete(authUser.getUuid());
-            Assert.notBlank(code, "验证码不存在或已过期");
-            Assert.isTrue(StrUtil.equalsIgnoreCase(paramCode, code), "验证码错误");
+            AssertUtil.notBlank(code, SysErrorCodeEnum.AUTH_VALID_NOT_FOUND_ERROR);
+            AssertUtil.isTrue(StrUtil.equalsIgnoreCase(paramCode, code), SysErrorCodeEnum.AUTH_VALID_ERROR);
         }//滑动
         else {
             CaptchaVO captchaVO = new CaptchaVO();
             captchaVO.setCaptchaVerification(captchaVerification);
             ResponseModel response = captchaService.verification(captchaVO);
-            Assert.isTrue(response.isSuccess(), response.getRepMsg());
+            AssertUtil.isTrue(response.isSuccess(), SysErrorCodeEnum.AUTH_VALID_FAILED_ERROR);
         }
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(authUser.getUsername(), password);

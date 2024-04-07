@@ -1,7 +1,6 @@
 package org.jjche.bpm.config.flowable.core.behavior;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.RandomUtil;
 import lombok.Setter;
 import org.flowable.bpmn.model.UserTask;
@@ -12,7 +11,9 @@ import org.flowable.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.flowable.engine.impl.util.TaskHelper;
 import org.flowable.task.service.TaskService;
 import org.flowable.task.service.impl.persistence.entity.TaskEntity;
+import org.jjche.bpm.enums.BpmErrorCodeEnum;
 import org.jjche.bpm.modules.definition.service.BpmTaskAssignRuleService;
+import org.jjche.common.exception.util.AssertUtil;
 
 import java.util.List;
 import java.util.Set;
@@ -39,7 +40,7 @@ public class BpmUserTaskActivityBehavior extends UserTaskActivityBehavior {
         DelegateExecution execution, ProcessEngineConfigurationImpl processEngineConfiguration) {
         // 第一步，获得任务的候选用户
         Long assigneeUserId = calculateTaskCandidateUsers(execution);
-        Assert.notNull(assigneeUserId, "任务处理人不能为空");
+        AssertUtil.notNull(assigneeUserId, BpmErrorCodeEnum.TASK_ASSIGNEE_NOT_NULL);
         // 第二步，设置作为负责人
         TaskHelper.changeTaskAssignee(task, String.valueOf(assigneeUserId));
     }

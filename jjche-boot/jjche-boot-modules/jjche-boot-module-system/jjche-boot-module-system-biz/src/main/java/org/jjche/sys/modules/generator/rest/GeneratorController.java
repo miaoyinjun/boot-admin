@@ -1,14 +1,16 @@
 package org.jjche.sys.modules.generator.rest;
 
-import cn.hutool.core.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.jjche.common.exception.util.AssertUtil;
+import org.jjche.common.exception.util.BusinessExceptionUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.core.util.SpringContextHolder;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.generator.domain.ColumnInfoDO;
 import org.jjche.sys.modules.generator.service.GenConfigService;
 import org.jjche.sys.modules.generator.service.GeneratorService;
@@ -105,7 +107,7 @@ public class GeneratorController extends BaseController {
     @PreAuthorize("@el.check('generator:list')")
     public R generator(@PathVariable String tableName, @PathVariable Integer type, HttpServletRequest request, HttpServletResponse response) {
         boolean isDev = SpringContextHolder.isDev();
-        Assert.isFalse(!isDev && type == 0, "此环境不允许生成代码，请选择预览或者下载查看！");
+        AssertUtil.isFalse(!isDev && type == 0, SysErrorCodeEnum.GENERATOR_CODE_NOT_ALLOWED);
         switch (type) {
             // 生成代码
             case 0:
@@ -120,7 +122,7 @@ public class GeneratorController extends BaseController {
                 generatorService.download(genConfigService.find(tableName), generatorService.getColumns(tableName), request, response);
                 break;
             default:
-                throw new IllegalArgumentException("没有这个选项");
+                throw BusinessExceptionUtil.exception(SysErrorCodeEnum.GENERATOR_CODE_NO_ITEM_ERROR);
         }
         return R.ok();
     }

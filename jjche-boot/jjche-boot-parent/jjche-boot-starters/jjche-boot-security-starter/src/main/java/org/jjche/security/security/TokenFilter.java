@@ -61,31 +61,28 @@ public class TokenFilter extends GenericFilterBean {
         HttpServletResponse response = ((HttpServletResponse) servletResponse);
         String uri = request.getRequestURI();
         String method = request.getMethod();
-
-        //验证url和method是否存在
-        if (validUrl(response, uri, method)) {
-            return;
-        }
-
         HeaderMapRequestWrapper reqWrapper = new HeaderMapRequestWrapper((HttpServletRequest) servletRequest);
-        //非cloud才会走这里
-        JwtUserDTO userDetails = commonApi.getUserDetails();
-        String token = reqWrapper.getHeader(SecurityConstant.HEADER_AUTH);
-        if (userDetails != null) {
-            Authentication authentication = null;
-            UserVO userVO = userDetails.getUser();
-            UserTypeEnum userType = userVO.getUserType();
-            //设置用户信息上下文
-            setContextUser(userDetails, token);
-            //密码
-            if (UserTypeEnum.PWD == userType) {
-                authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            }//短信
-            else if (UserTypeEnum.SMS == userType) {
-                authentication = new SmsCodeAuthenticationToken(userVO.getUsername());
-            }
-            if (authentication != null) {
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+        //验证url和method是否存在
+        if (BooleanUtil.isFalse(validUrl(response, uri, method))) {
+            //非cloud才会走这里
+            JwtUserDTO userDetails = commonApi.getUserDetails();
+            String token = reqWrapper.getHeader(SecurityConstant.HEADER_AUTH);
+            if (userDetails != null) {
+                Authentication authentication = null;
+                UserVO userVO = userDetails.getUser();
+                UserTypeEnum userType = userVO.getUserType();
+                //设置用户信息上下文
+                setContextUser(userDetails, token);
+                //密码
+                if (UserTypeEnum.PWD == userType) {
+                    authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                }//短信
+                else if (UserTypeEnum.SMS == userType) {
+                    authentication = new SmsCodeAuthenticationToken(userVO.getUsername());
+                }
+                if (authentication != null) {
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
             }
         }
         filterChain.doFilter(reqWrapper, servletResponse);
@@ -106,7 +103,7 @@ public class TokenFilter extends GenericFilterBean {
         boolean fileAvatarUri = antPathMatcher.match(FileConstant.AVATAR_PATH_MATCH, uri)
                 || antPathMatcher.match(FileConstant.FILE_PATH_MATCH, uri);
         if(fileAvatarUri){
-            return false;
+            return true;
         }
         boolean isMachUrl = false;
         boolean isMachUrlMethod = false;

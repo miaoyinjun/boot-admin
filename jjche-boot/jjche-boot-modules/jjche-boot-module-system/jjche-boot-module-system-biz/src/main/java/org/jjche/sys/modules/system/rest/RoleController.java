@@ -1,6 +1,5 @@
 package org.jjche.sys.modules.system.rest;
 
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.Dict;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -8,20 +7,22 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.annotation.PermissionData;
 import org.jjche.common.dto.RoleSmallDTO;
-import org.jjche.common.vo.UserVO;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.vo.DataScopeVO;
+import org.jjche.common.vo.UserVO;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.core.util.SecurityUtil;
 import org.jjche.log.biz.starter.annotation.LogRecord;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.system.domain.RoleDO;
 import org.jjche.sys.modules.system.dto.RoleDTO;
 import org.jjche.sys.modules.system.dto.RoleQueryCriteriaDTO;
 import org.jjche.sys.modules.system.dto.UserRoleDTO;
-import org.jjche.sys.modules.system.domain.RoleDO;
 import org.jjche.sys.modules.system.service.RoleService;
 import org.jjche.sys.modules.system.service.UserRoleService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -129,7 +130,7 @@ public class RoleController extends BaseController {
     @PostMapping
     @PreAuthorize("@el.check('roles:add')")
     public R create(@Validated @RequestBody RoleDO resources) {
-        Assert.isNull(resources.getId(), "A new " + ENTITY_NAME + " cannot already have an ID");
+        AssertUtil.isFalse(resources.getId() != null, SysErrorCodeEnum.ID_ALREADY_ERROR);
         getLevels(resources.getLevel());
         roleService.create(resources);
         return R.ok();
@@ -198,7 +199,7 @@ public class RoleController extends BaseController {
         List<Integer> levels = roleService.findByUsersId(SecurityUtil.getUserId()).stream().map(RoleSmallDTO::getLevel).collect(Collectors.toList());
         int min = Collections.min(levels);
         if (level != null) {
-            Assert.isFalse(level < min, "权限不足，你的角色级别：" + min + "，低于操作的角色级别：" + level);
+            AssertUtil.isFalse(level < min, SysErrorCodeEnum.ROLE_LEVEL_ERROR, min, level);
         }
         return min;
     }

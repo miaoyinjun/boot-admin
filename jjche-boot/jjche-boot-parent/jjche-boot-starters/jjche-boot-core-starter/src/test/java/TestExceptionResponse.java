@@ -1,7 +1,7 @@
 import cn.hutool.http.HttpStatus;
 import controller.CoreTestController;
 import dto.LoginDTO;
-import org.jjche.common.wrapper.enums.RCodeEnum;
+import org.jjche.common.exception.enums.GlobalErrorCodeEnum;
 import org.jjche.common.wrapper.response.R;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,6 @@ public class TestExceptionResponse {
         assertEquals(wrapperResponseEntity.getStatusCode().value(), HttpStatus.HTTP_BAD_REQUEST);
         R wrapper = wrapperResponseEntity.getBody();
         assertNotNull(wrapper);
-        assertEquals(wrapper.getCode(), RCodeEnum.VALID_ERROR.getCode());
         assertEquals(wrapper.getMessage(), CoreTestController.ASSERT_MSG);
     }
 
@@ -38,7 +37,7 @@ public class TestExceptionResponse {
         assertEquals(wrapperResponseEntity.getStatusCode().value(), HttpStatus.HTTP_BAD_REQUEST);
         R wrapper = wrapperResponseEntity.getBody();
         assertNotNull(wrapper);
-        assertEquals(wrapper.getCode(), RCodeEnum.PARAMETER_ERROR.getCode());
+        assertEquals(wrapper.getCode(), GlobalErrorCodeEnum.PARAMETER_ERROR.getCode());
         assertEquals(wrapper.getMessage(), "name: 不能为空");
     }
 
@@ -48,7 +47,7 @@ public class TestExceptionResponse {
         assertEquals(wrapperResponseEntity.getStatusCode().value(), HttpStatus.HTTP_BAD_REQUEST);
         R wrapper = wrapperResponseEntity.getBody();
         assertNotNull(wrapper);
-        assertEquals(wrapper.getCode(), RCodeEnum.PARAMETER_ERROR.getCode());
+        assertEquals(wrapper.getCode(), GlobalErrorCodeEnum.PARAMETER_ERROR.getCode());
         assertTrue(CoreTestController.GET_PARAM_CUSTOM_MSG_VALID_USER_NAME_MSG.equals(wrapper.getMessage()) ||
                 CoreTestController.GET_PARAM_CUSTOM_MSG_VALID_SEX_MSG.equals(wrapper.getMessage()));
     }
@@ -62,7 +61,7 @@ public class TestExceptionResponse {
         assertEquals(wrapperResponseEntity.getStatusCode().value(), HttpStatus.HTTP_BAD_REQUEST);
         R wrapper = wrapperResponseEntity.getBody();
         assertNotNull(wrapper);
-        assertEquals(wrapper.getCode(), RCodeEnum.PARAMETER_ERROR.getCode());
+        assertEquals(wrapper.getCode(), GlobalErrorCodeEnum.PARAMETER_ERROR.getCode());
         assertTrue(LoginDTO.NICKNAME_MSG.equals(wrapper.getMessage()) || LoginDTO.PHONE_MSG.equals(wrapper.getMessage()));
     }
 
@@ -72,7 +71,7 @@ public class TestExceptionResponse {
         assertEquals(wrapperResponseEntity.getStatusCode().value(), HttpStatus.HTTP_INTERNAL_ERROR);
         R wrapper = wrapperResponseEntity.getBody();
         assertNotNull(wrapper);
-        assertEquals(wrapper.getCode(), RCodeEnum.UNKNOWN_ERROR.getCode());
-        assertEquals(wrapper.getMessage(), RCodeEnum.UNKNOWN_ERROR.getMsg());
+        assertEquals(wrapper.getCode(), GlobalErrorCodeEnum.UNKNOWN_ERROR.getCode());
+        assertEquals(wrapper.getMessage(), GlobalErrorCodeEnum.UNKNOWN_ERROR.getMsg());
     }
 }

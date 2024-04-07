@@ -1,7 +1,6 @@
 package org.jjche.mybatis.util;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -11,9 +10,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.jjche.common.annotation.QueryCriteria;
-import org.jjche.common.constant.EnumConstant;
 import org.jjche.common.base.BaseQueryCriteriaDTO;
+import org.jjche.common.constant.EnumConstant;
 import org.jjche.common.dto.PermissionDataRuleDTO;
+import org.jjche.common.enums.InfraErrorCodeEnum;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.mybatis.param.BetweenParam;
 
 import java.lang.reflect.Field;
@@ -234,7 +235,7 @@ public class MybatisUtil {
      */
     public static BetweenParam getBetweenParam(List<String> betweenParamList, boolean isDateTime) {
         boolean isBetween = CollUtil.isNotEmpty(betweenParamList) && betweenParamList.size() == 2;
-        Assert.isTrue(isBetween, "区间参数长度必须是2");
+        AssertUtil.isTrue(isBetween, InfraErrorCodeEnum.COMMON_RANGE_PARAM_ERROR);
         BetweenParam betweenParam = new BetweenParam(betweenParamList.get(0), betweenParamList.get(1));
 //        if (isDateTime) {
 //            String dateTimeRegex = "^[1-9]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\\s+(20|21|22|23|[0-1]\\d):[0-5]\\d:[0-5]\\d$";

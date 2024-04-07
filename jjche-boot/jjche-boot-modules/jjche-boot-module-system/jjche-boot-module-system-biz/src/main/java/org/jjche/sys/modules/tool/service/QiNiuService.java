@@ -1,6 +1,6 @@
 package org.jjche.sys.modules.tool.service;
 
-import cn.hutool.core.lang.Assert;
+import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.alicp.jetcache.anno.CacheInvalidate;
 import com.alicp.jetcache.anno.Cached;
@@ -15,17 +15,19 @@ import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
 import lombok.RequiredArgsConstructor;
+import org.jjche.common.exception.util.AssertUtil;
+import org.jjche.common.exception.util.BusinessExceptionUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
-import org.jjche.common.util.ValidationUtil;
 import org.jjche.core.util.FileUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
-import org.jjche.sys.modules.tool.dto.QiniuQueryCriteriaDTO;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.tool.constant.ToolCacheKey;
 import org.jjche.sys.modules.tool.domain.QiniuConfigDO;
 import org.jjche.sys.modules.tool.domain.QiniuContentDO;
+import org.jjche.sys.modules.tool.dto.QiniuQueryCriteriaDTO;
 import org.jjche.sys.modules.tool.mapper.QiNiuConfigMapper;
 import org.jjche.sys.modules.tool.mapper.QiniuContentMapper;
 import org.jjche.sys.modules.tool.utils.QiNiuUtil;
@@ -77,9 +79,8 @@ public class QiNiuService extends MyServiceImpl<QiNiuConfigMapper, QiniuConfigDO
     @Transactional(rollbackFor = Exception.class)
     public QiniuConfigDO config(QiniuConfigDO qiniuConfig) {
         qiniuConfig.setId(1L);
-        String http = "http://", https = "https://";
-        Boolean isHttpOrHttps = qiniuConfig.getHost().toLowerCase().startsWith(http) || qiniuConfig.getHost().toLowerCase().startsWith(https);
-        Assert.isTrue(isHttpOrHttps, "外链域名必须以http://或者https://开头");
+        String resourcePath = qiniuConfig.getHost().toLowerCase();
+        AssertUtil.isTrue(HttpUtil.isHttp(resourcePath) && HttpUtil.isHttps(resourcePath), SysErrorCodeEnum.MENU_URL_PREFIX_ERROR);
         this.saveOrUpdate(qiniuConfig);
         return qiniuConfig;
     }
@@ -145,7 +146,7 @@ public class QiNiuService extends MyServiceImpl<QiNiuConfigMapper, QiniuConfigDO
     @Transactional(rollbackFor = Exception.class)
     public QiniuContentDO upload(MultipartFile file, QiniuConfigDO qiniuConfig) {
         FileUtil.checkSize(maxSize, file.getSize());
-        Assert.notNull(qiniuConfig, "请先添加相应配置，再操作");
+        AssertUtil.notNull(qiniuConfig, SysErrorCodeEnum.QINIU_NOT_CONFIG_ERROR);
         // 构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(QiNiuUtil.getRegion(qiniuConfig.getZone()));
         UploadManager uploadManager = new UploadManager(cfg);
@@ -176,7 +177,7 @@ public class QiNiuService extends MyServiceImpl<QiNiuConfigMapper, QiniuConfigDO
             }
             return content;
         } catch (Exception e) {
-            throw new IllegalArgumentException(e.getMessage());
+            throw BusinessExceptionUtil.exception(SysErrorCodeEnum.QINIU_UPLOAD_FAILED_ERROR);
         }
     }
 
@@ -188,7 +189,6 @@ public class QiNiuService extends MyServiceImpl<QiNiuConfigMapper, QiniuConfigDO
      */
     public QiniuContentDO findByContentId(Long id) {
         QiniuContentDO qiniuContent = qiniuContentRepository.selectById(id);
-        ValidationUtil.isNull(qiniuContent.getId(), "QiniuContentDO", "id", id);
         return qiniuContent;
     }
 
@@ -240,7 +240,7 @@ public class QiNiuService extends MyServiceImpl<QiNiuConfigMapper, QiniuConfigDO
      */
     @Transactional(rollbackFor = Exception.class)
     public void synchronize(QiniuConfigDO config) {
-        Assert.notNull(config.getId(), "请先添加相应配置，再操作");
+        AssertUtil.notNull(config.getId(), SysErrorCodeEnum.QINIU_NOT_CONFIG_ERROR);
         //构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(QiNiuUtil.getRegion(config.getZone()));
         Auth auth = Auth.create(config.getAccessKey(), config.getSecretKey());

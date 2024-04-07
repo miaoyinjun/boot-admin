@@ -4,9 +4,9 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.log.StaticLog;
 import org.jjche.common.constant.SecurityConstant;
 import org.jjche.common.context.ContextUtil;
+import org.jjche.common.exception.enums.GlobalErrorCodeEnum;
 import org.jjche.common.vo.DataScopeVO;
 import org.jjche.common.util.StrUtil;
-import org.jjche.common.wrapper.enums.RCodeEnum;
 import org.jjche.core.exception.AuthenticationTokenExpiredException;
 import org.springframework.util.StringUtils;
 
@@ -35,7 +35,7 @@ public class SecurityUtil {
         if (StrUtil.isNotBlank(value)) {
             return value;
         }
-        throw new AuthenticationTokenExpiredException(RCodeEnum.TOKEN_EXPIRED.getMsg());
+        throw new AuthenticationTokenExpiredException(GlobalErrorCodeEnum.TOKEN_EXPIRED.getMsg());
     }
 
     /**
@@ -70,7 +70,7 @@ public class SecurityUtil {
         if (value != null && value > 0) {
             return value;
         }
-        throw new AuthenticationTokenExpiredException(RCodeEnum.TOKEN_EXPIRED.getMsg());
+        throw new AuthenticationTokenExpiredException(GlobalErrorCodeEnum.TOKEN_EXPIRED.getMsg());
     }
 
     /**
@@ -116,7 +116,7 @@ public class SecurityUtil {
     public static Set<String> listPermission() {
         Set<String> permissions = ContextUtil.getPermissions();
         if (CollUtil.isEmpty(permissions)) {
-            throw new AuthenticationTokenExpiredException(RCodeEnum.TOKEN_EXPIRED.getMsg());
+            throw new AuthenticationTokenExpiredException(GlobalErrorCodeEnum.TOKEN_EXPIRED.getMsg());
         }
         return permissions;
     }

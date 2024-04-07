@@ -1,7 +1,6 @@
 package org.jjche.sys.modules.system.service;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alicp.jetcache.anno.Cached;
@@ -10,18 +9,20 @@ import lombok.RequiredArgsConstructor;
 import org.jjche.common.constant.PermissionDataCacheKey;
 import org.jjche.common.dto.PermissionDataResourceDTO;
 import org.jjche.common.dto.PermissionDataRuleDTO;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.vo.DataPermissionFieldResultVO;
 import org.jjche.core.util.SecurityUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.system.domain.DataPermissionFieldDO;
 import org.jjche.sys.modules.system.dto.DataPermissionFieldDTO;
 import org.jjche.sys.modules.system.dto.DataPermissionFieldQueryCriteriaDTO;
-import org.jjche.sys.modules.system.vo.DataPermissionFieldVO;
-import org.jjche.sys.modules.system.domain.DataPermissionFieldDO;
 import org.jjche.sys.modules.system.mapper.DataPermissionFieldMapper;
 import org.jjche.sys.modules.system.mapstruct.DataPermissionFieldMapStruct;
+import org.jjche.sys.modules.system.vo.DataPermissionFieldVO;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,7 +80,7 @@ public class DataPermissionFieldService extends MyServiceImpl<DataPermissionFiel
      */
     public DataPermissionFieldVO getVoById(Long id) {
         DataPermissionFieldDO dataPermissionFieldDO = this.getById(id);
-        Assert.notNull(dataPermissionFieldDO, "记录不存在或权限不足");
+        AssertUtil.notNull(dataPermissionFieldDO, SysErrorCodeEnum.RECORD_NOT_FOUND);
         return this.dataPermissionFieldMapper.toVO(dataPermissionFieldDO);
     }
 
@@ -92,7 +93,7 @@ public class DataPermissionFieldService extends MyServiceImpl<DataPermissionFiel
      */
     @Transactional(rollbackFor = Exception.class)
     public void delete(Set<Long> ids) {
-        Assert.isTrue(this.removeBatchByIdsWithFill(new DataPermissionFieldDO(), ids) == ids.size(), "删除失败，记录不存在或权限不足");
+        AssertUtil.isTrue(this.removeBatchByIdsWithFill(new DataPermissionFieldDO(), ids) == ids.size(), SysErrorCodeEnum.DELETE_ERROR);
         dataPermissionFieldRoleService.deleteByPermissionFieldIds(ids);
         dataPermissionFieldRoleService.delUserCache();
     }
@@ -119,10 +120,10 @@ public class DataPermissionFieldService extends MyServiceImpl<DataPermissionFiel
     @Transactional(rollbackFor = Exception.class)
     public void update(DataPermissionFieldDTO dto) {
         DataPermissionFieldDO dataPermissionField = this.getById(dto.getId());
-        Assert.notNull(dataPermissionField, "记录不存在");
+        AssertUtil.notNull(dataPermissionField, SysErrorCodeEnum.RECORD_NOT_FOUND);
 
         dataPermissionField = this.dataPermissionFieldMapper.toDO(dto);
-        Assert.isTrue(this.updateById(dataPermissionField), "修改失败，记录不存在或权限不足");
+        AssertUtil.isTrue(this.updateById(dataPermissionField), SysErrorCodeEnum.UPDATE_ERROR);
         dataPermissionFieldRoleService.delUserCache();
     }
 

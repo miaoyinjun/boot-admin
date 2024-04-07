@@ -1,18 +1,20 @@
 package org.jjche.sys.modules.tool.service;
 
-import cn.hutool.core.lang.Assert;
 import cn.hutool.extra.mail.Mail;
 import cn.hutool.extra.mail.MailAccount;
 import com.alicp.jetcache.anno.CacheUpdate;
 import com.alicp.jetcache.anno.Cached;
 import lombok.RequiredArgsConstructor;
+import org.jjche.common.exception.util.AssertUtil;
+import org.jjche.common.exception.util.BusinessExceptionUtil;
 import org.jjche.common.util.RsaUtils;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.security.property.SecurityProperties;
-import org.jjche.sys.modules.tool.vo.EmailVO;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.tool.constant.ToolCacheKey;
 import org.jjche.sys.modules.tool.domain.EmailConfigDO;
 import org.jjche.sys.modules.tool.mapper.EmailMapper;
+import org.jjche.sys.modules.tool.vo.EmailVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,7 +70,7 @@ public class EmailService extends MyServiceImpl<EmailMapper, EmailConfigDO> {
      */
     @Transactional(rollbackFor = Exception.class)
     public void send(EmailVO emailVo, EmailConfigDO emailConfig) {
-        Assert.notNull(emailConfig.getId(), "请先配置，再操作");
+        AssertUtil.notNull(emailConfig.getId(), SysErrorCodeEnum.EMAIL_NOT_CONFIG_ERROR);
         // 封装
         MailAccount account = new MailAccount();
         // 设置用户
@@ -82,7 +84,7 @@ public class EmailService extends MyServiceImpl<EmailMapper, EmailConfigDO> {
             // 非对称解密
             account.setPass(RsaUtils.decryptByPrivateKey(privateKey, emailConfig.getPass()));
         } catch (Exception e) {
-            throw new IllegalArgumentException(e.getMessage());
+            throw BusinessExceptionUtil.exception(SysErrorCodeEnum.EMAIL_SEND_FAILED_ERROR);
         }
         account.setFrom(emailConfig.getUser() + "<" + emailConfig.getFromUser() + ">");
         // ssl方式发送
@@ -102,7 +104,7 @@ public class EmailService extends MyServiceImpl<EmailMapper, EmailConfigDO> {
                     .setUseGlobalSession(false)
                     .send();
         } catch (Exception e) {
-            throw new IllegalArgumentException(e.getMessage());
+            throw BusinessExceptionUtil.exception(SysErrorCodeEnum.EMAIL_SEND_FAILED_ERROR);
         }
     }
 }

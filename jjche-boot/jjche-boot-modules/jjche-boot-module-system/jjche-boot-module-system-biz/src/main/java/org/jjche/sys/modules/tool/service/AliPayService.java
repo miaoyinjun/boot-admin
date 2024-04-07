@@ -1,14 +1,13 @@
 package org.jjche.sys.modules.tool.service;
 
-import cn.hutool.core.lang.Assert;
 import com.alicp.jetcache.anno.CacheUpdate;
 import com.alicp.jetcache.anno.Cached;
 import lombok.RequiredArgsConstructor;
 import org.jjche.mybatis.base.service.MyServiceImpl;
-import org.jjche.sys.modules.tool.vo.TradeVO;
 import org.jjche.sys.modules.tool.constant.ToolCacheKey;
 import org.jjche.sys.modules.tool.domain.AlipayConfigDO;
 import org.jjche.sys.modules.tool.mapper.AliPayMapper;
+import org.jjche.sys.modules.tool.vo.TradeVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,7 +58,6 @@ public class AliPayService extends MyServiceImpl<AliPayMapper, AlipayConfigDO> {
      */
     public String toPayAsPc(AlipayConfigDO alipay, TradeVO trade) throws Exception {
 
-        Assert.notNull(alipay.getId(), "请先添加相应配置，再操作");
 //        AlipayClient alipayClient = new DefaultAlipayClient(alipay.getGatewayUrl(), alipay.getAppId(), alipay.getPrivateKey(), alipay.getFormat(), alipay.getCharset(), alipay.getPublicKey(), alipay.getSignType());
 //
 //        // 创建API对应的request(电脑网页版)
@@ -93,7 +91,6 @@ public class AliPayService extends MyServiceImpl<AliPayMapper, AlipayConfigDO> {
      * @throws Exception if any.
      */
     public String toPayAsWeb(AlipayConfigDO alipay, TradeVO trade) throws Exception {
-        Assert.notNull(alipay.getId(), "请先添加相应配置，再操作");
 //        AlipayClient alipayClient = new DefaultAlipayClient(alipay.getGatewayUrl(), alipay.getAppId(), alipay.getPrivateKey(), alipay.getFormat(), alipay.getCharset(), alipay.getPublicKey(), alipay.getSignType());
 //
 //        double money = Double.parseDouble(trade.getTotalAmount());

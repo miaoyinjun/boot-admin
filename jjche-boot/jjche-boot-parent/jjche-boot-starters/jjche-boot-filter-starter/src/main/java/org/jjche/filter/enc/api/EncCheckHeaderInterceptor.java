@@ -1,7 +1,6 @@
 package org.jjche.filter.enc.api;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.text.AntPathMatcher;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.NumberUtil;
@@ -12,10 +11,12 @@ import org.jjche.cache.service.RedisService;
 import org.jjche.common.api.CommonApi;
 import org.jjche.common.constant.FilterEncConstant;
 import org.jjche.common.context.ContextUtil;
+import org.jjche.common.enums.InfraErrorCodeEnum;
 import org.jjche.common.exception.RequestLimitException;
 import org.jjche.common.exception.RequestTimeoutException;
 import org.jjche.common.exception.SignException;
 import org.jjche.common.exception.WhiteIpException;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.util.HttpUtil;
 import org.jjche.common.vo.SecurityAppKeyBasicVO;
 import org.jjche.filter.constant.FilterCacheKey;
@@ -60,16 +61,16 @@ public class EncCheckHeaderInterceptor implements HandlerInterceptor {
         String signValue = request.getHeader(FilterEncEnum.SIGN.getKey());
 
         /** appId */
-        Assert.notBlank(appIdValue, FilterEncEnum.APP_ID.getErrMsg());
+        AssertUtil.notBlank(appIdValue, InfraErrorCodeEnum.ENC_APPID_ERROR);
         /** timestamp */
-        Assert.notBlank(timestampValue, FilterEncEnum.TIMESTAMP.getErrMsg());
+        AssertUtil.notBlank(timestampValue, InfraErrorCodeEnum.ENC_TIMESTAMP_ERROR);
         /** nonce */
-        Assert.notBlank(nonceValue, FilterEncEnum.NONCE.getErrMsg());
+        AssertUtil.notBlank(nonceValue, InfraErrorCodeEnum.ENC_NONCE_ERROR);
         /** sign */
-        Assert.notBlank(signValue, FilterEncEnum.SIGN.getErrMsg());
+        AssertUtil.notBlank(signValue, InfraErrorCodeEnum.ENC_SIGN_ERROR);
 
         /** 校验随机数长度 */
-        Assert.isTrue(StrUtil.length(nonceValue) == FilterEncConstant.NONCE_LENGTH, FilterEncEnum.NONCE.getErrMsg());
+        AssertUtil.isTrue(StrUtil.length(nonceValue) == FilterEncConstant.NONCE_LENGTH, InfraErrorCodeEnum.ENC_NONCE_ERROR);
 
         /** 校验时间有效性 */
         Long paramTimestamp = null;
@@ -94,7 +95,7 @@ public class EncCheckHeaderInterceptor implements HandlerInterceptor {
         if (appSecretVO != null) {
             appSecret = appSecretVO.getAppSecret();
         }
-        Assert.notNull(appSecret, FilterEncEnum.APP_ID.getErrMsg());
+        AssertUtil.notNull(appSecret, InfraErrorCodeEnum.ENC_APPID_ERROR);
 
         /** md5生成16进制小写字符串 */
         String mySign = EncUtil.md5Sign(appSecret, timestampValue, nonceValue);

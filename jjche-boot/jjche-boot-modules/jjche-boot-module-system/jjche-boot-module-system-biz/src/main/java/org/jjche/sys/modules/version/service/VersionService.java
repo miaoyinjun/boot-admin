@@ -1,16 +1,18 @@
 package org.jjche.sys.modules.version.service;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.log.StaticLog;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.util.ThrowableUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.version.domain.VersionDO;
 import org.jjche.sys.modules.version.dto.VersionDTO;
 import org.jjche.sys.modules.version.dto.VersionQueryCriteriaDTO;
@@ -43,9 +45,9 @@ public class VersionService extends MyServiceImpl<VersionMapper, VersionDO> {
      */
     @Transactional(rollbackFor = Exception.class)
     public void save(VersionDTO dto) {
-        QueryWrapper queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", dto.getName());
-        Assert.isNull(this.getOne(queryWrapper), "版本名称不能重复");
+        LambdaQueryWrapper<VersionDO> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(VersionDO::getName, dto.getName());
+        AssertUtil.isNull(this.getOne(queryWrapper), SysErrorCodeEnum.VERSION_NAME_ALREADY_ERROR);
         VersionDO versionDO = this.versionMapStruct.toDO(dto);
         versionDO.setIsActivated(false);
         this.save(versionDO);
@@ -61,15 +63,14 @@ public class VersionService extends MyServiceImpl<VersionMapper, VersionDO> {
     @Transactional(rollbackFor = Exception.class)
     public void update(VersionDTO dto) {
         VersionDO versionDO = this.getById(dto.getId());
-        Assert.notNull(versionDO, "记录不存在");
+        AssertUtil.notNull(versionDO, SysErrorCodeEnum.RECORD_NOT_FOUND);
         String name = dto.getName();
 
         QueryWrapper queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("name", name);
         VersionDO versionDoDb = this.getOne(queryWrapper);
         Boolean isExist = versionDoDb != null && !versionDoDb.getId().equals(dto.getId());
-        Assert.isFalse(isExist, "版本名称不能重复");
-
+        AssertUtil.isFalse(isExist, SysErrorCodeEnum.VERSION_NAME_ALREADY_ERROR);
         versionDO.setName(name);
         versionDO.setRemark(dto.getRemark());
         this.updateById(versionDO);
@@ -92,7 +93,7 @@ public class VersionService extends MyServiceImpl<VersionMapper, VersionDO> {
         this.updateById(versionDO);
         //设置新的激活记录
         versionDO = this.getById(id);
-        Assert.notNull(versionDO, "记录不存在");
+        AssertUtil.notNull(versionDO, SysErrorCodeEnum.RECORD_NOT_FOUND);
         versionDO.setIsActivated(true);
         this.updateById(versionDO);
     }
@@ -107,7 +108,7 @@ public class VersionService extends MyServiceImpl<VersionMapper, VersionDO> {
      */
     public VersionVO getVoById(Long id) {
         VersionDO versionDO = this.getById(id);
-        Assert.notNull(versionDO, "记录不存在或权限不足");
+        AssertUtil.notNull(versionDO, SysErrorCodeEnum.RECORD_NOT_FOUND);
         return this.versionMapStruct.toVO(versionDO);
     }
 

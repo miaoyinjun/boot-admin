@@ -2,15 +2,17 @@ package org.jjche.sys.modules.generator.service;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ZipUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
+import org.jjche.common.exception.util.AssertUtil;
+import org.jjche.common.exception.util.BusinessExceptionUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.util.StrUtil;
 import org.jjche.core.util.FileUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.generator.domain.ColumnInfoDO;
 import org.jjche.sys.modules.generator.domain.GenConfigDO;
 import org.jjche.sys.modules.generator.mapper.ColumnInfoMapper;
@@ -148,12 +150,12 @@ public class GeneratorService extends MyServiceImpl<ColumnInfoMapper, ColumnInfo
      * @param columns   字段信息
      */
     public void generator(GenConfigDO genConfig, List<ColumnInfoDO> columns) {
-        Assert.notNull(genConfig.getId(), "请先配置生成器");
+        AssertUtil.notNull(genConfig.getId(), SysErrorCodeEnum.GENERATOR_CODE_BEFORE_CONFIG);
         try {
             GenUtil.generatorCode(columns, genConfig, apiPrefix);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
-            throw new IllegalArgumentException("生成失败，请手动处理已生成的文件");
+            throw BusinessExceptionUtil.exception(SysErrorCodeEnum.GENERATOR_CODE_ERROR);
         }
     }
 
@@ -165,7 +167,7 @@ public class GeneratorService extends MyServiceImpl<ColumnInfoMapper, ColumnInfo
      * @return /
      */
     public List<Map<String, Object>> preview(GenConfigDO genConfig, List<ColumnInfoDO> columns) {
-        Assert.notNull(genConfig.getId(), "请先配置生成器");
+        AssertUtil.notNull(genConfig.getId(), SysErrorCodeEnum.GENERATOR_CODE_BEFORE_CONFIG);
         List<Map<String, Object>> genList = GenUtil.preview(columns, genConfig, apiPrefix);
         return genList;
     }
@@ -180,14 +182,14 @@ public class GeneratorService extends MyServiceImpl<ColumnInfoMapper, ColumnInfo
      */
     public void download(GenConfigDO genConfig, List<ColumnInfoDO> columns, HttpServletRequest
             request, HttpServletResponse response) {
-        Assert.notNull(genConfig.getId(), "请先配置生成器");
+        AssertUtil.notNull(genConfig.getId(), SysErrorCodeEnum.GENERATOR_CODE_BEFORE_CONFIG);
         try {
             File file = new File(GenUtil.download(columns, genConfig, apiPrefix));
             String zipPath = file.getPath() + ".zip";
             ZipUtil.zip(file.getPath(), zipPath);
             FileUtil.downloadFile(request, response, new File(zipPath), true);
         } catch (IOException e) {
-            throw new IllegalArgumentException("打包失败");
+            throw BusinessExceptionUtil.exception(SysErrorCodeEnum.GENERATOR_CODE_ZIP_ERROR);
         }
     }
 }

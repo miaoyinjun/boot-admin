@@ -1,20 +1,20 @@
 package org.jjche.bpm.modules.group.service;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
-import org.jjche.bpm.modules.group.vo.BpmUserGroupCreateReqVO;
-import org.jjche.bpm.modules.group.vo.BpmUserGroupQueryDTO;
-import org.jjche.bpm.modules.group.vo.BpmUserGroupUpdateReqVO;
+import org.jjche.bpm.enums.BpmErrorCodeEnum;
 import org.jjche.bpm.modules.group.domain.BpmUserGroupDO;
 import org.jjche.bpm.modules.group.mapper.BpmUserGroupMapper;
 import org.jjche.bpm.modules.group.mapstruct.BpmUserGroupConvert;
+import org.jjche.bpm.modules.group.vo.BpmUserGroupCreateReqVO;
+import org.jjche.bpm.modules.group.vo.BpmUserGroupQueryDTO;
+import org.jjche.bpm.modules.group.vo.BpmUserGroupUpdateReqVO;
 import org.jjche.common.enums.CommonStatusEnum;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
-import org.jjche.common.util.StrUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
@@ -130,9 +130,9 @@ public class BpmUserGroupService extends MyServiceImpl<BpmUserGroupMapper, BpmUs
         Map<Long, BpmUserGroupDO> finalUserGroupMap = userGroupMap;
         ids.forEach(id -> {
             BpmUserGroupDO userGroup = finalUserGroupMap.get(id);
-            Assert.notNull(userGroup, "用户组不存在");
-            Assert.equals(CommonStatusEnum.ENABLE.getDesc(), userGroup.getStatus(),
-                    StrUtil.format("名字为【{}】的用户组已被禁用", userGroup.getName()));
+            AssertUtil.notNull(userGroup, BpmErrorCodeEnum.USER_GROUP_NOT_FOUND);
+            AssertUtil.equals(CommonStatusEnum.ENABLE.getDesc(), userGroup.getStatus(),
+                    BpmErrorCodeEnum.USER_GROUP_DISABLED, userGroup.getName());
         });
     }
 }

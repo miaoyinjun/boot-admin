@@ -106,7 +106,7 @@ public class CoreEnvironmentPostProcessor implements EnvironmentPostProcessor {
         try {
             return this.loader.load(path.getFilename(), path).get(0);
         } catch (IOException ex) {
-            throw new IllegalStateException(
+            throw new RuntimeException(
                     "Failed to load yaml configuration from " + path, ex);
         }
     }

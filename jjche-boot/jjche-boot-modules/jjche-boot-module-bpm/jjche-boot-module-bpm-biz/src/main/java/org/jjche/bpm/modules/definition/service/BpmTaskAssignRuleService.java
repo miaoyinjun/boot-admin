@@ -2,7 +2,6 @@ package org.jjche.bpm.modules.definition.service;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.NumberUtil;
@@ -16,6 +15,7 @@ import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.UserTask;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.jjche.bpm.config.flowable.core.behavior.script.BpmTaskAssignScript;
+import org.jjche.bpm.enums.BpmErrorCodeEnum;
 import org.jjche.bpm.modules.definition.domain.BpmTaskAssignRuleDO;
 import org.jjche.bpm.modules.definition.enums.BpmTaskAssignRuleTypeEnum;
 import org.jjche.bpm.modules.definition.mapper.BpmTaskAssignRuleMapper;
@@ -27,7 +27,8 @@ import org.jjche.bpm.modules.group.domain.BpmUserGroupDO;
 import org.jjche.bpm.modules.group.service.BpmUserGroupService;
 import org.jjche.bpm.onstants.DictTypeConstants;
 import org.jjche.common.dto.DeptSmallDTO;
-import org.jjche.common.exception.BusinessException;
+import org.jjche.common.exception.util.AssertUtil;
+import org.jjche.common.exception.util.BusinessExceptionUtil;
 import org.jjche.common.vo.UserVO;
 import org.jjche.flowable.util.FlowableUtils;
 import org.jjche.mybatis.base.service.MyServiceImpl;
@@ -40,8 +41,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static cn.hutool.core.text.CharSequenceUtil.format;
 
 /**
  * BPM 任务分配规则 Service 实现类
@@ -74,7 +73,7 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
      * 获得流程定义的任务分配规则数组
      *
      * @param processDefinitionId 流程定义的编号
-     * @param taskDefinitionKey 流程任务定义的 Key。允许空
+     * @param taskDefinitionKey   流程任务定义的 Key。允许空
      * @return 任务规则数组
      */
     public List<BpmTaskAssignRuleDO> getTaskAssignRuleListByProcessDefinitionId(String processDefinitionId, String taskDefinitionKey) {
@@ -94,7 +93,7 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
     /**
      * 获得流程定义的任务分配规则数组
      *
-     * @param modelId 流程模型的编号
+     * @param modelId             流程模型的编号
      * @param processDefinitionId 流程定义的编号
      * @return 任务规则数组
      */
@@ -133,8 +132,7 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
         // 校验是否已经配置
         BpmTaskAssignRuleDO existRule = this.baseMapper.selectListByModelIdAndTaskDefinitionKey(reqVO.getModelId(), reqVO.getTaskDefinitionKey());
         if (existRule != null) {
-            String msg = StrUtil.format("流程({}) 的任务({}) 已经存在分配规则", reqVO.getModelId(), reqVO.getTaskDefinitionKey());
-            throw new BusinessException(msg);
+            throw BusinessExceptionUtil.exception(BpmErrorCodeEnum.RULE_ALREADY_FOUND, reqVO.getModelId(), reqVO.getTaskDefinitionKey());
         }
 
         // 存储
@@ -154,10 +152,10 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
         validTaskAssignRuleOptions(reqVO.getType(), reqVO.getOptions());
         // 校验是否存在
         BpmTaskAssignRuleDO existRule = this.baseMapper.selectById(reqVO.getId());
-        Assert.notNull(existRule, "流程任务分配规则不存在");
+        AssertUtil.notNull(existRule, BpmErrorCodeEnum.RULE_NOT_FOUND);
         // 只允许修改流程模型的规则
         if (!Objects.equals(BpmTaskAssignRuleDO.PROCESS_DEFINITION_ID_NULL, existRule.getProcessDefinitionId())) {
-            throw new BusinessException("只有流程模型的任务分配规则，才允许被修改");
+            throw BusinessExceptionUtil.exception(BpmErrorCodeEnum.RULE_NOT_ALLOWED_UPDATE);
         }
 
         // 执行更新
@@ -167,7 +165,7 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
     /**
      * 判断指定流程模型和流程定义的分配规则是否相等
      *
-     * @param modelId 流程模型编号
+     * @param modelId             流程模型编号
      * @param processDefinitionId 流程定义编号
      * @return 是否相等
      */
@@ -198,7 +196,7 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
      * 将流程流程模型的任务分配规则，复制一份给流程定义
      * 目的：每次流程模型部署时，都会生成一个新的流程定义，此时考虑到每次部署的流程不可变性，所以需要复制一份给该流程定义
      *
-     * @param fromModelId 流程模型编号
+     * @param fromModelId           流程模型编号
      * @param toProcessDefinitionId 流程定义编号
      */
     public void copyTaskAssignRules(String fromModelId, String toProcessDefinitionId) {
@@ -232,8 +230,7 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
         // 校验未配置规则的任务
         taskAssignRules.forEach(rule -> {
             if (CollUtil.isEmpty(rule.getOptions())) {
-                String msg = StrUtil.format("部署流程失败，原因：用户任务({})未配置分配规则，请点击【修改流程】按钮进行配置", rule.getTaskDefinitionName());
-                throw new BusinessException(msg);
+                throw BusinessExceptionUtil.exception(BpmErrorCodeEnum.RULE_NOT_ALLOWED_DEPLOY, rule.getTaskDefinitionName());
             }
         });
     }
@@ -253,7 +250,7 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
         } else if (Objects.equals(type, BpmTaskAssignRuleTypeEnum.SCRIPT.getType())) {
             sysBaseApi.validDictList(DictTypeConstants.TASK_ASSIGN_SCRIPT, Convert.toSet(String.class, options));
         } else {
-            throw new IllegalArgumentException(format("未知的规则类型({})", type));
+            throw BusinessExceptionUtil.exception(BpmErrorCodeEnum.RULE_UNKNOWN_FOUND, type);
         }
     }
 
@@ -273,10 +270,10 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
     BpmTaskAssignRuleDO getTaskRule(DelegateExecution execution) {
         List<BpmTaskAssignRuleDO> taskRules = getTaskAssignRuleListByProcessDefinitionId(execution.getProcessDefinitionId(), execution.getCurrentActivityId());
         if (CollUtil.isEmpty(taskRules)) {
-            throw new BusinessException(format("流程任务({}/{}/{}) 找不到符合的任务规则", execution.getId(), execution.getProcessDefinitionId(), execution.getCurrentActivityId()));
+            throw BusinessExceptionUtil.exception(BpmErrorCodeEnum.RULE_ACCORD_NOT_FOUND, execution.getProcessDefinitionId(), execution.getCurrentActivityId());
         }
         if (taskRules.size() > 1) {
-            throw new BusinessException(format("流程任务({}/{}/{}) 找到过多任务规则({})", execution.getId(), execution.getProcessDefinitionId(), execution.getCurrentActivityId()));
+            throw BusinessExceptionUtil.exception(BpmErrorCodeEnum.RULE_FOUND_MORE, execution.getProcessDefinitionId(), execution.getCurrentActivityId());
         }
         return taskRules.get(0);
     }
@@ -305,7 +302,7 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
         // 如果候选人为空，抛出异常
         if (CollUtil.isEmpty(assigneeUserIds)) {
             StaticLog.error("[calculateTaskCandidateUsers][流程任务({}/{}/{}) 任务规则({}) 找不到候选人]", execution.getId(), execution.getProcessDefinitionId(), execution.getCurrentActivityId(), JSONUtil.toJsonStr(rule));
-            throw new BusinessException("操作失败，原因：找不到任务的审批人！");
+            throw BusinessExceptionUtil.exception(BpmErrorCodeEnum.TASK_NOT_FOUND_ASSIGNEE_ERROR);
         }
         return assigneeUserIds;
     }
@@ -344,7 +341,7 @@ public class BpmTaskAssignRuleService extends MyServiceImpl<BpmTaskAssignRuleMap
         List<BpmTaskAssignScript> scripts = new ArrayList<>(rule.getOptions().size());
         rule.getOptions().forEach(id -> {
             BpmTaskAssignScript script = scriptMap.get(id);
-            Assert.notNull(script, StrUtil.format("操作失败，原因：任务分配脚本({}) 不存在", id));
+            AssertUtil.notNull(script, BpmErrorCodeEnum.RULE_SCRIPT_NOT_FOUND, id);
             scripts.add(script);
         });
         // 逐个计算任务

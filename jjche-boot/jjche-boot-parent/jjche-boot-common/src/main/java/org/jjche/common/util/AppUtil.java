@@ -1,9 +1,9 @@
 package org.jjche.common.util;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.Assert;
-import cn.hutool.core.map.MapUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import org.jjche.common.enums.InfraErrorCodeEnum;
+import org.jjche.common.exception.util.AssertUtil;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
@@ -60,7 +60,7 @@ public class AppUtil {
      */
     public static Class getApplicationClass() {
         Map<String, Object> map = SpringUtil.getApplicationContext().getBeansWithAnnotation(SpringBootApplication.class);
-        Assert.isTrue(MapUtil.isNotEmpty(map), "找不到SpringBootApplication注解");
+        AssertUtil.notEmpty(map, InfraErrorCodeEnum.COMMON_APP_NOT_FOUND_ERROR);
         Object application = null;
         for (String key : map.keySet()) {
             application = map.get(key);

@@ -1,7 +1,6 @@
 package org.jjche.bpm.modules.definition.service;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
@@ -16,6 +15,7 @@ import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.Model;
 import org.flowable.engine.repository.ModelQuery;
 import org.flowable.engine.repository.ProcessDefinition;
+import org.jjche.bpm.enums.BpmErrorCodeEnum;
 import org.jjche.bpm.modules.definition.dto.BpmModelMetaInfoRespDTO;
 import org.jjche.bpm.modules.definition.dto.BpmProcessDefinitionCreateReqDTO;
 import org.jjche.bpm.modules.definition.enums.BpmModelFormTypeEnum;
@@ -23,7 +23,8 @@ import org.jjche.bpm.modules.definition.mapstruct.BpmModelConvert;
 import org.jjche.bpm.modules.definition.vo.model.*;
 import org.jjche.bpm.modules.form.domain.BpmFormDO;
 import org.jjche.bpm.modules.form.service.BpmFormService;
-import org.jjche.common.exception.BusinessException;
+import org.jjche.common.exception.util.AssertUtil;
+import org.jjche.common.exception.util.BusinessExceptionUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.springframework.stereotype.Service;
@@ -128,8 +129,7 @@ public class BpmModelService {
         checkKeyNCName(createReqVO.getKey());
         // 校验流程标识已经存在
         Model keyModel = getModelByKey(createReqVO.getKey());
-        String msg = StrUtil.format("已经存在流程标识为【{}】的流程", createReqVO.getKey());
-        Assert.isNull(keyModel, msg);
+        AssertUtil.isNull(keyModel, BpmErrorCodeEnum.MODEL_CODE_ALREADY, createReqVO.getKey());
 
         // 创建流程定义
         Model model = repositoryService.newModel();
@@ -172,7 +172,7 @@ public class BpmModelService {
     public void updateModel(@Valid BpmModelUpdateReqVO updateReqVO) {
         // 校验流程模型存在
         Model model = repositoryService.getModel(updateReqVO.getId());
-        Assert.notNull(model, "流程模型不存在");
+        AssertUtil.notNull(model, BpmErrorCodeEnum.MODEL_NOT_FOUND);
         // 修改流程定义
         bpmModelConvert.copy(model, updateReqVO);
         // 更新模型
@@ -190,11 +190,11 @@ public class BpmModelService {
     public void deployModel(String id) {
         // 1.1 校验流程模型存在
         Model model = repositoryService.getModel(id);
-        Assert.notNull(model, "流程模型不存在");
+        AssertUtil.notNull(model, BpmErrorCodeEnum.MODEL_NOT_FOUND);
         // 1.2 校验流程图
         // TODO 芋艿：校验流程图的有效性；例如说，是否有开始的元素，是否有结束的元素；
         byte[] bpmnBytes = repositoryService.getModelEditorSource(model.getId());
-        Assert.notNull(bpmnBytes, "流程模型不存在");
+        AssertUtil.notNull(bpmnBytes, BpmErrorCodeEnum.MODEL_NOT_FOUND);
         // 1.3 校验表单已配
         BpmFormDO form = checkFormConfig(model.getMetaInfo());
         // 1.4 校验任务分配规则已配置
@@ -206,7 +206,7 @@ public class BpmModelService {
         if (processDefinitionService.isProcessDefinitionEquals(definitionCreateReqDTO)) { // 流程定义的信息相等
             ProcessDefinition oldProcessDefinition = processDefinitionService.getProcessDefinitionByDeploymentId(model.getDeploymentId());
             if (oldProcessDefinition != null && taskAssignRuleService.isTaskAssignRulesEquals(model.getId(), oldProcessDefinition.getId())) {
-                throw new BusinessException("流程定义部署失败，原因：信息未发生变化");
+                throw BusinessExceptionUtil.exception(BpmErrorCodeEnum.PROCESS_DEFINE_NO_CHANGE_FOUND);
             }
         }
 
@@ -236,7 +236,7 @@ public class BpmModelService {
         // 校验流程模型存在
         String id = CollUtil.getFirst(ids);
         Model model = repositoryService.getModel(id);
-        Assert.notNull(model, "流程模型不存在");
+        AssertUtil.notNull(model, BpmErrorCodeEnum.MODEL_NOT_FOUND);
         // 执行删除
         repositoryService.deleteModel(id);
         // 禁用流程实例
@@ -252,10 +252,10 @@ public class BpmModelService {
     public void updateModelState(String id, Integer state) {
         // 校验流程模型存在
         Model model = repositoryService.getModel(id);
-        Assert.notNull(model, "流程模型不存在");
+        AssertUtil.notNull(model, BpmErrorCodeEnum.MODEL_NOT_FOUND);
         // 校验流程定义存在
         ProcessDefinition definition = processDefinitionService.getProcessDefinitionByDeploymentId(model.getDeploymentId());
-        Assert.notNull(definition, "流程定义不存在");
+        AssertUtil.notNull(definition, BpmErrorCodeEnum.PROCESS_DEFINE_NOT_FOUND);
         // 更新状态
         processDefinitionService.updateProcessDefinitionState(definition.getId(), state);
     }
@@ -278,7 +278,7 @@ public class BpmModelService {
     private void checkKeyNCName(String key) {
         if (!(StringUtils.hasText(key)
                 && PATTERN_XML_NCNAME.matcher(key).matches())) {
-            throw new BusinessException("流程标识格式不正确，需要以字母或下划线开头，后接任意字母、数字、中划线、下划线、句点！");
+            throw BusinessExceptionUtil.exception(BpmErrorCodeEnum.PROCESS_DEFINE_CODE_CHECK_FOUND);
         }
     }
 
@@ -291,12 +291,12 @@ public class BpmModelService {
     private BpmFormDO checkFormConfig(String metaInfoStr) {
         BpmModelMetaInfoRespDTO metaInfo = JSONUtil.toBean(metaInfoStr, BpmModelMetaInfoRespDTO.class);
         if (metaInfo == null || metaInfo.getFormType() == null) {
-            throw new BusinessException("部署流程失败，原因：流程表单未配置，请点击【修改流程】按钮进行配置");
+            throw BusinessExceptionUtil.exception(BpmErrorCodeEnum.PROCESS_DEFINE_NO_FORM_FOUND);
         }
         // 校验表单存在
         if (Objects.equals(metaInfo.getFormType(), BpmModelFormTypeEnum.NORMAL.getType())) {
             BpmFormDO form = bpmFormService.getById(metaInfo.getFormId());
-            Assert.notNull(form, "动态表单不存在");
+            AssertUtil.notNull(form, BpmErrorCodeEnum.FORM_NOT_FOUND);
             return form;
         }
         return null;

@@ -2,16 +2,17 @@ package org.jjche.sys.modules.system.service;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
-import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
 import org.jjche.common.constant.PermissionDataCacheKey;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.system.domain.DataPermissionRuleRoleDO;
 import org.jjche.sys.modules.system.dto.DataPermissionRuleRoleDTO;
 import org.jjche.sys.modules.system.dto.DataPermissionRuleRoleQueryCriteriaDTO;
-import org.jjche.sys.modules.system.domain.DataPermissionRuleRoleDO;
 import org.jjche.sys.modules.system.mapper.DataPermissionRuleRoleMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,7 +62,7 @@ public class DataPermissionRuleRoleService extends MyServiceImpl<DataPermissionR
                 sysDataPermissionRuleRoleDO.setDataPermissionRuleId(id);
                 sysDataPermissionRuleRoleDOList.add(sysDataPermissionRuleRoleDO);
             }
-            Assert.isTrue(this.saveBatch(sysDataPermissionRuleRoleDOList), "保存失败");
+            AssertUtil.isTrue(this.saveBatch(sysDataPermissionRuleRoleDOList), SysErrorCodeEnum.SAVE_ERROR);
         }
         this.delUserCache();
     }

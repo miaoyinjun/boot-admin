@@ -69,7 +69,7 @@
 //            appPrivateKey = applicationProperty.getPrivateKey();
 //            appPublicKey = applicationProperty.getPublicKey();
 //        }
-//        Assert.notNull(appPrivateKey, FilterEncEnum.APP_ID.getErrMsg());
+//        AssertUtil.notNull(appPrivateKey, FilterEncEnum.APP_ID.getErrMsg());
 //
 //        /** 验证签名 */
 //        byte[] data = EncUtil.signData(queryOrderedString, timestampValue, nonceValue);

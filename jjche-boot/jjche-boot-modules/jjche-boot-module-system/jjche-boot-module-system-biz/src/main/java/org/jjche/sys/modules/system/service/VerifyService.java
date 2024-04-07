@@ -1,6 +1,5 @@
 package org.jjche.sys.modules.system.service;
 
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.extra.template.Template;
@@ -9,6 +8,8 @@ import cn.hutool.extra.template.TemplateEngine;
 import cn.hutool.extra.template.TemplateUtil;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
+import org.jjche.common.exception.util.AssertUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.tool.vo.EmailVO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -69,7 +70,7 @@ public class VerifyService {
      */
     public void validated(String key, String code) {
         String value = redisService.stringGetString(key);
-        Assert.isFalse(value == null || !value.toString().equals(code), "无效验证码");
+        AssertUtil.isFalse(value == null || !value.toString().equals(code), SysErrorCodeEnum.AUTH_VALID_ERROR);
         redisService.delete(key);
     }
 }

@@ -12,15 +12,16 @@ import org.jjche.common.dto.LogRecordDTO;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogModule;
 import org.jjche.common.enums.LogType;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.util.HttpUtil;
-import org.jjche.common.util.ValidationUtil;
 import org.jjche.core.util.FileUtil;
 import org.jjche.core.util.SecurityUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.logging.domain.LogDO;
 import org.jjche.sys.modules.logging.dto.LogQueryCriteriaDTO;
 import org.jjche.sys.modules.logging.mapper.LogMapper;
@@ -146,7 +147,7 @@ public class LogService extends MyServiceImpl<LogMapper, LogDO> {
      */
     public Object findByErrDetail(Long id) {
         LogDO log = this.getById(id);
-        ValidationUtil.isNull(log.getId(), "BizLog", "id", id);
+        AssertUtil.notNull(log, SysErrorCodeEnum.RECORD_NOT_FOUND);
         byte[] details = log.getExceptionDetail();
         return Dict.create().set("exception", new String(ObjectUtil.isNotNull(details) ? details : "".getBytes()));
     }

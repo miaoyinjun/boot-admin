@@ -15,19 +15,19 @@ public enum FilterEncEnum {
     /**
      * 应用标识
      */
-    APP_ID(FilterEncConstant.APP_ID, FilterEncConstant.APP_ID_DESC, "appId无效"),
+    APP_ID(FilterEncConstant.APP_ID, FilterEncConstant.APP_ID_DESC),
     /**
      * Unix时间戳(毫秒)
      */
-    TIMESTAMP(FilterEncConstant.TIMESTAMP, FilterEncConstant.TIMESTAMP_DESC, "timestamp无效"),
+    TIMESTAMP(FilterEncConstant.TIMESTAMP, FilterEncConstant.TIMESTAMP_DESC),
     /**
      * 随机数
      */
-    NONCE(FilterEncConstant.NONCE, FilterEncConstant.NONCE_DESC, "nonce无效"),
+    NONCE(FilterEncConstant.NONCE, FilterEncConstant.NONCE_DESC),
     /**
      * 签名
      */
-    SIGN(FilterEncConstant.SIGN, FilterEncConstant.SIGN_DESC, "sign无效"),
+    SIGN(FilterEncConstant.SIGN, FilterEncConstant.SIGN_DESC),
     ;
     /**
      * 标识
@@ -39,15 +39,9 @@ public enum FilterEncEnum {
      */
     private String des;
 
-    /**
-     * 错误信息
-     */
-    private String errMsg;
-
-    FilterEncEnum(String key, String des, String errMsg) {
+    FilterEncEnum(String key, String des) {
         this.key = key;
         this.des = des;
-        this.errMsg = errMsg;
     }
 
     /**
@@ -66,14 +60,5 @@ public enum FilterEncEnum {
      */
     public String getDes() {
         return des;
-    }
-
-    /**
-     * <p>Getter for the field <code>errMsg</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getErrMsg() {
-        return errMsg;
     }
 }

@@ -1,24 +1,24 @@
 package org.jjche.sys.modules.tool.rest;
 
-import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.ArrayUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.enums.FileType;
 import org.jjche.common.enums.LogCategoryType;
 import org.jjche.common.enums.LogType;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.core.util.FileUtil;
 import org.jjche.log.biz.starter.annotation.LogRecord;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.tool.domain.LocalStorageDO;
 import org.jjche.sys.modules.tool.dto.LocalStorageDTO;
 import org.jjche.sys.modules.tool.dto.LocalStorageQueryCriteriaDTO;
-import org.jjche.sys.modules.tool.vo.LocalStorageBaseVO;
-import org.jjche.sys.modules.tool.domain.LocalStorageDO;
 import org.jjche.sys.modules.tool.service.LocalStorageService;
+import org.jjche.sys.modules.tool.vo.LocalStorageBaseVO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -102,11 +102,11 @@ public class LocalStorageController extends BaseController {
     @ApiOperation("上传图片")
     public R<List<LocalStorageBaseVO>> upload(@RequestParam MultipartFile[] file) {
         // 判断文件是否为图片
-        Assert.isTrue(ArrayUtil.isNotEmpty(file), "请选择图片");
+        AssertUtil.notEmpty(file, SysErrorCodeEnum.FILE_PIC_ERROR);
         for (MultipartFile f : file) {
             String suffix = FileUtil.getExtensionName(f.getOriginalFilename());
             Boolean isPic = FileType.IMAGE.equals(FileUtil.getFileType(suffix));
-            Assert.isTrue(isPic, "只能上传图片");
+            AssertUtil.isTrue(isPic, SysErrorCodeEnum.FILE_PIC_ERROR);
         }
         return R.ok(localStorageService.create(null, Boolean.TRUE, file));
 

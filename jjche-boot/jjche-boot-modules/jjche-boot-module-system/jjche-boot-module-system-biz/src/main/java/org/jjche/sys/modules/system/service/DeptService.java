@@ -2,7 +2,6 @@ package org.jjche.sys.modules.system.service;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -13,19 +12,20 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
 import org.jjche.common.dto.DeptSmallDTO;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
-import org.jjche.common.vo.DataScopeVO;
 import org.jjche.common.util.StrUtil;
-import org.jjche.common.util.ValidationUtil;
+import org.jjche.common.vo.DataScopeVO;
 import org.jjche.core.util.FileUtil;
 import org.jjche.core.util.SecurityUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.system.constant.DeptCacheKey;
+import org.jjche.sys.modules.system.domain.DeptDO;
 import org.jjche.sys.modules.system.dto.DeptDTO;
 import org.jjche.sys.modules.system.dto.DeptQueryCriteriaDTO;
 import org.jjche.sys.modules.system.enums.DataScopeEnum;
-import org.jjche.sys.modules.system.constant.DeptCacheKey;
-import org.jjche.sys.modules.system.domain.DeptDO;
 import org.jjche.sys.modules.system.mapper.DeptMapper;
 import org.jjche.sys.modules.system.mapper.RoleMapper;
 import org.jjche.sys.modules.system.mapper.UserMapper;
@@ -122,7 +122,7 @@ public class DeptService extends MyServiceImpl<DeptMapper, DeptDO> {
     @Cached(name = DeptCacheKey.DEPT_ID, key = "#id")
     public DeptDTO findById(Long id) {
         DeptDO dept = this.getById(id);
-        Assert.notNull(dept, "未找到部门");
+        AssertUtil.notNull(dept, SysErrorCodeEnum.DEPT_NOT_FOUND_ERROR);
         return deptMapstruct.toVO(dept);
     }
 
@@ -173,9 +173,9 @@ public class DeptService extends MyServiceImpl<DeptMapper, DeptDO> {
         Long oldPid = findById(resources.getId()).getPid();
         Long newPid = resources.getPid();
         Boolean isSelf = resources.getPid() != null && resources.getId().equals(resources.getPid());
-        Assert.isFalse(isSelf, "上级不能为自己");
+        AssertUtil.isFalse(isSelf, SysErrorCodeEnum.DEPT_NOT_ALLOWED_PARENT_SELF_ERROR);
         DeptDO dept = this.getById(resources.getId());
-        ValidationUtil.isNull(dept.getId(), "DeptDO", "id", resources.getId());
+        AssertUtil.notNull(dept, SysErrorCodeEnum.RECORD_NOT_FOUND);
         resources.setId(dept.getId());
         this.updateById(resources);
         // 更新父节点中子节点数目
@@ -337,8 +337,8 @@ public class DeptService extends MyServiceImpl<DeptMapper, DeptDO> {
      */
     public void verification(Set<DeptDTO> deptDtos) {
         Set<Long> deptIds = deptDtos.stream().map(DeptDTO::getId).collect(Collectors.toSet());
-        Assert.isFalse(userRepository.countByDepts(deptIds) > 0, "所选部门存在用户关联，请解除后再试！");
-        Assert.isFalse(roleMapper.countByDepts(deptIds) > 0, "所选部门存在角色关联，请解除后再试！");
+        AssertUtil.isFalse(userRepository.countByDepts(deptIds) > 0, SysErrorCodeEnum.DEPT_ALREADY_USER_NOT_DEL_ERROR);
+        AssertUtil.isFalse(roleMapper.countByDepts(deptIds) > 0, SysErrorCodeEnum.DEPT_ALREADY_ROLE_NOT_DEL_ERROR);
     }
 
     private void updateSubCnt(Long deptId) {
@@ -459,7 +459,7 @@ public class DeptService extends MyServiceImpl<DeptMapper, DeptDO> {
         Map<Long, DeptDO> finalDeptMap = deptMap;
         ids.forEach(id -> {
             DeptDO dept = finalDeptMap.get(id);
-            Assert.notNull(dept, "当前部门不存在");
+            AssertUtil.notNull(dept, SysErrorCodeEnum.DEPT_NOT_FOUND_ERROR);
         });
     }
 }

@@ -1,6 +1,5 @@
 package org.jjche.sys.modules.quartz.rest;
 
-import cn.hutool.core.lang.Assert;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +10,9 @@ import org.jjche.common.param.PageParam;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
 import org.jjche.log.biz.starter.annotation.LogRecord;
-import org.jjche.sys.modules.quartz.dto.JobQueryCriteriaDTO;
 import org.jjche.sys.modules.quartz.domain.QuartzJobDO;
 import org.jjche.sys.modules.quartz.domain.QuartzLogDO;
+import org.jjche.sys.modules.quartz.dto.JobQueryCriteriaDTO;
 import org.jjche.sys.modules.quartz.service.QuartzJobService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -109,7 +108,6 @@ public class QuartzJobController extends BaseController {
     @PostMapping
     @PreAuthorize("@el.check('timing:add')")
     public R create(@Validated @RequestBody QuartzJobDO resources) {
-        Assert.isNull(resources.getId(), "A new " + ENTITY_NAME + " cannot already have an ID");
         quartzJobService.create(resources);
         return R.ok();
     }

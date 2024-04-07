@@ -8,7 +8,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.jjche.cache.lock.annotation.JRepeat;
 import org.jjche.cache.lock.client.RedissonLockClient;
-import org.jjche.common.exception.BusinessException;
+import org.jjche.common.enums.InfraErrorCodeEnum;
+import org.jjche.common.exception.util.BusinessExceptionUtil;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
 
@@ -62,7 +63,7 @@ public class RepeatSubmitAspect extends BaseAspect {
                     return joinPoint.proceed();
                 } else {
                     // 未获取到锁
-                    throw new BusinessException("请勿重复提交");
+                    throw BusinessExceptionUtil.exception(InfraErrorCodeEnum.COMMON_COMMIT_REPEAT_ERROR);
                 }
             } finally {
                 // 如果锁还存在，在方法执行完成后，释放锁

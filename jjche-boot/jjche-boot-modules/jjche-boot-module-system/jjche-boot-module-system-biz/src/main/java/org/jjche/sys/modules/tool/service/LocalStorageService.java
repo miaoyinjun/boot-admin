@@ -1,11 +1,11 @@
 package org.jjche.sys.modules.tool.service;
 
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.jjche.common.enums.FileType;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.core.fileconf.FileProperties;
@@ -15,13 +15,14 @@ import org.jjche.filter.enc.field.enums.EncryptMethod;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.tool.domain.LocalStorageDO;
 import org.jjche.sys.modules.tool.dto.LocalStorageDTO;
 import org.jjche.sys.modules.tool.dto.LocalStorageQueryCriteriaDTO;
-import org.jjche.sys.modules.tool.vo.LocalStorageBaseVO;
-import org.jjche.sys.modules.tool.domain.LocalStorageDO;
 import org.jjche.sys.modules.tool.mapper.LocalStorageMapper;
 import org.jjche.sys.modules.tool.mapstruct.LocalStorageBaseMapStruct;
 import org.jjche.sys.modules.tool.mapstruct.LocalStorageMapStruct;
+import org.jjche.sys.modules.tool.vo.LocalStorageBaseVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -106,7 +107,7 @@ public class LocalStorageService extends MyServiceImpl<LocalStorageMapper, Local
             String suffix = FileUtil.getExtensionName(multipartFile.getOriginalFilename());
             FileType type = FileUtil.getFileType(suffix);
             File file = FileUtil.upload(multipartFile, properties.getPath().getPath() + type.getValue() + File.separator);
-            Assert.notNull(file, "上传失败");
+            AssertUtil.notNull(file, SysErrorCodeEnum.FILE_UPLOAD_ERROR);
             try {
                 name = org.jjche.common.util.StrUtil.isBlank(name) ? FileUtil.getFileNameNoEx(multipartFile.getOriginalFilename()) : name;
                 LocalStorageDO localStorage = new LocalStorageDO(

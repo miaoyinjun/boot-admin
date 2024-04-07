@@ -1,11 +1,11 @@
 package org.jjche.sys.modules.system.service;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpUtil;
 import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -13,25 +13,26 @@ import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
 import org.jjche.common.constant.CommonMenuCacheKey;
 import org.jjche.common.dto.RoleSmallDTO;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
-import org.jjche.common.util.ValidationUtil;
 import org.jjche.core.util.FileUtil;
 import org.jjche.core.util.SecurityUtil;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.util.MybatisUtil;
-import org.jjche.sys.modules.system.dto.MenuDTO;
-import org.jjche.sys.modules.system.dto.MenuQueryCriteriaDTO;
-import org.jjche.sys.modules.system.vo.MenuMetaVO;
-import org.jjche.sys.modules.system.vo.MenuVO;
+import org.jjche.sys.enums.SysErrorCodeEnum;
 import org.jjche.sys.modules.system.constant.MenuCacheKey;
 import org.jjche.sys.modules.system.constant.RoleCacheKey;
 import org.jjche.sys.modules.system.domain.MenuDO;
 import org.jjche.sys.modules.system.domain.RoleDO;
 import org.jjche.sys.modules.system.domain.UserDO;
+import org.jjche.sys.modules.system.dto.MenuDTO;
+import org.jjche.sys.modules.system.dto.MenuQueryCriteriaDTO;
 import org.jjche.sys.modules.system.mapper.MenuMapper;
 import org.jjche.sys.modules.system.mapper.UserMapper;
 import org.jjche.sys.modules.system.mapstruct.MenuMapStruct;
+import org.jjche.sys.modules.system.vo.MenuMetaVO;
+import org.jjche.sys.modules.system.vo.MenuVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -250,19 +251,18 @@ public class MenuService extends MyServiceImpl<MenuMapper, MenuDO> {
     @Transactional(rollbackFor = Exception.class)
     public void create(MenuDO resources) {
         MenuDO menu = this.findByTitle(resources.getTitle());
-        Assert.isNull(menu, resources.getTitle() + "已存在");
+        AssertUtil.isNull(menu, SysErrorCodeEnum.MENU_TITLE_ALREADY_ERROR, resources.getTitle());
         String componentName = resources.getName();
         if (StrUtil.isNotBlank(componentName)) {
             MenuDO menu1 = this.findByName(componentName);
-            Assert.isNull(menu1, resources.getName() + "已存在");
+            AssertUtil.isNull(menu1, SysErrorCodeEnum.MENU_NAME_ALREADY_ERROR, resources.getName());
         }
         if (resources.getPid().equals(0L)) {
             resources.setPid(null);
         }
         if (resources.getIFrame()) {
-            String http = "http://", https = "https://";
-            Boolean isHttpOrHttps = !(resources.getPath().toLowerCase().startsWith(http) || resources.getPath().toLowerCase().startsWith(https));
-            Assert.isFalse(isHttpOrHttps, "外链必须以http://或者https://开头");
+            String resourcePath = resources.getPath().toLowerCase();
+            AssertUtil.isTrue(HttpUtil.isHttp(resourcePath) && HttpUtil.isHttps(resourcePath), SysErrorCodeEnum.MENU_URL_PREFIX_ERROR);
         }
         this.save(resources);
         // 计算子节点数目
@@ -279,19 +279,16 @@ public class MenuService extends MyServiceImpl<MenuMapper, MenuDO> {
     @Transactional(rollbackFor = Exception.class)
     public void update(MenuDO resources) {
         Boolean isSelf = resources.getId().equals(resources.getPid());
-        Assert.isFalse(isSelf, "上级不能为自己");
+        AssertUtil.isFalse(isSelf, SysErrorCodeEnum.MENU_NOT_ALLOWED_SELF_ERROR);
         MenuDO menu = this.getById(resources.getId());
-        ValidationUtil.isNull(menu.getId(), "Permission", "id", resources.getId());
-
+        AssertUtil.notNull(menu, SysErrorCodeEnum.RECORD_NOT_FOUND);
         if (resources.getIFrame()) {
-            String http = "http://", https = "https://";
-            Boolean isHttpOrHttps = !(resources.getPath().toLowerCase().startsWith(http) || resources.getPath().toLowerCase().startsWith(https));
-            Assert.isFalse(isHttpOrHttps, "外链必须以http://或者https://开头");
+            String resourcePath = resources.getPath().toLowerCase();
+            AssertUtil.isTrue(HttpUtil.isHttp(resourcePath) && HttpUtil.isHttps(resourcePath), SysErrorCodeEnum.MENU_URL_PREFIX_ERROR);
         }
         MenuDO menu1 = this.findByTitle(resources.getTitle());
         Boolean isMenuEqual = menu1 != null && !menu1.getId().equals(menu.getId());
-        Assert.isFalse(isMenuEqual, resources.getTitle() + "已存在");
-
+        AssertUtil.isFalse(isMenuEqual, SysErrorCodeEnum.MENU_TITLE_ALREADY_ERROR, resources.getTitle());
         if (resources.getPid().equals(0L)) {
             resources.setPid(null);
         }
@@ -303,7 +300,7 @@ public class MenuService extends MyServiceImpl<MenuMapper, MenuDO> {
         if (StrUtil.isNotBlank(componentName)) {
             menu1 = this.findByName(componentName);
             Boolean isMenuEqual2 = menu1 != null && !menu1.getId().equals(menu.getId());
-            Assert.isFalse(isMenuEqual2, componentName + "已存在");
+            AssertUtil.isFalse(isMenuEqual2, SysErrorCodeEnum.MENU_NAME_ALREADY_ERROR, componentName);
         }
         menu.setTitle(resources.getTitle());
         menu.setComponent(resources.getComponent());
@@ -456,8 +453,8 @@ public class MenuService extends MyServiceImpl<MenuMapper, MenuDO> {
                             String component = menuDTO.getComponent();
                             if (menuDTO.getPid() == null) {
                                 menuVo.setComponent(StrUtil.isEmpty(component) ? "Layout" : component);
-                            }else if(menuDTO.getType() == 0){
-                                menuVo.setComponent(StrUtil.isEmpty(component)?"ParentView":component);
+                            } else if (menuDTO.getType() == 0) {
+                                menuVo.setComponent(StrUtil.isEmpty(component) ? "ParentView" : component);
                             } else if (!StrUtil.isEmpty(component)) {
                                 menuVo.setComponent(component);
                             }
@@ -495,7 +492,7 @@ public class MenuService extends MyServiceImpl<MenuMapper, MenuDO> {
      */
     public MenuDO findOne(Long id) {
         MenuDO menu = this.getById(id);
-        ValidationUtil.isNull(menu.getId(), "MenuDO", "id", id);
+        AssertUtil.notNull(menu, SysErrorCodeEnum.RECORD_NOT_FOUND);
         return menu;
     }
 

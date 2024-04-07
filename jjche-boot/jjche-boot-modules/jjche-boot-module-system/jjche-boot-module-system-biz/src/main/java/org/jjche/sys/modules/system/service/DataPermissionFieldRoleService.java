@@ -1,26 +1,27 @@
 package org.jjche.sys.modules.system.service;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.jjche.cache.service.RedisService;
 import org.jjche.common.constant.PermissionDataCacheKey;
+import org.jjche.common.exception.util.AssertUtil;
 import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.mybatis.base.service.MyServiceImpl;
 import org.jjche.mybatis.param.SortEnum;
 import org.jjche.mybatis.util.MybatisUtil;
+import org.jjche.sys.enums.SysErrorCodeEnum;
+import org.jjche.sys.modules.system.domain.DataPermissionFieldDO;
+import org.jjche.sys.modules.system.domain.DataPermissionFieldRoleDO;
 import org.jjche.sys.modules.system.dto.DataPermissionFieldQueryCriteriaDTO;
 import org.jjche.sys.modules.system.dto.DataPermissionFieldRoleDTO;
 import org.jjche.sys.modules.system.dto.DataPermissionFieldRoleQueryCriteriaDTO;
 import org.jjche.sys.modules.system.dto.DataPermissionFiledRoleSelectedDTO;
-import org.jjche.sys.modules.system.vo.DataPermissionFieldRoleVO;
-import org.jjche.sys.modules.system.domain.DataPermissionFieldDO;
-import org.jjche.sys.modules.system.domain.DataPermissionFieldRoleDO;
 import org.jjche.sys.modules.system.mapper.DataPermissionFieldRoleMapper;
 import org.jjche.sys.modules.system.mapstruct.DataPermissionFieldRoleMapStruct;
+import org.jjche.sys.modules.system.vo.DataPermissionFieldRoleVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,7 +74,7 @@ public class DataPermissionFieldRoleService extends MyServiceImpl<DataPermission
                 sysDataPermissionFieldRoleDO.setIsEditable(selectedDTO.getIsEditable());
                 sysDataPermissionFieldRoleDOList.add(sysDataPermissionFieldRoleDO);
             }
-            Assert.isTrue(this.saveBatch(sysDataPermissionFieldRoleDOList), "保存失败");
+            AssertUtil.isTrue(this.saveBatch(sysDataPermissionFieldRoleDOList), SysErrorCodeEnum.SAVE_ERROR);
         }
         this.delUserCache();
     }
