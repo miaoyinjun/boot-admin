@@ -33,7 +33,7 @@ import javax.validation.Valid;
  * @version 1.0.0-SNAPSHOT
  * @since 2021-02-02
  */
-@Api(tags = "演示-对外-加密|解密")
+@Api(tags = "示例-对外-加密|解密")
 @ApiSupport(order = 1, author = "miaoyj")
 @OutRestController("students")
 @RequiredArgsConstructor

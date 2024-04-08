@@ -42,7 +42,7 @@ import java.util.List;
  * @version 1.0.0-SNAPSHOT
  * @since 2021-02-02
  */
-@Api(tags = "演示-学生")
+@Api(tags = "示例-学生")
 @ApiSupport(order = 1, author = "miaoyj")
 @RestController
 @RequestMapping("students")

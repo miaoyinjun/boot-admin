@@ -10,7 +10,7 @@ package org.jjche.demo.constant;
  */
 public interface DemoApiConstants {
     /**
-     * 演示服务 {@value}
+     * 示例服务 {@value}
      */
     String NAME = "jjche-cloud-demo";
 }

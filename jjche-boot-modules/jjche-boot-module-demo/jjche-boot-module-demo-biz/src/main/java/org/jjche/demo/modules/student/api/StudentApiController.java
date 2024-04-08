@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 1.0.0-SNAPSHOT
  * @since 2021-02-02
  */
-@Api(tags = "演示-对内学生")
+@Api(tags = "示例-对内学生")
 @ApiSupport(order = 1, author = "miaoyj")
 @RestController
 @RequestMapping("internal/students")
