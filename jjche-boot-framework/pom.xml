@@ -3,15 +3,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>org.jjcheframework.boot</groupId>
+    <artifactId>jjche-boot-framework</artifactId>
+    <packaging>pom</packaging>
+    <version>2.0.8-SNAPSHOT</version>
+
     <parent>
         <groupId>org.jjcheframework.boot</groupId>
-        <artifactId>jjche-boot-parent</artifactId>
-        <version>1.0.11-SNAPSHOT</version>
+        <artifactId>jjche-boot</artifactId>
+        <version>2.0.8-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jjche-boot-maven-plugins</artifactId>
-    <packaging>pom</packaging>
     <modules>
-        <!--        <module>mybatis-plus-maven-plugin</module>-->
+        <module>jjche-boot-common</module>
+        <module>jjche-boot-starters</module>
+        <module>jjche-cloud-starters</module>
     </modules>
+
 </project>

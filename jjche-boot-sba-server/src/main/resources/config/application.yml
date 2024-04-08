@@ -1,7 +1,0 @@
-server:
-  port: 9999
-  application:
-    name: "@project.artifactId@"
-spring:
-  profiles:
-    active: dev

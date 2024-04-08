@@ -9,7 +9,6 @@
         <groupId>com.alibaba.csp</groupId>
         <artifactId>sentinel-parent</artifactId>
         <version>1.8.2</version>
-        <relativePath />
     </parent>
 
     <properties>

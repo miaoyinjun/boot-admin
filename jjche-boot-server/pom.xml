@@ -12,9 +12,8 @@
 
     <parent>
         <groupId>org.jjcheframework.boot</groupId>
-        <artifactId>jjche-boot-parent</artifactId>
+        <artifactId>jjche-boot</artifactId>
         <version>2.0.8-SNAPSHOT</version>
-        <relativePath/>
     </parent>
 
     <dependencies>

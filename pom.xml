@@ -10,29 +10,879 @@
     <name>jjche-boot</name>
 
     <modules>
-        <module>jjche-boot-parent</module>
+        <module>jjche-boot-framework</module>
         <module>jjche-boot-server</module>
         <module>jjche-cloud-server</module>
         <module>jjche-boot-modules</module>
-<!--        <module>jjche-boot-sba-server</module>-->
     </modules>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <build.plugins.plugin.version>3.0.0-M1</build.plugins.plugin.version>
+        <spring.boot.starter.version>2.6.3</spring.boot.starter.version>
+        <spring-cloud.version>2021.0.3</spring-cloud.version>
+        <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
+        <spring.boot.admin.starter.version>2.6.3</spring.boot.admin.starter.version>
+        <maven.plugin.version>3.6.0</maven.plugin.version>
+        <screw.version>1.0.4</screw.version>
+        <mysql.version>8.0.21</mysql.version>
+        <!-- docker -->
+        <docker.maven.verion>0.41.0</docker.maven.verion>
+
+        <hutool.version>5.8.3</hutool.version>
+        <mybatis.plus.version>3.5.1</mybatis.plus.version>
+        <liquibase.version>4.26.0</liquibase.version>
+        <jjwt.version>0.11.1</jjwt.version>
+        <mapstruct.version>1.4.1.Final</mapstruct.version>
+        <poi.version>4.1.2</poi.version>
+        <commons-pool2.version>2.11.1</commons-pool2.version>
+        <jjwt.version>0.11.1</jjwt.version>
+        <!-- oshi监控需要指定jna版本, 问题详见 https://github.com/oshi/oshi/issues/1040 -->
+        <jna.version>5.6.0</jna.version>
+        <mail.version>1.4.7</mail.version>
+        <qiniu.version>7.8.0</qiniu.version>
+        <alipay.version>4.9.153.ALL</alipay.version>
+        <nacos.version>2.0.3</nacos.version>
+        <jetcache.version>2.7.3</jetcache.version>
+        <druid.version>1.2.9</druid.version>
+        <skywalking.version>8.11.0</skywalking.version>
+        <minio.version>8.4.5</minio.version>
+        <okhttp3.version>4.10.0</okhttp3.version>
+        <redission.version>3.18.0</redission.version>
+        <flowable.version>6.8.0</flowable.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>${spring.boot.starter.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- spring-cloud-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring-cloud-alibaba -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-common</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-system-api-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-cloud-system-api-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-core-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-sba-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-swagger-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-log-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-cat-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-mybatis-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-cache-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-filter-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-security-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>org.jjcheframework.boot</groupId>-->
+            <!--                <artifactId>jjche-boot-xxl-job-client-starter</artifactId>-->
+            <!--                <version>1.0.0-SNAPSHOT</version>-->
+            <!--            </dependency>-->
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-serialize-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-userdetail-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <!-- cloud -->
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-cloud-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-cloud-gray-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-shardingsphere-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-minio-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-sentinel-dashboard-starter</artifactId>
+                <version>1.8.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-xxl-job-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <!-- 工作流相关 -->
+            <dependency>
+                <groupId>org.jjcheframework.boot</groupId>
+                <artifactId>jjche-boot-flowable-starter</artifactId>
+                <version>2.0.8-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-spring-boot-starter-process</artifactId>
+                <version>${flowable.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-spring-boot-starter-actuator</artifactId>
+                <version>${flowable.version}</version>
+            </dependency>
+            <!-- 工作流相关结束 -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-starter-redisson</artifactId>
+                <version>${jetcache.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <scope>runtime</scope>
+                <version>${mysql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${liquibase.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-annotation</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-extension</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>2.3.30</version>
+            </dependency>
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>3.9.1</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>1.5.22</version>
+                <scope>compile</scope>
+            </dependency>
+            <!--springbootAdmin-->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${spring.boot.admin.starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>${spring.boot.admin.starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>3.0.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.12</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.10</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-dependencies</artifactId>
+                <version>3.0.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.2.3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>annotations</artifactId>
+                <version>3.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-plugin-api</artifactId>
+                <version>3.6.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.plugin-tools</groupId>
+                <artifactId>maven-plugin-annotations</artifactId>
+                <version>${maven.plugin.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.plexus</groupId>
+                <artifactId>plexus-utils</artifactId>
+                <version>3.3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>2.3.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>4.0.1</version>
+            </dependency>
+            <!-- Java图形验证码 -->
+            <dependency>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>easy-captcha</artifactId>
+                <version>1.6.2</version>
+            </dependency>
+            <dependency>
+                <groupId>net.dreamlu</groupId>
+                <artifactId>mica-ip2region</artifactId>
+                <version>2.7.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commons-pool2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>xerces</groupId>
+                <artifactId>xercesImpl</artifactId>
+                <version>2.12.0</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.inject</groupId>
+                <artifactId>javax.inject</artifactId>
+                <version>1</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.bitwalker</groupId>
+                <artifactId>UserAgentUtils</artifactId>
+                <version>1.21</version>
+            </dependency>
+            <dependency>
+                <groupId>com.deepoove</groupId>
+                <artifactId>poi-tl</artifactId>
+                <version>1.8.2</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.ethz.ganymed</groupId>
+                <artifactId>ganymed-ssh2</artifactId>
+                <version>build210</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jcraft</groupId>
+                <artifactId>jsch</artifactId>
+                <version>0.1.55</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.oshi</groupId>
+                <artifactId>oshi-core</artifactId>
+                <version>6.4.0</version>
+            </dependency>
+            <!--邮件依赖-->
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>${mail.version}</version>
+            </dependency>
+
+            <!--七牛云存储-->
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>${qiniu.version}</version>
+            </dependency>
+
+            <!--支付宝依赖-->
+            <dependency>
+                <groupId>com.alipay.sdk</groupId>
+                <artifactId>alipay-sdk-java</artifactId>
+                <version>${alipay.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>4.0.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>${nacos.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-spring-boot-starter</artifactId>
+                <version>4.4.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anji-plus</groupId>
+                <artifactId>spring-boot-starter-captcha</artifactId>
+                <version>1.3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>2.13.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-trace</artifactId>
+                <version>${skywalking.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-logback-1.x</artifactId>
+                <version>${skywalking.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.siegmar</groupId>
+                <artifactId>logback-gelf</artifactId>
+                <version>4.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yomahub</groupId>
+                <artifactId>tlog-all-spring-boot-starter</artifactId>
+                <version>1.4.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>shardingsphere-jdbc-core-spring-boot-starter</artifactId>
+                <version>5.1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dianping.cat</groupId>
+                <artifactId>cat-client</artifactId>
+                <version>3.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redission.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>config/*.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>target/dist</directory>
+                <targetPath>static</targetPath>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>external.atlassian.jgitflow</groupId>
                 <artifactId>jgitflow-maven-plugin</artifactId>
-                <version>1.0-m5.1</version>
-                <configuration>
-                    <updateDependencies>true</updateDependencies>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <enableSshAgent>true</enableSshAgent>
-                    <pushHotfixes>true</pushHotfixes>
-                    <pushReleases>true</pushReleases>
-                    <noDeploy>true</noDeploy>
-                    <noReleaseBuild>true</noReleaseBuild>
-                </configuration>
+            </plugin>
+            <!-- docker的maven插件 -->
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
             </plugin>
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <compilerArgument>-parameters</compilerArgument>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.starter.version}</version>
+                    <dependencies>
+                        <!--springloaded  hot deploy -->
+                        <dependency>
+                            <groupId>org.springframework</groupId>
+                            <artifactId>springloaded</artifactId>
+                            <version>1.2.8.RELEASE</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <fork>false</fork>
+                        <executable>true</executable>
+                        <includeSystemScope>true</includeSystemScope>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.2.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>external.atlassian.jgitflow</groupId>
+                    <artifactId>jgitflow-maven-plugin</artifactId>
+                    <version>1.0-m5.1</version>
+                    <configuration>
+                        <updateDependencies>true</updateDependencies>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <enableSshAgent>true</enableSshAgent>
+                        <pushHotfixes>true</pushHotfixes>
+                        <pushReleases>true</pushReleases>
+                        <noDeploy>true</noDeploy>
+                        <squash>true</squash>
+                        <noReleaseBuild>true</noReleaseBuild>
+                    </configuration>
+                </plugin>
+                <plugin>
+
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <configuration>
+                        <delimiters>@</delimiters>
+                        <useDefaultDelimiters>false</useDefaultDelimiters>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>4.0.0</version>
+                    <executions>
+                        <execution>
+                            <id>get-the-git-infos</id>
+                            <goals>
+                                <goal>revision</goal>
+                            </goals>
+                            <phase>initialize</phase>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <!--日期格式;默认值:dd.MM.yyyy '@' HH:mm:ss z;-->
+                        <dateFormat>yyyy-MM-dd HH:mm:ss z</dateFormat>
+                        <!--若项目打包类型为pom,是否取消构建;默认值:true;-->
+                        <skipPoms>false</skipPoms>
+                        <!--是否生成"git.properties"文件;默认值:false;-->
+                        <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                        <!--指定"git.properties"文件的存放路径(相对于${project.basedir}的一个路径);-->
+                        <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
+                        </generateGitPropertiesFilename>
+                        <commitIdGenerationMode>full</commitIdGenerationMode>
+                        <includeOnlyProperties>
+                            <includeOnlyProperty>git.branch</includeOnlyProperty>
+                            <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
+                            <includeOnlyProperty>git.commit.id.full</includeOnlyProperty>
+                            <includeOnlyProperty>git.commit.message.full</includeOnlyProperty>
+                            <includeOnlyProperty>git.commit.time</includeOnlyProperty>
+                            <includeOnlyProperty>git.commit.user.name</includeOnlyProperty>
+                            <includeOnlyProperty>git.tags</includeOnlyProperty>
+                            <includeOnlyProperty>git.remote.origin.url</includeOnlyProperty>
+
+                            <!--                        <includeOnlyProperty>git.closest.*</includeOnlyProperty>-->
+                            <!--                        <includeOnlyProperty>git.dirty</includeOnlyProperty>-->
+                        </includeOnlyProperties>
+
+                        <!--git描述配置,可选;由JGit提供实现;-->
+                        <gitDescribe>
+                            <!--跳过生成描述属性-->
+                            <skip>true</skip>
+                            <!--提交操作未发现tag时,仅打印提交操作ID,-->
+                            <always>false</always>
+                        </gitDescribe>
+
+                        <validationProperties>
+                            <!-- verify that the project version does not end with `-SNAPSHOT` -->
+                            <validationProperty>
+                                <name>validating project version</name>
+                                <value>${project.version}</value>
+                                <shouldMatchTo><![CDATA[^.*(?<!-SNAPSHOT)$]]></shouldMatchTo>
+                                <!-- for future reference on this particular regex, please refer to lookahead and lookbehind expressions -->
+                                <!-- we could also use: <shouldMatchTo>^[0-9\.]*$</shouldMatchTo> -->
+                            </validationProperty>
+                            <!-- verify that the current repository is not dirty -->
+                            <validationProperty>
+                                <name>validating git dirty</name>
+                                <value>${git.dirty}</value>
+                                <shouldMatchTo>false</shouldMatchTo>
+                            </validationProperty>
+                            <!-- verify that the current commit has a tag -->
+                            <!--                        <validationProperty>-->
+                            <!--                            <name>validating current commit has a tag</name>-->
+                            <!--                            <value>${git.closest.tag.commit.count}</value>-->
+                            <!--                            <shouldMatchTo>0</shouldMatchTo>-->
+                            <!--                        </validationProperty>-->
+                        </validationProperties>
+                    </configuration>
+                </plugin>
+                <!--                <plugin>-->
+                <!--                    <groupId>org.liquibase</groupId>-->
+                <!--                    <artifactId>liquibase-maven-plugin</artifactId>-->
+                <!--                    <version>${liquibase.version}</version>-->
+                <!--                    <configuration>-->
+                <!--                        <propertyFile>src/main/resources/liquibase/env/${profiles.active}.properties</propertyFile>-->
+                <!--                        <password>${liquibase.password}</password>-->
+                <!--                        <changeLogFile>liquibase/master.xml</changeLogFile>-->
+                <!--                        <tag>${project.version}</tag>-->
+                <!--                        <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>-->
+                <!--                        <contexts>${profiles.active}</contexts>-->
+                <!--                    </configuration>-->
+                <!--                </plugin>-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <configuration>
+                        <defaultVersion>${project.version}</defaultVersion>
+                        <version>true</version>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>update</id>
+                            <goals>
+                                <goal>fix</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>javadoc</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-plugin-plugin</artifactId>
+                    <version>${maven.plugin.version}</version>
+                </plugin>
+                <!--                <plugin>-->
+                <!--                    <groupId>org.codehaus.mojo</groupId>-->
+                <!--                    <artifactId>properties-maven-plugin</artifactId>-->
+                <!--                    <version>1.0.0</version>-->
+                <!--                    <executions>-->
+                <!--                        <execution>-->
+                <!--                            <id>default-cli</id>-->
+                <!--                            <phase>initialize</phase>-->
+                <!--                            <goals>-->
+                <!--                                <goal>read-project-properties</goal>-->
+                <!--                            </goals>-->
+                <!--                            <configuration>-->
+                <!--                                <files>-->
+                <!--                                    <file>-->
+                <!--                                        ${project.basedir}/src/main/resources/mybatis-plus-maven-plugin.properties-->
+                <!--                                    </file>-->
+                <!--                                </files>-->
+                <!--                            </configuration>-->
+                <!--                        </execution>-->
+                <!--                    </executions>-->
+                <!--                </plugin>-->
+                <!--                <plugin>-->
+                <!--                    <groupId>com.boot</groupId>-->
+                <!--                    <artifactId>mybatis-plus-maven-plugin</artifactId>-->
+                <!--                    <version>1.0.10-SNAPSHOT</version>-->
+                <!--                    <configuration>-->
+                <!--                        <globalConfig>-->
+                <!--                            <entityName>%sDO</entityName>-->
+                <!--                            <outputDir>${basedir}</outputDir>-->
+                <!--                            <author>${globalConfig.author}</author>-->
+                <!--                        </globalConfig>-->
+                <!--                        <packageInfo>-->
+                <!--                            <parent>${packageInfo.parent}</parent>-->
+                <!--                        </packageInfo>-->
+                <!--                        <dataSource>-->
+                <!--                            <driverName>${dataSource.driverName}</driverName>-->
+                <!--                            <url>${dataSource.url}</url>-->
+                <!--                            <username>${dataSource.username}</username>-->
+                <!--                            <password>${dataSource.password}</password>-->
+                <!--                        </dataSource>-->
+                <!--                    </configuration>-->
+                <!--                </plugin>-->
+                <plugin>
+                    <groupId>cn.smallbun.screw</groupId>
+                    <artifactId>screw-maven-plugin</artifactId>
+                    <version>${screw.version}</version>
+                    <dependencies>
+                        <!-- HikariCP -->
+                        <dependency>
+                            <groupId>com.zaxxer</groupId>
+                            <artifactId>HikariCP</artifactId>
+                            <version>3.4.5</version>
+                        </dependency>
+                        <!--mysql driver-->
+                        <dependency>
+                            <groupId>mysql</groupId>
+                            <artifactId>mysql-connector-java</artifactId>
+                            <version>${mysql.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <!--driver-->
+                        <driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
+                        <!--生成文件类型-->
+                        <fileType>HTML</fileType>
+                        <!--打开文件输出目录-->
+                        <openOutputDir>false</openOutputDir>
+                        <!--文件产生位置-->
+                        <fileOutputDir>${project.build.outputDirectory}/db/doc</fileOutputDir>
+                        <!--生成模板-->
+                        <produceType>freemarker</produceType>
+                        <!--忽略表名-->
+                        <tableName>DATABASECHANGELOG,DATABASECHANGELOGLOCK</tableName>
+                        <!--描述-->
+                        <description>${project.description}</description>
+                        <!--版本-->
+                        <version>${project.version}</version>
+                        <!--标题-->
+                        <title>数据库文档</title>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${build.plugins.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.6.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${docker.maven.verion}</version>
+                    <configuration>
+                        <images>
+                            <image>
+                                <name>${project.artifactId}:latest</name>
+                                <alias>service</alias>
+                                <build>
+                                    <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                                    <buildOptions>
+                                        <network>host</network>
+                                    </buildOptions>
+                                </build>
+                            </image>
+                        </images>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
+
+    <!-- 发布maven私服 -->
+    <distributionManagement>
+        <repository>
+            <id>maven-releases</id>
+            <url>${JJCHE_MAVEN_URL}/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>maven-snapshots</id>
+            <url>${JJCHE_MAVEN_URL}/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
