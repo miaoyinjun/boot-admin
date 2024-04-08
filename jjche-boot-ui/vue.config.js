@@ -22,7 +22,7 @@ module.exports = {
     disableHostCheck: true,
     port: port,
     https: false,
-    open: false,
+    open: true,
     overlay: {
       warnings: false,
       errors: true
