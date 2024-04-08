@@ -54,8 +54,8 @@ public class JacksonHttpMessageConverter extends MappingJackson2HttpMessageConve
         objectMapper.setDateFormat(new SimpleDateFormat(DatePattern.NORM_DATETIME_PATTERN));
         // 时区设置
         objectMapper.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-        objectMapper.setSerializerFactory(objectMapper.getSerializerFactory()
-                .withSerializerModifier(new MyBeanSerializerModifier()));
+//        objectMapper.setSerializerFactory(objectMapper.getSerializerFactory()
+//                .withSerializerModifier(new MyBeanSerializerModifier()));
 
         //解决 /instances/%5Bobject%20Object%5D/actuator/metrics
         //https://github.com/codecentric/spring-boot-admin/issues/1517
