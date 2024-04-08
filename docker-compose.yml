@@ -33,7 +33,7 @@ services:
     container_name: jjche-boot-api
     restart: always
     build:
-      context: ./jjche-boot/jjche-boot-server
+      context: ./jjche-boot-server
       dockerfile: ./Dockerfile
     ports:
       - 8801:8801
