@@ -1,11 +1,19 @@
 #!/usr/bin/env bash
-source ~/.bash_profile
+APP_NAME=jjche-boot-server.jar
+JVM_OPTS="-Xms4096m -Xmx4096m -XX:NewSize=2250M -XX:MaxNewSize=2250M -XX:MetaspaceSize=256m
+          -XX:MaxMetaspaceSize=512M -XX:+HeapDumpOnOutOfMemoryError -XX:+ExitOnOutOfMemoryError
+          -XX:HeapDumpPath=./ -Dfile.encoding=utf-8 "
 
-APP_NAME=jjche-boot-demo.jar
+APP_OPTS="-DJJCHE_DB_HOST=localhost -DJJCHE_DB_PORT=3306 -DJJCHE_DB_UNAME=root
+           -DJJCHE_DB_PASSWORD=123 -DJJCHE_REDIS_HOST=localhost -DJJCHE_REDIS_PORT=6379
+           -DJJCHE_REDIS_PASSWORD=123 "
+
+SPRING_OPTS="--spring.profiles.active=test"
+
 
 #使用说明，用来提示输入参数
 usage() {
-    echo "Usage: sh lims.sh [start|stop|restart|status]"
+    echo "Usage: sh app.sh [start|stop|restart|status]"
     exit 1
 }
 
@@ -25,7 +33,7 @@ start() {
    if [ $? -eq "0" ]; then
      echo "${APP_NAME} is already running. pid=${pid} ."
    else
-     nohup java ${JAVA_OPTS} -jar $APP_NAME ${JAVA_WEB_SERVICE_OPTS} > /dev/null 2>&1 &
+     nohup java -jar ${JVM_OPTS} ${APP_OPTS} $APP_NAME ${SPRING_OPTS} > /dev/null 2>&1 &
    fi
 }
 #停止方法
