@@ -62,7 +62,6 @@ CREATE TABLE `code_gen_config`
     `api_path`    varchar(255) DEFAULT NULL COMMENT '前端Api文件路径',
     `prefix`      varchar(255) DEFAULT NULL COMMENT '表前缀',
     `api_alias`   varchar(255) DEFAULT NULL COMMENT '接口名称',
-    `api_version` varchar(50) NOT NULL COMMENT '版本号',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 7

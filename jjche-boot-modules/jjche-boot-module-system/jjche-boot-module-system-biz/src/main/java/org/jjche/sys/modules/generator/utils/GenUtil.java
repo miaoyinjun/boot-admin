@@ -1,8 +1,6 @@
 package org.jjche.sys.modules.generator.utils;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.DatePattern;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.extra.template.*;
 import org.jjche.common.util.AppUtil;
 import org.jjche.common.util.StrUtil;
@@ -68,7 +66,7 @@ public class GenUtil {
         templateNames.add("ServiceImpl");
         templateNames.add("MapStruct");
 //        templateNames.add("SortEnum");
-        templateNames.add("ApiVersion");
+//        templateNames.add("ApiVersion");
         templateNames.add("MenuRoleSql");
         templateNames.add(DIFF_OLD_FUNC);
         return templateNames;
@@ -211,15 +209,15 @@ public class GenUtil {
         String tableName = genConfig.getTableName();
         // 存储模版字段数据
         Map<String, Object> genMap = new HashMap<>(16);
-        String apiVersion = genConfig.getApiVersion();
-        apiVersion = StrUtil.subBefore(apiVersion, "-", true);
-        apiVersion = StrUtil.replace(apiVersion, ".", "_");
-        genMap.put("apiVersionConstant", "VERSION_" + apiVersion);
-        apiVersion += "版本-" + DateUtil.format(DateUtil.date(), DatePattern.PURE_DATE_PATTERN);
+//        String apiVersion = genConfig.getApiVersion();
+//        apiVersion = StrUtil.subBefore(apiVersion, "-", true);
+//        apiVersion = StrUtil.replace(apiVersion, ".", "_");
+//        genMap.put("apiVersionConstant", "VERSION_" + apiVersion);
+//        apiVersion += "版本-" + DateUtil.format(DateUtil.date(), DatePattern.PURE_DATE_PATTERN);
         // 接口别名
         genMap.put("apiAlias", genConfig.getApiAlias());
-        apiVersion = StrUtil.replace(apiVersion, "_", ".");
-        genMap.put("apiVersion", apiVersion);
+//        apiVersion = StrUtil.replace(apiVersion, "_", ".");
+//        genMap.put("apiVersion", apiVersion);
         // 包名称
         String packagePath = getAppPackagePath().
                 replaceAll("\\\\|/", ".");

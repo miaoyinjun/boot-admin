@@ -41,8 +41,6 @@ public class GenConfigDO implements Serializable {
     private String prefix;
     @ApiModelProperty(value = "是否覆盖")
     private Boolean cover = false;
-    @ApiModelProperty(value = "版本号")
-    private String apiVersion;
 
     /**
      * <p>Constructor for GenConfigDO.</p>

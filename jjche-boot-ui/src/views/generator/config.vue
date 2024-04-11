@@ -179,16 +179,6 @@
                 style="color: #c0c0c0; margin-left: 10px"
               >接口的名称，用于控制器与接口文档中，如：用户</span>
             </el-form-item>
-            <el-form-item label="版本号" prop="apiVersion">
-              <el-input
-                v-model="form.apiVersion"
-                placeholder="版本号"
-                style="width: 40%"
-              />
-              <span
-                style="color: #c0c0c0; margin-left: 10px"
-              >版本号必输，如：1.0.0</span>
-            </el-form-item>
             <el-form-item label="去表前缀" prop="prefix">
               <el-input
                 v-model="form.prefix"
@@ -249,7 +239,6 @@ export default {
         apiPath: '',
         prefix: '',
         apiAlias: null,
-        apiVersion: ''
       },
       rules: {
         author: [{ required: true, message: '作者不能为空', trigger: 'blur' }],
@@ -262,9 +251,6 @@ export default {
         ],
         apiAlias: [
           { required: true, message: '接口名称不能为空', trigger: 'blur' }
-        ],
-        apiVersion: [
-          { required: true, message: '版本号不能为空', trigger: 'blur' }
         ],
         cover: [{ required: true, message: '不能为空', trigger: 'blur' }]
       }

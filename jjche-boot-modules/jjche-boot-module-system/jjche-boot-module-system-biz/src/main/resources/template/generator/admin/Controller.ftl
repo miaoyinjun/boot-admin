@@ -4,7 +4,6 @@ import ${packageApi}.vo.${className}VO;
 import ${packageService}.service.${className}Service;
 import ${packageApi}.dto.${className}QueryCriteriaDTO;
 import ${packageApi}.dto.${className}DTO;
-import ${packagePath}.constant.ApiVersion;
 import org.jjche.common.base.BaseDTO;
 import org.jjche.log.biz.starter.annotation.LogRecord;
 import org.jjche.core.base.BaseController;
@@ -46,7 +45,7 @@ public class ${className}Controller extends BaseController{
     private final ${className}Service ${changeClassName}Service;
 
     @PostMapping
-    @ApiOperation(value = "${apiAlias}-新增", tags = ApiVersion.${apiVersionConstant})
+    @ApiOperation(value = "${apiAlias}-新增")
     @ApiOperationSupport(ignoreParameters = {"id"})
     @PreAuthorize("@el.check('${tableName}:add')")
     @LogRecord(
@@ -59,7 +58,7 @@ public class ${className}Controller extends BaseController{
     }
 
     @DeleteMapping
-    @ApiOperation(value = "${apiAlias}-删除", tags = ApiVersion.${apiVersionConstant})
+    @ApiOperation(value = "${apiAlias}-删除")
     @PreAuthorize("@el.check('${tableName}:del')")
     @LogRecord(value = "删除", category = LogCategoryType.OPERATING,
             type = LogType.DELETE, module = "${apiAlias}", bizNo = "{{#ids}}",
@@ -71,7 +70,7 @@ public class ${className}Controller extends BaseController{
     }
 
     @PutMapping
-    @ApiOperation(value = "${apiAlias}-修改", tags = ApiVersion.${apiVersionConstant})
+    @ApiOperation(value = "${apiAlias}-修改")
     @PreAuthorize("@el.check('${tableName}:edit')")
     @LogRecord(
             value = "修改", category = LogCategoryType.OPERATING,
@@ -85,13 +84,13 @@ public class ${className}Controller extends BaseController{
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "${apiAlias}-查询单个", tags = ApiVersion.${apiVersionConstant})
+    @ApiOperation(value = "${apiAlias}-查询单个")
     @PreAuthorize("@el.check('${tableName}:list')")
     public R<${className}VO> getById(@PathVariable Long id) {
         return R.ok(this.${changeClassName}Service.getVoById(id));
     }
 
-    @ApiOperation(value = "${apiAlias}-导出", tags = ApiVersion.${apiVersionConstant})
+    @ApiOperation(value = "${apiAlias}-导出")
     @GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @PreAuthorize("@el.check('${tableName}:list')")
     public void download(@Validated ${className}QueryCriteriaDTO criteria) {
@@ -99,7 +98,7 @@ public class ${className}Controller extends BaseController{
     }
 
     @GetMapping
-    @ApiOperation(value = "${apiAlias}-列表", tags = ApiVersion.${apiVersionConstant})
+    @ApiOperation(value = "${apiAlias}-列表")
     @PreAuthorize("@el.check('${tableName}:list')")
     public R<MyPage<${className}VO>> pageQuery(PageParam page,
                             @Validated ${className}QueryCriteriaDTO query){

@@ -9,10 +9,9 @@ import org.jjche.common.param.MyPage;
 import org.jjche.common.param.PageParam;
 import org.jjche.common.wrapper.response.R;
 import org.jjche.core.base.BaseController;
-import org.jjche.demo.constant.ApiVersion;
-import org.jjche.demo.modules.student.dto.StudentQueryCriteriaDTO;
 import org.jjche.demo.modules.student.api.enums.StudentCourseEnum;
 import org.jjche.demo.modules.student.api.vo.StudentApiVO;
+import org.jjche.demo.modules.student.dto.StudentQueryCriteriaDTO;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,9 +36,8 @@ public class StudentApiController extends BaseController {
 
     private final DemoStudentApi studentApiService;
     @GetMapping
-    @ApiOperation(value = "对内-学生-列表", tags = ApiVersion.VERSION_1_0_0)
+    @ApiOperation(value = "对内-学生-列表")
     public R<MyPage<StudentApiVO>> page(PageParam page, @ApiParam(value = "课程") @RequestParam(required = false) StudentCourseEnum course, @Validated StudentQueryCriteriaDTO query) {
         return R.ok(studentApiService.page(page, course, query.getName()));
     }
-
 }
