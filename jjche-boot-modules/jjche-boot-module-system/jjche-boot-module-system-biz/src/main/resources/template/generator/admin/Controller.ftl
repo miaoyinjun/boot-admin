@@ -38,7 +38,7 @@ import java.util.List;
 @Api(tags = "${apiAlias}")
 @ApiSupport(order = 1, author = "${author}")
 @RestController
-@RequestMapping("${controllerBaseUrl}")
+@RequestMapping("${controllerUrl}")
 @RequiredArgsConstructor
 public class ${className}Controller extends BaseController{
 

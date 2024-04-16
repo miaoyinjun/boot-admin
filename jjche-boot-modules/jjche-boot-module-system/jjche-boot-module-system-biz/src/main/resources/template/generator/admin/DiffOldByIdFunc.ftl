@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Component
 @RequiredArgsConstructor
-public class ${className}DiffOldByIdParseFunction implements IParseFunction<Object> {
+public class ${className}DiffOldByIdParseFunction implements IParseFunction {
     private final ${className}Service ${changeClassName}Service;
     private final ${className}MapStruct ${changeClassName}MapStruct;
 

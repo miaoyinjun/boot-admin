@@ -223,10 +223,10 @@ public class GenUtil {
                 replaceAll("\\\\|/", ".");
 
         String packageService = packagePath + ".modules." + genConfig.getModuleName();
-        String packageApi = packageService + ".api";
+//        String packageApi = packageService + ".api";
 
         genMap.put("packagePath", packagePath);
-        genMap.put("packageApi", packageApi);
+        genMap.put("packageApi", packageService);
         genMap.put("packageService", packageService);
         // 作者
         genMap.put("author", genConfig.getAuthor());
@@ -246,8 +246,8 @@ public class GenUtil {
             className = StrUtil.toCapitalizeCamelCase(StrUtil.removePrefix(tableName, genConfig.getPrefix()));
             changeClassName = StrUtil.toCamelCase(StrUtil.removePrefix(tableName, genConfig.getPrefix()));
         }
-        String controllerBaseUrl = StrUtil.pluralizeWord(tableName);
-        controllerBaseUrl = AppUtil.getAppPackageNamePrefix() + StrUtil.SLASH + controllerBaseUrl;
+        String controllerUrl = StrUtil.pluralizeWord(tableName);
+        String controllerBaseUrl = "demo" + StrUtil.SLASH + controllerUrl;
         // 保存类名
         genMap.put("className", className);
         // 保存小写开头的类名
@@ -255,6 +255,7 @@ public class GenUtil {
         //全大写类名
         genMap.put("diffOldFuncName", diffOldFuncName);
         //控制器基础url
+        genMap.put("controllerUrl", controllerUrl);
         genMap.put("controllerBaseUrl", controllerBaseUrl);
         // 存在 Timestamp 字段
         genMap.put("hasTimestamp", false);
@@ -466,11 +467,11 @@ public class GenUtil {
         path = getPackPath(path, rootPath);
         path += File.separator + "ui" + File.separator;
         if ("api".equals(templateName)) {
-            return path + "api/" + apiName + "/api.js";
+            return path + "src/api/system/" + apiName + ".js";
         }
 
         if ("index".equals(templateName)) {
-            return path + "views/" + apiName + "/index.vue";
+            return path + "src/views/system/" + apiName + "/index.vue";
         }
 
         return null;

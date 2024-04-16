@@ -141,6 +141,7 @@
 </template>
 
 <script>
+    import crud${className} from '@/api/system/${tableName}'
     import CRUD, {crud, form, header, presenter} from '@crud/crud'
     import rrOperation from '@crud/RR.operation'
     import crudOperation from '@crud/CRUD.operation'
@@ -148,11 +149,11 @@
     import pagination from '@crud/Pagination'
     import DateRangePicker from '@/components/DateRangePicker'
 
-    const defaultForm = {
+const defaultForm = {
 <#if columns??>
     <#list columns as column>
         <#if column.formShow>
-  ${column.changeColumnName}: null<#if column_has_next && columns[column_index+1].formShow>,</#if>
+  ${column.changeColumnName}: null<#if column_has_next && columns[column_index].formShow>,</#if>
   </#if>
   </#list>
 </#if>
