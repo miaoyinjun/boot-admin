@@ -1,5 +1,6 @@
 package org.jjche.demo.modules.student.rest;
 
+import cn.hutool.log.StaticLog;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
@@ -90,6 +91,7 @@ public class StudentController extends BaseController {
     @ApiOperation(value = "学生-列表")
     @PreAuthorize("@el.check('student:list')")
     public R<MyPage<StudentVO>> page(PageParam page, @ApiParam(value = "课程") @RequestParam(required = false) StudentCourseEnum course, @Validated StudentQueryCriteriaDTO query) {
+        StaticLog.warn("name：{}", query.getName());
         return R.ok(studentService.page(page, course, query));
     }
 

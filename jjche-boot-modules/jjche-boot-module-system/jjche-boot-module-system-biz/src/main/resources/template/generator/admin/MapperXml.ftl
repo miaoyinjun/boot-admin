@@ -18,7 +18,7 @@
         </#if>
     </sql>
 
-    <select id="pageQuery" resultType="${className}VO">
+    <select id="pageQuery" resultType="${packageApi}.vo.${className}VO">
         <include refid="querySql"/>
     </select>
 </mapper>

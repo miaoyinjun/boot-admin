@@ -524,6 +524,11 @@
                 <artifactId>redisson-spring-boot-starter</artifactId>
                 <version>${redission.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.codehaus.janino</groupId>
+                <artifactId>janino</artifactId>
+                <version>3.0.6</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -6,9 +6,16 @@ scan：当此属性设置为true时，配置文件如果发生改变，将会被
 debug：当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 -->
 <configuration debug="false" scan="true">
     <springProperty scope="context" name="appName" source="spring.application.name"/>
+    <springProperty scope="context" name="env" source="spring.profiles.active" defaultValue="DEV"/>
     <springProperty scope="context" name="logPath" source="logging.file.path" defaultValue="./logs"/>
     <springProperty scope="context" name="maxHistory" source="logging.file.max_history" defaultValue="90"/>
     <springProperty scope="context" name="level" source="logging.level.root" defaultValue="INFO"/>
+
+    <springProperty scope="context" name="graylogHost"
+                    source="graylog.host"/>
+    <springProperty scope="context" name="graylogPort"
+                    source="graylog.port"/>
+
     <contextName>JJcheLogback</contextName>
     <!--特别注意!!!   定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
     <!--特别注意!!!   部署之前将log_level改为INFO-->
@@ -147,6 +154,31 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
         </encoder>
     </appender>
 
+    <appender name="GELF" class="de.siegmar.logbackgelf.GelfUdpAppender">
+        <graylogHost>${graylogHost}</graylogHost>
+        <graylogPort>${graylogPort}</graylogPort>
+        <maxChunkSize>508</maxChunkSize>
+        <useCompression>true</useCompression>
+        <encoder class="de.siegmar.logbackgelf.GelfEncoder">
+            <includeRawMessage>false</includeRawMessage>
+            <includeMarker>true</includeMarker>
+            <includeMdcData>true</includeMdcData>
+            <includeCallerData>false</includeCallerData>
+            <includeRootCauseData>false</includeRootCauseData>
+            <includeLevelName>true</includeLevelName>
+            <shortPatternLayout
+                    class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.mdc.TraceIdMDCPatternLogbackLayout">
+                <pattern>%m%nopex</pattern>
+            </shortPatternLayout>
+            <fullPatternLayout
+                    class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.mdc.TraceIdMDCPatternLogbackLayout">
+                <pattern>%m%n</pattern>
+            </fullPatternLayout>
+            <staticField>app_name:${appName}</staticField>
+            <staticField>env:${env}</staticField>
+        </encoder>
+    </appender>
+
     <logger name="com.github.xiaoymin.knife4j.core.model.MarkdownFile" level="WARN"/>
     <logger name="com.ulisesbocchio.jasyptspringboot.EncryptablePropertySourceConverter" level="WARN"/>
     <logger name="org.springframework.security.web.DefaultSecurityFilterChain" level="WARN"/>
@@ -156,12 +188,17 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
         <appender-ref ref="CONSOLE"/>
     </root>
 
-    <springProfile name="test,uat,prod">
+<!--    <springProfile name="test,uat,prod">-->
         <root level="${level}">
             <appender-ref ref="INFO_FILE"/>
             <appender-ref ref="WARN_FILE"/>
             <appender-ref ref="ERROR_FILE"/>
             <appender-ref ref="ALL_FILE"/>
+            <if condition='isDefined("graylogHost")'>
+                <then>
+                    <appender-ref ref="GELF"/>
+                </then>
+            </if>
         </root>
-    </springProfile>
+<!--    </springProfile>-->
 </configuration>

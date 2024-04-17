@@ -16,11 +16,11 @@
         <!--        </choose>-->
     </sql>
 
-    <select id="pageQuery" resultType="StudentVO">
+    <select id="pageQuery" resultType="org.jjche.demo.modules.student.vo.StudentVO">
         <include refid="querySql"/>
     </select>
 
-    <select id="queryAll" resultType="StudentVO">
+    <select id="queryAll" resultType="org.jjche.demo.modules.student.vo.StudentVO">
         <include refid="querySql"/>
     </select>
 </mapper>
