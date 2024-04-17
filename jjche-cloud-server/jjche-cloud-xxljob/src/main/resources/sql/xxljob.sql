@@ -2,8 +2,8 @@
 # XXL-JOB v2.3.1
 # Copyright (c) 2015-present, xuxueli.
 
-CREATE database if NOT EXISTS `jjche-cloud-xxljob` default character set utf8mb4 collate utf8mb4_unicode_ci;
-use `jjche-cloud-xxljob`;
+--CREATE database if NOT EXISTS `jjche-cloud-xxljob` default character set utf8mb4 collate utf8mb4_unicode_ci;
+--use `jjche-cloud-xxljob`;
 
 SET NAMES utf8mb4;
 

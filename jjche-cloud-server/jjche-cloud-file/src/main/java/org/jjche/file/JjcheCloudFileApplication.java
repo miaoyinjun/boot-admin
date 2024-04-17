@@ -15,7 +15,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  * @since 2020-06-18 9:16
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, MailSenderAutoConfiguration.class})
-public class JjcheCloudMinioApplication {
+public class JjcheCloudFileApplication {
     /**
      * 入口
      *
@@ -24,7 +24,7 @@ public class JjcheCloudMinioApplication {
      * @since 2020-07-09
      */
     public static void main(String[] args) {
-        ConfigurableApplicationContext application = SpringApplication.run(JjcheCloudMinioApplication.class, args);
+        ConfigurableApplicationContext application = SpringApplication.run(JjcheCloudFileApplication.class, args);
         SpringContextHolder.appLog(application);
     }
 }

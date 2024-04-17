@@ -28,11 +28,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @EnableScheduling
 @SpringBootApplication
-public class JjcheNacosApplication {
+public class JjcheCloudNacosApplication {
 
     public static void main(String[] args) {
         if (initEnv()) {
-            SpringApplication.run(JjcheNacosApplication.class, args);
+            SpringApplication.run(JjcheCloudNacosApplication.class, args);
         }
     }
 

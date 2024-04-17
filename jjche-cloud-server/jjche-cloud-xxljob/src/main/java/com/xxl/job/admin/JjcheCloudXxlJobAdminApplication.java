@@ -11,10 +11,10 @@ import org.springframework.core.env.Environment;
  */
 @SpringBootApplication
 @Slf4j
-public class JjcheXxlJobAdminApplication {
+public class JjcheCloudXxlJobAdminApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext application = SpringApplication.run(JjcheXxlJobAdminApplication.class, args);
+        ConfigurableApplicationContext application = SpringApplication.run(JjcheCloudXxlJobAdminApplication.class, args);
         Environment env = application.getEnvironment();
         String port = env.getProperty("server.port");
         String contextPath = env.getProperty("server.servlet.context-path");
