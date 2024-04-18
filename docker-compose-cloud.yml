@@ -120,8 +120,8 @@ services:
     restart: always
     command: server /data/minio/
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
     ports:
       - 9000:9000
     healthcheck:

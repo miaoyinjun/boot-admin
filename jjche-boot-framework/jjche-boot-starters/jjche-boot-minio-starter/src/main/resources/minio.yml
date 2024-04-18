@@ -2,6 +2,6 @@ jjche:
   minio:
     endpoint: ${JJCHE_SERVER_MINIO_HOST:http://127.0.0.1}:${JJCHE_SERVER_MINIO_PORT:9000} #Minio服务所在地址
     bucketName: ${JJCHE_SERVER_MINIO_BUCKET_NAME:jjche} #存储桶名称
-    accessKey: ${JJCHE_SERVER_MINIO_ACCESS_KEY:minioadmin} #访问的key
-    secretKey: ${JJCHE_SERVER_MINIO_SECRET_KEY:minioadmin} #访问的秘钥
+    accessKey: ${JJCHE_SERVER_MINIO_ACCESS_KEY:minio} #访问的key
+    secretKey: ${JJCHE_SERVER_MINIO_SECRET_KEY:minio123} #访问的秘钥
     urlPrefix: ${jjche.minio.endpoint} #用户上传文件完成返回的路径，为空时返回相对路径，否则是完整的文件访问路径，可以是minio的外网地址(推荐)或本java服务的地址例：https://baidu.com，返回的完整访问地址：https://baidu.com/2022-12-13/37e3f1f9b57744eb8ef21fb3b8e73677.jpg
