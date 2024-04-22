@@ -6,8 +6,5 @@
 
 
     <include file="0.9.0/master.xml" relativeToChangelogFile="true"/>
-    <changeSet author="miaoyj" id="0.9.0">
-        <tagDatabase tag="0.9.0"/>
-    </changeSet>
 
 </databaseChangeLog>
