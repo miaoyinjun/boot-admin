@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <doc-alert title="工作流" url="https://doc.iocoder.cn/bpm"/>
+    <doc-alert title="工作流" url="https://www.yuque.com/miaoyj/nsln4r/wfakr6frz33peu15"/>
 
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">

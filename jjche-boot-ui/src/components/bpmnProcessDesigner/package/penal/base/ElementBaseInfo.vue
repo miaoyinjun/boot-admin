@@ -10,7 +10,7 @@
       <div v-if="elementBaseInfo.$type === 'bpmn:Process'">
         <!-- 如果是 Process 信息的时候，使用自定义表单 -->
         <el-link
-          href="https://doc.iocoder.cn/bpm/#_3-%E6%B5%81%E7%A8%8B%E5%9B%BE%E7%A4%BA%E4%BE%8B"
+          href="https://www.yuque.com/miaoyj/nsln4r/wfakr6frz33peu15"
           type="danger"
           target="_blank"
           >如何实现实现会签、或签？</el-link

@@ -2,6 +2,8 @@ package org.jjche.core.base;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.jjche.common.param.MyPage;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 import java.util.Collection;
 import java.util.List;
@@ -34,6 +36,10 @@ public interface BaseVoMapStruct<E, V> {
      * @param dooList DOList
      * @return VOList
      */
+    @Mappings({
+            @Mapping(source = "activityId", target = "key"),
+            @Mapping(source = "activityType", target = "type")
+    })
     List<V> toVO(Collection<E> dooList);
 
     /**

@@ -33,7 +33,7 @@ public class BpmActivityService {
     public List<BpmActivityRespVO> getActivityListByProcessInstanceId(String processInstanceId) {
         List<HistoricActivityInstance> activityList = historyService.createHistoricActivityInstanceQuery()
                 .processInstanceId(processInstanceId).list();
-        return bpmActivityConvert.toVO(activityList);
+        return bpmActivityConvert.convertList(activityList);
     }
 
     /**

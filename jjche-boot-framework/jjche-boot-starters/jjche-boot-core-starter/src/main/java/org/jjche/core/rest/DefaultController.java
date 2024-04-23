@@ -21,6 +21,6 @@ public class DefaultController {
     @ApiOperation(value = "bpm", hidden = true)
     public void bpm404() {
         throw new BusinessException(GlobalErrorCodeEnum.NOT_IMPLEMENTED.getCode(),
-         "[工作流模块 jjche-boot-module-bpm - 已禁用][参考 https:///bpm/ 开启]");
+         "[工作流模块 jjche-boot-module-bpm - 已禁用][参考 https://www.yuque.com/miaoyj/nsln4r/wfakr6frz33peu15开启]");
     }
 }
