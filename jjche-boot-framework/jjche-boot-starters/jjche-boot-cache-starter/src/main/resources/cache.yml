@@ -10,7 +10,7 @@ spring:
       max-idle: 8
       min-idle: 1
 jetcache:
-  statIntervalMinutes: 60
+  statIntervalMinutes: 0
   hiddenPackages: true
   areaInCacheName: false
   local:
