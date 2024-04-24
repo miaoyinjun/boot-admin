@@ -153,7 +153,7 @@ public class RoleService extends MyServiceImpl<RoleMapper, RoleDO> {
     @Cached(name = RoleCacheKey.ROLE_ID, key = "#id")
     public RoleDTO findById(long id) {
         RoleDO role = this.getById(id);
-        AssertUtil.isNull(role, SysErrorCodeEnum.RECORD_NOT_FOUND);
+        AssertUtil.notNull(role, SysErrorCodeEnum.RECORD_NOT_FOUND);
         return roleMapper.toVO(role);
     }
 
@@ -209,7 +209,7 @@ public class RoleService extends MyServiceImpl<RoleMapper, RoleDO> {
     @Transactional(rollbackFor = Exception.class)
     public void update(RoleDO resources) {
         RoleDO role = this.getById(resources.getId());
-        AssertUtil.isNull(role, SysErrorCodeEnum.RECORD_NOT_FOUND);
+        AssertUtil.notNull(role, SysErrorCodeEnum.RECORD_NOT_FOUND);
 
         RoleDO role1 = this.findByName(resources.getName());
         Boolean isExist = role1 != null && !role1.getId().equals(role.getId());

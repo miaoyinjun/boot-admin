@@ -76,12 +76,12 @@ public class SysBaseService implements SysBaseApi {
 
     @Override
     public void validRoleList(Set<Long> ids) {
-        roleService.verification(ids);
+        roleService.validRoleList(ids);
     }
 
     @Override
     public Set<Long> getUserRoleIdByRoleIds(Set<Long> roleIds) {
-        return null;
+        return roleService.getUserRoleIdByRoleIds(roleIds);
     }
 
     @Override
