@@ -21,7 +21,7 @@ jetcache:
   remote:
     default:
       type: redisson
-      keyPrefix: "${spring.application.name}:"
+#      keyPrefix: "${spring.application.name}:" #redisson已经有前缀
       keyConvertor: fastjson
       valueEncoder: java
       valueDecoder: java
