@@ -6,8 +6,8 @@
 ### 项目介绍
 
 1. **基础功能**：用户、角色、菜单、部门、岗位、数据字典、任务调度、工作流、版本管理
-2. **微服务：**支持单体服务与微服务之间灵活切换，灰度发布、流量控制、熔断降级
-3. **在线代码生成器：**单表生成前后端代码
+2. **微服务**：支持单体服务与微服务之间灵活切换，灰度发布、流量控制、熔断降级
+3. **在线代码生成器**：单表生成前后端代码
 4. **操作日志**：注解，追溯数据修改历史
 5. **查询过滤器**：SQL自动动态拼装
 6. **数据权限**：菜单级、按钮级、数据行级、数据列级、列表和表单字段级
@@ -58,47 +58,77 @@
 > jjche-boot-server -- 单体启动入口
 
 > jjche-cloud-server -- 微服务启动入口
-> jjche-cloud-nacos -- 注册中心
-> jjche-cloud-gateway -- 网关服务
-> jjche-cloud-system -- 系统服务
-> jjche-cloud-bpm -- 工作流服务
-> jjche-cloud-demo -- 示例服务
-> jjche-cloud-file -- 文件服务
-> jjche-cloud-monitor -- 监控服务
-> jjche-cloud-sentinel -- Sentinel流控熔断
-> jjche-cloud-xxljob -- 分布式定时服务
-
+>> jjche-cloud-nacos -- 注册中心
+>>
+>> jjche-cloud-gateway -- 网关服务
+>>
+>> jjche-cloud-system -- 系统服务
+>>
+>> jjche-cloud-bpm -- 工作流服务
+>>
+>> jjche-cloud-demo -- 示例服务
+>>
+>> jjche-cloud-file -- 文件服务
+>>
+>> jjche-cloud-monitor -- 监控服务
+>>
+>> jjche-cloud-sentinel -- Sentinel流控熔断
+>>
+>> jjche-cloud-xxljob -- 分布式定时服务
+>>
 > jjche-boot-modules  -- 业务模块
-> jjche-boot-module-system  -- 系统模块
-> jjche-boot-module-bpm -- 工作流模块
-> jjche-boot-module-demo -- 示例模块
+>> jjche-boot-module-system  -- 系统模块
+>> 
+>> jjche-boot-module-bpm -- 工作流模块
+>> 
+>> jjche-boot-module-demo -- 示例模块
 
 > jjche-boot-framework -- 框架
-> jjche-boot-common -- 通用
-> jjche-boot-starters -- 基础组件
-> jjche-boot-cache-starter -- 缓存
-> jjche-boot-cat-starter -- CAT监控
-> jjche-boot-core-starter -- 核心
-> jjche-boot-filter-starter -- 安全过滤器
-> jjche-boot-flowable-starter -- 工作流
-> jjche-boot-log-starter -- 日志
-> jjche-boot-minio-starter -- Minio存储
-> jjche-boot-mybatis-starter -- mybatis定义
-> jjche-boot-sba-starter -- spring-boot-admin增强
-> jjche-boot-security-starter -- 安全
-> jjche-boot-sentinel-dashboard-starter -- sentinel控制台
-> jjche-boot-serialize-starter -- 序列化
-> jjche-boot-shardingsphere-starter -- 分库分表
-> jjche-boot-starter -- 组件集成
-> jjche-boot-swagger-starter -- API文档
-> jjche-boot-system-api-starter -- 系统核心接口定义
-> jjche-boot-userdetail-starter -- 默认安全认证定义
-> jjche-boot-xxl-job-starter -- xxljob客户端
-
-> jjche-cloud-starters -- 微服务组件
-> jjche-cloud-gray-starter -- 灰度发布
-> jjche-cloud-starter -- 微服务组件集成
-> jjche-cloud-system-api-starter -- 系统核心接口定义
+>> jjche-boot-common -- 通用
+>> 
+>> jjche-boot-starters -- 基础组件
+>>
+>>> jjche-boot-cache-starter -- 缓存
+>>> jjche-boot-cat-starter -- CAT监控
+>>>
+>>> jjche-boot-core-starter -- 核心
+>>>
+>>> jjche-boot-filter-starter -- 安全过滤器
+>>>
+>>> jjche-boot-flowable-starter -- 工作流
+>>>
+>>> jjche-boot-log-starter -- 日志
+>>>
+>>> jjche-boot-minio-starter -- Minio存储
+>>>
+>>> jjche-boot-mybatis-starter -- mybatis定义
+>>>
+>>> jjche-boot-sba-starter -- spring-boot-admin增强
+>>>
+>>> jjche-boot-security-starter -- 安全
+>>>
+>>> jjche-boot-sentinel-dashboard-starter -- sentinel控制台
+>>>
+>>> jjche-boot-serialize-starter -- 序列化
+>>>
+>>> jjche-boot-shardingsphere-starter -- 分库分表
+>>>
+>>> jjche-boot-starter -- 组件集成
+>>>
+>>> jjche-boot-swagger-starter -- API文档
+>>>
+>>> jjche-boot-system-api-starter -- 系统核心接口定义
+>>>
+>>> jjche-boot-userdetail-starter -- 默认安全认证定义
+>>>
+>>> jjche-boot-xxl-job-starter -- xxljob客户端
+>>>
+>> jjche-cloud-starters -- 微服务组件
+>>> jjche-cloud-gray-starter -- 灰度发布
+>>>
+>>> jjche-cloud-starter -- 微服务组件集成
+>>>
+>>> jjche-cloud-system-api-starter -- 系统核心接口定义
 
 
 ![](https://miaoyinjun.gitee.io/jjche-boot-book/assets/1712541760561-443af786-2530-4b85-8d8f-fab41f359de0.png)<br />![](https://miaoyinjun.gitee.io/jjche-boot-book/assets/1712541760710-09c08b5b-a4d4-495d-98be-afa6b7699703.png)<br />![](https://miaoyinjun.gitee.io/jjche-boot-book/assets/1712541760644-97bcd508-1a2b-4b8c-b9dd-2097824ba593.png)<br />![](https://miaoyinjun.gitee.io/jjche-boot-book/assets/1712546838923-e86d0acf-4e0e-443e-b631-23d5593a1ff5.png)<br />![](https://miaoyinjun.gitee.io/jjche-boot-book/assets/1712546927982-7548e330-0be9-48db-a41d-399ddb082cff.png)<br />![](https://miaoyinjun.gitee.io/jjche-boot-book/assets/1712541760840-3a24f014-dafa-45c0-8d9c-203e74ca386f.png)<br />![](https://miaoyinjun.gitee.io/jjche-boot-book/assets/1712541760847-12c78ba9-53ab-4d1a-9374-a0553cd819e8.png)<br />![](https://miaoyinjun.gitee.io/jjche-boot-book/assets/1712541762285-dc56b2f0-0b79-4a93-bdd6-4450ded30252.png)<br />![](https://miaoyinjun.gitee.io/jjche-boot-book/assets/1712541762262-cade073b-ac8c-49ca-82a8-9346a8705c66.png)<br />![](https://miaoyinjun.gitee.io/jjche-boot-book/assets/1712541762246-b8ef2825-32b3-4d81-bc81-15b676bfa637.png)<br />![](https://miaoyinjun.gitee.io/jjche-boot-book/assets/1712541762310-46f6333e-bcad-4200-a5c6-f73ef1caf8fa.png)<br />![](https://miaoyinjun.gitee.io/jjche-boot-book/assets/1712541763240-6f4236e3-f9c0-4efb-9b63-b80ad108945e.png)<br />![](https://miaoyinjun.gitee.io/jjche-boot-book/assets/1712541763377-2e4edc62-b924-4cbc-8636-22f5217ea596.png)<br />![](https://miaoyinjun.gitee.io/jjche-boot-book/assets/1712541763463-a8541f38-11a6-443c-b4ab-e929f2a4f912.png)<br />![](https://miaoyinjun.gitee.io/jjche-boot-book/assets/1712541763490-70000301-fbe8-4a07-93f2-a770c2801734.png)
