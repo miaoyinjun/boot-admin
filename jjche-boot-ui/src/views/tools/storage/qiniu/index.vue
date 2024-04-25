@@ -89,7 +89,7 @@
           :show-overflow-tooltip="true"
           label="文件名"
         >
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <a
               href="JavaScript:"
               class="el-link el-link--primary"
@@ -109,7 +109,7 @@
         <el-table-column prop="size" label="文件大小" />
         <el-table-column prop="type" label="空间类型" />
         <el-table-column prop="gmtModified" label="创建日期">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <span>{{ parseTime(scope.row.gmtModified) }}</span>
           </template>
         </el-table-column>

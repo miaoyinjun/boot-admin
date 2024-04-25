@@ -50,7 +50,7 @@
               <el-table-column prop="columnName" label="字段名称" />
               <el-table-column prop="columnType" label="字段类型" />
               <el-table-column prop="remark" label="最大长度">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-input
                     v-model="data[scope.$index].maxLength"
                     size="mini"
@@ -59,7 +59,7 @@
                 </template>
               </el-table-column>
               <el-table-column prop="remark" label="字段描述">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-input
                     v-model="data[scope.$index].remark"
                     size="mini"
@@ -68,22 +68,22 @@
                 </template>
               </el-table-column>
               <el-table-column align="center" label="必填" width="70px">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-checkbox v-model="data[scope.$index].notNull" />
                 </template>
               </el-table-column>
               <el-table-column align="center" label="列表" width="70px">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-checkbox v-model="data[scope.$index].listShow" />
                 </template>
               </el-table-column>
               <el-table-column align="center" label="表单" width="70px">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-checkbox v-model="data[scope.$index].formShow" />
                 </template>
               </el-table-column>
               <el-table-column label="表单类型">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-select
                     v-model="data[scope.$index].formType"
                     filterable
@@ -101,7 +101,7 @@
                 </template>
               </el-table-column>
               <el-table-column label="查询方式">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-select
                     v-model="data[scope.$index].queryType"
                     filterable
@@ -119,7 +119,7 @@
                 </template>
               </el-table-column>
               <el-table-column label="关联字典">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-select
                     v-model="data[scope.$index].dictName"
                     filterable
@@ -178,16 +178,6 @@
               <span
                 style="color: #c0c0c0; margin-left: 10px"
               >接口的名称，用于控制器与接口文档中，如：用户</span>
-            </el-form-item>
-            <el-form-item label="版本号" prop="apiVersion">
-              <el-input
-                v-model="form.apiVersion"
-                placeholder="版本号"
-                style="width: 40%"
-              />
-              <span
-                style="color: #c0c0c0; margin-left: 10px"
-              >版本号必输，如：1.0.0</span>
             </el-form-item>
             <el-form-item label="去表前缀" prop="prefix">
               <el-input
@@ -249,7 +239,6 @@ export default {
         apiPath: '',
         prefix: '',
         apiAlias: null,
-        apiVersion: ''
       },
       rules: {
         author: [{ required: true, message: '作者不能为空', trigger: 'blur' }],
@@ -262,9 +251,6 @@ export default {
         ],
         apiAlias: [
           { required: true, message: '接口名称不能为空', trigger: 'blur' }
-        ],
-        apiVersion: [
-          { required: true, message: '版本号不能为空', trigger: 'blur' }
         ],
         cover: [{ required: true, message: '不能为空', trigger: 'blur' }]
       }

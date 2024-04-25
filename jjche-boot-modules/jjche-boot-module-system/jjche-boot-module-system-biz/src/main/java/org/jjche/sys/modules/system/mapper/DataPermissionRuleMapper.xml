@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jjche.sys.modules.system.mapper.DataPermissionRuleMapper">
+
+    <sql id="querySql">
+        SELECT * FROM sys_data_permission_rule ${ew.customSqlSegment}
+    </sql>
+
+    <select id="pageQuery" resultType="org.jjche.sys.modules.system.vo.DataPermissionRuleVO">
+        <include refid="querySql"/>
+    </select>
+
+    <select id="queryAll" resultType="org.jjche.sys.modules.system.domain.DataPermissionRuleDO">
+        <include refid="querySql"/>
+    </select>
+
+    <select id="selectByUserId" resultType="org.jjche.common.dto.PermissionDataRuleDTO">
+        SELECT t.id, t.`name`, t.`condition`, t.`column`, t.`value`, t.is_activated
+        ,m.permission AS 'menuPermission'
+        FROM sys_data_permission_rule t
+        INNER JOIN sys_data_permission_rule_role fr ON t.id = fr.data_permission_rule_id
+        INNER JOIN sys_menu m ON m.id = fr.menu_id
+        WHERE t.is_activated = 1 AND fr.role_id IN
+        (SELECT role_id FROM sys_users_roles WHERE user_id = #{userId})
+    </select>
+
+</mapper>

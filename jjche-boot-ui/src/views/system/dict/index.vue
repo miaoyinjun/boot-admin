@@ -89,7 +89,7 @@
               align="center"
               fixed="right"
             >
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <udOperation :data="scope.row" :permission="permission" />
               </template>
             </el-table-column>

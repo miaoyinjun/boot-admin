@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <description>单体应用的入口，按需加载modules</description>
+
+    <groupId>org.jjche.server</groupId>
+    <artifactId>jjche-boot-server</artifactId>
+    <packaging>jar</packaging>
+    <version>2.0.8</version>
+
+    <parent>
+        <groupId>org.jjcheframework.boot</groupId>
+        <artifactId>jjche-boot</artifactId>
+        <version>2.0.8</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jjche.sys</groupId>
+            <artifactId>jjche-boot-module-system-biz</artifactId>
+            <version>2.0.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jjche.bpm</groupId>
+            <artifactId>jjche-boot-module-bpm-biz</artifactId>
+            <version>2.0.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jjche.demo</groupId>
+            <artifactId>jjche-boot-module-demo-biz</artifactId>
+            <version>2.0.8</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--     远程nexus仓库 -->
+    <!--    <repositories>-->
+    <!--        <repository>-->
+    <!--            <id>maven-releases</id>-->
+    <!--            <url>http://1.1.1.1:8081/repository/maven-releases</url>-->
+    <!--        </repository>-->
+    <!--        <repository>-->
+    <!--            <id>maven-snapshots</id>-->
+    <!--            <url>http://1.1.1.1:8081/repository/maven-snapshots</url>-->
+    <!--            <snapshots>-->
+    <!--                <updatePolicy>always</updatePolicy>-->
+    <!--            </snapshots>-->
+    <!--        </repository>-->
+    <!--    </repositories>-->
+    <!--    <pluginRepositories>-->
+    <!--        <pluginRepository>-->
+    <!--            <id>maven-releases</id>-->
+    <!--            <url>http://1.1.1.1:8081/repository/maven-releases</url>-->
+    <!--        </pluginRepository>-->
+    <!--        <pluginRepository>-->
+    <!--            <id>maven-snapshots</id>-->
+    <!--            <url>http://1.1.1.1:8081/repository/maven-snapshots</url>-->
+    <!--            <snapshots>-->
+    <!--                <updatePolicy>always</updatePolicy>-->
+    <!--            </snapshots>-->
+    <!--        </pluginRepository>-->
+    <!--    </pluginRepositories>-->
+</project>

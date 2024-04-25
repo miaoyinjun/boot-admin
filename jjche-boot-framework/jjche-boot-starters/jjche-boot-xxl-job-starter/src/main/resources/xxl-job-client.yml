@@ -1,0 +1,9 @@
+jjche:
+  xxljob:
+    enabled: true
+    adminAddresses: http://${JJCHE_XXLJOB_HOST:localhost}:${JJCHE_XXLJOB_PORT:8804}/xxl-job-admin
+    appName: ${spring.application.name}
+    logretentiondays: 30
+    logpath: ${log.path:./logs/}
+    accessToken: default_token
+    address: ''

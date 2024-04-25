@@ -1,8 +1,0 @@
-jjche:
-  filter:
-    enc:
-      api:
-        urls:
-          - ${jjche.core.api.path.global-prefix}${jjche.core.api.path.prefix}${jjche.core.api.path.out-prefix}/**
-      field:
-        secret-key: ${JJCHE_FILTER_ENC_FIELD_SECRET_KEY:YgnE7hAjiifYFibD}

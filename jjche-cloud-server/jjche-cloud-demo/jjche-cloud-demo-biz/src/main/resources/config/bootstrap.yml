@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: "@parent.artifactId@"
+
+#获取maven属性在应用界面与细节/信息可获取到
+info:
+  name: "@parent.artifactId@"
+  description: "@parent.description@"
+  version: "@parent.version@"

@@ -67,7 +67,7 @@
       />
       <el-table-column prop="createTime" label="创建日期" />
       <el-table-column label="操作" width="160px" align="center" fixed="right">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button size="mini" style="margin-right: 2px" type="text">
             <router-link
               :to="'/sys-tools/generator/preview/' + scope.row.tableName"

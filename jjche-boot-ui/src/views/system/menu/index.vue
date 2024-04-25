@@ -42,6 +42,15 @@
             <el-radio-button label="2">按钮</el-radio-button>
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="上级类目" prop="pid">
+          <treeselect
+            v-model="form.pid"
+            :options="menus"
+            :load-options="loadMenus"
+            style="width: 450px"
+            placeholder="选择上级类目"
+          />
+        </el-form-item>
         <el-form-item
           v-show="form.type.toString() !== '2'"
           label="菜单图标"
@@ -133,7 +142,7 @@
         >
           <el-input
             v-model="form.permission"
-            :disabled="form.iframe"
+            :disabled="form.iframe.toString() === 'true'"
             placeholder="权限标识"
             style="width: 178px"
           />
@@ -159,7 +168,7 @@
           />
         </el-form-item>
         <el-form-item
-          v-show="!form.iframe && form.type.toString() === '1'"
+          v-show="form.iframe.toString() !== 'true' && form.type.toString() === '1'"
           label="组件名称"
           prop="componentName"
         >
@@ -170,7 +179,7 @@
           />
         </el-form-item>
         <el-form-item
-          v-show="!form.iframe && form.type.toString() === '1'"
+          v-show="form.iframe.toString() !== 'true' && form.type.toString() === '1'"
           label="组件路径"
           prop="component"
         >
@@ -178,15 +187,6 @@
             v-model="form.component"
             style="width: 178px"
             placeholder="组件路径"
-          />
-        </el-form-item>
-        <el-form-item label="上级类目" prop="pid">
-          <treeselect
-            v-model="form.pid"
-            :options="menus"
-            :load-options="loadMenus"
-            style="width: 450px"
-            placeholder="选择上级类目"
           />
         </el-form-item>
       </el-form>
@@ -222,12 +222,12 @@
         prop="title"
       />
       <el-table-column prop="icon" label="图标" align="center" width="60px">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <svg-icon :icon-class="scope.row.icon ? scope.row.icon : ''" />
         </template>
       </el-table-column>
       <el-table-column prop="menuSort" align="center" label="排序">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           {{ scope.row.menuSort }}
         </template>
       </el-table-column>
@@ -242,25 +242,25 @@
         label="组件路径"
       />
       <el-table-column prop="iframe" label="外链" width="75px">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span v-if="scope.row.iframe">是</span>
           <span v-else>否</span>
         </template>
       </el-table-column>
       <el-table-column prop="cache" label="缓存" width="75px">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span v-if="scope.row.cache">是</span>
           <span v-else>否</span>
         </template>
       </el-table-column>
       <el-table-column prop="hidden" label="可见" width="75px">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span v-if="scope.row.hidden">否</span>
           <span v-else>是</span>
         </template>
       </el-table-column>
       <el-table-column prop="gmtCreate" label="创建日期" width="135px">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.gmtCreate) }}</span>
         </template>
       </el-table-column>
@@ -271,7 +271,7 @@
         align="center"
         fixed="right"
       >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <div style="display: inline-block">
             <udOperation
               :data="scope.row"
@@ -415,7 +415,7 @@ export default {
     getSupDepts(id) {
       crudMenu.getMenuSuperior(id).then((res) => {
         const children = res.map(function(obj) {
-          if (!obj.leaf && !obj.children) {
+          if (!obj.leaf && (!obj.children || obj.children.length == 0)) {
             obj.children = null
           }
           return obj
@@ -429,6 +429,8 @@ export default {
           parentNode.children = res.map(function(obj) {
             if (!obj.leaf) {
               obj.children = null
+            } else {
+              delete obj.children
             }
             return obj
           })

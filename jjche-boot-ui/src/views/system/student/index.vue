@@ -94,12 +94,12 @@
         <el-table-column prop="name" label="姓名" />
         <el-table-column prop="age" label="年龄" />
         <el-table-column prop="course" label="课程类型">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     {{ dict.label.course_status[scope.row.course] }}
                   </template>
                 </el-table-column>
         <el-table-column prop="gmtCreate" label="创建时间">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <span>{{ scope.row.gmtCreate }}</span>
           </template>
         </el-table-column>
@@ -110,7 +110,7 @@
           width="300px"
           align="center"
         >
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <div style="display: inline-block">
               <udOperation :data="scope.row" :permission="permission" />
             </div>

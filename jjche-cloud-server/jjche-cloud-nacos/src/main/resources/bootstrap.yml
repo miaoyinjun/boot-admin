@@ -1,0 +1,52 @@
+server:
+  port: ${JJCHE_NACOS_PORT:8848}
+  tomcat:
+    basedir: logs
+
+db:
+  num: 1
+  url:
+    '0': jdbc:mysql://${JJCHE_DB_HOST:localhost}:${JJCHE_DB_PORT:3306}/jjche-cloud-nacos?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true
+  user:
+    '0': ${JJCHE_DB_UNAME:root}
+  password:
+    '0': ${JJCHE_DB_PASSWORD:}
+
+nacos:
+  core:
+    auth:
+      system.type: nacos
+      default.token.secret.key: SecretKey012345678901234567890123456789012345678901234567890123456789
+  security:
+    ignore:
+      urls: /,/error,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/v1/auth/**,/v1/console/health/**,/actuator/**,/v1/console/server/**
+
+spring:
+  datasource:
+    platform: mysql  #这个过期属性不能修改，nacos 代码对此有硬编码
+  security:
+    enabled: true
+  boot: # 接入 spring boot admin
+    admin:
+      client:
+        url: ${JJCHE_SBA_SERVER_URL}
+        username: admin
+        password: ${JJCHE_SBA_PASSWORD}
+        instance:
+          prefer-ip: true
+  application:
+    name: @project.artifactId@
+
+useAddressServer: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    export:
+      influx:
+        enabled: false
+      elastic:
+        enabled: false

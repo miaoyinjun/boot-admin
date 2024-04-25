@@ -126,7 +126,7 @@
       <el-table-column prop="deployPath" label="部署目录" />
       <el-table-column prop="backupPath" label="备份目录" />
       <el-table-column prop="gmtCreate" label="创建日期">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.gmtCreate) }}</span>
         </template>
       </el-table-column>
@@ -136,7 +136,7 @@
         width="150px"
         align="center"
       >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <udOperation :data="scope.row" :permission="permission" />
         </template>
       </el-table-column>

@@ -1,0 +1,25 @@
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+knife4j:
+  enable: true
+  setting:
+    enableSwaggerModels: false
+    enableVersion: true
+    enableReloadCacheParameter: true
+    enableFooter: false
+    enableDynamicParameter: true
+    enableDocumentManage: true
+    enableGroup: true
+    enableOpenApi: false
+jjche:
+  swagger:
+    filter-path: ${jjche.core.api.path.prefix}
+    title: ${info.name:}
+    version: ${info.version:}
+    description: ${info.description:}
+    security-jwt:
+      enabled: ${jjche.security.enabled:false}
+      token-header: ${jjche.security.jwt.header}
+      token-start-with: ${jjche.security.jwt.token-start-with}

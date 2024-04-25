@@ -1,0 +1,33 @@
+spring:
+  redis:
+    database: ${JJCHE_REDIS_DB:1}
+    host: ${JJCHE_REDIS_HOST:localhost}
+    port: ${JJCHE_REDIS_PORT:6379}
+    password: ${JJCHE_REDIS_PASSWORD:}
+    pool:
+      max-active: 30
+      max-wait: -1
+      max-idle: 8
+      min-idle: 1
+jetcache:
+  statIntervalMinutes: 0
+  hiddenPackages: true
+  areaInCacheName: false
+  local:
+    default:
+      type: linkedhashmap
+      keyConvertor: fastjson
+      expireAfterWriteInMillis: 3600000
+  remote:
+    default:
+      type: redisson
+#      keyPrefix: "${spring.application.name}:" #redisson已经有前缀
+      keyConvertor: fastjson
+      valueEncoder: java
+      valueDecoder: java
+      expireAfterWriteInMillis: ${jetcache.local.default.expireAfterWriteInMillis}
+      #uri: redis://${spring.redis.password}@${spring.redis.host}:${spring.redis.port}/${spring.redis.database}
+      poolConfig:
+        minIdle: ${spring.redis.pool.min-idle}
+        maxIdle: ${spring.redis.pool.max-idle}
+        maxTotal: 50

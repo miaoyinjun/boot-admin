@@ -92,7 +92,7 @@
     >
       <el-table-column type="selection" width="55" />
       <el-table-column prop="name" label="文件名">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-popover
             :content="'file/' + scope.row.type + '/' + scope.row.realName"
             placement="top-start"
@@ -120,7 +120,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="path" label="预览图">
-        <template slot-scope="{ row }">
+        <template v-slot="{ row }">
           <el-image
             :src="'/file/' + row.type + '/' + row.realName"
             :preview-src-list="['/file/' + row.type + '/' + row.realName]"
@@ -139,7 +139,7 @@
       <el-table-column prop="size" label="大小" />
       <el-table-column prop="operate" label="操作人" />
       <el-table-column prop="gmtCreate" label="创建日期">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.gmtCreate) }}</span>
         </template>
       </el-table-column>
@@ -151,13 +151,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getToken } from '@/utils/auth'
 import crudFile from '@/api/tools/localStorage'
 import Crud, { presenter, header, form, crud } from '@crud/crud'
 import rrOperation from '@crud/RR.operation'
 import crudOperation from '@crud/CRUD.operation'
 import pagination from '@crud/Pagination'
 import DateRangePicker from '@/components/DateRangePicker'
+import { getBaseHeader } from '@/utils/request'
 
 const defaultForm = { id: null, name: '' }
 export default {
@@ -174,7 +174,7 @@ export default {
     return {
       delAllLoading: false,
       loading: false,
-      headers: { Authorization: getToken() },
+      headers: getBaseHeader(),
       permission: {
         edit: ['admin', 'storage:edit'],
         del: ['admin', 'storage:del']

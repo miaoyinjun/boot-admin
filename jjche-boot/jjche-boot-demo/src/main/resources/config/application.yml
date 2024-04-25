@@ -1,9 +1,0 @@
-jjche.core.api.path.prefix: /demo
-spring:
-  application:
-    name: "@project.name@"
-#获取maven属性在应用界面与细节/信息可获取到
-info:
-  name: "@project.name@"
-  description: "@project.description@"
-  version: "@project.version@"

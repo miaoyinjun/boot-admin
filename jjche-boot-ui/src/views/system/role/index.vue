@@ -144,7 +144,7 @@
               prop="gmtCreate"
               label="创建日期"
             >
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <span>{{ parseTime(scope.row.gmtCreate) }}</span>
               </template>
             </el-table-column>
@@ -155,7 +155,7 @@
               align="center"
               fixed="right"
             >
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <div style="display: inline-block">
                   <udOperation
                     v-if="scope.row.level >= level"
@@ -381,8 +381,9 @@ export default {
       this.$refs.menu.setCheckedKeys([])
     },
     // 新增前初始化部门信息
-    [Crud.HOOK.beforeToAdd]() {
+    [Crud.HOOK.beforeToAdd](crud, form) {
       this.deptDatas = []
+      form.menus = null
     },
     // 编辑前初始化自定义数据权限的部门信息
     [Crud.HOOK.beforeToEdit](crud, form) {
@@ -447,7 +448,10 @@ export default {
           }
         } else {
           for (let i = 0; i < childIds.length; i++) {
-            this.menuIds.push(childIds[i])
+            const index = this.menuIds.indexOf(childIds[i])
+            if (index === -1) {
+              this.menuIds.push(childIds[i])
+            }
           }
         }
         this.$refs.menu.setCheckedKeys(this.menuIds)

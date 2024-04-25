@@ -1,0 +1,192 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="20240218_001_add_bpm" author="miaoyj">
+        <sql>
+            -- ----------------------------
+-- Table structure for bpm_form
+-- ----------------------------
+            CREATE TABLE `bpm_form`
+            (
+                `id`           bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                `name`         varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '表单名',
+                `content`      text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '表单的配置',
+                `remark`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+                `created_by`   varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '创建者',
+                `updated_by`   varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '修改者',
+                `gmt_create`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `gmt_modified` datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                PRIMARY KEY (`id`) USING BTREE
+            ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流的表单定义' ROW_FORMAT = COMPACT;
+
+            -- ----------------------------
+-- Records of bpm_form
+-- ----------------------------
+            INSERT INTO `bpm_form`
+            VALUES (1, 'test',
+                    '{\"widgetList\":[{\"type\":\"static-text\",\"icon\":\"static-text\",\"formItemFlag\":false,\"options\":{\"name\":\"statictext111193\",\"columnWidth\":\"200px\",\"hidden\":false,\"textContent\":\"单列表单\",\"customClass\":[],\"onCreated\":\"\",\"onMounted\":\"\",\"label\":\"static-text\"},\"id\":\"statictext111193\"},{\"type\":\"divider\",\"icon\":\"divider\",\"formItemFlag\":false,\"options\":{\"name\":\"divider102346\",\"label\":\"\",\"columnWidth\":\"200px\",\"direction\":\"horizontal\",\"contentPosition\":\"center\",\"hidden\":false,\"customClass\":[],\"onCreated\":\"\",\"onMounted\":\"\"},\"id\":\"divider102346\"},{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input12931\",\"label\":\"发件人姓名\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"input12931\"},{\"type\":\"switch\",\"icon\":\"switch-field\",\"formItemFlag\":true,\"options\":{\"name\":\"switch96070\",\"label\":\"是否保密\",\"labelAlign\":\"\",\"defaultValue\":true,\"columnWidth\":\"200px\",\"labelWidth\":null,\"labelHidden\":false,\"disabled\":false,\"hidden\":false,\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"switchWidth\":40,\"activeText\":\"\",\"inactiveText\":\"\",\"activeColor\":null,\"inactiveColor\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onValidate\":\"\"},\"id\":\"switch96070\"},{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input23031\",\"label\":\"发件人号码\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"input23031\"},{\"type\":\"textarea\",\"icon\":\"textarea-field\",\"formItemFlag\":true,\"options\":{\"name\":\"textarea21654\",\"label\":\"发件人地址\",\"labelAlign\":\"\",\"rows\":3,\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"textarea21654\"},{\"type\":\"divider\",\"icon\":\"divider\",\"formItemFlag\":false,\"options\":{\"name\":\"divider69240\",\"label\":\"\",\"columnWidth\":\"200px\",\"direction\":\"horizontal\",\"contentPosition\":\"center\",\"hidden\":false,\"customClass\":\"\",\"onCreated\":\"\",\"onMounted\":\"\"},\"id\":\"divider69240\"},{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input113152\",\"label\":\"收件人姓名\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"input113152\"},{\"type\":\"checkbox\",\"icon\":\"checkbox-field\",\"formItemFlag\":true,\"options\":{\"name\":\"checkbox63174\",\"label\":\"接收时间段\",\"labelAlign\":\"\",\"defaultValue\":[],\"columnWidth\":\"200px\",\"size\":\"\",\"displayStyle\":\"inline\",\"buttonStyle\":false,\"border\":false,\"labelWidth\":null,\"labelHidden\":false,\"disabled\":false,\"hidden\":false,\"optionItems\":[{\"label\":\"上午9:00 - 11:30\",\"value\":1},{\"label\":\"下午12:30 - 18:00\",\"value\":2},{\"label\":\"晚上18:00 - 21:00\",\"value\":3}],\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onValidate\":\"\"},\"id\":\"checkbox63174\"},{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input40240\",\"label\":\"收件人号码\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"input40240\"},{\"type\":\"input\",\"icon\":\"text-field\",\"formItemFlag\":true,\"options\":{\"name\":\"input78584\",\"label\":\"收件人地址\",\"labelAlign\":\"\",\"type\":\"text\",\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"showPassword\":false,\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"prefixIcon\":\"\",\"suffixIcon\":\"\",\"appendButton\":false,\"appendButtonDisabled\":false,\"buttonIcon\":\"el-icon-search\",\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"input78584\"},{\"type\":\"divider\",\"icon\":\"divider\",\"formItemFlag\":false,\"options\":{\"name\":\"divider75887\",\"label\":\"\",\"columnWidth\":\"200px\",\"direction\":\"horizontal\",\"contentPosition\":\"center\",\"hidden\":false,\"customClass\":[],\"onCreated\":\"\",\"onMounted\":\"\"},\"id\":\"divider75887\"},{\"type\":\"time-range\",\"icon\":\"time-range-field\",\"formItemFlag\":true,\"options\":{\"name\":\"timerange47503\",\"label\":\"送货时间\",\"labelAlign\":\"\",\"defaultValue\":null,\"startPlaceholder\":\"\",\"endPlaceholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"clearable\":true,\"editable\":false,\"format\":\"HH:mm:ss\",\"required\":true,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"timerange47503\"},{\"type\":\"slider\",\"icon\":\"slider-field\",\"formItemFlag\":true,\"options\":{\"name\":\"slider54714\",\"label\":\"价格保护\",\"labelAlign\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"disabled\":false,\"hidden\":false,\"required\":false,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":[],\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"min\":0,\"max\":100,\"step\":10,\"range\":false,\"height\":null,\"onCreated\":\"\",\"onMounted\":\"\",\"onChange\":\"\",\"onValidate\":\"\",\"showStops\":true},\"id\":\"slider54714\"},{\"type\":\"textarea\",\"icon\":\"textarea-field\",\"formItemFlag\":true,\"options\":{\"name\":\"textarea64794\",\"label\":\"其他信息\",\"labelAlign\":\"\",\"rows\":3,\"defaultValue\":\"\",\"placeholder\":\"\",\"columnWidth\":\"200px\",\"size\":\"\",\"labelWidth\":null,\"labelHidden\":false,\"readonly\":false,\"disabled\":false,\"hidden\":false,\"required\":false,\"validation\":\"\",\"validationHint\":\"\",\"customClass\":\"\",\"labelIconClass\":null,\"labelIconPosition\":\"rear\",\"labelTooltip\":null,\"minLength\":null,\"maxLength\":null,\"showWordLimit\":false,\"onCreated\":\"\",\"onMounted\":\"\",\"onInput\":\"\",\"onChange\":\"\",\"onFocus\":\"\",\"onBlur\":\"\",\"onValidate\":\"\"},\"id\":\"textarea64794\"}],\"formConfig\":{\"modelName\":\"formData\",\"refName\":\"vForm\",\"rulesName\":\"rules\",\"labelWidth\":150,\"labelPosition\":\"left\",\"size\":\"\",\"labelAlign\":\"label-right-align\",\"cssCode\":\"\",\"customClass\":[],\"functions\":\"\",\"layoutType\":\"PC\",\"onFormCreated\":\"\",\"onFormMounted\":\"\",\"onFormDataChange\":\"\",\"onFormValidate\":\"\"}}',
+                    NULL, 'admin', 'admin', '2023-03-31 13:13:51', '2023-03-31 13:13:51');
+
+            -- ----------------------------
+-- Table structure for bpm_oa_leave
+-- ----------------------------
+            CREATE TABLE `bpm_oa_leave`
+            (
+                `id`                  bigint(20) NOT NULL AUTO_INCREMENT COMMENT '请假表单主键',
+                `user_id`             bigint(20) NOT NULL COMMENT '申请人的用户编号',
+                `type`                tinyint(4) NOT NULL COMMENT '请假类型',
+                `reason`              varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请假原因',
+                `start_time`          datetime                                                      NOT NULL COMMENT '开始时间',
+                `end_time`            datetime                                                      NOT NULL COMMENT '结束时间',
+                `day`                 tinyint(4) NOT NULL COMMENT '请假天数',
+                `result`              tinyint(4) NOT NULL COMMENT '请假结果',
+                `process_instance_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '流程实例的编号',
+                `created_by`          varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT 'System' COMMENT '创建者',
+                `updated_by`          varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT 'System' COMMENT '修改者',
+                `gmt_create`          datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `gmt_modified`        datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                PRIMARY KEY (`id`) USING BTREE
+            ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'OA 请假申请表' ROW_FORMAT = COMPACT;
+
+            -- ----------------------------
+-- Records of bpm_oa_leave
+-- ----------------------------
+
+            -- ----------------------------
+-- Table structure for bpm_process_definition_ext
+-- ----------------------------
+            CREATE TABLE `bpm_process_definition_ext`
+            (
+                `id`                      bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                `process_definition_id`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '流程定义的编号',
+                `model_id`                varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '流程模型的编号',
+                `description`             varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                `form_type`               tinyint(4) NOT NULL COMMENT '表单类型',
+                `form_id`                 bigint(20) NULL DEFAULT NULL COMMENT '表单编号',
+                `form_conf`               text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '表单的配置',
+                `form_custom_create_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '自定义表单的提交路径',
+                `form_custom_view_path`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '自定义表单的查看路径',
+                `created_by`              varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '创建者',
+                `updated_by`              varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '修改者',
+                `gmt_create`              datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `gmt_modified`            datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                PRIMARY KEY (`id`) USING BTREE
+            ) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Bpm 流程定义的拓展表' ROW_FORMAT = COMPACT;
+
+            -- ----------------------------
+-- Records of bpm_process_definition_ext
+-- ----------------------------
+
+            -- ----------------------------
+-- Table structure for bpm_process_instance_ext
+-- ----------------------------
+            CREATE TABLE `bpm_process_instance_ext`
+            (
+                `id`                    bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                `start_user_id`         bigint(20) NOT NULL COMMENT '发起流程的用户编号',
+                `name`                  varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '流程实例的名字',
+                `process_instance_id`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '流程实例的编号',
+                `process_definition_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '流程定义的编号',
+                `category`              varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '流程分类',
+                `status`                tinyint(4) NOT NULL COMMENT '流程实例的状态',
+                `result`                tinyint(4) NOT NULL COMMENT '流程实例的结果',
+                `end_time`              datetime NULL DEFAULT NULL COMMENT '结束时间',
+                `form_variables`        varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '表单值',
+                `created_by`            varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '创建者',
+                `updated_by`            varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '修改者',
+                `gmt_create`            datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `gmt_modified`          datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                PRIMARY KEY (`id`) USING BTREE
+            ) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流的流程实例的拓展' ROW_FORMAT = COMPACT;
+
+            -- ----------------------------
+-- Records of bpm_process_instance_ext
+-- ----------------------------
+
+            -- ----------------------------
+-- Table structure for bpm_task_assign_rule
+-- ----------------------------
+            CREATE TABLE `bpm_task_assign_rule`
+            (
+                `id`                    bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                `model_id`              varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL COMMENT '流程模型的编号',
+                `process_definition_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL COMMENT '流程定义的编号',
+                `task_definition_key`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL COMMENT '流程任务定义的 key',
+                `type`                  tinyint(4) NOT NULL COMMENT '规则类型',
+                `options`               varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '规则值，JSON 数组',
+                `created_by`            varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL DEFAULT 'System' COMMENT '创建者',
+                `updated_by`            varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL DEFAULT 'System' COMMENT '修改者',
+                `gmt_create`            datetime                                                       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `gmt_modified`          datetime                                                       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                PRIMARY KEY (`id`) USING BTREE
+            ) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Bpm 任务规则表' ROW_FORMAT = COMPACT;
+
+            -- ----------------------------
+-- Records of bpm_task_assign_rule
+-- ----------------------------
+            -- ----------------------------
+-- Table structure for bpm_task_ext
+-- ----------------------------
+            CREATE TABLE `bpm_task_ext`
+            (
+                `id`                    bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                `assignee_user_id`      bigint(20) NULL DEFAULT NULL COMMENT '任务的审批人',
+                `name`                  varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '任务的名字',
+                `task_id`               varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务的编号',
+                `result`                tinyint(4) NOT NULL COMMENT '任务的结果',
+                `reason`                varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '审批建议',
+                `end_time`              datetime NULL DEFAULT NULL COMMENT '任务的结束时间',
+                `process_instance_id`   varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '流程实例的编号',
+                `process_definition_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '流程定义的编号',
+                `created_by`            varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '创建者',
+                `updated_by`            varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'System' COMMENT '修改者',
+                `gmt_create`            datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `gmt_modified`          datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                PRIMARY KEY (`id`) USING BTREE
+            ) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流的流程任务的拓展表' ROW_FORMAT = COMPACT;
+
+            -- ----------------------------
+-- Records of bpm_task_ext
+-- ----------------------------
+            -- ----------------------------
+-- Table structure for bpm_user_group
+-- ----------------------------
+            CREATE TABLE `bpm_user_group`
+            (
+                `id`              bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                `name`            varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL DEFAULT '' COMMENT '组名',
+                `description`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT '' COMMENT '描述',
+                `member_user_ids` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '成员编号数组',
+                `status`          tinyint(4) NOT NULL COMMENT '状态（0正常 1停用）',
+                `created_by`      varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL DEFAULT 'System' COMMENT '创建者',
+                `updated_by`      varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci   NOT NULL DEFAULT 'System' COMMENT '修改者',
+                `gmt_create`      datetime                                                       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                `gmt_modified`    datetime                                                       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                PRIMARY KEY (`id`) USING BTREE
+            ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户组' ROW_FORMAT = COMPACT;
+
+            -- ----------------------------
+-- Records of bpm_user_group
+-- ----------------------------
+            INSERT INTO `bpm_user_group`
+            VALUES (1, '分组1', '11', '[1]', 1, 'admin', 'admin', '2023-06-20 10:18:16', '2023-06-20 10:36:48');
+        </sql>
+        <rollback>
+            <sql>
+                DROP TABLE IF EXISTS `bpm_form`;
+                DROP TABLE IF EXISTS `bpm_oa_leave`;
+                DROP TABLE IF EXISTS `bpm_process_definition_ext`;
+                DROP TABLE IF EXISTS `bpm_process_instance_ext`;
+                DROP TABLE IF EXISTS `bpm_task_assign_rule`;
+                DROP TABLE IF EXISTS `bpm_task_ext`;
+                DROP TABLE IF EXISTS `bpm_user_group`;
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
+

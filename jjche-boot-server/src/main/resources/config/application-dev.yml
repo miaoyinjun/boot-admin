@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${JJCHE_DB_HOST:localhost}:${JJCHE_DB_PORT:3306}/${JJCHE_DB_DATABASE:jjche-boot}?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&rewriteBatchedStatements=true&nullCatalogMeansCurrent=true
+    username: ${JJCHE_DB_UNAME:root}
+    password: ${JJCHE_DB_PASSWORD:}

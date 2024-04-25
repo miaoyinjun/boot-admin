@@ -88,7 +88,7 @@
       <el-table-column prop="port" label="端口" />
       <el-table-column prop="account" label="账号" />
       <el-table-column prop="gmtCreate" label="创建日期">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.gmtCreate) }}</span>
         </template>
       </el-table-column>
@@ -98,7 +98,7 @@
         width="150px"
         align="center"
       >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <udOperation :data="scope.row" :permission="permission" />
         </template>
       </el-table-column>

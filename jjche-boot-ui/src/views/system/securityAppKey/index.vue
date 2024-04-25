@@ -92,7 +92,7 @@
         <el-table-column prop="name" label="名称" />
         <el-table-column prop="appId" label="appId" />
         <el-table-column prop="enabled" label="状态">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-switch
               v-model="scope.row.enabled"
               @change="changeEnabled(scope.row, scope.row.enabled)"
@@ -106,7 +106,7 @@
           width="150px"
           align="center"
         >
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <udOperation
               :data="scope.row"
               :permission="permission"

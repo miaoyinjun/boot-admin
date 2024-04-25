@@ -38,11 +38,10 @@ router.beforeEach((to, from, next) => {
         NProgress.done()
       } else {
         if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
-          store.dispatch('GetInfo').then(res => { // 拉取user_info
+          store.dispatch('GetInfo').then(() => { // 拉取user_info
             // 动态路由，拉取菜单
             loadMenus(next, to)
-          }).catch((err) => {
-            console.log(err)
+          }).catch(() => {
             store.dispatch('LogOut').then(() => {
               location.reload() // 为了重新实例化vue-router对象 避免bug
             })
@@ -50,7 +49,7 @@ router.beforeEach((to, from, next) => {
           // 登录时未拉取 菜单，在此处拉取
         } else if (store.getters.loadMenus) {
           // 修改成false，防止死循环
-          store.dispatch('updateLoadMenus').then(res => { })
+          store.dispatch('updateLoadMenus')
           loadMenus(next, to)
         } else {
           next()
@@ -70,11 +69,15 @@ router.beforeEach((to, from, next) => {
 
 export const loadMenus = (next, to) => {
   buildMenus().then(res => {
-    const asyncRouter = filterAsyncRouter(res)
-    asyncRouter.push({ path: '*', redirect: '/404', hidden: true })
-    store.dispatch('GenerateRoutes', asyncRouter).then(() => { // 存储路由
-      router.addRoutes(asyncRouter) // 动态添加可访问路由表
-      const firstRouter = asyncRouter[0]
+    const sdata = JSON.parse(JSON.stringify(res))
+    const rdata = JSON.parse(JSON.stringify(res))
+    const sidebarRoutes = filterAsyncRouter(sdata)
+    const rewriteRoutes = filterAsyncRouter(rdata, false, true)
+    rewriteRoutes.push({ path: '*', redirect: '/404', hidden: true })
+
+    store.dispatch('GenerateRoutes', rewriteRoutes).then(() => { // 存储路由
+      router.addRoutes(rewriteRoutes) // 动态添加可访问路由表
+      const firstRouter = rewriteRoutes[0]
       // 防止用户没有首页权限，而且通过登录默认进入首页
       if (to.path === '/dashboard' && firstRouter.path !== '/dashboard') {
         const firstChildren = firstRouter.children
@@ -87,6 +90,7 @@ export const loadMenus = (next, to) => {
         next({ ...to, replace: true })
       }
     })
+    store.dispatch('SetSidebarRouters', sidebarRoutes)
   })
 }
 

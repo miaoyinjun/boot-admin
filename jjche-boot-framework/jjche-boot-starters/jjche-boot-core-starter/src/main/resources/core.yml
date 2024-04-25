@@ -1,0 +1,71 @@
+server:
+  port: ${JJCHE_SERVER_PORT:8801}
+  servlet:
+    register-default-servlet: true
+  compression:
+    enabled: true
+    mime-types: application/javascript,text/css,application/json,application/xml,text/html,text/xml,text/plain
+#  tomcat:
+#    max-connections: 5000
+#    max-threads: 2000
+#    accept-count: 200
+#    min-spare-threads: 10
+#    connection-timeout: 30000
+spring:
+  thymeleaf:
+    check-template-location: false
+    check-template: false
+  freemarker:
+    check-template-location: false
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    key-obtention-iterations: 1000
+    pool-size: 1
+    salt-generator-classname: org.jasypt.salt.RandomSaltGenerator
+    string-output-type: base64
+feign:
+  compression:
+    request:
+      enabled: false
+    response:
+      enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 60000
+        loggerLevel: FULL
+jjche:
+  core:
+    api:
+      path:
+        prefix: /api
+        out-prefix: /external
+    alarm:
+      ding-talk:
+        url: https://oapi.dingtalk.com/robot/send
+  # 文件存储路径
+  tool:
+    file:
+      # 文件大小 /M
+      maxSize: 100
+      avatarMaxSize: 5
+      mac:
+        path: ./file/
+        avatar: ./avatar/
+      linux:
+        path: ./file/
+        avatar: ./avatar/
+      windows:
+        path: C:\admin\file\
+        avatar: C:\admin\avatar\
+    #七牛云
+    qiniu:
+      # 文件大小 /M
+      max-size: 15
+    mail:
+      #邮箱验证码有效时间/秒
+      code:
+        expiration: 300

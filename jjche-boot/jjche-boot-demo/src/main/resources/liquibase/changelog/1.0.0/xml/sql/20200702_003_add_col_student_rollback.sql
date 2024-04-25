@@ -1,1 +1,0 @@
-ALTER TABLE `student` DROP COLUMN `creator_user_id`;

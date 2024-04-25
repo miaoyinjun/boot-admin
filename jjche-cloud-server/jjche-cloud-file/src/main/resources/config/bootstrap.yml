@@ -1,0 +1,11 @@
+server.port: ${JJCHE_MINIO_PORT:8902}
+spring:
+  application:
+    name: "@project.artifactId@"
+  liquibase:
+    enabled: false
+#获取maven属性在应用界面与细节/信息可获取到
+info:
+  name: "@project.artifactId@"
+  description: "@project.description@"
+  version: "@project.version@"

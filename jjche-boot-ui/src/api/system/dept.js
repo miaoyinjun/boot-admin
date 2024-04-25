@@ -41,4 +41,12 @@ export function edit(data) {
   })
 }
 
-export default { add, edit, del, getDepts, getDeptSuperior }
+// 获取部门精简信息列表
+export function listSimpleDepts() {
+  return request({
+    url: 'sys/dept/list-all-simple',
+    method: 'get'
+  })
+}
+
+export default { add, edit, del, getDepts, getDeptSuperior, listSimpleDepts }

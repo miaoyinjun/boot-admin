@@ -142,7 +142,7 @@
       <el-table-column prop="app.name" label="应用名称" />
       <el-table-column prop="servers" label="服务器列表" />
       <el-table-column prop="gmtCreate" label="部署日期">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.gmtCreate) }}</span>
         </template>
       </el-table-column>
@@ -152,7 +152,7 @@
         width="150px"
         align="center"
       >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <udOperation :data="scope.row" :permission="permission" />
         </template>
       </el-table-column>

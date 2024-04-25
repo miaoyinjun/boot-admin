@@ -1,5 +1,5 @@
 <template>
-  <div :class="className" :style="{ height: height, width: width }" />
+  <div :class="className" :style="{height:height,width:width}" />
 </template>
 
 <script>
@@ -57,18 +57,7 @@ export default {
         legend: {
           orient: 'vertical',
           x: 'left',
-          data: [
-            '直达',
-            '营销广告',
-            '搜索引擎',
-            '邮件营销',
-            '联盟广告',
-            '视频广告',
-            '百度',
-            '谷歌',
-            '必应',
-            '其他'
-          ]
+          data: ['直达', '营销广告', '搜索引擎', '邮件营销', '联盟广告', '视频广告', '百度', '谷歌', '必应', '其他']
         },
         series: [
           {

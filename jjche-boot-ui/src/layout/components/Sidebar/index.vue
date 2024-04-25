@@ -7,14 +7,14 @@
         :collapse="isCollapse"
         :background-color="variables.menuBg"
         :text-color="variables.menuText"
-        :unique-opened="$store.state.settings.uniqueOpened"
         :active-text-color="variables.menuActiveText"
         :collapse-transition="false"
+        unique-opened
         mode="vertical"
       >
         <sidebar-item
-          v-for="route in permission_routers"
-          :key="route.path"
+          v-for="(route, index) in sidebarRouters"
+          :key="route.path  + index"
           :item="route"
           :base-path="route.path"
         />
@@ -32,7 +32,7 @@ import variables from '@/assets/styles/variables.scss'
 export default {
   components: { SidebarItem, Logo },
   computed: {
-    ...mapGetters(['permission_routers', 'sidebar']),
+    ...mapGetters(['sidebarRouters', 'sidebar']),
     activeMenu() {
       const route = this.$route
       const { meta, path } = route

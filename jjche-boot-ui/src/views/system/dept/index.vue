@@ -120,7 +120,7 @@
       <el-table-column label="名称" prop="name" />
       <el-table-column label="排序" prop="deptSort" />
       <el-table-column label="状态" align="center" prop="enabled">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-switch
             v-model="scope.row.enabled"
             :disabled="
@@ -134,7 +134,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="gmtCreate" label="创建日期">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.gmtCreate) }}</span>
         </template>
       </el-table-column>
@@ -145,7 +145,7 @@
         align="center"
         fixed="right"
       >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <udOperation
             :data="scope.row"
             :permission="permission"

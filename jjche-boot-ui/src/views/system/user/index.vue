@@ -77,16 +77,16 @@
             label-width="66px"
           >
             <el-form-item label="用户名" prop="username">
-              <el-input v-model="form.username" />
+              <el-input v-model.trim="form.username" />
             </el-form-item>
             <el-form-item label="电话" prop="phone">
-              <el-input v-model.number="form.phone" />
+              <el-input v-model.number.trim="form.phone" />
             </el-form-item>
             <el-form-item label="昵称" prop="nickName">
-              <el-input v-model="form.nickName" />
+              <el-input v-model.trim="form.nickName" />
             </el-form-item>
             <el-form-item label="邮箱" prop="email">
-              <el-input v-model="form.email" />
+              <el-input v-model.trim="form.email" />
             </el-form-item>
             <el-form-item label="部门" prop="dept.id">
               <treeselect
@@ -201,7 +201,7 @@
             prop="role"
             label="角色"
           >
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <span v-for="role in scope.row.roles" :key="role.id">
                 {{ role.name }}
               </span>
@@ -212,12 +212,12 @@
             prop="dept"
             label="部门"
           >
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <div>{{ scope.row.dept.name }}</div>
             </template>
           </el-table-column>
           <el-table-column label="状态" align="center" prop="enabled">
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-switch
                 v-model="scope.row.enabled"
                 :disabled="!checkPermission(permission.edit)"
@@ -233,7 +233,7 @@
             width="135"
             label="创建日期"
           >
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <span>{{ scope.row.gmtCreate }}</span>
             </template>
           </el-table-column>
@@ -243,7 +243,7 @@
             width="135"
             label="最后一次登陆时间"
           >
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <span>{{ scope.row.lastLoginTime }}</span>
             </template>
           </el-table-column>
@@ -254,7 +254,7 @@
             align="center"
             fixed="right"
           >
-            <template slot-scope="scope">
+            <template v-slot="scope">
               <el-button
                 v-permission="['admin']"
                 :disabled="scope.row.username === 'admin'"

@@ -32,7 +32,7 @@
       <el-table-column prop="ip" label="部署IP" />
       <el-table-column prop="deployUser" label="部署人员" />
       <el-table-column prop="gmtCreate" label="部署时间">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.gmtCreate) }}</span>
         </template>
       </el-table-column>
@@ -42,7 +42,7 @@
         width="100px"
         align="center"
       >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-popover
             :ref="scope.row.id"
             v-permission="['admin', 'deployHistory:del']"

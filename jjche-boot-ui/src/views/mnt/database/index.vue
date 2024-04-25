@@ -88,7 +88,7 @@
       <el-table-column prop="jdbcUrl" label="连接地址" />
       <el-table-column prop="userName" width="200px" label="用户名" />
       <el-table-column prop="gmtCreate" width="200px" label="创建日期">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.gmtCreate) }}</span>
         </template>
       </el-table-column>
@@ -98,7 +98,7 @@
         width="150px"
         align="center"
       >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <udOperation :data="scope.row" :permission="permission" />
         </template>
       </el-table-column>

@@ -33,7 +33,7 @@
         :show-overflow-tooltip="true"
       />
       <el-table-column type="expand" label="参数">
-        <template slot-scope="props">
+        <template v-slot="props">
           <el-form label-position="left" inline class="demo-table-expand">
             <el-form-item label="请求地址">
               <span>{{ props.row.url }}</span>
@@ -60,12 +60,12 @@
         prop="category"
         label="分类"
       >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseCategory(scope.row.category) }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="logType" label="类型">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseLogType(scope.row.logType) }}</span>
         </template>
       </el-table-column>
@@ -90,7 +90,7 @@
         label="详情"
       />
       <el-table-column prop="isSuccess" label="状态">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag v-if="scope.row.isSuccess">成功</el-tag>
           <el-button
             v-if="scope.row.isSuccess == false"
@@ -106,7 +106,7 @@
         label="结果"
       />
       <el-table-column prop="time" label="请求耗时" align="center">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag v-if="scope.row.time <= 300">{{ scope.row.time }}ms</el-tag>
           <el-tag
             v-else-if="scope.row.time <= 1000"
@@ -133,7 +133,7 @@
       />
       <el-table-column prop="username" label="操作人" />
       <el-table-column prop="gmtCreate" label="操作时间" width="180px">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.gmtCreate) }}</span>
         </template>
       </el-table-column>

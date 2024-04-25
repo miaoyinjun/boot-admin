@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: test
+  redis:
+    #数据库索引
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    #连接超时时间
+    timeout: 5000
+
+jjche:
+  security:
+    jwt:
+      token-validity-in-milli-seconds: 3000

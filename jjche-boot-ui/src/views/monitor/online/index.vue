@@ -58,17 +58,17 @@
         label="操作系统"
       />
       <el-table-column prop="loginTime" label="登录时间">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.loginTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="lastAccessTime" label="最后访问时间">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ parseTime(scope.row.lastAccessTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="70px" fixed="right">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-popover :ref="scope.$index" placement="top" width="180">
             <p>确定强制退出该用户吗？</p>
             <div style="text-align: right; margin: 0">
