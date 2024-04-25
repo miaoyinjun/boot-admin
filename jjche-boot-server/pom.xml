@@ -7,29 +7,29 @@
     <groupId>org.jjche.server</groupId>
     <artifactId>jjche-boot-server</artifactId>
     <packaging>jar</packaging>
-    <version>2.0.9-SNAPSHOT</version>
+    <version>2.0.8</version>
 
     <parent>
         <groupId>org.jjcheframework.boot</groupId>
         <artifactId>jjche-boot</artifactId>
-        <version>2.0.9-SNAPSHOT</version>
+        <version>2.0.8</version>
     </parent>
 
     <dependencies>
         <dependency>
             <groupId>org.jjche.sys</groupId>
             <artifactId>jjche-boot-module-system-biz</artifactId>
-            <version>2.0.9-SNAPSHOT</version>
+            <version>2.0.8</version>
         </dependency>
         <dependency>
             <groupId>org.jjche.bpm</groupId>
             <artifactId>jjche-boot-module-bpm-biz</artifactId>
-            <version>2.0.9-SNAPSHOT</version>
+            <version>2.0.8</version>
         </dependency>
         <dependency>
             <groupId>org.jjche.demo</groupId>
             <artifactId>jjche-boot-module-demo-biz</artifactId>
-            <version>2.0.9-SNAPSHOT</version>
+            <version>2.0.8</version>
         </dependency>
     </dependencies>
 

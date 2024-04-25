@@ -7,14 +7,14 @@
     <parent>
         <groupId>org.jjche.sys</groupId>
         <artifactId>jjche-boot-module-system</artifactId>
-        <version>2.0.9-SNAPSHOT</version>
+        <version>2.0.8</version>
     </parent>
 
     <dependencies>
         <dependency>
             <groupId>org.jjche.sys</groupId>
             <artifactId>jjche-boot-module-system-api</artifactId>
-            <version>2.0.9-SNAPSHOT</version>
+            <version>2.0.8</version>
         </dependency>
         <dependency>
             <groupId>org.jjcheframework.boot</groupId>

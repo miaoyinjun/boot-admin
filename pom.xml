@@ -4,7 +4,7 @@
 
     <groupId>org.jjcheframework.boot</groupId>
     <artifactId>jjche-boot</artifactId>
-    <version>2.0.9-SNAPSHOT</version>
+    <version>2.0.8</version>
     <packaging>pom</packaging>
     <name>jjche-boot</name>
 
@@ -87,68 +87,68 @@
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-common</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-system-api-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-cloud-system-api-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-core-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
 
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-sba-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-swagger-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-log-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-cat-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-mybatis-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-cache-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-filter-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-security-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <!--            <dependency>-->
             <!--                <groupId>org.jjcheframework.boot</groupId>-->
@@ -158,49 +158,49 @@
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-serialize-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-userdetail-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <!-- cloud -->
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-cloud-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-cloud-gray-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-shardingsphere-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-minio-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-sentinel-dashboard-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>1.8.3</version>
             </dependency>
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-xxl-job-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <!-- 工作流相关 -->
             <dependency>
                 <groupId>org.jjcheframework.boot</groupId>
                 <artifactId>jjche-boot-flowable-starter</artifactId>
-                <version>2.0.9-SNAPSHOT</version>
+                <version>2.0.8</version>
             </dependency>
             <dependency>
                 <groupId>org.flowable</groupId>

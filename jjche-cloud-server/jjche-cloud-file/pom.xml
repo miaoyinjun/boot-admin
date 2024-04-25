@@ -6,11 +6,11 @@
     <groupId>org.jjche.cloud</groupId>
     <artifactId>jjche-cloud-file</artifactId>
     <packaging>jar</packaging>
-    <version>2.0.9-SNAPSHOT</version>
+    <version>2.0.8</version>
     <parent>
         <groupId>org.jjcheframework.boot</groupId>
         <artifactId>jjche-cloud-server</artifactId>
-        <version>2.0.9-SNAPSHOT</version>
+        <version>2.0.8</version>
     </parent>
 
     <dependencies>
