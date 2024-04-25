@@ -1,0 +1,33 @@
+version: '1.0'
+name: pipeline-20220120
+displayName: pipeline-20220120
+triggers:
+  trigger: auto
+  push:
+    branches:
+      prefix:
+        - ''
+stages:
+  - name: stage-54a59a45
+    displayName: 未命名
+    strategy: naturally
+    trigger: auto
+    executor: []
+    steps:
+      - step: build@maven
+        name: build_maven
+        displayName: Maven 构建
+        jdkVersion: '8'
+        mavenVersion: 3.3.9
+        artifacts:
+          - name: BUILD_ARTIFACT
+            path:
+              - ./jjche-boot-web-demo/target
+        commands:
+          - cd jjche-boot-parent
+          - mvn clean install
+          - cd ../ && cd jjche-boot-web-demo
+          - mvn -B clean package -Dmaven.test.skip=true
+permissions:
+  - role: admin
+    members: []
