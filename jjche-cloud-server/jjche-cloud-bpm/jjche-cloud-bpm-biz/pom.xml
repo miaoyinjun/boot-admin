@@ -16,12 +16,12 @@
 
     <artifactId>jjche-cloud-bpm-biz</artifactId>
     <packaging>jar</packaging>
-    <version>2.0.8</version>
+    <version>2.0.9-SNAPSHOT</version>
 
     <parent>
         <groupId>org.jjche.bpm</groupId>
         <artifactId>jjche-cloud-bpm</artifactId>
-        <version>2.0.8</version>
+        <version>2.0.9-SNAPSHOT</version>
     </parent>
 
     <dependencies>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>org.jjche.bpm</groupId>
             <artifactId>jjche-boot-module-bpm-biz</artifactId>
-            <version>2.0.8</version>
+            <version>2.0.9-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
